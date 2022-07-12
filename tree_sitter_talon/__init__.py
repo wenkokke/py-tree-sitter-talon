@@ -32,7 +32,7 @@ class TreeSitterTalon:
 
     @property
     def node_types_path(self) -> str:
-        self.resource_filename("data/tree-sitter-talon/src/node-types.json")
+        return self.resource_filename("data/tree-sitter-talon/src/node-types.json")
 
     def __init__(self):
         # Build tree-sitter-talon
