@@ -1,16 +1,16 @@
 from pathlib import Path
-import sys
 from typing import Optional, Union
+import sys
 import tree_sitter_type_provider as tstp
 import tree_sitter as ts
-import pkg_resources
+import pkg_resources as pkg
 import os
 
 
 class TreeSitterTalon:
     @classmethod
     def resource_filename(cls, resource_name: str) -> str:
-        return pkg_resources.resource_filename("tree_sitter_talon", resource_name)
+        return pkg.resource_filename("tree_sitter_talon", resource_name)
 
     @property
     @classmethod
