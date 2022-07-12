@@ -42,7 +42,7 @@ class TreeSitterTalon:
         self.parser.set_language(self.language)
 
         # Build tree-sitter node types
-        with open(f"{self.repository_path}/{self.node_types_path}", "r") as fp:
+        with open(self.node_types_path, "r") as fp:
             node_types = tstp.NodeType.schema().loads(fp.read(), many=True)
         self.types = tstp.TypeProvider("types", node_types)
 
