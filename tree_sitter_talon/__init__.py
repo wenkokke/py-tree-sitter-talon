@@ -8,25 +8,21 @@ import os
 
 
 class TreeSitterTalon:
-    @classmethod
-    def resource_filename(cls, resource_name: str) -> str:
+    def resource_filename(self, resource_name: str) -> str:
         return pkg.resource_filename("tree_sitter_talon", resource_name)
 
     @property
-    @classmethod
-    def repository_path(cls) -> str:
-        return cls.resource_filename("data/tree-sitter-talon")
+    def repository_path(self) -> str:
+        return self.resource_filename("data/tree-sitter-talon")
 
     @property
-    @classmethod
-    def data_path(cls) -> str:
-        return cls.resource_filename("data")
+    def data_path(self) -> str:
+        return self.resource_filename("data")
 
     @property
-    @classmethod
-    def library_path(cls) -> str:
+    def library_path(self) -> str:
         return os.path.join(
-            cls.data_path,
+            self.data_path,
             {
                 "linux": "talon.so",
                 "darwin": "talon.dylib",
@@ -35,9 +31,8 @@ class TreeSitterTalon:
         )
 
     @property
-    @classmethod
-    def node_types_path(cls) -> str:
-        cls.resource_filename("data/tree-sitter-talon/src/node-types.json")
+    def node_types_path(self) -> str:
+        self.resource_filename("data/tree-sitter-talon/src/node-types.json")
 
     def __init__(self):
         # Build tree-sitter-talon
