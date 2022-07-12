@@ -43,4 +43,21 @@ setup(
         "tree_sitter_type_provider @ git+ssh://git@github.com/wenkokke/py-tree-sitter-type-provider.git#egg=tree_sitter_type_provider",
     ],
     cmdclass={"sdist": custom_sdist},
+    package_data={
+        'tree-sitter-talon': [
+            "data/tree-sitter-talon/Cargo.toml",
+            "data/tree-sitter-talon/binding.gyp",
+            "data/tree-sitter-talon/bindings/node/binding.cc",
+            "data/tree-sitter-talon/bindings/node/index.js",
+            "data/tree-sitter-talon/bindings/rust/build.rs",
+            "data/tree-sitter-talon/bindings/rust/lib.rs",
+            "data/tree-sitter-talon/grammar.js",
+            "data/tree-sitter-talon/package.json",
+            "data/tree-sitter-talon/src/grammar.json",
+            "data/tree-sitter-talon/src/node-types.json",
+            "data/tree-sitter-talon/src/parser.c",
+            "data/tree-sitter-talon/src/scanner.cc",
+            "data/tree-sitter-talon/src/tree_sitter/parser.h",
+        ]
+    },
 )
