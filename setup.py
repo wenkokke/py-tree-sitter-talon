@@ -10,17 +10,20 @@ from setuptools.command.sdist import sdist
 
 class custom_sdist(sdist):
     def run(self):
+
         # Get data/tree-sitter-talon
         if shutil.which("git") is not None:
             os.system("git submodule update --init")
         else:
             print("Building tree_sitter_talon requires git")
             exit(1)
+
         # Create mypy stubs
         if shutil.which("stubgen") is not None:
             os.system("stubgen -p tree_sitter_talon")
             shutil.move("out/tree_sitter_talon.pyi", "tree_sitter_talon/__init__.pyi")
             shutil.rmtree("out")
+
         # Run sdist
         sdist.run(self)
 
@@ -52,11 +55,11 @@ setup(
     project_urls={"Source": "https://github.com/wenkokke/py-tree-sitter-talon"},
     install_requires=[
         "tree_sitter",
-        "tree_sitter_type_provider @ git+ssh://git@github.com/wenkokke/py-tree-sitter-type-provider.git#egg=tree_sitter_type_provider",
+        "tree_sitter_type_provider @ git+ssh://git@github.com/wenkokke/py-tree-sitter-type-provider.git@v1.0.1#egg=tree_sitter_type_provider",
     ],
     cmdclass={"sdist": custom_sdist},
     package_data={
-        'tree_sitter_talon': [
+        "tree_sitter_talon": [
             "data/*",
             "data/tree-sitter-talon/binding.gyp",
             "data/tree-sitter-talon/bindings/node/binding.cc",

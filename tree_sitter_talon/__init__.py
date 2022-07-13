@@ -10,12 +10,19 @@ import os
 
 class TreeSitterTalon(ModuleType):
     def resource_filename(self, resource_name: str) -> str:
-        filename = pkg.resource_filename("tree_sitter_talon", resource_name)
+        dirname = os.path.dirname(__file__)
+        try:
+            filename = pkg.resource_filename("tree_sitter_talon", resource_name)
+            if os.path.exists(filename) and os.path.commonprefix([filename, dirname]) == dirname:
+                return filename
+        except (KeyError, ModuleNotFoundError):
+            pass
+
+        filename = os.path.join(dirname, resource_name)
         if os.path.exists(filename):
             return filename
-        filename = os.path.join(os.path.dirname(__file__), resource_name)
-        if os.path.exists(filename):
-            return filename
+
+        raise FileNotFoundError(resource_name)
 
 
     @property
