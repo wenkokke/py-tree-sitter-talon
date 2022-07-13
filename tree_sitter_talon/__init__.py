@@ -1,4 +1,5 @@
 from pathlib import Path
+from types import ModuleType
 from typing import Optional, Union
 import sys
 import tree_sitter_type_provider as tstp
@@ -7,9 +8,15 @@ import pkg_resources as pkg
 import os
 
 
-class TreeSitterTalon:
+class TreeSitterTalon(ModuleType):
     def resource_filename(self, resource_name: str) -> str:
-        return pkg.resource_filename("tree_sitter_talon", resource_name)
+        filename = pkg.resource_filename("tree_sitter_talon", resource_name)
+        if os.path.exists(filename):
+            return filename
+        filename = os.path.join(os.path.dirname(__file__), resource_name)
+        if os.path.exists(filename):
+            return filename
+
 
     @property
     def repository_path(self) -> str:
@@ -35,6 +42,9 @@ class TreeSitterTalon:
         return self.resource_filename("data/tree-sitter-talon/src/node-types.json")
 
     def __init__(self):
+        # Initialize module
+        super().__init__("tree_sitter_talon")
+
         # Build tree-sitter-talon
         ts.Language.build_library(self.library_path, [self.repository_path])
         self.language = ts.Language(self.library_path, "talon")

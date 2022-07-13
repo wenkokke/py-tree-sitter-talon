@@ -2,18 +2,30 @@
 Py-Tree-Sitter-Talon
 """
 
-from os import path, system
+import os
+import shutil
 from setuptools import setup
 from setuptools.command.sdist import sdist
 
 
 class custom_sdist(sdist):
     def run(self):
-        system("git submodule update --init")
+        # Get data/tree-sitter-talon
+        if shutil.which("git") is not None:
+            os.system("git submodule update --init")
+        else:
+            print("Building tree_sitter_talon requires git")
+            exit(1)
+        # Create mypy stubs
+        if shutil.which("stubgen") is not None:
+            os.system("stubgen -p tree_sitter_talon")
+            shutil.move("out/tree_sitter_talon.pyi", "tree_sitter_talon/__init__.pyi")
+            shutil.rmtree("out")
+        # Run sdist
         sdist.run(self)
 
 
-with open(path.join(path.dirname(__file__), "README.md")) as f:
+with open(os.path.join(os.path.dirname(__file__), "README.md")) as f:
     LONG_DESCRIPTION = f.read()
 
 
