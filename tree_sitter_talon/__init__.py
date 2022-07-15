@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Optional, Union
 from tree_sitter_type_provider import TreeSitterTypeProvider
-from tree_sitter_type_provider.node_types import NodeType, Node
+from tree_sitter_type_provider.node_types import NodeType, Node, Point
 
 
 import sys
@@ -61,6 +61,7 @@ class TreeSitterTalon(TreeSitterTypeProvider):
         self.language = ts.Language(self.library_path, "talon")
         self.parser = ts.Parser()
         self.parser.set_language(self.language)
+        self.Point = Point
         self.Node = Node
 
     def parse(self, contents: bytes, has_header: Optional[bool] = None) -> ts.Tree:

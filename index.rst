@@ -1,35 +1,44 @@
-tree_sitter_talon
-=================
+-------------------------------------
+Python bindings for Tree-Sitter Talon
+-------------------------------------
+
+.. module:: tree_sitter_talon
 
 =====================
 Tree-Sitter Instances
 =====================
 
-.. autodata:: tree_sitter_talon::language
+.. autodata:: language
 
-.. autodata:: tree_sitter_talon::parser
+.. autodata:: parser
 
 =============================
 Parsing and Converting to AST
 =============================
 
-.. autofunction:: tree_sitter_talon::parse
+.. autofunction:: parse
 
-.. autofunction:: tree_sitter_talon::parse_file
+.. autofunction:: parse_file
 
-.. autofunction:: tree_sitter_talon::from_tree_sitter
+.. autofunction:: from_tree_sitter
 
 ================================
 Talon Abstract Syntax Tree Nodes
 ================================
 
-Abstract type for all AST nodes.
+All AST nodes inherit from the Node class.
 
-.. autoclass:: tree_sitter_talon::Node
+.. autoclass:: Node
 
-   Each node stores the text it corresponds to, as well as its node type.
+   .. _Node:
+
+   Nodes store the following information the text and the start and end
+   positions corresponding to this node in the source file, as well as the
+   tree-sitter name for the node type:
 
    .. autoattribute:: text
+   .. autoattribute:: start_position
+   .. autoattribute:: end_position
    .. autoattribute:: type
 
    Nodes can be converted to and from JSON.
@@ -53,198 +62,165 @@ Abstract type for all AST nodes.
 
    .. automethod:: schema
 
+Each explicit node in the tree-sitter grammar corresponds to a dataclass.
 
-
-Concrete types for AST nodes.
-
-.. autoclass:: tree_sitter_talon::ERROR
+.. autoclass:: Action
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::Action
+.. autoclass:: And
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::And
+.. autoclass:: ArgumentList
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::ArgumentList
+.. autoclass:: Assignment
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::Assignment
+.. autoclass:: BinaryOperator
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::BinaryOperator
+.. autoclass:: Block
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::Block
+.. autoclass:: Capture
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::Capture
+.. autoclass:: Choice
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::Choice
+.. autoclass:: Command
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::Command
+.. autoclass:: Comment
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::Comment
+.. autoclass:: Context
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::Context
+.. autoclass:: Docstring
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::Docstring
+.. autoclass:: EndAnchor
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::EndAnchor
+.. autoclass:: Expression
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::Expression
+.. autoclass:: Float
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::Float
+.. autoclass:: Identifier
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::Identifier
+.. autoclass:: ImplicitString
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::ImplicitString
+.. autoclass:: IncludeTag
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::IncludeTag
+.. autoclass:: Integer
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::Integer
+.. autoclass:: Interpolation
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::Interpolation
+.. autoclass:: KeyAction
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::KeyAction
+.. autoclass:: List
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::List
+.. autoclass:: Match
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::Match
+.. autoclass:: Not
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::Not
+.. autoclass:: Number
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::Number
+.. autoclass:: Operator
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::Operator
+.. autoclass:: Optional
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::Optional
+.. autoclass:: Or
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::Or
+.. autoclass:: ParenthesizedExpression
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::ParenthesizedExpression
+.. autoclass:: ParenthesizedRule
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::ParenthesizedRule
+.. autoclass:: RegexEscapeSequence
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::RegexEscapeSequence
+.. autoclass:: Repeat
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::Repeat
+.. autoclass:: Repeat1
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::Repeat1
+.. autoclass:: Rule
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::Rule
+.. autoclass:: Seq
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::Seq
+.. autoclass:: Settings
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::Settings
+.. autoclass:: SleepAction
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::SleepAction
+.. autoclass:: SourceFile
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::SourceFile
+.. autoclass:: StartAnchor
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::StartAnchor
+.. autoclass:: String
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::String
+.. autoclass:: StringContent
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::StringContent
+.. autoclass:: StringEscapeSequence
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::StringEscapeSequence
+.. autoclass:: Variable
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::Variable
+.. autoclass:: Word
    :members:
-   :undoc-members:
 
-.. autoclass:: tree_sitter_talon::Word
+Finally, there is one additional dataclass for ERROR nodes.
+
+.. autoclass:: ERROR
    :members:
-   :undoc-members:
+
+=====================
+Abstract Node Visitor
+=====================
+
+.. autoclass:: NodeVisitor
+   :members:
+
+=========================
+Abstract Node Transformer
+=========================
+
+.. autotypevar:: Result
+   :no-value:
+   :no-type:
+
+.. autoclass:: NodeTransformer
+   :members:
 
 ========================================
-Abstract Visitor and Transformer Classes
+Helper Classes
 ========================================
 
-.. autoclass:: tree_sitter_talon::NodeVisitor
-   :members:
-   :undoc-members:
-
-.. autoclass:: tree_sitter_talon::NodeTransformer
-   :members:
-   :undoc-members:
+.. autoclass:: Point
