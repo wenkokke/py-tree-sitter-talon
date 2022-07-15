@@ -66,9 +66,3 @@ html_theme = "alabaster"
 html_static_path = ["_static"]
 
 
-def setup(app):
-    import inspect
-    import tree_sitter_talon
-
-    for name, cls in inspect.getmembers(tree_sitter_talon.types, inspect.isclass):
-        print(name, cls)
