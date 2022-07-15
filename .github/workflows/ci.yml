@@ -6,8 +6,21 @@ on:
       - dev
 
 jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: 'true'
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.10.4"
+      - run: pip install .
+      - run: pytest
+
   sphinx-doc:
-    name: Sphinx
+    name: Sphinx Doc
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

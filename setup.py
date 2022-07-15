@@ -59,6 +59,8 @@ setup(
         "sphinx",
         "sphinx-toolbox >=3.1.2",
         "sphinx_bootstrap_theme",
+        "pytest",
+        "pytest-golden",
     ],
     cmdclass={"sdist": custom_sdist},
     package_data={
