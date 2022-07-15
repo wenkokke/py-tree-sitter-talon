@@ -2,56 +2,56 @@ from pathlib import Path
 from typing import Optional, Union
 from tree_sitter_type_provider import TreeSitterTypeProvider
 from tree_sitter_type_provider.node_types import NodeType, Node, Point
-
+from pkg_resources import resource_filename  # type: ignore
 
 import sys
 import tree_sitter as ts
-import pkg_resources  # type: ignore
 import os
 
 
 class TreeSitterTalon(TreeSitterTypeProvider):
-    def resource_filename(self, resource_name: str) -> Path:
+    def resource_path(self, resource_name: str) -> Path:
         dirname = os.path.dirname(__file__)
         try:
-            filename = Path(
-                pkg_resources.resource_filename("tree_sitter_talon", resource_name)
-            )
+            filename = Path(resource_filename("tree_sitter_talon", resource_name))
             if filename.exists() and filename.match(f"dirname/**"):
                 return filename
         except (KeyError, ModuleNotFoundError):
             pass
 
         filename = Path(dirname) / resource_name
+        print(filename)
         if filename.exists():
             return filename
 
         raise FileNotFoundError(resource_name)
 
     @property
-    def repository_path(self) -> Path:
-        return self.resource_filename("data/tree-sitter-talon")
+    def repository_path(self) -> str:
+        return str(self.resource_path("data/tree-sitter-talon"))
 
     @property
     def data_path(self) -> Path:
-        return self.resource_filename("data")
+        return self.resource_path("data")
 
     @property
-    def library_path(self) -> Path:
+    def library_path(self) -> str:
         library_name = {
             "linux": "talon.so",
             "darwin": "talon.dylib",
             "win32": "talon.dll",
         }[sys.platform]
-        return self.data_path / library_name
+        return str(self.data_path / library_name)
 
     @property
     def node_types_path(self) -> Path:
-        return self.resource_filename("data/tree-sitter-talon/src/node-types.json")
+        return self.resource_path("data/tree-sitter-talon/src/node-types.json")
 
     def __init__(self):
         # Read node-types.json
-        node_types = NodeType.schema().loads(self.node_types_path.read_text(), many=True)
+        node_types = NodeType.schema().loads(
+            self.node_types_path.read_text(), many=True
+        )
 
         # Initialize module
         super().__init__("tree_sitter_talon", node_types)
