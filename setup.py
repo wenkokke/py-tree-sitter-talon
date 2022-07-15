@@ -55,7 +55,7 @@ setup(
     project_urls={"Source": "https://github.com/wenkokke/py-tree-sitter-talon"},
     install_requires=[
         "tree_sitter",
-        "tree_sitter_type_provider @ git+ssh://git@github.com/wenkokke/py-tree-sitter-type-provider.git@v2.1.1#egg=tree_sitter_type_provider",
+        "tree_sitter_type_provider @ git+ssh://git@github.com/wenkokke/py-tree-sitter-type-provider.git@v2.1.2#egg=tree_sitter_type_provider",
         "sphinx",
         "sphinx-toolbox >=3.1.2",
         "sphinx_bootstrap_theme",
