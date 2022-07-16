@@ -18,12 +18,6 @@ class custom_sdist(sdist):
             print("Building tree_sitter_talon requires git")
             exit(1)
 
-        # Create mypy stubs
-        if shutil.which("stubgen") is not None:
-            os.system("stubgen -p tree_sitter_talon")
-            shutil.move("out/tree_sitter_talon.pyi", "tree_sitter_talon/__init__.pyi")
-            shutil.rmtree("out")
-
         # Run sdist
         sdist.run(self)
 
