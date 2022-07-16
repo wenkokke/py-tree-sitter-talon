@@ -64,7 +64,25 @@ class TreeSitterTalon(TreeSitterTypeProvider):
         self.Point = Point
         self.Node = Node
 
+<<<<<<< HEAD
     def parse(self, contents: bytes, has_header: Optional[bool] = None) -> ts.Tree:
+=======
+    def parse(
+        self, contents: Union[str, bytes], has_header: Optional[bool] = None
+    ) -> Node:
+        return self.from_tree_sitter(self.parse_as_tree(contents, has_header).root_node)
+
+    def parse_file(
+        self, path: Union[str, Path], has_header: Optional[bool] = None
+    ) -> Node:
+        return self.from_tree_sitter(self.parse_file_as_tree(path, has_header).root_node)
+
+    def parse_as_tree(
+        self, contents: Union[str, bytes], has_header: Optional[bool] = None
+    ) -> ts.Tree:
+        if isinstance(contents, str):
+            contents = bytes(contents, "utf-8")
+>>>>>>> 35c009c (Fix bug)
         if has_header is None:
             has_header = contents.startswith(b"-\n") or (b"\n-\n" in contents)
         if not has_header:
