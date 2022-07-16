@@ -34,7 +34,7 @@ with open(os.path.join(os.path.dirname(__file__), "README.md")) as f:
 
 setup(
     name="tree_sitter_talon",
-    version="1.0.2",
+    version="1.0.3",
     maintainer="Wen Kokke",
     maintainer_email="me@wen.works",
     author="Wen Kokke",
@@ -55,7 +55,7 @@ setup(
     project_urls={"Source": "https://github.com/wenkokke/py-tree-sitter-talon"},
     install_requires=[
         "tree_sitter",
-        "tree_sitter_type_provider @ git+https://github.com/wenkokke/py-tree-sitter-type-provider.git@v2.1.2#egg=tree_sitter_type_provider",
+        "tree_sitter_type_provider @ git+https://github.com/wenkokke/py-tree-sitter-type-provider.git@v2.1.3#egg=tree_sitter_type_provider",
         "sphinx",
         "sphinx-toolbox >=3.1.2",
         "sphinx_bootstrap_theme",
