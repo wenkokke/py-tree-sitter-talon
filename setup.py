@@ -34,7 +34,7 @@ with open(os.path.join(os.path.dirname(__file__), "README.md")) as f:
 
 setup(
     name="tree_sitter_talon",
-    version="1.0.1",
+    version="1.0.0",
     maintainer="Wen Kokke",
     maintainer_email="me@wen.works",
     author="Wen Kokke",
@@ -65,6 +65,8 @@ setup(
     cmdclass={"sdist": custom_sdist},
     package_data={
         "tree_sitter_talon": [
+            "py.typed"
+            "__init__.pyi",
             "data/*",
             "data/tree-sitter-talon/binding.gyp",
             "data/tree-sitter-talon/bindings/node/binding.cc",

@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Optional, Union
+from typing import Optional, Sequence, Union
 from tree_sitter_type_provider import TreeSitterTypeProvider
 from tree_sitter_type_provider.node_types import NodeType, Node, Point
 from pkg_resources import resource_filename  # type: ignore
@@ -64,15 +64,12 @@ class TreeSitterTalon(TreeSitterTypeProvider):
         self.Point = Point
         self.Node = Node
 
-<<<<<<< HEAD
-    def parse(self, contents: bytes, has_header: Optional[bool] = None) -> ts.Tree:
-=======
     def parse(
         self,
         contents: Union[str, bytes],
         has_header: Optional[bool] = None,
         encoding: str = "utf-8",
-    ) -> Node:
+    ) -> Union[Sequence[Node], Node, None]:
         tree = self.parse_as_tree_sitter(contents, has_header, encoding)
         return self.from_tree_sitter(tree.root_node)
 
@@ -81,7 +78,7 @@ class TreeSitterTalon(TreeSitterTypeProvider):
         path: Union[str, Path],
         has_header: Optional[bool] = None,
         encoding: str = "utf-8",
-    ) -> Node:
+    ) -> Union[Sequence[Node], Node, None]:
         tree = self.parse_file_as_tree_sitter(path, has_header, encoding)
         return self.from_tree_sitter(tree.root_node)
 
@@ -92,28 +89,18 @@ class TreeSitterTalon(TreeSitterTypeProvider):
         encoding: str = "utf-8",
     ) -> ts.Tree:
         if isinstance(contents, str):
-<<<<<<< HEAD
-            contents = bytes(contents, "utf-8")
->>>>>>> 35c009c (Fix bug)
-=======
             contents = bytes(contents, encoding)
->>>>>>> ebd0a49 (Added stubs, fixed small bugs.)
         if has_header is None:
             has_header = contents.startswith(b"-\n") or (b"\n-\n" in contents)
         if not has_header:
             contents = b"-\n" + contents
         return self.parser.parse(contents)
 
-<<<<<<< HEAD
-    def parse_file(
-        self, path: Union[str, Path], has_header: Optional[bool] = None
-=======
     def parse_file_as_tree_sitter(
         self,
         path: Union[str, Path],
         has_header: Optional[bool] = None,
         encoding: str = "utf-8",
->>>>>>> ebd0a49 (Added stubs, fixed small bugs.)
     ) -> ts.Tree:
         if not isinstance(path, Path):
             path = Path(path)
