@@ -14,34 +14,24 @@ def parse(
     has_header: bool | None = None,
     encoding: str = "utf-8",
 ) -> Node: ...
-
 def parse_file(
     path: str | Path,
     has_header: bool | None = None,
     encoding: str = "utf-8",
 ) -> Node: ...
-
 def parse_as_tree_sitter(
     contents: str | bytes,
     has_header: bool | None = None,
     encoding: str = "utf-8",
 ) -> ts.Tree: ...
-
 def parse_file_as_tree_sitter(
     path: str | Path,
     has_header: bool | None = None,
     encoding: str = "utf-8",
 ) -> ts.Tree: ...
-
 def from_tree_sitter(
     tsnode: ts.Node, encoding: str = "utf-8"
 ) -> Sequence[Node] | Node | None: ...
-
-@dataclass
-class ERROR(Node):
-
-    children: Sequence[Sequence[Node] | Node | None] = ...
-
 @dataclass
 class Action(Node):
 
@@ -125,6 +115,11 @@ class Context(Node):
 @dataclass
 class Docstring(Node):
     pass
+
+@dataclass
+class ERROR(Node):
+
+    children: Sequence[Sequence[Node] | Node | None] = ...
 
 @dataclass
 class EndAnchor(Node):
@@ -371,372 +366,568 @@ class NodeVisitor(object):
 Result = TypeVar("Result")
 
 class NodeTransformer(Generic[Result]):
-    def generic_transform(
-        self,
-        *,
-        text: str,
-        type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
-    ) -> Result: ...
     def transform(self, node: Node) -> Result: ...
     def transform_Action(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        action_name: Result,
+        arguments: Result,
+        action_name_hist: "Identifier",
+        arguments_hist: "ArgumentList",
     ) -> Result: ...
     def transform_And(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        children: Sequence[Result],
+        children_hist: Sequence["And" | "Match" | "Not"],
     ) -> Result: ...
     def transform_ArgumentList(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        children: Sequence[Result],
+        children_hist: Sequence[
+            "Action"
+            | "BinaryOperator"
+            | "Float"
+            | "Integer"
+            | "KeyAction"
+            | "ParenthesizedExpression"
+            | "SleepAction"
+            | "String"
+            | "Variable"
+        ],
     ) -> Result: ...
     def transform_Assignment(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        left: Result,
+        right: Result,
+        left_hist: "Identifier",
+        right_hist: "Action"
+        | "BinaryOperator"
+        | "Float"
+        | "Integer"
+        | "KeyAction"
+        | "ParenthesizedExpression"
+        | "SleepAction"
+        | "String"
+        | "Variable",
     ) -> Result: ...
     def transform_BinaryOperator(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        left: Result,
+        operator: Result,
+        right: Result,
+        left_hist: "Action"
+        | "BinaryOperator"
+        | "Float"
+        | "Integer"
+        | "KeyAction"
+        | "ParenthesizedExpression"
+        | "SleepAction"
+        | "String"
+        | "Variable",
+        operator_hist: "Operator",
+        right_hist: "Action"
+        | "BinaryOperator"
+        | "Float"
+        | "Integer"
+        | "KeyAction"
+        | "ParenthesizedExpression"
+        | "SleepAction"
+        | "String"
+        | "Variable",
     ) -> Result: ...
     def transform_Block(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        children: Sequence[Result],
+        children_hist: Sequence["Assignment" | "Docstring" | "Expression"],
     ) -> Result: ...
     def transform_Capture(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        capture_name: Result,
+        capture_name_hist: "Identifier",
     ) -> Result: ...
     def transform_Choice(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        children: Sequence[Result],
+        children_hist: Sequence[
+            "Capture"
+            | "EndAnchor"
+            | "List"
+            | "Optional"
+            | "ParenthesizedRule"
+            | "Repeat"
+            | "Repeat1"
+            | "Seq"
+            | "StartAnchor"
+            | "Word"
+        ],
     ) -> Result: ...
     def transform_Command(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        rule: Result,
+        script: Result,
+        rule_hist: "Rule",
+        script_hist: "Block",
     ) -> Result: ...
     def transform_Comment(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
     ) -> Result: ...
     def transform_Context(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        children: Sequence[Result],
+        children_hist: Sequence["And" | "Docstring" | "Match" | "Not" | "Or"],
     ) -> Result: ...
     def transform_Docstring(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
     ) -> Result: ...
     def transform_ERROR(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        children: Sequence[Result],
+        children_hist: Sequence[Sequence[Node] | Node | None],
     ) -> Result: ...
     def transform_EndAnchor(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
     ) -> Result: ...
     def transform_Expression(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        expression: Result,
+        expression_hist: "Action"
+        | "BinaryOperator"
+        | "Float"
+        | "Integer"
+        | "KeyAction"
+        | "ParenthesizedExpression"
+        | "SleepAction"
+        | "String"
+        | "Variable",
     ) -> Result: ...
     def transform_Float(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
     ) -> Result: ...
     def transform_Identifier(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
     ) -> Result: ...
     def transform_ImplicitString(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
     ) -> Result: ...
     def transform_IncludeTag(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        tag: Result,
+        tag_hist: "Identifier",
     ) -> Result: ...
     def transform_Integer(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
     ) -> Result: ...
     def transform_Interpolation(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        children: Result,
+        children_hist: "Action"
+        | "BinaryOperator"
+        | "Float"
+        | "Integer"
+        | "KeyAction"
+        | "ParenthesizedExpression"
+        | "SleepAction"
+        | "String"
+        | "Variable",
     ) -> Result: ...
     def transform_KeyAction(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        arguments: Result,
+        arguments_hist: "ImplicitString",
     ) -> Result: ...
     def transform_List(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        list_name: Result,
+        list_name_hist: "Identifier",
     ) -> Result: ...
     def transform_Match(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        key: Result,
+        pattern: Result,
+        key_hist: "Identifier",
+        pattern_hist: "ImplicitString",
     ) -> Result: ...
     def transform_Not(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        children: Result,
+        children_hist: "Match",
     ) -> Result: ...
     def transform_Number(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        children: Result,
+        children_hist: "Float" | "Integer",
     ) -> Result: ...
     def transform_Operator(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
     ) -> Result: ...
     def transform_Optional(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        children: Sequence[Result],
+        children_hist: Sequence[
+            "Capture"
+            | "Choice"
+            | "EndAnchor"
+            | "List"
+            | "Optional"
+            | "ParenthesizedRule"
+            | "Repeat"
+            | "Repeat1"
+            | "Seq"
+            | "StartAnchor"
+            | "Word"
+        ],
     ) -> Result: ...
     def transform_Or(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        children: Sequence[Result],
+        children_hist: Sequence["And" | "Match" | "Not"],
     ) -> Result: ...
     def transform_ParenthesizedExpression(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        children: Result,
+        children_hist: "Action"
+        | "BinaryOperator"
+        | "Float"
+        | "Integer"
+        | "KeyAction"
+        | "ParenthesizedExpression"
+        | "SleepAction"
+        | "String"
+        | "Variable",
     ) -> Result: ...
     def transform_ParenthesizedRule(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        children: Sequence[Result],
+        children_hist: Sequence[
+            "Choice"
+            | "EndAnchor"
+            | "List"
+            | "Optional"
+            | "ParenthesizedRule"
+            | "Repeat"
+            | "Repeat1"
+            | "Seq"
+            | "StartAnchor"
+            | "Word"
+        ],
     ) -> Result: ...
     def transform_RegexEscapeSequence(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        children: Result,
+        children_hist: "RegexEscapeSequence" | None,
     ) -> Result: ...
     def transform_Repeat(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        children: Result,
+        children_hist: "Capture"
+        | "List"
+        | "Optional"
+        | "ParenthesizedRule"
+        | "Repeat"
+        | "Repeat1"
+        | "Word",
     ) -> Result: ...
     def transform_Repeat1(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        children: Result,
+        children_hist: "Capture"
+        | "List"
+        | "Optional"
+        | "ParenthesizedRule"
+        | "Repeat"
+        | "Repeat1"
+        | "Word",
     ) -> Result: ...
     def transform_Rule(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        children: Sequence[Result],
+        children_hist: Sequence[
+            "Capture"
+            | "Choice"
+            | "EndAnchor"
+            | "List"
+            | "Optional"
+            | "ParenthesizedRule"
+            | "Repeat"
+            | "Repeat1"
+            | "Seq"
+            | "StartAnchor"
+            | "Word"
+        ],
     ) -> Result: ...
     def transform_Seq(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        children: Sequence[Result],
+        children_hist: Sequence[
+            "Capture"
+            | "List"
+            | "Optional"
+            | "ParenthesizedRule"
+            | "Repeat"
+            | "Repeat1"
+            | "Word"
+        ],
     ) -> Result: ...
     def transform_Settings(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        children: Result,
+        children_hist: "Block",
     ) -> Result: ...
     def transform_SleepAction(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        arguments: Result,
+        arguments_hist: "ImplicitString",
     ) -> Result: ...
     def transform_SourceFile(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        children: Sequence[Result],
+        children_hist: Sequence["Command" | "Context" | "IncludeTag" | "Settings"],
     ) -> Result: ...
     def transform_StartAnchor(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
     ) -> Result: ...
     def transform_String(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        children: Sequence[Result],
+        children_hist: Sequence[
+            "Interpolation" | "StringContent" | "StringEscapeSequence"
+        ],
     ) -> Result: ...
     def transform_StringContent(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
     ) -> Result: ...
     def transform_StringEscapeSequence(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
     ) -> Result: ...
     def transform_Variable(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
+        variable_name: Result,
+        variable_name_hist: "Identifier",
     ) -> Result: ...
     def transform_Word(
         self,
         *,
         text: str,
         type: str,
-        children: Sequence[Result] = [],
-        **kwargs: Dict[str, Result | Sequence[Node] | Node | None]
+        start_position: Point,
+        end_position: Point,
     ) -> Result: ...
