@@ -23,8 +23,6 @@ def node_dict_simplify(node_dict: Dict[str, Any]) -> None:
 
 @pytest.mark.golden_test("golden/*.yml")
 def test_golden(golden):
-    tree = talon.parse(bytes(golden["input"], "utf-8"))
-    node = talon.from_tree_sitter(tree.root_node)
-    node_dict = node.to_dict()
+    node_dict = talon.parse(golden["input"]).to_dict()
     node_dict_simplify(node_dict)
     assert node_dict == golden.out["output"]

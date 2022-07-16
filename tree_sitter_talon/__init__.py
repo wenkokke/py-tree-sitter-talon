@@ -68,33 +68,57 @@ class TreeSitterTalon(TreeSitterTypeProvider):
     def parse(self, contents: bytes, has_header: Optional[bool] = None) -> ts.Tree:
 =======
     def parse(
-        self, contents: Union[str, bytes], has_header: Optional[bool] = None
+        self,
+        contents: Union[str, bytes],
+        has_header: Optional[bool] = None,
+        encoding: str = "utf-8",
     ) -> Node:
-        return self.from_tree_sitter(self.parse_as_tree(contents, has_header).root_node)
+        tree = self.parse_as_tree_sitter(contents, has_header, encoding)
+        return self.from_tree_sitter(tree.root_node)
 
     def parse_file(
-        self, path: Union[str, Path], has_header: Optional[bool] = None
+        self,
+        path: Union[str, Path],
+        has_header: Optional[bool] = None,
+        encoding: str = "utf-8",
     ) -> Node:
-        return self.from_tree_sitter(self.parse_file_as_tree(path, has_header).root_node)
+        tree = self.parse_file_as_tree_sitter(path, has_header, encoding)
+        return self.from_tree_sitter(tree.root_node)
 
-    def parse_as_tree(
-        self, contents: Union[str, bytes], has_header: Optional[bool] = None
+    def parse_as_tree_sitter(
+        self,
+        contents: Union[str, bytes],
+        has_header: Optional[bool] = None,
+        encoding: str = "utf-8",
     ) -> ts.Tree:
         if isinstance(contents, str):
+<<<<<<< HEAD
             contents = bytes(contents, "utf-8")
 >>>>>>> 35c009c (Fix bug)
+=======
+            contents = bytes(contents, encoding)
+>>>>>>> ebd0a49 (Added stubs, fixed small bugs.)
         if has_header is None:
             has_header = contents.startswith(b"-\n") or (b"\n-\n" in contents)
         if not has_header:
             contents = b"-\n" + contents
         return self.parser.parse(contents)
 
+<<<<<<< HEAD
     def parse_file(
         self, path: Union[str, Path], has_header: Optional[bool] = None
+=======
+    def parse_file_as_tree_sitter(
+        self,
+        path: Union[str, Path],
+        has_header: Optional[bool] = None,
+        encoding: str = "utf-8",
+>>>>>>> ebd0a49 (Added stubs, fixed small bugs.)
     ) -> ts.Tree:
         if not isinstance(path, Path):
             path = Path(path)
-        return self.parse(path.read_bytes(), has_header=has_header)
+        contents = path.read_bytes()
+        return self.parse_as_tree_sitter(contents, has_header, encoding)
 
 
 sys.modules[__name__] = TreeSitterTalon()
