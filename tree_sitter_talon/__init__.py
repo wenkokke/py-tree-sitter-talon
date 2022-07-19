@@ -2,7 +2,7 @@ from io import StringIO
 from pathlib import Path
 from typing import Sequence
 from tree_sitter_type_provider import TreeSitterTypeProvider
-from tree_sitter_type_provider.node_types import NodeType, Node, Point
+from tree_sitter_type_provider.node_types import NodeType, Node, Point, ERROR
 from pkg_resources import resource_filename  # type: ignore
 
 import sys
@@ -71,6 +71,7 @@ class TreeSitterTalon(TreeSitterTypeProvider):
         self.parser.set_language(self.language)
         self.Point = Point
         self.Node = Node
+        self.ERROR = ERROR
 
     def parse(
         self,
