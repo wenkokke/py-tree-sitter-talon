@@ -1,3 +1,4 @@
+from io import StringIO
 from pathlib import Path
 from typing import Sequence
 from tree_sitter_type_provider import TreeSitterTypeProvider
@@ -53,8 +54,15 @@ class TreeSitterTalon(TreeSitterTypeProvider):
             self.node_types_path.read_text(), many=True
         )
 
+        # Conversion from tree-sitter names to Python names
+        def as_class_name(node_type_name: str) -> str:
+            buffer = ["Talon"]
+            for part in node_type_name.split("_"):
+                buffer.append(part.capitalize())
+            return "".join(buffer)
+
         # Initialize module
-        super().__init__("tree_sitter_talon", node_types)
+        super().__init__("tree_sitter_talon", node_types, as_class_name=as_class_name)
 
         # Build tree-sitter-talon
         ts.Language.build_library(self.library_path, [self.repository_path])

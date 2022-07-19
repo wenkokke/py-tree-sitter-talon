@@ -1,11 +1,10 @@
-from pathlib import Path
-from typing import Any, Dict
+from typing import Any
 
 import pytest
 import tree_sitter_talon as talon
 
 
-def node_dict_simplify(node_dict: Dict[str, Any]) -> None:
+def node_dict_simplify(node_dict: dict[str, Any]) -> None:
     if len(node_dict) > 4:
         del node_dict["text"]
 
