@@ -21,7 +21,6 @@ class TreeSitterTalon(TreeSitterTypeProvider):
             pass
 
         filename = Path(dirname) / resource_name
-        print(filename)
         if filename.exists():
             return filename
 
