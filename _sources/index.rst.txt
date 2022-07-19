@@ -39,7 +39,7 @@ All AST nodes inherit from the Node class.
    .. autoattribute:: text
    .. autoattribute:: start_position
    .. autoattribute:: end_position
-   .. autoattribute:: type
+   .. autoattribute:: type_name
 
    Nodes can be converted to and from JSON.
 
@@ -64,136 +64,136 @@ All AST nodes inherit from the Node class.
 
 Each explicit node in the tree-sitter grammar corresponds to a dataclass.
 
-.. autoclass:: Action
+.. autoclass:: TalonAction
    :members:
 
-.. autoclass:: And
+.. autoclass:: TalonAnd
    :members:
 
-.. autoclass:: ArgumentList
+.. autoclass:: TalonArgumentList
    :members:
 
-.. autoclass:: Assignment
+.. autoclass:: TalonAssignment
    :members:
 
-.. autoclass:: BinaryOperator
+.. autoclass:: TalonBinaryOperator
    :members:
 
-.. autoclass:: Block
+.. autoclass:: TalonBlock
    :members:
 
-.. autoclass:: Capture
+.. autoclass:: TalonCapture
    :members:
 
-.. autoclass:: Choice
+.. autoclass:: TalonChoice
    :members:
 
-.. autoclass:: Command
+.. autoclass:: TalonCommand
    :members:
 
-.. autoclass:: Comment
+.. autoclass:: TalonComment
    :members:
 
-.. autoclass:: Context
+.. autoclass:: TalonContext
    :members:
 
-.. autoclass:: Docstring
+.. autoclass:: TalonDocstring
    :members:
 
-.. autoclass:: EndAnchor
+.. autoclass:: TalonEndAnchor
    :members:
 
-.. autoclass:: Expression
+.. autoclass:: TalonExpression
    :members:
 
-.. autoclass:: Float
+.. autoclass:: TalonFloat
    :members:
 
-.. autoclass:: Identifier
+.. autoclass:: TalonIdentifier
    :members:
 
-.. autoclass:: ImplicitString
+.. autoclass:: TalonImplicitString
    :members:
 
-.. autoclass:: IncludeTag
+.. autoclass:: TalonIncludeTag
    :members:
 
-.. autoclass:: Integer
+.. autoclass:: TalonInteger
    :members:
 
-.. autoclass:: Interpolation
+.. autoclass:: TalonInterpolation
    :members:
 
-.. autoclass:: KeyAction
+.. autoclass:: TalonKeyAction
    :members:
 
-.. autoclass:: List
+.. autoclass:: TalonList
    :members:
 
-.. autoclass:: Match
+.. autoclass:: TalonMatch
    :members:
 
-.. autoclass:: Not
+.. autoclass:: TalonNot
    :members:
 
-.. autoclass:: Number
+.. autoclass:: TalonNumber
    :members:
 
-.. autoclass:: Operator
+.. autoclass:: TalonOperator
    :members:
 
-.. autoclass:: Optional
+.. autoclass:: TalonOptional
    :members:
 
-.. autoclass:: Or
+.. autoclass:: TalonOr
    :members:
 
-.. autoclass:: ParenthesizedExpression
+.. autoclass:: TalonParenthesizedExpression
    :members:
 
-.. autoclass:: ParenthesizedRule
+.. autoclass:: TalonParenthesizedRule
    :members:
 
-.. autoclass:: RegexEscapeSequence
+.. autoclass:: TalonRegexEscapeSequence
    :members:
 
-.. autoclass:: Repeat
+.. autoclass:: TalonRepeat
    :members:
 
-.. autoclass:: Repeat1
+.. autoclass:: TalonRepeat1
    :members:
 
-.. autoclass:: Rule
+.. autoclass:: TalonRule
    :members:
 
-.. autoclass:: Seq
+.. autoclass:: TalonSeq
    :members:
 
-.. autoclass:: Settings
+.. autoclass:: TalonSettings
    :members:
 
-.. autoclass:: SleepAction
+.. autoclass:: TalonSleepAction
    :members:
 
-.. autoclass:: SourceFile
+.. autoclass:: TalonSourceFile
    :members:
 
-.. autoclass:: StartAnchor
+.. autoclass:: TalonStartAnchor
    :members:
 
-.. autoclass:: String
+.. autoclass:: TalonString
    :members:
 
-.. autoclass:: StringContent
+.. autoclass:: TalonStringContent
    :members:
 
-.. autoclass:: StringEscapeSequence
+.. autoclass:: TalonStringEscapeSequence
    :members:
 
-.. autoclass:: Variable
+.. autoclass:: TalonVariable
    :members:
 
-.. autoclass:: Word
+.. autoclass:: TalonWord
    :members:
 
 Finally, there is one additional dataclass for ERROR nodes.
