@@ -232,9 +232,9 @@ class TalonParenthesizedRule(Node):
     ]
 
 @dataclass
-class TalonRegexEscapelist(Node):
+class TalonRegexEscapeSequence(Node):
 
-    children: "TalonRegexEscapelist" | None
+    children: "TalonRegexEscapeSequence" | None
 
 @dataclass
 class TalonRepeat(Node):
@@ -301,7 +301,7 @@ class TalonStartAnchor(Node):
 class TalonString(Node):
 
     children: list[
-        "TalonInterpolation" | "TalonStringContent" | "TalonStringEscapelist"
+        "TalonInterpolation" | "TalonStringContent" | "TalonStringEscapeSequence"
     ]
 
 @dataclass
@@ -309,7 +309,7 @@ class TalonStringContent(Node):
     pass
 
 @dataclass
-class TalonStringEscapelist(Node):
+class TalonStringEscapeSequence(Node):
     pass
 
 @dataclass
@@ -354,7 +354,7 @@ class NodeVisitor(object):
     def visit_Or(self, node: Node) -> None: ...
     def visit_ParenthesizedExpression(self, node: Node) -> None: ...
     def visit_ParenthesizedRule(self, node: Node) -> None: ...
-    def visit_RegexEscapelist(self, node: Node) -> None: ...
+    def visit_RegexEscapeSequence(self, node: Node) -> None: ...
     def visit_Repeat(self, node: Node) -> None: ...
     def visit_Repeat1(self, node: Node) -> None: ...
     def visit_Rule(self, node: Node) -> None: ...
@@ -365,7 +365,7 @@ class NodeVisitor(object):
     def visit_StartAnchor(self, node: Node) -> None: ...
     def visit_String(self, node: Node) -> None: ...
     def visit_StringContent(self, node: Node) -> None: ...
-    def visit_StringEscapelist(self, node: Node) -> None: ...
+    def visit_StringEscapeSequence(self, node: Node) -> None: ...
     def visit_Variable(self, node: Node) -> None: ...
     def visit_Word(self, node: Node) -> None: ...
 
@@ -773,7 +773,7 @@ class NodeTransformer(Generic[Result]):
             | "TalonWord"
         ],
     ) -> Result: ...
-    def transform_RegexEscapelist(
+    def transform_RegexEscapeSequence(
         self,
         *,
         text: str,
@@ -781,7 +781,7 @@ class NodeTransformer(Generic[Result]):
         start_position: Point,
         end_position: Point,
         children: Result,
-        children_hist: "TalonRegexEscapelist" | None,
+        children_hist: "TalonRegexEscapeSequence" | None,
     ) -> Result: ...
     def transform_Repeat(
         self,
@@ -904,7 +904,7 @@ class NodeTransformer(Generic[Result]):
         end_position: Point,
         children: list[Result],
         children_hist: list[
-            "TalonInterpolation" | "TalonStringContent" | "TalonStringEscapelist"
+            "TalonInterpolation" | "TalonStringContent" | "TalonStringEscapeSequence"
         ],
     ) -> Result: ...
     def transform_StringContent(
@@ -915,7 +915,7 @@ class NodeTransformer(Generic[Result]):
         start_position: Point,
         end_position: Point,
     ) -> Result: ...
-    def transform_StringEscapelist(
+    def transform_StringEscapeSequence(
         self,
         *,
         text: str,
