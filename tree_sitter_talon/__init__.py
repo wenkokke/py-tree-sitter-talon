@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Optional, Sequence, Union
+from typing import Sequence
 from tree_sitter_type_provider import TreeSitterTypeProvider
 from tree_sitter_type_provider.node_types import NodeType, Node, Point
 from pkg_resources import resource_filename  # type: ignore
@@ -66,26 +66,26 @@ class TreeSitterTalon(TreeSitterTypeProvider):
 
     def parse(
         self,
-        contents: Union[str, bytes],
-        has_header: Optional[bool] = None,
+        contents: str | bytes,
+        has_header: bool | None = None,
         encoding: str = "utf-8",
-    ) -> Union[Sequence[Node], Node, None]:
+    ) -> Sequence[Node] | Node | None:
         tree = self.parse_as_tree_sitter(contents, has_header, encoding)
         return self.from_tree_sitter(tree.root_node)
 
     def parse_file(
         self,
-        path: Union[str, Path],
-        has_header: Optional[bool] = None,
+        path: str | Path,
+        has_header: bool | None = None,
         encoding: str = "utf-8",
-    ) -> Union[Sequence[Node], Node, None]:
+    ) -> Sequence[Node] | Node | None:
         tree = self.parse_file_as_tree_sitter(path, has_header, encoding)
         return self.from_tree_sitter(tree.root_node)
 
     def parse_as_tree_sitter(
         self,
-        contents: Union[str, bytes],
-        has_header: Optional[bool] = None,
+        contents: str | bytes,
+        has_header: bool | None = None,
         encoding: str = "utf-8",
     ) -> ts.Tree:
         if isinstance(contents, str):
@@ -98,8 +98,8 @@ class TreeSitterTalon(TreeSitterTypeProvider):
 
     def parse_file_as_tree_sitter(
         self,
-        path: Union[str, Path],
-        has_header: Optional[bool] = None,
+        path: str | Path,
+        has_header: bool | None = None,
         encoding: str = "utf-8",
     ) -> ts.Tree:
         if not isinstance(path, Path):
