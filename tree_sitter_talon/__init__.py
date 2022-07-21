@@ -1,4 +1,3 @@
-from io import StringIO
 from pathlib import Path
 from typing import Sequence
 from tree_sitter_type_provider import TreeSitterTypeProvider
@@ -8,7 +7,6 @@ from pkg_resources import resource_filename  # type: ignore
 import sys
 import tree_sitter as ts
 import os
-
 
 class TreeSitterTalon(TreeSitterTypeProvider):
     def resource_path(self, resource_name: str) -> Path:
