@@ -1,9 +1,51 @@
 [build-system]
-requires = [
-    "setuptools>=43.0.0",
-    "wheel>=0.36.2",
-]
+requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "tree_sitter_talon"
+version = "1.2.1"
+description = "Parser for Talon files in Python"
+readme = "README.md"
+requires-python = ">=3.9"
+keywords = ["talon", "parser"]
+authors = [{ name = "Wen Kokke" }]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Software Development :: Compilers",
+]
+dependencies = [
+    "tree_sitter",
+    "tree_sitter_type_provider",
+    "dataclasses-json",
+    "sphinx",
+    "sphinx-toolbox >=3.1.2",
+    "sphinx_bootstrap_theme",
+    "pytest",
+    "pytest-golden"
+]
+
+[project.urls]
+homepage = "https://wenkokke.github.io/py-tree-sitter-talon/"
+repository = "https://github.com/wenkokke/py-tree-sitter-talon"
+
+[tool.setuptools.package-data]
+tree_sitter_talon = [
+    "py.typed",
+    "__init__.pyi",
+    "data/tree-sitter-talon/binding.gyp",
+    "data/tree-sitter-talon/bindings/node/binding.cc",
+    "data/tree-sitter-talon/bindings/node/index.js",
+    "data/tree-sitter-talon/bindings/rust/build.rs",
+    "data/tree-sitter-talon/bindings/rust/lib.rs",
+    "data/tree-sitter-talon/grammar.js",
+    "data/tree-sitter-talon/package.json",
+    "data/tree-sitter-talon/src/grammar.json",
+    "data/tree-sitter-talon/src/node-types.json",
+    "data/tree-sitter-talon/src/parser.c",
+    "data/tree-sitter-talon/src/scanner.cc",
+    "data/tree-sitter-talon/src/tree_sitter/parser.h",
+]
 
 [pytest]
 testpaths = "test"
@@ -12,3 +54,14 @@ testpaths = "test"
 enable_assertion_pass_hook = true
 filterwarnings = ["ignore::DeprecationWarning:.*:"]
 addopts = "--ignore=test/data"
+
+[tool.bumpver]
+current_version = "1.2.1"
+version_pattern = "MAJOR.MINOR.PATCH"
+commit_message = "Bump version {old_version} -> {new_version}"
+commit = true
+tag = true
+push = true
+
+[tool.bumpver.file_patterns]
+"pyproject.toml" = ['current_version = "{version}"', 'version = "{version}"']
