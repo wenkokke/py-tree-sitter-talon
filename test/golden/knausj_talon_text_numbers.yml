@@ -8,6 +8,11 @@ output:
     - type: not
       children:
       - type: match
+        children:
+        - text: tag
+          type: identifier
+        - text: ' user.mouse_grid_showing'
+          type: implicit_string
         key:
           text: tag
           type: identifier
@@ -15,10 +20,44 @@ output:
           text: ' user.mouse_grid_showing'
           type: implicit_string
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: capture
+        children:
+        - text: user.number_string
+          type: identifier
+        capture_name:
+          text: user.number_string
+          type: identifier
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: '{'
+            type: string_content
+          - text: number_string
+            type: string_content
+          - text: '}'
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: '{'
+            type: string_content
+          - text: number_string
+            type: string_content
+          - text: '}'
+            type: string_content
     rule:
       type: rule
       children:
       - type: capture
+        children:
+        - text: user.number_string
+          type: identifier
         capture_name:
           text: user.number_string
           type: identifier
@@ -26,6 +65,15 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: '{'
+            type: string_content
+          - text: number_string
+            type: string_content
+          - text: '}'
+            type: string_content
         expression:
           type: string
           children:

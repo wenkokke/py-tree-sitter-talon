@@ -12,6 +12,46 @@ output:
   - text: '# allows you to prevent a command executing by ending it with "cancel cancel"'
     type: comment
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: cancel
+          type: word
+        - text: cancel
+          type: word
+      - text: $
+        type: end_anchor
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: skip
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: skip
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: skip
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: skip
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
     rule:
       type: rule
       children:
@@ -27,8 +67,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: skip
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: skip
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: skip
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: skip
             type: identifier
@@ -42,6 +100,69 @@ output:
       \ to hear, eg \"ignore hey Jerry\""
     type: comment
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: ignore
+          type: word
+        - type: optional
+          children:
+          - type: capture
+            children:
+            - text: phrase
+              type: identifier
+            capture_name:
+              text: phrase
+              type: identifier
+      - text: $
+        type: end_anchor
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: app.notify
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: Command ignored
+                type: string_content
+          action_name:
+            text: app.notify
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: Command ignored
+                type: string_content
+        expression:
+          type: action
+          children:
+          - text: app.notify
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: Command ignored
+                type: string_content
+          action_name:
+            text: app.notify
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: Command ignored
+                type: string_content
     rule:
       type: rule
       children:
@@ -52,6 +173,9 @@ output:
         - type: optional
           children:
           - type: capture
+            children:
+            - text: phrase
+              type: identifier
             capture_name:
               text: phrase
               type: identifier
@@ -61,8 +185,38 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: app.notify
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: Command ignored
+                type: string_content
+          action_name:
+            text: app.notify
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: Command ignored
+                type: string_content
         expression:
           type: action
+          children:
+          - text: app.notify
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: Command ignored
+                type: string_content
           action_name:
             text: app.notify
             type: identifier

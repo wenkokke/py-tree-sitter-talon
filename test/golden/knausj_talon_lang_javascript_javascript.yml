@@ -23,6 +23,11 @@ output:
   - type: context
     children:
     - type: match
+      children:
+      - text: tag
+        type: identifier
+      - text: ' user.javascript'
+        type: implicit_string
       key:
         text: tag
         type: identifier
@@ -30,62 +35,107 @@ output:
         text: ' user.javascript'
         type: implicit_string
   - type: include_tag
+    children:
+    - text: user.code_imperative
+      type: identifier
     tag:
       text: user.code_imperative
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_object_oriented
+      type: identifier
     tag:
       text: user.code_object_oriented
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_comment_line
+      type: identifier
     tag:
       text: user.code_comment_line
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_comment_block_c_like
+      type: identifier
     tag:
       text: user.code_comment_block_c_like
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_data_bool
+      type: identifier
     tag:
       text: user.code_data_bool
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_data_null
+      type: identifier
     tag:
       text: user.code_data_null
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_functions
+      type: identifier
     tag:
       text: user.code_functions
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_functions_common
+      type: identifier
     tag:
       text: user.code_functions_common
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_keywords
+      type: identifier
     tag:
       text: user.code_keywords
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_libraries
+      type: identifier
     tag:
       text: user.code_libraries
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_operators_array
+      type: identifier
     tag:
       text: user.code_operators_array
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_operators_assignment
+      type: identifier
     tag:
       text: user.code_operators_assignment
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_operators_bitwise
+      type: identifier
     tag:
       text: user.code_operators_bitwise
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_operators_lambda
+      type: identifier
     tag:
       text: user.code_operators_lambda
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_operators_math
+      type: identifier
     tag:
       text: user.code_operators_math
       type: identifier
@@ -94,6 +144,13 @@ output:
     - type: block
       children:
       - type: assignment
+        children:
+        - text: user.code_private_function_formatter
+          type: identifier
+        - type: string
+          children:
+          - text: PRIVATE_CAMEL_CASE
+            type: string_content
         left:
           text: user.code_private_function_formatter
           type: identifier
@@ -103,6 +160,13 @@ output:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
       - type: assignment
+        children:
+        - text: user.code_protected_function_formatter
+          type: identifier
+        - type: string
+          children:
+          - text: PRIVATE_CAMEL_CASE
+            type: string_content
         left:
           text: user.code_protected_function_formatter
           type: identifier
@@ -112,6 +176,13 @@ output:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
       - type: assignment
+        children:
+        - text: user.code_public_function_formatter
+          type: identifier
+        - type: string
+          children:
+          - text: PRIVATE_CAMEL_CASE
+            type: string_content
         left:
           text: user.code_public_function_formatter
           type: identifier
@@ -121,6 +192,13 @@ output:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
       - type: assignment
+        children:
+        - text: user.code_private_variable_formatter
+          type: identifier
+        - type: string
+          children:
+          - text: PRIVATE_CAMEL_CASE
+            type: string_content
         left:
           text: user.code_private_variable_formatter
           type: identifier
@@ -130,6 +208,13 @@ output:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
       - type: assignment
+        children:
+        - text: user.code_protected_variable_formatter
+          type: identifier
+        - type: string
+          children:
+          - text: PRIVATE_CAMEL_CASE
+            type: string_content
         left:
           text: user.code_protected_variable_formatter
           type: identifier
@@ -139,6 +224,13 @@ output:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
       - type: assignment
+        children:
+        - text: user.code_public_variable_formatter
+          type: identifier
+        - type: string
+          children:
+          - text: PRIVATE_CAMEL_CASE
+            type: string_content
         left:
           text: user.code_public_variable_formatter
           type: identifier
@@ -148,6 +240,36 @@ output:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: op
+              type: word
+            - text: is
+              type: word
+        - text: strict
+          type: word
+        - text: equal
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: ' === '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: ' === '
+            type: string_content
     rule:
       type: rule
       children:
@@ -169,12 +291,49 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: ' === '
+            type: string_content
         expression:
           type: string
           children:
           - text: ' === '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: op
+              type: word
+            - text: is
+              type: word
+        - text: strict
+          type: word
+        - text: not
+          type: word
+        - text: equal
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: ' !== '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: ' !== '
+            type: string_content
     rule:
       type: rule
       children:
@@ -198,12 +357,41 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: ' !== '
+            type: string_content
         expression:
           type: string
           children:
           - text: ' !== '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: op
+          type: word
+        - text: 'null'
+          type: word
+        - text: else
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: ' ?? '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: ' ?? '
+            type: string_content
     rule:
       type: rule
       children:
@@ -219,12 +407,39 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: ' ?? '
+            type: string_content
         expression:
           type: string
           children:
           - text: ' ?? '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - text: const
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'const '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'const '
+            type: string_content
     rule:
       type: rule
       children:
@@ -238,12 +453,39 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'const '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'const '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - text: let
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'let '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'let '
+            type: string_content
     rule:
       type: rule
       children:
@@ -257,12 +499,39 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'let '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'let '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - text: var
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'var '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'var '
+            type: string_content
     rule:
       type: rule
       children:
@@ -276,12 +545,39 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'var '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'var '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - text: export
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'export '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'export '
+            type: string_content
     rule:
       type: rule
       children:
@@ -295,12 +591,39 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'export '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'export '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - text: async
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'async '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'async '
+            type: string_content
     rule:
       type: rule
       children:
@@ -314,12 +637,39 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'async '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'async '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - text: await
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'await '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'await '
+            type: string_content
     rule:
       type: rule
       children:
@@ -333,12 +683,124 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'await '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'await '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: dot
+          type: word
+        - type: list
+          children:
+          - text: user.code_common_member_function
+            type: identifier
+          list_name:
+            text: user.code_common_member_function
+            type: identifier
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: .
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: code_common_member_function
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: (
+                type: string_content
+            - type: string
+              children:
+              - text: )
+                type: string_content
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: .
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: code_common_member_function
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: (
+                type: string_content
+            - type: string
+              children:
+              - text: )
+                type: string_content
+        expression:
+          type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: .
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: code_common_member_function
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: (
+                type: string_content
+            - type: string
+              children:
+              - text: )
+                type: string_content
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: .
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: code_common_member_function
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: (
+                type: string_content
+            - type: string
+              children:
+              - text: )
+                type: string_content
     rule:
       type: rule
       children:
@@ -347,6 +809,9 @@ output:
         - text: dot
           type: word
         - type: list
+          children:
+          - text: user.code_common_member_function
+            type: identifier
           list_name:
             text: user.code_common_member_function
             type: identifier
@@ -354,8 +819,74 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: .
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: code_common_member_function
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: (
+                type: string_content
+            - type: string
+              children:
+              - text: )
+                type: string_content
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: .
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: code_common_member_function
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: (
+                type: string_content
+            - type: string
+              children:
+              - text: )
+                type: string_content
         expression:
           type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: .
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: code_common_member_function
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: (
+                type: string_content
+            - type: string
+              children:
+              - text: )
+                type: string_content
           action_name:
             text: user.insert_between
             type: identifier
@@ -379,6 +910,60 @@ output:
               - text: )
                 type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - text: map
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: app.notify
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'ERROR: Command deprecated; please use "dot map"'
+                type: string_content
+          action_name:
+            text: app.notify
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'ERROR: Command deprecated; please use "dot map"'
+                type: string_content
+        expression:
+          type: action
+          children:
+          - text: app.notify
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'ERROR: Command deprecated; please use "dot map"'
+                type: string_content
+          action_name:
+            text: app.notify
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'ERROR: Command deprecated; please use "dot map"'
+                type: string_content
     rule:
       type: rule
       children:
@@ -392,8 +977,38 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: app.notify
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'ERROR: Command deprecated; please use "dot map"'
+                type: string_content
+          action_name:
+            text: app.notify
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'ERROR: Command deprecated; please use "dot map"'
+                type: string_content
         expression:
           type: action
+          children:
+          - text: app.notify
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'ERROR: Command deprecated; please use "dot map"'
+                type: string_content
           action_name:
             text: app.notify
             type: identifier
@@ -405,6 +1020,60 @@ output:
               - text: 'ERROR: Command deprecated; please use "dot map"'
                 type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - text: filter
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: app.notify
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'ERROR: Command deprecated; please use "dot filter"'
+                type: string_content
+          action_name:
+            text: app.notify
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'ERROR: Command deprecated; please use "dot filter"'
+                type: string_content
+        expression:
+          type: action
+          children:
+          - text: app.notify
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'ERROR: Command deprecated; please use "dot filter"'
+                type: string_content
+          action_name:
+            text: app.notify
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'ERROR: Command deprecated; please use "dot filter"'
+                type: string_content
     rule:
       type: rule
       children:
@@ -418,8 +1087,38 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: app.notify
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'ERROR: Command deprecated; please use "dot filter"'
+                type: string_content
+          action_name:
+            text: app.notify
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'ERROR: Command deprecated; please use "dot filter"'
+                type: string_content
         expression:
           type: action
+          children:
+          - text: app.notify
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'ERROR: Command deprecated; please use "dot filter"'
+                type: string_content
           action_name:
             text: app.notify
             type: identifier
@@ -431,6 +1130,60 @@ output:
               - text: 'ERROR: Command deprecated; please use "dot filter"'
                 type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - text: reduce
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: app.notify
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'ERROR: Command deprecated; please use "dot reduce"'
+                type: string_content
+          action_name:
+            text: app.notify
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'ERROR: Command deprecated; please use "dot reduce"'
+                type: string_content
+        expression:
+          type: action
+          children:
+          - text: app.notify
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'ERROR: Command deprecated; please use "dot reduce"'
+                type: string_content
+          action_name:
+            text: app.notify
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'ERROR: Command deprecated; please use "dot reduce"'
+                type: string_content
     rule:
       type: rule
       children:
@@ -444,8 +1197,38 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: app.notify
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'ERROR: Command deprecated; please use "dot reduce"'
+                type: string_content
+          action_name:
+            text: app.notify
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'ERROR: Command deprecated; please use "dot reduce"'
+                type: string_content
         expression:
           type: action
+          children:
+          - text: app.notify
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'ERROR: Command deprecated; please use "dot reduce"'
+                type: string_content
           action_name:
             text: app.notify
             type: identifier
@@ -457,6 +1240,28 @@ output:
               - text: 'ERROR: Command deprecated; please use "dot reduce"'
                 type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - text: spread
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: '...'
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: '...'
+            type: string_content
     rule:
       type: rule
       children:
@@ -470,12 +1275,87 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: '...'
+            type: string_content
         expression:
           type: string
           children:
           - text: '...'
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: from
+          type: word
+        - text: import
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: ' from  "'
+                type: string_content
+            - type: string
+              children:
+              - text: '"'
+                type: string_content
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: ' from  "'
+                type: string_content
+            - type: string
+              children:
+              - text: '"'
+                type: string_content
+        expression:
+          type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: ' from  "'
+                type: string_content
+            - type: string
+              children:
+              - text: '"'
+                type: string_content
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: ' from  "'
+                type: string_content
+            - type: string
+              children:
+              - text: '"'
+                type: string_content
     rule:
       type: rule
       children:
@@ -489,8 +1369,50 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: ' from  "'
+                type: string_content
+            - type: string
+              children:
+              - text: '"'
+                type: string_content
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: ' from  "'
+                type: string_content
+            - type: string
+              children:
+              - text: '"'
+                type: string_content
         expression:
           type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: ' from  "'
+                type: string_content
+            - type: string
+              children:
+              - text: '"'
+                type: string_content
           action_name:
             text: user.insert_between
             type: identifier

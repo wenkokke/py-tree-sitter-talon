@@ -13,6 +13,11 @@ output:
   - type: context
     children:
     - type: match
+      children:
+      - text: tag
+        type: identifier
+      - text: ' user.draft_window_showing'
+        type: implicit_string
       key:
         text: tag
         type: identifier
@@ -20,6 +25,44 @@ output:
         text: ' user.draft_window_showing'
         type: implicit_string
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: draft
+          type: word
+        - text: hide
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.draft_hide
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.draft_hide
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: user.draft_hide
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.draft_hide
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
     rule:
       type: rule
       children:
@@ -33,8 +76,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.draft_hide
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.draft_hide
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: user.draft_hide
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: user.draft_hide
             type: identifier
@@ -42,6 +103,138 @@ output:
             type: argument_list
             children: []
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: draft
+          type: word
+        - text: submit
+          type: word
+    - type: block
+      children:
+      - type: assignment
+        children:
+        - text: content
+          type: identifier
+        - type: action
+          children:
+          - text: user.draft_get_text
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.draft_get_text
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        left:
+          text: content
+          type: identifier
+        right:
+          type: action
+          children:
+          - text: user.draft_get_text
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.draft_get_text
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.draft_hide
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.draft_hide
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: user.draft_hide
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.draft_hide
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: content
+                type: identifier
+              variable_name:
+                text: content
+                type: identifier
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: content
+                type: identifier
+              variable_name:
+                text: content
+                type: identifier
+        expression:
+          type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: content
+                type: identifier
+              variable_name:
+                text: content
+                type: identifier
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: content
+                type: identifier
+              variable_name:
+                text: content
+                type: identifier
+      - text: '# user.paste may be somewhat faster, but seems to be unreliable on
+          MacOSX, see'
+        type: comment
+      - text: '# https://github.com/talonvoice/talon/issues/254#issuecomment-789355238'
+        type: comment
+      - text: '# user.paste(content)'
+        type: comment
     rule:
       type: rule
       children:
@@ -55,11 +248,31 @@ output:
       type: block
       children:
       - type: assignment
+        children:
+        - text: content
+          type: identifier
+        - type: action
+          children:
+          - text: user.draft_get_text
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.draft_get_text
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         left:
           text: content
           type: identifier
         right:
           type: action
+          children:
+          - text: user.draft_get_text
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: user.draft_get_text
             type: identifier
@@ -67,8 +280,26 @@ output:
             type: argument_list
             children: []
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.draft_hide
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.draft_hide
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: user.draft_hide
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: user.draft_hide
             type: identifier
@@ -76,8 +307,20 @@ output:
             type: argument_list
             children: []
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: content
+                type: identifier
+              variable_name:
+                text: content
+                type: identifier
           action_name:
             text: insert
             type: identifier
@@ -85,6 +328,36 @@ output:
             type: argument_list
             children:
             - type: variable
+              children:
+              - text: content
+                type: identifier
+              variable_name:
+                text: content
+                type: identifier
+        expression:
+          type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: content
+                type: identifier
+              variable_name:
+                text: content
+                type: identifier
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: content
+                type: identifier
               variable_name:
                 text: content
                 type: identifier

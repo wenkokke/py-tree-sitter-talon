@@ -74,6 +74,734 @@ output:
       adding the vscode setting "editor.emptySelectionClipboard": false'
     type: comment
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: navigate
+          type: word
+        - type: optional
+          children:
+          - type: list
+            children:
+            - text: user.arrow_key
+              type: identifier
+            list_name:
+              text: user.arrow_key
+              type: identifier
+        - type: optional
+          children:
+          - type: list
+            children:
+            - text: user.navigation_action
+              type: identifier
+            list_name:
+              text: user.navigation_action
+              type: identifier
+        - type: optional
+          children:
+          - type: list
+            children:
+            - text: user.navigation_target_name
+              type: identifier
+            list_name:
+              text: user.navigation_target_name
+              type: identifier
+        - type: optional
+          children:
+          - type: list
+            children:
+            - text: user.before_or_after
+              type: identifier
+            list_name:
+              text: user.before_or_after
+              type: identifier
+        - type: optional
+          children:
+          - type: capture
+            children:
+            - text: user.ordinals
+              type: identifier
+            capture_name:
+              text: user.ordinals
+              type: identifier
+        - type: capture
+          children:
+          - text: user.navigation_target
+            type: identifier
+          capture_name:
+            text: user.navigation_target
+            type: identifier
+    - text: '## If you use this command a lot, you may wish to have a shorter syntax
+        that omits the navigate keyword. Note that you then at least have to say either
+        a navigation_action or before_or_after:'
+      type: comment
+    - text: '#({user.navigation_action} [{user.arrow_key}] [{user.navigation_target_name}]
+        [{user.before_or_after}] | [{user.arrow_key}] {user.before_or_after}) [<user.ordinals>]
+        <user.navigation_target>:'
+      type: comment
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.navigation
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: navigation_action
+                  type: identifier
+                variable_name:
+                  text: navigation_action
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children:
+                - text: GO
+                  type: string_content
+              left:
+                type: variable
+                children:
+                - text: navigation_action
+                  type: identifier
+                variable_name:
+                  text: navigation_action
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                type: string
+                children:
+                - text: GO
+                  type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: arrow_key
+                  type: identifier
+                variable_name:
+                  text: arrow_key
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children:
+                - text: RIGHT
+                  type: string_content
+              left:
+                type: variable
+                children:
+                - text: arrow_key
+                  type: identifier
+                variable_name:
+                  text: arrow_key
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                type: string
+                children:
+                - text: RIGHT
+                  type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: navigation_target_name
+                  type: identifier
+                variable_name:
+                  text: navigation_target_name
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children:
+                - text: DEFAULT
+                  type: string_content
+              left:
+                type: variable
+                children:
+                - text: navigation_target_name
+                  type: identifier
+                variable_name:
+                  text: navigation_target_name
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                type: string
+                children:
+                - text: DEFAULT
+                  type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: before_or_after
+                  type: identifier
+                variable_name:
+                  text: before_or_after
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children:
+                - text: DEFAULT
+                  type: string_content
+              left:
+                type: variable
+                children:
+                - text: before_or_after
+                  type: identifier
+                variable_name:
+                  text: before_or_after
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                type: string
+                children:
+                - text: DEFAULT
+                  type: string_content
+            - type: variable
+              children:
+              - text: navigation_target
+                type: identifier
+              variable_name:
+                text: navigation_target
+                type: identifier
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: ordinals
+                  type: identifier
+                variable_name:
+                  text: ordinals
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: ordinals
+                  type: identifier
+                variable_name:
+                  text: ordinals
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: user.navigation
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: navigation_action
+                  type: identifier
+                variable_name:
+                  text: navigation_action
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children:
+                - text: GO
+                  type: string_content
+              left:
+                type: variable
+                children:
+                - text: navigation_action
+                  type: identifier
+                variable_name:
+                  text: navigation_action
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                type: string
+                children:
+                - text: GO
+                  type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: arrow_key
+                  type: identifier
+                variable_name:
+                  text: arrow_key
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children:
+                - text: RIGHT
+                  type: string_content
+              left:
+                type: variable
+                children:
+                - text: arrow_key
+                  type: identifier
+                variable_name:
+                  text: arrow_key
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                type: string
+                children:
+                - text: RIGHT
+                  type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: navigation_target_name
+                  type: identifier
+                variable_name:
+                  text: navigation_target_name
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children:
+                - text: DEFAULT
+                  type: string_content
+              left:
+                type: variable
+                children:
+                - text: navigation_target_name
+                  type: identifier
+                variable_name:
+                  text: navigation_target_name
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                type: string
+                children:
+                - text: DEFAULT
+                  type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: before_or_after
+                  type: identifier
+                variable_name:
+                  text: before_or_after
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children:
+                - text: DEFAULT
+                  type: string_content
+              left:
+                type: variable
+                children:
+                - text: before_or_after
+                  type: identifier
+                variable_name:
+                  text: before_or_after
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                type: string
+                children:
+                - text: DEFAULT
+                  type: string_content
+            - type: variable
+              children:
+              - text: navigation_target
+                type: identifier
+              variable_name:
+                text: navigation_target
+                type: identifier
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: ordinals
+                  type: identifier
+                variable_name:
+                  text: ordinals
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: ordinals
+                  type: identifier
+                variable_name:
+                  text: ordinals
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: user.navigation
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: navigation_action
+                  type: identifier
+                variable_name:
+                  text: navigation_action
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children:
+                - text: GO
+                  type: string_content
+              left:
+                type: variable
+                children:
+                - text: navigation_action
+                  type: identifier
+                variable_name:
+                  text: navigation_action
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                type: string
+                children:
+                - text: GO
+                  type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: arrow_key
+                  type: identifier
+                variable_name:
+                  text: arrow_key
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children:
+                - text: RIGHT
+                  type: string_content
+              left:
+                type: variable
+                children:
+                - text: arrow_key
+                  type: identifier
+                variable_name:
+                  text: arrow_key
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                type: string
+                children:
+                - text: RIGHT
+                  type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: navigation_target_name
+                  type: identifier
+                variable_name:
+                  text: navigation_target_name
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children:
+                - text: DEFAULT
+                  type: string_content
+              left:
+                type: variable
+                children:
+                - text: navigation_target_name
+                  type: identifier
+                variable_name:
+                  text: navigation_target_name
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                type: string
+                children:
+                - text: DEFAULT
+                  type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: before_or_after
+                  type: identifier
+                variable_name:
+                  text: before_or_after
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children:
+                - text: DEFAULT
+                  type: string_content
+              left:
+                type: variable
+                children:
+                - text: before_or_after
+                  type: identifier
+                variable_name:
+                  text: before_or_after
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                type: string
+                children:
+                - text: DEFAULT
+                  type: string_content
+            - type: variable
+              children:
+              - text: navigation_target
+                type: identifier
+              variable_name:
+                text: navigation_target
+                type: identifier
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: ordinals
+                  type: identifier
+                variable_name:
+                  text: ordinals
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: ordinals
+                  type: identifier
+                variable_name:
+                  text: ordinals
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: user.navigation
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: navigation_action
+                  type: identifier
+                variable_name:
+                  text: navigation_action
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children:
+                - text: GO
+                  type: string_content
+              left:
+                type: variable
+                children:
+                - text: navigation_action
+                  type: identifier
+                variable_name:
+                  text: navigation_action
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                type: string
+                children:
+                - text: GO
+                  type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: arrow_key
+                  type: identifier
+                variable_name:
+                  text: arrow_key
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children:
+                - text: RIGHT
+                  type: string_content
+              left:
+                type: variable
+                children:
+                - text: arrow_key
+                  type: identifier
+                variable_name:
+                  text: arrow_key
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                type: string
+                children:
+                - text: RIGHT
+                  type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: navigation_target_name
+                  type: identifier
+                variable_name:
+                  text: navigation_target_name
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children:
+                - text: DEFAULT
+                  type: string_content
+              left:
+                type: variable
+                children:
+                - text: navigation_target_name
+                  type: identifier
+                variable_name:
+                  text: navigation_target_name
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                type: string
+                children:
+                - text: DEFAULT
+                  type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: before_or_after
+                  type: identifier
+                variable_name:
+                  text: before_or_after
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children:
+                - text: DEFAULT
+                  type: string_content
+              left:
+                type: variable
+                children:
+                - text: before_or_after
+                  type: identifier
+                variable_name:
+                  text: before_or_after
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                type: string
+                children:
+                - text: DEFAULT
+                  type: string_content
+            - type: variable
+              children:
+              - text: navigation_target
+                type: identifier
+              variable_name:
+                text: navigation_target
+                type: identifier
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: ordinals
+                  type: identifier
+                variable_name:
+                  text: ordinals
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: ordinals
+                  type: identifier
+                variable_name:
+                  text: ordinals
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
     rule:
       type: rule
       children:
@@ -84,34 +812,52 @@ output:
         - type: optional
           children:
           - type: list
+            children:
+            - text: user.arrow_key
+              type: identifier
             list_name:
               text: user.arrow_key
               type: identifier
         - type: optional
           children:
           - type: list
+            children:
+            - text: user.navigation_action
+              type: identifier
             list_name:
               text: user.navigation_action
               type: identifier
         - type: optional
           children:
           - type: list
+            children:
+            - text: user.navigation_target_name
+              type: identifier
             list_name:
               text: user.navigation_target_name
               type: identifier
         - type: optional
           children:
           - type: list
+            children:
+            - text: user.before_or_after
+              type: identifier
             list_name:
               text: user.before_or_after
               type: identifier
         - type: optional
           children:
           - type: capture
+            children:
+            - text: user.ordinals
+              type: identifier
             capture_name:
               text: user.ordinals
               type: identifier
         - type: capture
+          children:
+          - text: user.navigation_target
+            type: identifier
           capture_name:
             text: user.navigation_target
             type: identifier
@@ -263,8 +1009,8 @@ output:
       but these commands are kept here for convenience. Originally from word_selection.talon.'
     type: comment
   - type: command
-    rule:
-      type: rule
+    children:
+    - type: rule
       children:
       - type: seq
         children:
@@ -275,15 +1021,65 @@ output:
         - type: optional
           children:
           - type: capture
+            children:
+            - text: number_small
+              type: identifier
             capture_name:
               text: number_small
               type: identifier
-    script:
-      type: block
+    - type: block
       children:
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: user.navigation_by_name
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: RIGHT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: word
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
           action_name:
             text: user.navigation_by_name
             type: identifier
@@ -307,8 +1103,342 @@ output:
               - text: word
                 type: string_content
             - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
               left:
                 type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: user.navigation_by_name
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: RIGHT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: word
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: user.navigation_by_name
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: RIGHT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: word
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - text: word
+          type: word
+        - text: neck
+          type: word
+        - type: optional
+          children:
+          - type: capture
+            children:
+            - text: number_small
+              type: identifier
+            capture_name:
+              text: number_small
+              type: identifier
+    script:
+      type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.navigation_by_name
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: RIGHT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: word
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: user.navigation_by_name
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: RIGHT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: word
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: user.navigation_by_name
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: RIGHT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: word
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: user.navigation_by_name
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: RIGHT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: word
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
                 variable_name:
                   text: number_small
                   type: identifier
@@ -319,8 +1449,8 @@ output:
                 text: '1'
                 type: integer
   - type: command
-    rule:
-      type: rule
+    children:
+    - type: rule
       children:
       - type: seq
         children:
@@ -331,15 +1461,65 @@ output:
         - type: optional
           children:
           - type: capture
+            children:
+            - text: number_small
+              type: identifier
             capture_name:
               text: number_small
               type: identifier
-    script:
-      type: block
+    - type: block
       children:
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: user.navigation_by_name
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: LEFT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: word
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
           action_name:
             text: user.navigation_by_name
             type: identifier
@@ -363,8 +1543,342 @@ output:
               - text: word
                 type: string_content
             - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
               left:
                 type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: user.navigation_by_name
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: LEFT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: word
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: user.navigation_by_name
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: LEFT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: word
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - text: word
+          type: word
+        - text: pre
+          type: word
+        - type: optional
+          children:
+          - type: capture
+            children:
+            - text: number_small
+              type: identifier
+            capture_name:
+              text: number_small
+              type: identifier
+    script:
+      type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.navigation_by_name
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: LEFT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: word
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: user.navigation_by_name
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: LEFT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: word
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: user.navigation_by_name
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: LEFT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: word
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: user.navigation_by_name
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: LEFT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: word
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
                 variable_name:
                   text: number_small
                   type: identifier
@@ -375,8 +1889,8 @@ output:
                 text: '1'
                 type: integer
   - type: command
-    rule:
-      type: rule
+    children:
+    - type: rule
       children:
       - type: seq
         children:
@@ -389,15 +1903,65 @@ output:
         - type: optional
           children:
           - type: capture
+            children:
+            - text: number_small
+              type: identifier
             capture_name:
               text: number_small
               type: identifier
-    script:
-      type: block
+    - type: block
       children:
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: user.navigation_by_name
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: RIGHT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: small
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
           action_name:
             text: user.navigation_by_name
             type: identifier
@@ -421,8 +1985,344 @@ output:
               - text: small
                 type: string_content
             - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
               left:
                 type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: user.navigation_by_name
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: RIGHT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: small
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: user.navigation_by_name
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: RIGHT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: small
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - text: small
+          type: word
+        - text: word
+          type: word
+        - text: neck
+          type: word
+        - type: optional
+          children:
+          - type: capture
+            children:
+            - text: number_small
+              type: identifier
+            capture_name:
+              text: number_small
+              type: identifier
+    script:
+      type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.navigation_by_name
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: RIGHT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: small
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: user.navigation_by_name
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: RIGHT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: small
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: user.navigation_by_name
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: RIGHT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: small
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: user.navigation_by_name
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: RIGHT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: small
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
                 variable_name:
                   text: number_small
                   type: identifier
@@ -433,8 +2333,8 @@ output:
                 text: '1'
                 type: integer
   - type: command
-    rule:
-      type: rule
+    children:
+    - type: rule
       children:
       - type: seq
         children:
@@ -447,15 +2347,65 @@ output:
         - type: optional
           children:
           - type: capture
+            children:
+            - text: number_small
+              type: identifier
             capture_name:
               text: number_small
               type: identifier
-    script:
-      type: block
+    - type: block
       children:
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: user.navigation_by_name
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: LEFT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: small
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
           action_name:
             text: user.navigation_by_name
             type: identifier
@@ -479,8 +2429,344 @@ output:
               - text: small
                 type: string_content
             - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
               left:
                 type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: user.navigation_by_name
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: LEFT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: small
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: user.navigation_by_name
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: LEFT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: small
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - text: small
+          type: word
+        - text: word
+          type: word
+        - text: pre
+          type: word
+        - type: optional
+          children:
+          - type: capture
+            children:
+            - text: number_small
+              type: identifier
+            capture_name:
+              text: number_small
+              type: identifier
+    script:
+      type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.navigation_by_name
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: LEFT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: small
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: user.navigation_by_name
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: LEFT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: small
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: user.navigation_by_name
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: LEFT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: small
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: user.navigation_by_name
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: LEFT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: small
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
                 variable_name:
                   text: number_small
                   type: identifier
@@ -491,8 +2777,8 @@ output:
                 text: '1'
                 type: integer
   - type: command
-    rule:
-      type: rule
+    children:
+    - type: rule
       children:
       - type: seq
         children:
@@ -505,15 +2791,65 @@ output:
         - type: optional
           children:
           - type: capture
+            children:
+            - text: number_small
+              type: identifier
             capture_name:
               text: number_small
               type: identifier
-    script:
-      type: block
+    - type: block
       children:
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: user.navigation_by_name
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: RIGHT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: big
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
           action_name:
             text: user.navigation_by_name
             type: identifier
@@ -537,8 +2873,344 @@ output:
               - text: big
                 type: string_content
             - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
               left:
                 type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: user.navigation_by_name
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: RIGHT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: big
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: user.navigation_by_name
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: RIGHT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: big
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - text: big
+          type: word
+        - text: word
+          type: word
+        - text: neck
+          type: word
+        - type: optional
+          children:
+          - type: capture
+            children:
+            - text: number_small
+              type: identifier
+            capture_name:
+              text: number_small
+              type: identifier
+    script:
+      type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.navigation_by_name
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: RIGHT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: big
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: user.navigation_by_name
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: RIGHT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: big
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: user.navigation_by_name
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: RIGHT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: big
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: user.navigation_by_name
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: RIGHT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: big
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
                 variable_name:
                   text: number_small
                   type: identifier
@@ -549,8 +3221,8 @@ output:
                 text: '1'
                 type: integer
   - type: command
-    rule:
-      type: rule
+    children:
+    - type: rule
       children:
       - type: seq
         children:
@@ -563,15 +3235,65 @@ output:
         - type: optional
           children:
           - type: capture
+            children:
+            - text: number_small
+              type: identifier
             capture_name:
               text: number_small
               type: identifier
-    script:
-      type: block
+    - type: block
       children:
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: user.navigation_by_name
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: LEFT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: big
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
           action_name:
             text: user.navigation_by_name
             type: identifier
@@ -595,8 +3317,344 @@ output:
               - text: big
                 type: string_content
             - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
               left:
                 type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: user.navigation_by_name
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: LEFT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: big
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: user.navigation_by_name
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: LEFT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: big
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - text: big
+          type: word
+        - text: word
+          type: word
+        - text: pre
+          type: word
+        - type: optional
+          children:
+          - type: capture
+            children:
+            - text: number_small
+              type: identifier
+            capture_name:
+              text: number_small
+              type: identifier
+    script:
+      type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.navigation_by_name
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: LEFT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: big
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: user.navigation_by_name
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: LEFT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: big
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: user.navigation_by_name
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: LEFT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: big
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: user.navigation_by_name
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: SELECT
+                type: string_content
+            - type: string
+              children:
+              - text: LEFT
+                type: string_content
+            - type: string
+              children:
+              - text: DEFAULT
+                type: string_content
+            - type: string
+              children:
+              - text: big
+                type: string_content
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
                 variable_name:
                   text: number_small
                   type: identifier

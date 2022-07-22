@@ -1,943 +1,333 @@
 from dataclasses import dataclass
+from dataclasses_json import dataclass_json
 from pathlib import Path
-from typing import Generic, TypeVar
-from tree_sitter_type_provider import Node as Node, Point as Point
+from typing import Optional, Union
+from tree_sitter_type_provider import *
 
-import tree_sitter as ts  # type: ignore
+import tree_sitter # type: ignore
 
-parser: ts.Parser
+parser: tree_sitter.Parser
 
-language: ts.Language
+language: tree_sitter.Language
+
 
 def parse(
-    contents: str | bytes,
-    has_header: bool | None = None,
+    contents: Union[str, bytes],
+    has_header: Optional[bool] = None,
     encoding: str = "utf-8",
 ) -> Node: ...
+
+
 def parse_file(
-    path: str | Path,
-    has_header: bool | None = None,
+    path: Union[str, Path],
+    has_header: Optional[bool] = None,
     encoding: str = "utf-8",
 ) -> Node: ...
+
+
 def parse_as_tree_sitter(
-    contents: str | bytes,
-    has_header: bool | None = None,
+    contents: Union[str, bytes],
+    has_header: Optional[bool] = None,
     encoding: str = "utf-8",
-) -> ts.Tree: ...
+) -> tree_sitter.Tree: ...
+
+
 def parse_file_as_tree_sitter(
-    path: str | Path,
-    has_header: bool | None = None,
+    path: Union[str, Path],
+    has_header: Optional[bool] = None,
     encoding: str = "utf-8",
-) -> ts.Tree: ...
+) -> tree_sitter.Tree: ...
+
+
 def from_tree_sitter(
-    tsnode: ts.Node, encoding: str = "utf-8"
-) -> list[Node] | Node | None: ...
+    tsnode: tree_sitter.Node,
+    encoding: str = "utf-8"
+) -> Node: ...
+
+
+@dataclass_json
 @dataclass
-class TalonAction(Node):
+class TalonAction(Branch):
+    children: list[TalonComment]
+    action_name: list[Union[TalonIdentifier, TalonComment]]
+    arguments: list[Union[TalonArgumentList, TalonComment]]
 
-    action_name: "TalonIdentifier"
-    arguments: "TalonArgumentList"
 
+@dataclass_json
 @dataclass
-class TalonAnd(Node):
+class TalonAnd(Branch):
+    children: list[Union[TalonAnd, TalonMatch, TalonNot, TalonComment]]
 
-    children: list["TalonAnd" | "TalonMatch" | "TalonNot"]
 
+@dataclass_json
 @dataclass
-class TalonArgumentList(Node):
+class TalonArgumentList(Branch):
+    children: list[Union[TalonAction, TalonBinaryOperator, TalonFloat, TalonInteger, TalonKeyAction, TalonParenthesizedExpression, TalonSleepAction, TalonString, TalonVariable, TalonComment]]
 
-    children: list[
-        "TalonAction"
-        | "TalonBinaryOperator"
-        | "TalonFloat"
-        | "TalonInteger"
-        | "TalonKeyAction"
-        | "TalonParenthesizedExpression"
-        | "TalonSleepAction"
-        | "TalonString"
-        | "TalonVariable"
-    ]
 
+@dataclass_json
 @dataclass
-class TalonAssignment(Node):
+class TalonAssignment(Branch):
+    children: list[TalonComment]
+    left: list[Union[TalonIdentifier, TalonComment]]
+    right: list[Union[TalonAction, TalonBinaryOperator, TalonFloat, TalonInteger, TalonKeyAction, TalonParenthesizedExpression, TalonSleepAction, TalonString, TalonVariable, TalonComment]]
 
-    left: "TalonIdentifier"
-    right: "TalonAction" | "TalonBinaryOperator" | "TalonFloat" | "TalonInteger" | "TalonKeyAction" | "TalonParenthesizedExpression" | "TalonSleepAction" | "TalonString" | "TalonVariable"
 
+@dataclass_json
 @dataclass
-class TalonBinaryOperator(Node):
+class TalonBinaryOperator(Branch):
+    children: list[TalonComment]
+    left: list[Union[TalonAction, TalonBinaryOperator, TalonFloat, TalonInteger, TalonKeyAction, TalonParenthesizedExpression, TalonSleepAction, TalonString, TalonVariable, TalonComment]]
+    operator: list[Union[TalonOperator, TalonComment]]
+    right: list[Union[TalonAction, TalonBinaryOperator, TalonFloat, TalonInteger, TalonKeyAction, TalonParenthesizedExpression, TalonSleepAction, TalonString, TalonVariable, TalonComment]]
 
-    left: "TalonAction" | "TalonBinaryOperator" | "TalonFloat" | "TalonInteger" | "TalonKeyAction" | "TalonParenthesizedExpression" | "TalonSleepAction" | "TalonString" | "TalonVariable"
-    operator: "TalonOperator"
-    right: "TalonAction" | "TalonBinaryOperator" | "TalonFloat" | "TalonInteger" | "TalonKeyAction" | "TalonParenthesizedExpression" | "TalonSleepAction" | "TalonString" | "TalonVariable"
 
+@dataclass_json
 @dataclass
-class TalonBlock(Node):
+class TalonBlock(Branch):
+    children: list[Union[TalonAssignment, TalonDocstring, TalonExpression, TalonComment]]
 
-    children: list["TalonAssignment" | "TalonDocstring" | "TalonExpression"]
 
+@dataclass_json
 @dataclass
-class TalonCapture(Node):
+class TalonCapture(Branch):
+    children: list[TalonComment]
+    capture_name: list[Union[TalonIdentifier, TalonComment]]
 
-    capture_name: "TalonIdentifier"
 
+@dataclass_json
 @dataclass
-class TalonChoice(Node):
+class TalonChoice(Branch):
+    children: list[Union[TalonCapture, TalonEndAnchor, TalonList, TalonOptional, TalonParenthesizedRule, TalonRepeat, TalonRepeat1, TalonSeq, TalonStartAnchor, TalonWord, TalonComment]]
 
-    children: list[
-        "TalonCapture"
-        | "TalonEndAnchor"
-        | "TalonList"
-        | "TalonOptional"
-        | "TalonParenthesizedRule"
-        | "TalonRepeat"
-        | "TalonRepeat1"
-        | "TalonSeq"
-        | "TalonStartAnchor"
-        | "TalonWord"
-    ]
 
+@dataclass_json
 @dataclass
-class TalonCommand(Node):
+class TalonCommand(Branch):
+    children: list[TalonComment]
+    rule: list[Union[TalonRule, TalonComment]]
+    script: list[Union[TalonBlock, TalonComment]]
 
-    rule: "TalonRule"
-    script: "TalonBlock"
 
+@dataclass_json
 @dataclass
-class TalonComment(Node):
+class TalonComment(Leaf):
     pass
 
-@dataclass
-class TalonContext(Node):
 
-    children: list[
-        "TalonAnd" | "TalonDocstring" | "TalonMatch" | "TalonNot" | "TalonOr"
-    ]
-
+@dataclass_json
 @dataclass
-class TalonDocstring(Node):
+class TalonContext(Branch):
+    children: list[Union[TalonAnd, TalonDocstring, TalonMatch, TalonNot, TalonOr, TalonComment]]
+
+
+@dataclass_json
+@dataclass
+class TalonDocstring(Leaf):
     pass
 
-@dataclass
-class ERROR(Node):
 
-    children: list[list[Node] | Node | None] = ...
-
+@dataclass_json
 @dataclass
-class TalonEndAnchor(Node):
+class TalonEndAnchor(Leaf):
     pass
 
-@dataclass
-class TalonExpression(Node):
 
-    expression: "TalonAction" | "TalonBinaryOperator" | "TalonFloat" | "TalonInteger" | "TalonKeyAction" | "TalonParenthesizedExpression" | "TalonSleepAction" | "TalonString" | "TalonVariable"
-
+@dataclass_json
 @dataclass
-class TalonFloat(Node):
+class TalonError(Branch):
+    children: list[Union[TalonAction, TalonAnd, TalonArgumentList, TalonAssignment, TalonBinaryOperator, TalonBlock, TalonCapture, TalonChoice, TalonCommand, TalonContext, TalonExpression, TalonIncludeTag, TalonInterpolation, TalonKeyAction, TalonList, TalonMatch, TalonNot, TalonNumber, TalonOptional, TalonOr, TalonParenthesizedExpression, TalonParenthesizedRule, TalonRegexEscapeSequence, TalonRepeat, TalonRepeat1, TalonRule, TalonSeq, TalonSettings, TalonSleepAction, TalonSourceFile, TalonString, TalonStringContent, TalonVariable, TalonComment, TalonDocstring, TalonEndAnchor, TalonFloat, TalonIdentifier, TalonImplicitString, TalonInteger, TalonOperator, TalonStartAnchor, TalonStringEscapeSequence, TalonWord, TalonError]]
+
+
+@dataclass_json
+@dataclass
+class TalonExpression(Branch):
+    children: list[TalonComment]
+    expression: list[Union[TalonAction, TalonBinaryOperator, TalonFloat, TalonInteger, TalonKeyAction, TalonParenthesizedExpression, TalonSleepAction, TalonString, TalonVariable, TalonComment]]
+
+
+@dataclass_json
+@dataclass
+class TalonFloat(Leaf):
     pass
 
+
+@dataclass_json
 @dataclass
-class TalonIdentifier(Node):
+class TalonIdentifier(Leaf):
     pass
 
+
+@dataclass_json
 @dataclass
-class TalonImplicitString(Node):
+class TalonImplicitString(Leaf):
     pass
 
-@dataclass
-class TalonIncludeTag(Node):
 
-    tag: "TalonIdentifier"
-
+@dataclass_json
 @dataclass
-class TalonInteger(Node):
+class TalonIncludeTag(Branch):
+    children: list[TalonComment]
+    tag: list[Union[TalonIdentifier, TalonComment]]
+
+
+@dataclass_json
+@dataclass
+class TalonInteger(Leaf):
     pass
 
+
+@dataclass_json
 @dataclass
-class TalonInterpolation(Node):
+class TalonInterpolation(Branch):
+    children: list[Union[TalonAction, TalonBinaryOperator, TalonFloat, TalonInteger, TalonKeyAction, TalonParenthesizedExpression, TalonSleepAction, TalonString, TalonVariable, TalonComment]]
 
-    children: "TalonAction" | "TalonBinaryOperator" | "TalonFloat" | "TalonInteger" | "TalonKeyAction" | "TalonParenthesizedExpression" | "TalonSleepAction" | "TalonString" | "TalonVariable"
 
+@dataclass_json
 @dataclass
-class TalonKeyAction(Node):
+class TalonKeyAction(Branch):
+    children: list[TalonComment]
+    arguments: list[Union[TalonImplicitString, TalonComment]]
 
-    arguments: "TalonImplicitString"
 
+@dataclass_json
 @dataclass
-class TalonList(Node):
+class TalonList(Branch):
+    children: list[TalonComment]
+    list_name: list[Union[TalonIdentifier, TalonComment]]
 
-    list_name: "TalonIdentifier"
 
+@dataclass_json
 @dataclass
-class TalonMatch(Node):
+class TalonMatch(Branch):
+    children: list[TalonComment]
+    key: list[Union[TalonIdentifier, TalonComment]]
+    pattern: list[Union[TalonImplicitString, TalonComment]]
 
-    key: "TalonIdentifier"
-    pattern: "TalonImplicitString"
 
+@dataclass_json
 @dataclass
-class TalonNot(Node):
+class TalonNot(Branch):
+    children: list[Union[TalonMatch, TalonComment]]
 
-    children: "TalonMatch"
 
+@dataclass_json
 @dataclass
-class TalonNumber(Node):
+class TalonNumber(Branch):
+    children: list[Union[TalonFloat, TalonInteger, TalonComment]]
 
-    children: "TalonFloat" | "TalonInteger"
 
+@dataclass_json
 @dataclass
-class TalonOperator(Node):
+class TalonOperator(Leaf):
     pass
 
+
+@dataclass_json
 @dataclass
-class TalonOptional(Node):
+class TalonOptional(Branch):
+    children: list[Union[TalonCapture, TalonChoice, TalonEndAnchor, TalonList, TalonOptional, TalonParenthesizedRule, TalonRepeat, TalonRepeat1, TalonSeq, TalonStartAnchor, TalonWord, TalonComment]]
 
-    children: list[
-        "TalonCapture"
-        | "TalonChoice"
-        | "TalonEndAnchor"
-        | "TalonList"
-        | "TalonOptional"
-        | "TalonParenthesizedRule"
-        | "TalonRepeat"
-        | "TalonRepeat1"
-        | "TalonSeq"
-        | "TalonStartAnchor"
-        | "TalonWord"
-    ]
 
+@dataclass_json
 @dataclass
-class TalonOr(Node):
+class TalonOr(Branch):
+    children: list[Union[TalonAnd, TalonMatch, TalonNot, TalonComment]]
 
-    children: list["TalonAnd" | "TalonMatch" | "TalonNot"]
 
+@dataclass_json
 @dataclass
-class TalonParenthesizedExpression(Node):
+class TalonParenthesizedExpression(Branch):
+    children: list[Union[TalonAction, TalonBinaryOperator, TalonFloat, TalonInteger, TalonKeyAction, TalonParenthesizedExpression, TalonSleepAction, TalonString, TalonVariable, TalonComment]]
 
-    children: "TalonAction" | "TalonBinaryOperator" | "TalonFloat" | "TalonInteger" | "TalonKeyAction" | "TalonParenthesizedExpression" | "TalonSleepAction" | "TalonString" | "TalonVariable"
 
+@dataclass_json
 @dataclass
-class TalonParenthesizedRule(Node):
+class TalonParenthesizedRule(Branch):
+    children: list[Union[TalonCapture, TalonChoice, TalonEndAnchor, TalonList, TalonOptional, TalonParenthesizedRule, TalonRepeat, TalonRepeat1, TalonSeq, TalonStartAnchor, TalonWord, TalonComment]]
 
-    children: list[
-        "TalonChoice"
-        | "TalonEndAnchor"
-        | "TalonList"
-        | "TalonOptional"
-        | "TalonParenthesizedRule"
-        | "TalonRepeat"
-        | "TalonRepeat1"
-        | "TalonSeq"
-        | "TalonStartAnchor"
-        | "TalonWord"
-    ]
 
+@dataclass_json
 @dataclass
-class TalonRegexEscapeSequence(Node):
+class TalonRegexEscapeSequence(Branch):
+    children: list[Union[TalonRegexEscapeSequence, TalonComment]]
 
-    children: "TalonRegexEscapeSequence" | None
 
+@dataclass_json
 @dataclass
-class TalonRepeat(Node):
+class TalonRepeat(Branch):
+    children: list[Union[TalonCapture, TalonList, TalonOptional, TalonParenthesizedRule, TalonRepeat, TalonRepeat1, TalonWord, TalonComment]]
 
-    children: "TalonCapture" | "TalonList" | "TalonOptional" | "TalonParenthesizedRule" | "TalonRepeat" | "TalonRepeat1" | "TalonWord"
 
+@dataclass_json
 @dataclass
-class TalonRepeat1(Node):
+class TalonRepeat1(Branch):
+    children: list[Union[TalonCapture, TalonList, TalonOptional, TalonParenthesizedRule, TalonRepeat, TalonRepeat1, TalonWord, TalonComment]]
 
-    children: "TalonCapture" | "TalonList" | "TalonOptional" | "TalonParenthesizedRule" | "TalonRepeat" | "TalonRepeat1" | "TalonWord"
 
+@dataclass_json
 @dataclass
-class TalonRule(Node):
+class TalonRule(Branch):
+    children: list[Union[TalonCapture, TalonChoice, TalonEndAnchor, TalonList, TalonOptional, TalonParenthesizedRule, TalonRepeat, TalonRepeat1, TalonSeq, TalonStartAnchor, TalonWord, TalonComment]]
 
-    children: list[
-        "TalonCapture"
-        | "TalonChoice"
-        | "TalonEndAnchor"
-        | "TalonList"
-        | "TalonOptional"
-        | "TalonParenthesizedRule"
-        | "TalonRepeat"
-        | "TalonRepeat1"
-        | "TalonSeq"
-        | "TalonStartAnchor"
-        | "TalonWord"
-    ]
 
+@dataclass_json
 @dataclass
-class TalonSeq(Node):
+class TalonSeq(Branch):
+    children: list[Union[TalonCapture, TalonList, TalonOptional, TalonParenthesizedRule, TalonRepeat, TalonRepeat1, TalonWord, TalonComment]]
 
-    children: list[
-        "TalonCapture"
-        | "TalonList"
-        | "TalonOptional"
-        | "TalonParenthesizedRule"
-        | "TalonRepeat"
-        | "TalonRepeat1"
-        | "TalonWord"
-    ]
 
+@dataclass_json
 @dataclass
-class TalonSettings(Node):
+class TalonSettings(Branch):
+    children: list[Union[TalonBlock, TalonComment]]
 
-    children: "TalonBlock"
 
+@dataclass_json
 @dataclass
-class TalonSleepAction(Node):
+class TalonSleepAction(Branch):
+    children: list[TalonComment]
+    arguments: list[Union[TalonImplicitString, TalonComment]]
 
-    arguments: "TalonImplicitString"
 
+@dataclass_json
 @dataclass
-class TalonSourceFile(Node):
+class TalonSourceFile(Branch):
+    children: list[Union[TalonCommand, TalonContext, TalonIncludeTag, TalonSettings, TalonComment]]
 
-    children: list[
-        "TalonCommand" | "TalonContext" | "TalonIncludeTag" | "TalonSettings"
-    ]
 
+@dataclass_json
 @dataclass
-class TalonStartAnchor(Node):
+class TalonStartAnchor(Leaf):
     pass
 
-@dataclass
-class TalonString(Node):
 
-    children: list[
-        "TalonInterpolation" | "TalonStringContent" | "TalonStringEscapeSequence"
-    ]
-
+@dataclass_json
 @dataclass
-class TalonStringContent(Node):
+class TalonString(Branch):
+    children: list[Union[TalonInterpolation, TalonStringContent, TalonStringEscapeSequence, TalonComment]]
+
+
+@dataclass_json
+@dataclass
+class TalonStringContent(Leaf):
     pass
 
+
+@dataclass_json
 @dataclass
-class TalonStringEscapeSequence(Node):
+class TalonStringEscapeSequence(Leaf):
     pass
 
-@dataclass
-class TalonVariable(Node):
-    variable_name: "TalonIdentifier"
 
+@dataclass_json
 @dataclass
-class TalonWord(Node):
+class TalonVariable(Branch):
+    children: list[TalonComment]
+    variable_name: list[Union[TalonIdentifier, TalonComment]]
+
+
+@dataclass_json
+@dataclass
+class TalonWord(Leaf):
     pass
-
-class NodeVisitor(object):
-    def generic_visit(self, node: Node) -> None: ...
-    def visit(self, node: Node) -> None: ...
-    def visit_Action(self, node: Node) -> None: ...
-    def visit_And(self, node: Node) -> None: ...
-    def visit_ArgumentList(self, node: Node) -> None: ...
-    def visit_Assignment(self, node: Node) -> None: ...
-    def visit_BinaryOperator(self, node: Node) -> None: ...
-    def visit_Block(self, node: Node) -> None: ...
-    def visit_Capture(self, node: Node) -> None: ...
-    def visit_Choice(self, node: Node) -> None: ...
-    def visit_Command(self, node: Node) -> None: ...
-    def visit_Comment(self, node: Node) -> None: ...
-    def visit_Context(self, node: Node) -> None: ...
-    def visit_Docstring(self, node: Node) -> None: ...
-    def visit_ERROR(self, node: Node) -> None: ...
-    def visit_EndAnchor(self, node: Node) -> None: ...
-    def visit_Expression(self, node: Node) -> None: ...
-    def visit_Float(self, node: Node) -> None: ...
-    def visit_Identifier(self, node: Node) -> None: ...
-    def visit_ImplicitString(self, node: Node) -> None: ...
-    def visit_IncludeTag(self, node: Node) -> None: ...
-    def visit_Integer(self, node: Node) -> None: ...
-    def visit_Interpolation(self, node: Node) -> None: ...
-    def visit_KeyAction(self, node: Node) -> None: ...
-    def visit_List(self, node: Node) -> None: ...
-    def visit_Match(self, node: Node) -> None: ...
-    def visit_Not(self, node: Node) -> None: ...
-    def visit_Number(self, node: Node) -> None: ...
-    def visit_Operator(self, node: Node) -> None: ...
-    def visit_Optional(self, node: Node) -> None: ...
-    def visit_Or(self, node: Node) -> None: ...
-    def visit_ParenthesizedExpression(self, node: Node) -> None: ...
-    def visit_ParenthesizedRule(self, node: Node) -> None: ...
-    def visit_RegexEscapeSequence(self, node: Node) -> None: ...
-    def visit_Repeat(self, node: Node) -> None: ...
-    def visit_Repeat1(self, node: Node) -> None: ...
-    def visit_Rule(self, node: Node) -> None: ...
-    def visit_Seq(self, node: Node) -> None: ...
-    def visit_Settings(self, node: Node) -> None: ...
-    def visit_SleepAction(self, node: Node) -> None: ...
-    def visit_SourceFile(self, node: Node) -> None: ...
-    def visit_StartAnchor(self, node: Node) -> None: ...
-    def visit_String(self, node: Node) -> None: ...
-    def visit_StringContent(self, node: Node) -> None: ...
-    def visit_StringEscapeSequence(self, node: Node) -> None: ...
-    def visit_Variable(self, node: Node) -> None: ...
-    def visit_Word(self, node: Node) -> None: ...
-
-Result = TypeVar("Result")
-
-class NodeTransformer(Generic[Result]):
-    def transform(self, node: Node) -> Result: ...
-    def transform_Action(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        action_name: Result,
-        arguments: Result,
-        action_name_hist: "TalonIdentifier",
-        arguments_hist: "TalonArgumentList",
-    ) -> Result: ...
-    def transform_And(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        children: list[Result],
-        children_hist: list["TalonAnd" | "TalonMatch" | "TalonNot"],
-    ) -> Result: ...
-    def transform_ArgumentList(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        children: list[Result],
-        children_hist: list[
-            "TalonAction"
-            | "TalonBinaryOperator"
-            | "TalonFloat"
-            | "TalonInteger"
-            | "TalonKeyAction"
-            | "TalonParenthesizedExpression"
-            | "TalonSleepAction"
-            | "TalonString"
-            | "TalonVariable"
-        ],
-    ) -> Result: ...
-    def transform_Assignment(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        left: Result,
-        right: Result,
-        left_hist: "TalonIdentifier",
-        right_hist: "TalonAction"
-        | "TalonBinaryOperator"
-        | "TalonFloat"
-        | "TalonInteger"
-        | "TalonKeyAction"
-        | "TalonParenthesizedExpression"
-        | "TalonSleepAction"
-        | "TalonString"
-        | "TalonVariable",
-    ) -> Result: ...
-    def transform_BinaryOperator(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        left: Result,
-        operator: Result,
-        right: Result,
-        left_hist: "TalonAction"
-        | "TalonBinaryOperator"
-        | "TalonFloat"
-        | "TalonInteger"
-        | "TalonKeyAction"
-        | "TalonParenthesizedExpression"
-        | "TalonSleepAction"
-        | "TalonString"
-        | "TalonVariable",
-        operator_hist: "TalonOperator",
-        right_hist: "TalonAction"
-        | "TalonBinaryOperator"
-        | "TalonFloat"
-        | "TalonInteger"
-        | "TalonKeyAction"
-        | "TalonParenthesizedExpression"
-        | "TalonSleepAction"
-        | "TalonString"
-        | "TalonVariable",
-    ) -> Result: ...
-    def transform_Block(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        children: list[Result],
-        children_hist: list["TalonAssignment" | "TalonDocstring" | "TalonExpression"],
-    ) -> Result: ...
-    def transform_Capture(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        capture_name: Result,
-        capture_name_hist: "TalonIdentifier",
-    ) -> Result: ...
-    def transform_Choice(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        children: list[Result],
-        children_hist: list[
-            "TalonCapture"
-            | "TalonEndAnchor"
-            | "TalonList"
-            | "TalonOptional"
-            | "TalonParenthesizedRule"
-            | "TalonRepeat"
-            | "TalonRepeat1"
-            | "TalonSeq"
-            | "TalonStartAnchor"
-            | "TalonWord"
-        ],
-    ) -> Result: ...
-    def transform_Command(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        rule: Result,
-        script: Result,
-        rule_hist: "TalonRule",
-        script_hist: "TalonBlock",
-    ) -> Result: ...
-    def transform_Comment(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-    ) -> Result: ...
-    def transform_Context(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        children: list[Result],
-        children_hist: list[
-            "TalonAnd" | "TalonDocstring" | "TalonMatch" | "TalonNot" | "TalonOr"
-        ],
-    ) -> Result: ...
-    def transform_Docstring(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-    ) -> Result: ...
-    def transform_ERROR(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        children: list[Result],
-        children_hist: list[list[Node] | Node | None],
-    ) -> Result: ...
-    def transform_EndAnchor(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-    ) -> Result: ...
-    def transform_Expression(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        expression: Result,
-        expression_hist: "TalonAction"
-        | "TalonBinaryOperator"
-        | "TalonFloat"
-        | "TalonInteger"
-        | "TalonKeyAction"
-        | "TalonParenthesizedExpression"
-        | "TalonSleepAction"
-        | "TalonString"
-        | "TalonVariable",
-    ) -> Result: ...
-    def transform_Float(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-    ) -> Result: ...
-    def transform_Identifier(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-    ) -> Result: ...
-    def transform_ImplicitString(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-    ) -> Result: ...
-    def transform_IncludeTag(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        tag: Result,
-        tag_hist: "TalonIdentifier",
-    ) -> Result: ...
-    def transform_Integer(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-    ) -> Result: ...
-    def transform_Interpolation(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        children: Result,
-        children_hist: "TalonAction"
-        | "TalonBinaryOperator"
-        | "TalonFloat"
-        | "TalonInteger"
-        | "TalonKeyAction"
-        | "TalonParenthesizedExpression"
-        | "TalonSleepAction"
-        | "TalonString"
-        | "TalonVariable",
-    ) -> Result: ...
-    def transform_KeyAction(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        arguments: Result,
-        arguments_hist: "TalonImplicitString",
-    ) -> Result: ...
-    def transform_List(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        list_name: Result,
-        list_name_hist: "TalonIdentifier",
-    ) -> Result: ...
-    def transform_Match(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        key: Result,
-        pattern: Result,
-        key_hist: "TalonIdentifier",
-        pattern_hist: "TalonImplicitString",
-    ) -> Result: ...
-    def transform_Not(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        children: Result,
-        children_hist: "TalonMatch",
-    ) -> Result: ...
-    def transform_Number(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        children: Result,
-        children_hist: "TalonFloat" | "TalonInteger",
-    ) -> Result: ...
-    def transform_Operator(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-    ) -> Result: ...
-    def transform_Optional(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        children: list[Result],
-        children_hist: list[
-            "TalonCapture"
-            | "TalonChoice"
-            | "TalonEndAnchor"
-            | "TalonList"
-            | "TalonOptional"
-            | "TalonParenthesizedRule"
-            | "TalonRepeat"
-            | "TalonRepeat1"
-            | "TalonSeq"
-            | "TalonStartAnchor"
-            | "TalonWord"
-        ],
-    ) -> Result: ...
-    def transform_Or(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        children: list[Result],
-        children_hist: list["TalonAnd" | "TalonMatch" | "TalonNot"],
-    ) -> Result: ...
-    def transform_ParenthesizedExpression(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        children: Result,
-        children_hist: "TalonAction"
-        | "TalonBinaryOperator"
-        | "TalonFloat"
-        | "TalonInteger"
-        | "TalonKeyAction"
-        | "TalonParenthesizedExpression"
-        | "TalonSleepAction"
-        | "TalonString"
-        | "TalonVariable",
-    ) -> Result: ...
-    def transform_ParenthesizedRule(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        children: list[Result],
-        children_hist: list[
-            "TalonChoice"
-            | "TalonEndAnchor"
-            | "TalonList"
-            | "TalonOptional"
-            | "TalonParenthesizedRule"
-            | "TalonRepeat"
-            | "TalonRepeat1"
-            | "TalonSeq"
-            | "TalonStartAnchor"
-            | "TalonWord"
-        ],
-    ) -> Result: ...
-    def transform_RegexEscapeSequence(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        children: Result,
-        children_hist: "TalonRegexEscapeSequence" | None,
-    ) -> Result: ...
-    def transform_Repeat(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        children: Result,
-        children_hist: "TalonCapture"
-        | "TalonList"
-        | "TalonOptional"
-        | "TalonParenthesizedRule"
-        | "TalonRepeat"
-        | "TalonRepeat1"
-        | "TalonWord",
-    ) -> Result: ...
-    def transform_Repeat1(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        children: Result,
-        children_hist: "TalonCapture"
-        | "TalonList"
-        | "TalonOptional"
-        | "TalonParenthesizedRule"
-        | "TalonRepeat"
-        | "TalonRepeat1"
-        | "TalonWord",
-    ) -> Result: ...
-    def transform_Rule(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        children: list[Result],
-        children_hist: list[
-            "TalonCapture"
-            | "TalonChoice"
-            | "TalonEndAnchor"
-            | "TalonList"
-            | "TalonOptional"
-            | "TalonParenthesizedRule"
-            | "TalonRepeat"
-            | "TalonRepeat1"
-            | "TalonSeq"
-            | "TalonStartAnchor"
-            | "TalonWord"
-        ],
-    ) -> Result: ...
-    def transform_Seq(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        children: list[Result],
-        children_hist: list[
-            "TalonCapture"
-            | "TalonList"
-            | "TalonOptional"
-            | "TalonParenthesizedRule"
-            | "TalonRepeat"
-            | "TalonRepeat1"
-            | "TalonWord"
-        ],
-    ) -> Result: ...
-    def transform_Settings(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        children: Result,
-        children_hist: "TalonBlock",
-    ) -> Result: ...
-    def transform_SleepAction(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        arguments: Result,
-        arguments_hist: "TalonImplicitString",
-    ) -> Result: ...
-    def transform_SourceFile(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        children: list[Result],
-        children_hist: list[
-            "TalonCommand" | "TalonContext" | "TalonIncludeTag" | "TalonSettings"
-        ],
-    ) -> Result: ...
-    def transform_StartAnchor(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-    ) -> Result: ...
-    def transform_String(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        children: list[Result],
-        children_hist: list[
-            "TalonInterpolation" | "TalonStringContent" | "TalonStringEscapeSequence"
-        ],
-    ) -> Result: ...
-    def transform_StringContent(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-    ) -> Result: ...
-    def transform_StringEscapeSequence(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-    ) -> Result: ...
-    def transform_Variable(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-        variable_name: Result,
-        variable_name_hist: "TalonIdentifier",
-    ) -> Result: ...
-    def transform_Word(
-        self,
-        *,
-        text: str,
-        type_name: str,
-        start_position: Point,
-        end_position: Point,
-    ) -> Result: ...

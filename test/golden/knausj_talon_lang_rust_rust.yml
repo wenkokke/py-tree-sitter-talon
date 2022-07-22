@@ -43,6 +43,11 @@ output:
   - type: context
     children:
     - type: match
+      children:
+      - text: tag
+        type: identifier
+      - text: ' user.rust'
+        type: implicit_string
       key:
         text: tag
         type: identifier
@@ -50,62 +55,107 @@ output:
         text: ' user.rust'
         type: implicit_string
   - type: include_tag
+    children:
+    - text: user.code_comment_line
+      type: identifier
     tag:
       text: user.code_comment_line
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_comment_block_c_like
+      type: identifier
     tag:
       text: user.code_comment_block_c_like
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_comment_documentation
+      type: identifier
     tag:
       text: user.code_comment_documentation
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_imperative
+      type: identifier
     tag:
       text: user.code_imperative
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_object_oriented
+      type: identifier
     tag:
       text: user.code_object_oriented
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_data_bool
+      type: identifier
     tag:
       text: user.code_data_bool
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_data_null
+      type: identifier
     tag:
       text: user.code_data_null
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_functions
+      type: identifier
     tag:
       text: user.code_functions
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_functions_common
+      type: identifier
     tag:
       text: user.code_functions_common
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_libraries
+      type: identifier
     tag:
       text: user.code_libraries
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_libraries_gui
+      type: identifier
     tag:
       text: user.code_libraries_gui
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_operators_array
+      type: identifier
     tag:
       text: user.code_operators_array
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_operators_assignment
+      type: identifier
     tag:
       text: user.code_operators_assignment
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_operators_bitwise
+      type: identifier
     tag:
       text: user.code_operators_bitwise
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_operators_math
+      type: identifier
     tag:
       text: user.code_operators_math
       type: identifier
@@ -114,6 +164,13 @@ output:
     - type: block
       children:
       - type: assignment
+        children:
+        - text: user.code_private_function_formatter
+          type: identifier
+        - type: string
+          children:
+          - text: SNAKE_CASE
+            type: string_content
         left:
           text: user.code_private_function_formatter
           type: identifier
@@ -123,6 +180,13 @@ output:
           - text: SNAKE_CASE
             type: string_content
       - type: assignment
+        children:
+        - text: user.code_protected_function_formatter
+          type: identifier
+        - type: string
+          children:
+          - text: SNAKE_CASE
+            type: string_content
         left:
           text: user.code_protected_function_formatter
           type: identifier
@@ -132,6 +196,13 @@ output:
           - text: SNAKE_CASE
             type: string_content
       - type: assignment
+        children:
+        - text: user.code_public_function_formatter
+          type: identifier
+        - type: string
+          children:
+          - text: SNAKE_CASE
+            type: string_content
         left:
           text: user.code_public_function_formatter
           type: identifier
@@ -141,6 +212,13 @@ output:
           - text: SNAKE_CASE
             type: string_content
       - type: assignment
+        children:
+        - text: user.code_private_variable_formatter
+          type: identifier
+        - type: string
+          children:
+          - text: SNAKE_CASE
+            type: string_content
         left:
           text: user.code_private_variable_formatter
           type: identifier
@@ -150,6 +228,13 @@ output:
           - text: SNAKE_CASE
             type: string_content
       - type: assignment
+        children:
+        - text: user.code_protected_variable_formatter
+          type: identifier
+        - type: string
+          children:
+          - text: SNAKE_CASE
+            type: string_content
         left:
           text: user.code_protected_variable_formatter
           type: identifier
@@ -159,6 +244,13 @@ output:
           - text: SNAKE_CASE
             type: string_content
       - type: assignment
+        children:
+        - text: user.code_public_variable_formatter
+          type: identifier
+        - type: string
+          children:
+          - text: SNAKE_CASE
+            type: string_content
         left:
           text: user.code_public_variable_formatter
           type: identifier
@@ -172,6 +264,28 @@ output:
   - text: '## for unsafe rust'
     type: comment
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - text: unsafe
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'unsafe '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'unsafe '
+            type: string_content
     rule:
       type: rule
       children:
@@ -185,12 +299,55 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'unsafe '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'unsafe '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: unsafe
+          type: word
+        - text: block
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_state_unsafe
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_state_unsafe
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: user.code_state_unsafe
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_state_unsafe
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
     rule:
       type: rule
       children:
@@ -204,8 +361,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_state_unsafe
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_state_unsafe
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: user.code_state_unsafe
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: user.code_state_unsafe
             type: identifier
@@ -215,6 +390,236 @@ output:
   - text: '## rust centric struct and enum definitions'
     type: comment
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: struct
+              type: word
+            - text: structure
+              type: word
+        - type: capture
+          children:
+          - text: user.text
+            type: identifier
+          capture_name:
+            text: user.text
+            type: identifier
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'struct '
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'struct '
+                type: string_content
+        expression:
+          type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'struct '
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'struct '
+                type: string_content
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: action
+              children:
+              - text: user.formatted_text
+                type: identifier
+              - type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: text
+                    type: identifier
+                  variable_name:
+                    text: text
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PUBLIC_CAMEL_CASE
+                    type: string_content
+              action_name:
+                text: user.formatted_text
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: text
+                    type: identifier
+                  variable_name:
+                    text: text
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PUBLIC_CAMEL_CASE
+                    type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: action
+              children:
+              - text: user.formatted_text
+                type: identifier
+              - type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: text
+                    type: identifier
+                  variable_name:
+                    text: text
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PUBLIC_CAMEL_CASE
+                    type: string_content
+              action_name:
+                text: user.formatted_text
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: text
+                    type: identifier
+                  variable_name:
+                    text: text
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PUBLIC_CAMEL_CASE
+                    type: string_content
+        expression:
+          type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: action
+              children:
+              - text: user.formatted_text
+                type: identifier
+              - type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: text
+                    type: identifier
+                  variable_name:
+                    text: text
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PUBLIC_CAMEL_CASE
+                    type: string_content
+              action_name:
+                text: user.formatted_text
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: text
+                    type: identifier
+                  variable_name:
+                    text: text
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PUBLIC_CAMEL_CASE
+                    type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: action
+              children:
+              - text: user.formatted_text
+                type: identifier
+              - type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: text
+                    type: identifier
+                  variable_name:
+                    text: text
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PUBLIC_CAMEL_CASE
+                    type: string_content
+              action_name:
+                text: user.formatted_text
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: text
+                    type: identifier
+                  variable_name:
+                    text: text
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PUBLIC_CAMEL_CASE
+                    type: string_content
     rule:
       type: rule
       children:
@@ -231,6 +636,9 @@ output:
             - text: structure
               type: word
         - type: capture
+          children:
+          - text: user.text
+            type: identifier
           capture_name:
             text: user.text
             type: identifier
@@ -238,8 +646,38 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'struct '
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'struct '
+                type: string_content
         expression:
           type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'struct '
+                type: string_content
           action_name:
             text: insert
             type: identifier
@@ -251,15 +689,30 @@ output:
               - text: 'struct '
                 type: string_content
       - type: expression
-        expression:
-          type: action
-          action_name:
-            text: insert
+        children:
+        - type: action
+          children:
+          - text: insert
             type: identifier
-          arguments:
-            type: argument_list
+          - type: argument_list
             children:
             - type: action
+              children:
+              - text: user.formatted_text
+                type: identifier
+              - type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: text
+                    type: identifier
+                  variable_name:
+                    text: text
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PUBLIC_CAMEL_CASE
+                    type: string_content
               action_name:
                 text: user.formatted_text
                 type: identifier
@@ -267,6 +720,130 @@ output:
                 type: argument_list
                 children:
                 - type: variable
+                  children:
+                  - text: text
+                    type: identifier
+                  variable_name:
+                    text: text
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PUBLIC_CAMEL_CASE
+                    type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: action
+              children:
+              - text: user.formatted_text
+                type: identifier
+              - type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: text
+                    type: identifier
+                  variable_name:
+                    text: text
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PUBLIC_CAMEL_CASE
+                    type: string_content
+              action_name:
+                text: user.formatted_text
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: text
+                    type: identifier
+                  variable_name:
+                    text: text
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PUBLIC_CAMEL_CASE
+                    type: string_content
+        expression:
+          type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: action
+              children:
+              - text: user.formatted_text
+                type: identifier
+              - type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: text
+                    type: identifier
+                  variable_name:
+                    text: text
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PUBLIC_CAMEL_CASE
+                    type: string_content
+              action_name:
+                text: user.formatted_text
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: text
+                    type: identifier
+                  variable_name:
+                    text: text
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PUBLIC_CAMEL_CASE
+                    type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: action
+              children:
+              - text: user.formatted_text
+                type: identifier
+              - type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: text
+                    type: identifier
+                  variable_name:
+                    text: text
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PUBLIC_CAMEL_CASE
+                    type: string_content
+              action_name:
+                text: user.formatted_text
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: text
+                    type: identifier
                   variable_name:
                     text: text
                     type: identifier
@@ -275,8 +852,8 @@ output:
                   - text: PUBLIC_CAMEL_CASE
                     type: string_content
   - type: command
-    rule:
-      type: rule
+    children:
+    - type: rule
       children:
       - type: seq
         children:
@@ -285,15 +862,47 @@ output:
         - text: enum
           type: word
         - type: capture
+          children:
+          - text: user.text
+            type: identifier
           capture_name:
             text: user.text
             type: identifier
-    script:
-      type: block
+    - type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'enum '
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'enum '
+                type: string_content
         expression:
           type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'enum '
+                type: string_content
           action_name:
             text: insert
             type: identifier
@@ -305,15 +914,30 @@ output:
               - text: 'enum '
                 type: string_content
       - type: expression
-        expression:
-          type: action
-          action_name:
-            text: insert
+        children:
+        - type: action
+          children:
+          - text: insert
             type: identifier
-          arguments:
-            type: argument_list
+          - type: argument_list
             children:
             - type: action
+              children:
+              - text: user.formatted_text
+                type: identifier
+              - type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: text
+                    type: identifier
+                  variable_name:
+                    text: text
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PUBLIC_CAMEL_CASE
+                    type: string_content
               action_name:
                 text: user.formatted_text
                 type: identifier
@@ -321,6 +945,355 @@ output:
                 type: argument_list
                 children:
                 - type: variable
+                  children:
+                  - text: text
+                    type: identifier
+                  variable_name:
+                    text: text
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PUBLIC_CAMEL_CASE
+                    type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: action
+              children:
+              - text: user.formatted_text
+                type: identifier
+              - type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: text
+                    type: identifier
+                  variable_name:
+                    text: text
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PUBLIC_CAMEL_CASE
+                    type: string_content
+              action_name:
+                text: user.formatted_text
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: text
+                    type: identifier
+                  variable_name:
+                    text: text
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PUBLIC_CAMEL_CASE
+                    type: string_content
+        expression:
+          type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: action
+              children:
+              - text: user.formatted_text
+                type: identifier
+              - type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: text
+                    type: identifier
+                  variable_name:
+                    text: text
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PUBLIC_CAMEL_CASE
+                    type: string_content
+              action_name:
+                text: user.formatted_text
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: text
+                    type: identifier
+                  variable_name:
+                    text: text
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PUBLIC_CAMEL_CASE
+                    type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: action
+              children:
+              - text: user.formatted_text
+                type: identifier
+              - type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: text
+                    type: identifier
+                  variable_name:
+                    text: text
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PUBLIC_CAMEL_CASE
+                    type: string_content
+              action_name:
+                text: user.formatted_text
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: text
+                    type: identifier
+                  variable_name:
+                    text: text
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PUBLIC_CAMEL_CASE
+                    type: string_content
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - text: enum
+          type: word
+        - type: capture
+          children:
+          - text: user.text
+            type: identifier
+          capture_name:
+            text: user.text
+            type: identifier
+    script:
+      type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'enum '
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'enum '
+                type: string_content
+        expression:
+          type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'enum '
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'enum '
+                type: string_content
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: action
+              children:
+              - text: user.formatted_text
+                type: identifier
+              - type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: text
+                    type: identifier
+                  variable_name:
+                    text: text
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PUBLIC_CAMEL_CASE
+                    type: string_content
+              action_name:
+                text: user.formatted_text
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: text
+                    type: identifier
+                  variable_name:
+                    text: text
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PUBLIC_CAMEL_CASE
+                    type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: action
+              children:
+              - text: user.formatted_text
+                type: identifier
+              - type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: text
+                    type: identifier
+                  variable_name:
+                    text: text
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PUBLIC_CAMEL_CASE
+                    type: string_content
+              action_name:
+                text: user.formatted_text
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: text
+                    type: identifier
+                  variable_name:
+                    text: text
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PUBLIC_CAMEL_CASE
+                    type: string_content
+        expression:
+          type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: action
+              children:
+              - text: user.formatted_text
+                type: identifier
+              - type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: text
+                    type: identifier
+                  variable_name:
+                    text: text
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PUBLIC_CAMEL_CASE
+                    type: string_content
+              action_name:
+                text: user.formatted_text
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: text
+                    type: identifier
+                  variable_name:
+                    text: text
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PUBLIC_CAMEL_CASE
+                    type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: action
+              children:
+              - text: user.formatted_text
+                type: identifier
+              - type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: text
+                    type: identifier
+                  variable_name:
+                    text: text
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PUBLIC_CAMEL_CASE
+                    type: string_content
+              action_name:
+                text: user.formatted_text
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: text
+                    type: identifier
                   variable_name:
                     text: text
                     type: identifier
@@ -329,6 +1302,44 @@ output:
                   - text: PUBLIC_CAMEL_CASE
                     type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: toggle
+          type: word
+        - text: use
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_toggle_libraries
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_toggle_libraries
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: user.code_toggle_libraries
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_toggle_libraries
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
     rule:
       type: rule
       children:
@@ -342,8 +1353,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_toggle_libraries
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_toggle_libraries
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: user.code_toggle_libraries
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: user.code_toggle_libraries
             type: identifier
@@ -353,6 +1382,24 @@ output:
   - text: '## Simple aliases'
     type: comment
   - type: command
+    children:
+    - type: rule
+      children:
+      - text: borrow
+        type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: '&'
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: '&'
+            type: string_content
     rule:
       type: rule
       children:
@@ -362,12 +1409,39 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: '&'
+            type: string_content
         expression:
           type: string
           children:
           - text: '&'
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: borrow
+          type: word
+        - text: mutable
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: '&mut '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: '&mut '
+            type: string_content
     rule:
       type: rule
       children:
@@ -381,12 +1455,45 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: '&mut '
+            type: string_content
         expression:
           type: string
           children:
           - text: '&mut '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: pub
+              type: word
+            - text: public
+              type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'pub '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'pub '
+            type: string_content
     rule:
       type: rule
       children:
@@ -406,12 +1513,47 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'pub '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'pub '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: pub
+              type: word
+            - text: public
+              type: word
+        - text: crate
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'pub(crate) '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'pub(crate) '
+            type: string_content
     rule:
       type: rule
       children:
@@ -433,12 +1575,45 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'pub(crate) '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'pub(crate) '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: dyn
+              type: word
+            - text: dynamic
+              type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'dyn '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'dyn '
+            type: string_content
     rule:
       type: rule
       children:
@@ -458,12 +1633,39 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'dyn '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'dyn '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - text: constant
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'const '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'const '
+            type: string_content
     rule:
       type: rule
       children:
@@ -477,12 +1679,47 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'const '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'const '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: funk
+              type: word
+            - text: func
+              type: word
+            - text: function
+              type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'fn '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'fn '
+            type: string_content
     rule:
       type: rule
       children:
@@ -504,12 +1741,45 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'fn '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'fn '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: imp
+              type: word
+            - text: implements
+              type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'impl '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'impl '
+            type: string_content
     rule:
       type: rule
       children:
@@ -529,12 +1799,41 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'impl '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'impl '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - text: let
+          type: word
+        - text: mute
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'let mut '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'let mut '
+            type: string_content
     rule:
       type: rule
       children:
@@ -550,12 +1849,39 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'let mut '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'let mut '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - text: let
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'let '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'let '
+            type: string_content
     rule:
       type: rule
       children:
@@ -569,12 +1895,45 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'let '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'let '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: mute
+              type: word
+            - text: mutable
+              type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'mut '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'mut '
+            type: string_content
     rule:
       type: rule
       children:
@@ -594,12 +1953,45 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'mut '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'mut '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: mod
+              type: word
+            - text: module
+              type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'mod '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'mod '
+            type: string_content
     rule:
       type: rule
       children:
@@ -619,12 +2011,47 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'mod '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'mod '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - text: ref
+          type: word
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: mute
+              type: word
+            - text: mutable
+              type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'ref mut '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'ref mut '
+            type: string_content
     rule:
       type: rule
       children:
@@ -646,12 +2073,39 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'ref mut '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'ref mut '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - text: ref
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'ref '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'ref '
+            type: string_content
     rule:
       type: rule
       children:
@@ -665,12 +2119,39 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'ref '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'ref '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - text: trait
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'trait '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'trait '
+            type: string_content
     rule:
       type: rule
       children:
@@ -684,12 +2165,55 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'trait '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'trait '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - text: match
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_state_switch
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_state_switch
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: user.code_state_switch
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_state_switch
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
     rule:
       type: rule
       children:
@@ -703,8 +2227,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_state_switch
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_state_switch
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: user.code_state_switch
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: user.code_state_switch
             type: identifier
@@ -712,6 +2254,34 @@ output:
             type: argument_list
             children: []
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: some
+              type: word
+            - text: sum
+              type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: Some
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: Some
+            type: string_content
     rule:
       type: rule
       children:
@@ -731,12 +2301,39 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: Some
+            type: string_content
         expression:
           type: string
           children:
           - text: Some
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - text: static
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'static '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'static '
+            type: string_content
     rule:
       type: rule
       children:
@@ -750,12 +2347,39 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'static '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'static '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: self
+          type: word
+        - text: taught
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: self.
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: self.
+            type: string_content
     rule:
       type: rule
       children:
@@ -769,12 +2393,55 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: self.
+            type: string_content
         expression:
           type: string
           children:
           - text: self.
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - text: use
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_import
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_import
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: user.code_import
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_import
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
     rule:
       type: rule
       children:
@@ -788,8 +2455,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_import
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_import
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: user.code_import
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: user.code_import
             type: identifier
@@ -797,6 +2482,102 @@ output:
             type: argument_list
             children: []
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: use
+          type: word
+        - type: capture
+          children:
+          - text: user.code_libraries
+            type: identifier
+          capture_name:
+            text: user.code_libraries
+            type: identifier
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_insert_library
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_libraries
+                type: identifier
+              variable_name:
+                text: code_libraries
+                type: identifier
+            - type: string
+              children: []
+          action_name:
+            text: user.code_insert_library
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_libraries
+                type: identifier
+              variable_name:
+                text: code_libraries
+                type: identifier
+            - type: string
+              children: []
+        expression:
+          type: action
+          children:
+          - text: user.code_insert_library
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_libraries
+                type: identifier
+              variable_name:
+                text: code_libraries
+                type: identifier
+            - type: string
+              children: []
+          action_name:
+            text: user.code_insert_library
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_libraries
+                type: identifier
+              variable_name:
+                text: code_libraries
+                type: identifier
+            - type: string
+              children: []
+      - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: semicolon enter
+            type: implicit_string
+          arguments:
+            text: semicolon enter
+            type: implicit_string
+        expression:
+          type: key_action
+          children:
+          - text: semicolon enter
+            type: implicit_string
+          arguments:
+            text: semicolon enter
+            type: implicit_string
     rule:
       type: rule
       children:
@@ -805,6 +2586,9 @@ output:
         - text: use
           type: word
         - type: capture
+          children:
+          - text: user.code_libraries
+            type: identifier
           capture_name:
             text: user.code_libraries
             type: identifier
@@ -812,8 +2596,22 @@ output:
       type: block
       children:
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: user.code_insert_library
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_libraries
+                type: identifier
+              variable_name:
+                text: code_libraries
+                type: identifier
+            - type: string
+              children: []
           action_name:
             text: user.code_insert_library
             type: identifier
@@ -821,20 +2619,107 @@ output:
             type: argument_list
             children:
             - type: variable
+              children:
+              - text: code_libraries
+                type: identifier
+              variable_name:
+                text: code_libraries
+                type: identifier
+            - type: string
+              children: []
+        expression:
+          type: action
+          children:
+          - text: user.code_insert_library
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_libraries
+                type: identifier
+              variable_name:
+                text: code_libraries
+                type: identifier
+            - type: string
+              children: []
+          action_name:
+            text: user.code_insert_library
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_libraries
+                type: identifier
               variable_name:
                 text: code_libraries
                 type: identifier
             - type: string
               children: []
       - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: semicolon enter
+            type: implicit_string
+          arguments:
+            text: semicolon enter
+            type: implicit_string
         expression:
           type: key_action
+          children:
+          - text: semicolon enter
+            type: implicit_string
           arguments:
             text: semicolon enter
             type: implicit_string
   - text: '## specialist flow control'
     type: comment
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - text: if
+          type: word
+        - text: let
+          type: word
+        - text: some
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_insert_if_let_some
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_insert_if_let_some
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: user.code_insert_if_let_some
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_insert_if_let_some
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
     rule:
       type: rule
       children:
@@ -852,8 +2737,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_insert_if_let_some
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_insert_if_let_some
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: user.code_insert_if_let_some
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: user.code_insert_if_let_some
             type: identifier
@@ -861,6 +2764,48 @@ output:
             type: argument_list
             children: []
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - text: if
+          type: word
+        - text: let
+          type: word
+        - text: error
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_insert_if_let_error
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_insert_if_let_error
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: user.code_insert_if_let_error
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_insert_if_let_error
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
     rule:
       type: rule
       children:
@@ -878,8 +2823,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_insert_if_let_error
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_insert_if_let_error
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: user.code_insert_if_let_error
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: user.code_insert_if_let_error
             type: identifier
@@ -889,6 +2852,44 @@ output:
   - text: '## rust centric synonyms'
     type: comment
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: is
+          type: word
+        - text: some
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_insert_is_not_null
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_insert_is_not_null
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: user.code_insert_is_not_null
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_insert_is_not_null
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
     rule:
       type: rule
       children:
@@ -902,8 +2903,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_insert_is_not_null
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_insert_is_not_null
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: user.code_insert_is_not_null
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: user.code_insert_is_not_null
             type: identifier
@@ -913,6 +2932,50 @@ output:
   - text: '## for implementing'
     type: comment
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: implement
+          type: word
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: struct
+              type: word
+            - text: structure
+              type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_state_implements
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_state_implements
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: user.code_state_implements
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_state_implements
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
     rule:
       type: rule
       children:
@@ -932,8 +2995,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_state_implements
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_state_implements
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: user.code_state_implements
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: user.code_state_implements
             type: identifier
@@ -943,8 +3024,8 @@ output:
   - text: '## for annotating function parameters'
     type: comment
   - type: command
-    rule:
-      type: rule
+    children:
+    - type: rule
       children:
       - type: seq
         children:
@@ -955,15 +3036,29 @@ output:
         - text: trait
           type: word
         - type: list
+          children:
+          - text: user.code_trait
+            type: identifier
           list_name:
             text: user.code_trait
             type: identifier
-    script:
-      type: block
+    - type: block
       children:
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: user.code_insert_trait_annotation
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_trait
+                type: identifier
+              variable_name:
+                text: code_trait
+                type: identifier
           action_name:
             text: user.code_insert_trait_annotation
             type: identifier
@@ -971,10 +3066,140 @@ output:
             type: argument_list
             children:
             - type: variable
+              children:
+              - text: code_trait
+                type: identifier
+              variable_name:
+                text: code_trait
+                type: identifier
+        expression:
+          type: action
+          children:
+          - text: user.code_insert_trait_annotation
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_trait
+                type: identifier
+              variable_name:
+                text: code_trait
+                type: identifier
+          action_name:
+            text: user.code_insert_trait_annotation
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_trait
+                type: identifier
+              variable_name:
+                text: code_trait
+                type: identifier
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - text: is
+          type: word
+        - text: implemented
+          type: word
+        - text: trait
+          type: word
+        - type: list
+          children:
+          - text: user.code_trait
+            type: identifier
+          list_name:
+            text: user.code_trait
+            type: identifier
+    script:
+      type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_insert_trait_annotation
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_trait
+                type: identifier
+              variable_name:
+                text: code_trait
+                type: identifier
+          action_name:
+            text: user.code_insert_trait_annotation
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_trait
+                type: identifier
+              variable_name:
+                text: code_trait
+                type: identifier
+        expression:
+          type: action
+          children:
+          - text: user.code_insert_trait_annotation
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_trait
+                type: identifier
+              variable_name:
+                text: code_trait
+                type: identifier
+          action_name:
+            text: user.code_insert_trait_annotation
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_trait
+                type: identifier
               variable_name:
                 text: code_trait
                 type: identifier
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: is
+          type: word
+        - text: implemented
+          type: word
+        - text: trait
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: ': impl '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: ': impl '
+            type: string_content
     rule:
       type: rule
       children:
@@ -990,12 +3215,92 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: ': impl '
+            type: string_content
         expression:
           type: string
           children:
           - text: ': impl '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: returns
+          type: word
+        - text: implemented
+          type: word
+        - text: trait
+          type: word
+        - type: list
+          children:
+          - text: user.code_trait
+            type: identifier
+          list_name:
+            text: user.code_trait
+            type: identifier
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_insert_return_trait
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_trait
+                type: identifier
+              variable_name:
+                text: code_trait
+                type: identifier
+          action_name:
+            text: user.code_insert_return_trait
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_trait
+                type: identifier
+              variable_name:
+                text: code_trait
+                type: identifier
+        expression:
+          type: action
+          children:
+          - text: user.code_insert_return_trait
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_trait
+                type: identifier
+              variable_name:
+                text: code_trait
+                type: identifier
+          action_name:
+            text: user.code_insert_return_trait
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_trait
+                type: identifier
+              variable_name:
+                text: code_trait
+                type: identifier
     rule:
       type: rule
       children:
@@ -1008,6 +3313,9 @@ output:
         - text: trait
           type: word
         - type: list
+          children:
+          - text: user.code_trait
+            type: identifier
           list_name:
             text: user.code_trait
             type: identifier
@@ -1015,8 +3323,20 @@ output:
       type: block
       children:
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: user.code_insert_return_trait
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_trait
+                type: identifier
+              variable_name:
+                text: code_trait
+                type: identifier
           action_name:
             text: user.code_insert_return_trait
             type: identifier
@@ -1024,10 +3344,64 @@ output:
             type: argument_list
             children:
             - type: variable
+              children:
+              - text: code_trait
+                type: identifier
+              variable_name:
+                text: code_trait
+                type: identifier
+        expression:
+          type: action
+          children:
+          - text: user.code_insert_return_trait
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_trait
+                type: identifier
+              variable_name:
+                text: code_trait
+                type: identifier
+          action_name:
+            text: user.code_insert_return_trait
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_trait
+                type: identifier
               variable_name:
                 text: code_trait
                 type: identifier
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: returns
+          type: word
+        - text: implemented
+          type: word
+        - text: trait
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: ' -> impl '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: ' -> impl '
+            type: string_content
     rule:
       type: rule
       children:
@@ -1043,6 +3417,11 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: ' -> impl '
+            type: string_content
         expression:
           type: string
           children:
@@ -1051,6 +3430,81 @@ output:
   - text: '## for generic reference of traits'
     type: comment
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: trait
+          type: word
+        - type: list
+          children:
+          - text: user.code_trait
+            type: identifier
+          list_name:
+            text: user.code_trait
+            type: identifier
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '{'
+                type: string_content
+              - text: code_trait
+                type: string_content
+              - text: '}'
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '{'
+                type: string_content
+              - text: code_trait
+                type: string_content
+              - text: '}'
+                type: string_content
+        expression:
+          type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '{'
+                type: string_content
+              - text: code_trait
+                type: string_content
+              - text: '}'
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '{'
+                type: string_content
+              - text: code_trait
+                type: string_content
+              - text: '}'
+                type: string_content
     rule:
       type: rule
       children:
@@ -1059,6 +3513,9 @@ output:
         - text: trait
           type: word
         - type: list
+          children:
+          - text: user.code_trait
+            type: identifier
           list_name:
             text: user.code_trait
             type: identifier
@@ -1066,8 +3523,50 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '{'
+                type: string_content
+              - text: code_trait
+                type: string_content
+              - text: '}'
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '{'
+                type: string_content
+              - text: code_trait
+                type: string_content
+              - text: '}'
+                type: string_content
         expression:
           type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '{'
+                type: string_content
+              - text: code_trait
+                type: string_content
+              - text: '}'
+                type: string_content
           action_name:
             text: insert
             type: identifier
@@ -1083,6 +3582,91 @@ output:
               - text: '}'
                 type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: implemented
+          type: word
+        - text: trait
+          type: word
+        - type: list
+          children:
+          - text: user.code_trait
+            type: identifier
+          list_name:
+            text: user.code_trait
+            type: identifier
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'impl '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: code_trait
+                type: string_content
+              - text: '}'
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'impl '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: code_trait
+                type: string_content
+              - text: '}'
+                type: string_content
+        expression:
+          type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'impl '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: code_trait
+                type: string_content
+              - text: '}'
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'impl '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: code_trait
+                type: string_content
+              - text: '}'
+                type: string_content
     rule:
       type: rule
       children:
@@ -1093,6 +3677,9 @@ output:
         - text: trait
           type: word
         - type: list
+          children:
+          - text: user.code_trait
+            type: identifier
           list_name:
             text: user.code_trait
             type: identifier
@@ -1100,8 +3687,56 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'impl '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: code_trait
+                type: string_content
+              - text: '}'
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'impl '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: code_trait
+                type: string_content
+              - text: '}'
+                type: string_content
         expression:
           type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'impl '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: code_trait
+                type: string_content
+              - text: '}'
+                type: string_content
           action_name:
             text: insert
             type: identifier
@@ -1119,6 +3754,91 @@ output:
               - text: '}'
                 type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: dynamic
+          type: word
+        - text: trait
+          type: word
+        - type: list
+          children:
+          - text: user.code_trait
+            type: identifier
+          list_name:
+            text: user.code_trait
+            type: identifier
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'dyn '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: code_trait
+                type: string_content
+              - text: '}'
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'dyn '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: code_trait
+                type: string_content
+              - text: '}'
+                type: string_content
+        expression:
+          type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'dyn '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: code_trait
+                type: string_content
+              - text: '}'
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'dyn '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: code_trait
+                type: string_content
+              - text: '}'
+                type: string_content
     rule:
       type: rule
       children:
@@ -1129,6 +3849,9 @@ output:
         - text: trait
           type: word
         - type: list
+          children:
+          - text: user.code_trait
+            type: identifier
           list_name:
             text: user.code_trait
             type: identifier
@@ -1136,8 +3859,56 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'dyn '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: code_trait
+                type: string_content
+              - text: '}'
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'dyn '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: code_trait
+                type: string_content
+              - text: '}'
+                type: string_content
         expression:
           type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'dyn '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: code_trait
+                type: string_content
+              - text: '}'
+                type: string_content
           action_name:
             text: insert
             type: identifier
@@ -1157,6 +3928,85 @@ output:
   - text: '## for generic reference of macro'
     type: comment
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: macro
+          type: word
+        - type: list
+          children:
+          - text: user.code_macros
+            type: identifier
+          list_name:
+            text: user.code_macros
+            type: identifier
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_insert_macro
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_macros
+                type: identifier
+              variable_name:
+                text: code_macros
+                type: identifier
+            - type: string
+              children: []
+          action_name:
+            text: user.code_insert_macro
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_macros
+                type: identifier
+              variable_name:
+                text: code_macros
+                type: identifier
+            - type: string
+              children: []
+        expression:
+          type: action
+          children:
+          - text: user.code_insert_macro
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_macros
+                type: identifier
+              variable_name:
+                text: code_macros
+                type: identifier
+            - type: string
+              children: []
+          action_name:
+            text: user.code_insert_macro
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_macros
+                type: identifier
+              variable_name:
+                text: code_macros
+                type: identifier
+            - type: string
+              children: []
     rule:
       type: rule
       children:
@@ -1165,6 +4015,9 @@ output:
         - text: macro
           type: word
         - type: list
+          children:
+          - text: user.code_macros
+            type: identifier
           list_name:
             text: user.code_macros
             type: identifier
@@ -1172,8 +4025,22 @@ output:
       type: block
       children:
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: user.code_insert_macro
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_macros
+                type: identifier
+              variable_name:
+                text: code_macros
+                type: identifier
+            - type: string
+              children: []
           action_name:
             text: user.code_insert_macro
             type: identifier
@@ -1181,12 +4048,167 @@ output:
             type: argument_list
             children:
             - type: variable
+              children:
+              - text: code_macros
+                type: identifier
+              variable_name:
+                text: code_macros
+                type: identifier
+            - type: string
+              children: []
+        expression:
+          type: action
+          children:
+          - text: user.code_insert_macro
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_macros
+                type: identifier
+              variable_name:
+                text: code_macros
+                type: identifier
+            - type: string
+              children: []
+          action_name:
+            text: user.code_insert_macro
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_macros
+                type: identifier
               variable_name:
                 text: code_macros
                 type: identifier
             - type: string
               children: []
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: macro
+          type: word
+        - text: wrap
+          type: word
+        - type: list
+          children:
+          - text: user.code_macros
+            type: identifier
+          list_name:
+            text: user.code_macros
+            type: identifier
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_insert_macro
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_macros
+                type: identifier
+              variable_name:
+                text: code_macros
+                type: identifier
+            - type: action
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - type: argument_list
+                children: []
+              action_name:
+                text: edit.selected_text
+                type: identifier
+              arguments:
+                type: argument_list
+                children: []
+          action_name:
+            text: user.code_insert_macro
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_macros
+                type: identifier
+              variable_name:
+                text: code_macros
+                type: identifier
+            - type: action
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - type: argument_list
+                children: []
+              action_name:
+                text: edit.selected_text
+                type: identifier
+              arguments:
+                type: argument_list
+                children: []
+        expression:
+          type: action
+          children:
+          - text: user.code_insert_macro
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_macros
+                type: identifier
+              variable_name:
+                text: code_macros
+                type: identifier
+            - type: action
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - type: argument_list
+                children: []
+              action_name:
+                text: edit.selected_text
+                type: identifier
+              arguments:
+                type: argument_list
+                children: []
+          action_name:
+            text: user.code_insert_macro
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_macros
+                type: identifier
+              variable_name:
+                text: code_macros
+                type: identifier
+            - type: action
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - type: argument_list
+                children: []
+              action_name:
+                text: edit.selected_text
+                type: identifier
+              arguments:
+                type: argument_list
+                children: []
     rule:
       type: rule
       children:
@@ -1197,6 +4219,9 @@ output:
         - text: wrap
           type: word
         - type: list
+          children:
+          - text: user.code_macros
+            type: identifier
           list_name:
             text: user.code_macros
             type: identifier
@@ -1204,8 +4229,32 @@ output:
       type: block
       children:
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: user.code_insert_macro
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_macros
+                type: identifier
+              variable_name:
+                text: code_macros
+                type: identifier
+            - type: action
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - type: argument_list
+                children: []
+              action_name:
+                text: edit.selected_text
+                type: identifier
+              arguments:
+                type: argument_list
+                children: []
           action_name:
             text: user.code_insert_macro
             type: identifier
@@ -1213,10 +4262,69 @@ output:
             type: argument_list
             children:
             - type: variable
+              children:
+              - text: code_macros
+                type: identifier
               variable_name:
                 text: code_macros
                 type: identifier
             - type: action
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - type: argument_list
+                children: []
+              action_name:
+                text: edit.selected_text
+                type: identifier
+              arguments:
+                type: argument_list
+                children: []
+        expression:
+          type: action
+          children:
+          - text: user.code_insert_macro
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_macros
+                type: identifier
+              variable_name:
+                text: code_macros
+                type: identifier
+            - type: action
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - type: argument_list
+                children: []
+              action_name:
+                text: edit.selected_text
+                type: identifier
+              arguments:
+                type: argument_list
+                children: []
+          action_name:
+            text: user.code_insert_macro
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_macros
+                type: identifier
+              variable_name:
+                text: code_macros
+                type: identifier
+            - type: action
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - type: argument_list
+                children: []
               action_name:
                 text: edit.selected_text
                 type: identifier
@@ -1226,6 +4334,46 @@ output:
   - text: '## rust specific document comments'
     type: comment
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: block
+          type: word
+        - text: dock
+          type: word
+        - text: comment
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_comment_documentation_block
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_comment_documentation_block
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: user.code_comment_documentation_block
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_comment_documentation_block
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
     rule:
       type: rule
       children:
@@ -1241,8 +4389,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_comment_documentation_block
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_comment_documentation_block
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: user.code_comment_documentation_block
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: user.code_comment_documentation_block
             type: identifier
@@ -1250,6 +4416,46 @@ output:
             type: argument_list
             children: []
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: inner
+          type: word
+        - text: dock
+          type: word
+        - text: comment
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_comment_documentation_inner
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_comment_documentation_inner
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: user.code_comment_documentation_inner
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_comment_documentation_inner
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
     rule:
       type: rule
       children:
@@ -1265,8 +4471,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_comment_documentation_inner
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_comment_documentation_inner
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: user.code_comment_documentation_inner
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: user.code_comment_documentation_inner
             type: identifier
@@ -1274,6 +4498,48 @@ output:
             type: argument_list
             children: []
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: inner
+          type: word
+        - text: block
+          type: word
+        - text: dock
+          type: word
+        - text: comment
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_comment_documentation_block_inner
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_comment_documentation_block_inner
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: user.code_comment_documentation_block_inner
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_comment_documentation_block_inner
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
     rule:
       type: rule
       children:
@@ -1291,8 +4557,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_comment_documentation_block_inner
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.code_comment_documentation_block_inner
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: user.code_comment_documentation_block_inner
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: user.code_comment_documentation_block_inner
             type: identifier

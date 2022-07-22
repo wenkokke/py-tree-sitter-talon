@@ -81,6 +81,11 @@ output:
   - type: context
     children:
     - type: match
+      children:
+      - text: tag
+        type: identifier
+      - text: ' user.wsl'
+        type: implicit_string
       key:
         text: tag
         type: identifier
@@ -88,26 +93,128 @@ output:
         text: ' user.wsl'
         type: implicit_string
   - type: include_tag
+    children:
+    - text: terminal
+      type: identifier
     tag:
       text: terminal
       type: identifier
   - type: include_tag
+    children:
+    - text: user.file_manager
+      type: identifier
     tag:
       text: user.file_manager
       type: identifier
   - type: include_tag
+    children:
+    - text: user.generic_unix_shell
+      type: identifier
     tag:
       text: user.generic_unix_shell
       type: identifier
   - type: include_tag
+    children:
+    - text: user.git
+      type: identifier
     tag:
       text: user.git
       type: identifier
   - type: include_tag
+    children:
+    - text: user.kubectl
+      type: identifier
     tag:
       text: user.kubectl
       type: identifier
   - type: command
+    children:
+    - type: rule
+      children:
+      - text: ^
+        type: start_anchor
+      - type: seq
+        children:
+        - text: go
+          type: word
+        - type: capture
+          children:
+          - text: user.letter
+            type: identifier
+          capture_name:
+            text: user.letter
+            type: identifier
+      - text: $
+        type: end_anchor
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.file_manager_open_volume
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: /mnt/
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: letter
+                type: string_content
+              - text: '}'
+                type: string_content
+          action_name:
+            text: user.file_manager_open_volume
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: /mnt/
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: letter
+                type: string_content
+              - text: '}'
+                type: string_content
+        expression:
+          type: action
+          children:
+          - text: user.file_manager_open_volume
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: /mnt/
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: letter
+                type: string_content
+              - text: '}'
+                type: string_content
+          action_name:
+            text: user.file_manager_open_volume
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: /mnt/
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: letter
+                type: string_content
+              - text: '}'
+                type: string_content
     rule:
       type: rule
       children:
@@ -118,6 +225,9 @@ output:
         - text: go
           type: word
         - type: capture
+          children:
+          - text: user.letter
+            type: identifier
           capture_name:
             text: user.letter
             type: identifier
@@ -127,8 +237,56 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.file_manager_open_volume
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: /mnt/
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: letter
+                type: string_content
+              - text: '}'
+                type: string_content
+          action_name:
+            text: user.file_manager_open_volume
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: /mnt/
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: letter
+                type: string_content
+              - text: '}'
+                type: string_content
         expression:
           type: action
+          children:
+          - text: user.file_manager_open_volume
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: /mnt/
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: letter
+                type: string_content
+              - text: '}'
+                type: string_content
           action_name:
             text: user.file_manager_open_volume
             type: identifier
@@ -146,6 +304,54 @@ output:
               - text: '}'
                 type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: wsl
+              type: word
+            - text: weasel
+              type: word
+        - text: reset
+          type: word
+        - text: path
+          type: word
+        - text: detection
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.wsl_reset_path_detection
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.wsl_reset_path_detection
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: user.wsl_reset_path_detection
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.wsl_reset_path_detection
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
     rule:
       type: rule
       children:
@@ -169,8 +375,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.wsl_reset_path_detection
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.wsl_reset_path_detection
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: user.wsl_reset_path_detection
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: user.wsl_reset_path_detection
             type: identifier
@@ -178,6 +402,50 @@ output:
             type: argument_list
             children: []
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: wsl
+              type: word
+            - text: weasel
+              type: word
+        - text: speak
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.wsl_speak
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.wsl_speak
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: user.wsl_speak
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.wsl_speak
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
     rule:
       type: rule
       children:
@@ -197,8 +465,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.wsl_speak
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.wsl_speak
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: user.wsl_speak
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: user.wsl_speak
             type: identifier

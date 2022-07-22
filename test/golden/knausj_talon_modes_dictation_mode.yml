@@ -35,6 +35,11 @@ output:
   - type: context
     children:
     - type: match
+      children:
+      - text: mode
+        type: identifier
+      - text: ' dictation'
+        type: implicit_string
       key:
         text: mode
         type: identifier
@@ -42,6 +47,43 @@ output:
         text: ' dictation'
         type: implicit_string
   - type: command
+    children:
+    - type: rule
+      children:
+      - text: ^
+        type: start_anchor
+      - type: seq
+        children:
+        - text: press
+          type: word
+        - type: capture
+          children:
+          - text: user.modifiers
+            type: identifier
+          capture_name:
+            text: user.modifiers
+            type: identifier
+      - text: $
+        type: end_anchor
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: modifiers
+            type: implicit_string
+          arguments:
+            text: modifiers
+            type: implicit_string
+        expression:
+          type: key_action
+          children:
+          - text: modifiers
+            type: implicit_string
+          arguments:
+            text: modifiers
+            type: implicit_string
     rule:
       type: rule
       children:
@@ -52,6 +94,9 @@ output:
         - text: press
           type: word
         - type: capture
+          children:
+          - text: user.modifiers
+            type: identifier
           capture_name:
             text: user.modifiers
             type: identifier
@@ -61,12 +106,60 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: modifiers
+            type: implicit_string
+          arguments:
+            text: modifiers
+            type: implicit_string
         expression:
           type: key_action
+          children:
+          - text: modifiers
+            type: implicit_string
           arguments:
             text: modifiers
             type: implicit_string
   - type: command
+    children:
+    - type: rule
+      children:
+      - text: ^
+        type: start_anchor
+      - type: seq
+        children:
+        - text: press
+          type: word
+        - type: capture
+          children:
+          - text: user.keys
+            type: identifier
+          capture_name:
+            text: user.keys
+            type: identifier
+      - text: $
+        type: end_anchor
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: keys
+            type: implicit_string
+          arguments:
+            text: keys
+            type: implicit_string
+        expression:
+          type: key_action
+          children:
+          - text: keys
+            type: implicit_string
+          arguments:
+            text: keys
+            type: implicit_string
     rule:
       type: rule
       children:
@@ -77,6 +170,9 @@ output:
         - text: press
           type: word
         - type: capture
+          children:
+          - text: user.keys
+            type: identifier
           capture_name:
             text: user.keys
             type: identifier
@@ -86,8 +182,19 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: keys
+            type: implicit_string
+          arguments:
+            text: keys
+            type: implicit_string
         expression:
           type: key_action
+          children:
+          - text: keys
+            type: implicit_string
           arguments:
             text: keys
             type: implicit_string
@@ -98,19 +205,33 @@ output:
       \ no need to wrap those)"
     type: comment
   - type: command
-    rule:
-      type: rule
+    children:
+    - type: rule
       children:
       - type: capture
+        children:
+        - text: user.raw_prose
+          type: identifier
         capture_name:
           text: user.raw_prose
           type: identifier
-    script:
-      type: block
+    - type: block
       children:
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: auto_insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: raw_prose
+                type: identifier
+              variable_name:
+                text: raw_prose
+                type: identifier
           action_name:
             text: auto_insert
             type: identifier
@@ -118,10 +239,142 @@ output:
             type: argument_list
             children:
             - type: variable
+              children:
+              - text: raw_prose
+                type: identifier
+              variable_name:
+                text: raw_prose
+                type: identifier
+        expression:
+          type: action
+          children:
+          - text: auto_insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: raw_prose
+                type: identifier
+              variable_name:
+                text: raw_prose
+                type: identifier
+          action_name:
+            text: auto_insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: raw_prose
+                type: identifier
+              variable_name:
+                text: raw_prose
+                type: identifier
+    rule:
+      type: rule
+      children:
+      - type: capture
+        children:
+        - text: user.raw_prose
+          type: identifier
+        capture_name:
+          text: user.raw_prose
+          type: identifier
+    script:
+      type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: auto_insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: raw_prose
+                type: identifier
+              variable_name:
+                text: raw_prose
+                type: identifier
+          action_name:
+            text: auto_insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: raw_prose
+                type: identifier
+              variable_name:
+                text: raw_prose
+                type: identifier
+        expression:
+          type: action
+          children:
+          - text: auto_insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: raw_prose
+                type: identifier
+              variable_name:
+                text: raw_prose
+                type: identifier
+          action_name:
+            text: auto_insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: raw_prose
+                type: identifier
               variable_name:
                 text: raw_prose
                 type: identifier
   - type: command
+    children:
+    - type: rule
+      children:
+      - text: cap
+        type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.dictation_format_cap
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.dictation_format_cap
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: user.dictation_format_cap
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.dictation_format_cap
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
     rule:
       type: rule
       children:
@@ -131,8 +384,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.dictation_format_cap
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.dictation_format_cap
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: user.dictation_format_cap
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: user.dictation_format_cap
             type: identifier
@@ -142,6 +413,50 @@ output:
   - text: '# Hyphenated variants are for Dragon.'
     type: comment
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: parenthesized_rule
+        children:
+        - type: choice
+          children:
+          - type: seq
+            children:
+            - text: no
+              type: word
+            - text: cap
+              type: word
+          - text: no-caps
+            type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.dictation_format_no_cap
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.dictation_format_no_cap
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: user.dictation_format_no_cap
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.dictation_format_no_cap
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
     rule:
       type: rule
       children:
@@ -161,8 +476,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.dictation_format_no_cap
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.dictation_format_no_cap
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: user.dictation_format_no_cap
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: user.dictation_format_no_cap
             type: identifier
@@ -170,6 +503,50 @@ output:
             type: argument_list
             children: []
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: parenthesized_rule
+        children:
+        - type: choice
+          children:
+          - type: seq
+            children:
+            - text: no
+              type: word
+            - text: space
+              type: word
+          - text: no-space
+            type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.dictation_format_no_space
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.dictation_format_no_space
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: user.dictation_format_no_space
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.dictation_format_no_space
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
     rule:
       type: rule
       children:
@@ -189,8 +566,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.dictation_format_no_space
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.dictation_format_no_space
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: user.dictation_format_no_space
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: user.dictation_format_no_space
             type: identifier
@@ -198,6 +593,48 @@ output:
             type: argument_list
             children: []
   - type: command
+    children:
+    - type: rule
+      children:
+      - text: ^
+        type: start_anchor
+      - type: seq
+        children:
+        - text: cap
+          type: word
+        - text: that
+          type: word
+      - text: $
+        type: end_anchor
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.dictation_reformat_cap
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.dictation_reformat_cap
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: user.dictation_reformat_cap
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.dictation_reformat_cap
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
     rule:
       type: rule
       children:
@@ -215,8 +652,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.dictation_reformat_cap
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.dictation_reformat_cap
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: user.dictation_reformat_cap
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: user.dictation_reformat_cap
             type: identifier
@@ -224,6 +679,58 @@ output:
             type: argument_list
             children: []
   - type: command
+    children:
+    - type: rule
+      children:
+      - text: ^
+        type: start_anchor
+      - type: seq
+        children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - type: seq
+              children:
+              - text: no
+                type: word
+              - text: cap
+                type: word
+            - text: no-caps
+              type: word
+        - text: that
+          type: word
+      - text: $
+        type: end_anchor
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.dictation_reformat_no_cap
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.dictation_reformat_no_cap
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: user.dictation_reformat_no_cap
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.dictation_reformat_no_cap
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
     rule:
       type: rule
       children:
@@ -251,8 +758,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.dictation_reformat_no_cap
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.dictation_reformat_no_cap
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: user.dictation_reformat_no_cap
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: user.dictation_reformat_no_cap
             type: identifier
@@ -260,6 +785,58 @@ output:
             type: argument_list
             children: []
   - type: command
+    children:
+    - type: rule
+      children:
+      - text: ^
+        type: start_anchor
+      - type: seq
+        children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - type: seq
+              children:
+              - text: no
+                type: word
+              - text: space
+                type: word
+            - text: no-space
+              type: word
+        - text: that
+          type: word
+      - text: $
+        type: end_anchor
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.dictation_reformat_no_space
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.dictation_reformat_no_space
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: user.dictation_reformat_no_space
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.dictation_reformat_no_space
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
     rule:
       type: rule
       children:
@@ -287,8 +864,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.dictation_reformat_no_space
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.dictation_reformat_no_space
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: user.dictation_reformat_no_space
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: user.dictation_reformat_no_space
             type: identifier
@@ -298,6 +893,194 @@ output:
   - text: '# Navigation'
     type: comment
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: go
+          type: word
+        - text: up
+          type: word
+        - type: capture
+          children:
+          - text: number_small
+            type: identifier
+          capture_name:
+            text: number_small
+            type: identifier
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: line
+              type: word
+            - text: lines
+              type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.up
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.up
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: edit.up
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.up
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
     rule:
       type: rule
       children:
@@ -308,6 +1091,9 @@ output:
         - text: up
           type: word
         - type: capture
+          children:
+          - text: number_small
+            type: identifier
           capture_name:
             text: number_small
             type: identifier
@@ -323,8 +1109,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.up
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.up
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: edit.up
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: edit.up
             type: identifier
@@ -332,8 +1136,40 @@ output:
             type: argument_list
             children: []
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
           action_name:
             text: repeat
             type: identifier
@@ -341,8 +1177,90 @@ output:
             type: argument_list
             children:
             - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
               left:
                 type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
                 variable_name:
                   text: number_small
                   type: identifier
@@ -353,6 +1271,194 @@ output:
                 text: '1'
                 type: integer
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: go
+          type: word
+        - text: down
+          type: word
+        - type: capture
+          children:
+          - text: number_small
+            type: identifier
+          capture_name:
+            text: number_small
+            type: identifier
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: line
+              type: word
+            - text: lines
+              type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.down
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.down
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: edit.down
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.down
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
     rule:
       type: rule
       children:
@@ -363,6 +1469,9 @@ output:
         - text: down
           type: word
         - type: capture
+          children:
+          - text: number_small
+            type: identifier
           capture_name:
             text: number_small
             type: identifier
@@ -378,8 +1487,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.down
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.down
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: edit.down
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: edit.down
             type: identifier
@@ -387,8 +1514,40 @@ output:
             type: argument_list
             children: []
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
           action_name:
             text: repeat
             type: identifier
@@ -396,8 +1555,90 @@ output:
             type: argument_list
             children:
             - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
               left:
                 type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
                 variable_name:
                   text: number_small
                   type: identifier
@@ -408,6 +1649,194 @@ output:
                 text: '1'
                 type: integer
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: go
+          type: word
+        - text: left
+          type: word
+        - type: capture
+          children:
+          - text: number_small
+            type: identifier
+          capture_name:
+            text: number_small
+            type: identifier
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: word
+              type: word
+            - text: words
+              type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.word_left
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.word_left
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: edit.word_left
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.word_left
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
     rule:
       type: rule
       children:
@@ -418,6 +1847,9 @@ output:
         - text: left
           type: word
         - type: capture
+          children:
+          - text: number_small
+            type: identifier
           capture_name:
             text: number_small
             type: identifier
@@ -433,8 +1865,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.word_left
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.word_left
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: edit.word_left
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: edit.word_left
             type: identifier
@@ -442,8 +1892,40 @@ output:
             type: argument_list
             children: []
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
           action_name:
             text: repeat
             type: identifier
@@ -451,8 +1933,90 @@ output:
             type: argument_list
             children:
             - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
               left:
                 type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
                 variable_name:
                   text: number_small
                   type: identifier
@@ -463,6 +2027,194 @@ output:
                 text: '1'
                 type: integer
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: go
+          type: word
+        - text: right
+          type: word
+        - type: capture
+          children:
+          - text: number_small
+            type: identifier
+          capture_name:
+            text: number_small
+            type: identifier
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: word
+              type: word
+            - text: words
+              type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.word_right
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.word_right
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: edit.word_right
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.word_right
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
     rule:
       type: rule
       children:
@@ -473,6 +2225,9 @@ output:
         - text: right
           type: word
         - type: capture
+          children:
+          - text: number_small
+            type: identifier
           capture_name:
             text: number_small
             type: identifier
@@ -488,8 +2243,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.word_right
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.word_right
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: edit.word_right
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: edit.word_right
             type: identifier
@@ -497,8 +2270,40 @@ output:
             type: argument_list
             children: []
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
           action_name:
             text: repeat
             type: identifier
@@ -506,8 +2311,90 @@ output:
             type: argument_list
             children:
             - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
               left:
                 type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
                 variable_name:
                   text: number_small
                   type: identifier
@@ -518,6 +2405,46 @@ output:
                 text: '1'
                 type: integer
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: go
+          type: word
+        - text: line
+          type: word
+        - text: start
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.line_start
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.line_start
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: edit.line_start
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.line_start
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
     rule:
       type: rule
       children:
@@ -533,8 +2460,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.line_start
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.line_start
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: edit.line_start
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: edit.line_start
             type: identifier
@@ -542,6 +2487,46 @@ output:
             type: argument_list
             children: []
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: go
+          type: word
+        - text: line
+          type: word
+        - text: end
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.line_end
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.line_end
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: edit.line_end
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.line_end
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
     rule:
       type: rule
       children:
@@ -557,8 +2542,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.line_end
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.line_end
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: edit.line_end
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: edit.line_end
             type: identifier
@@ -568,8 +2571,8 @@ output:
   - text: '# Selection'
     type: comment
   - type: command
-    rule:
-      type: rule
+    children:
+    - type: rule
       children:
       - type: seq
         children:
@@ -578,6 +2581,9 @@ output:
         - text: left
           type: word
         - type: capture
+          children:
+          - text: number_small
+            type: identifier
           capture_name:
             text: number_small
             type: identifier
@@ -589,12 +2595,29 @@ output:
               type: word
             - text: words
               type: word
-    script:
-      type: block
+    - type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.extend_word_left
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.extend_word_left
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: edit.extend_word_left
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: edit.extend_word_left
             type: identifier
@@ -602,17 +2625,31 @@ output:
             type: argument_list
             children: []
       - type: expression
-        expression:
-          type: action
-          action_name:
-            text: repeat
+        children:
+        - type: action
+          children:
+          - text: repeat
             type: identifier
-          arguments:
-            type: argument_list
+          - type: argument_list
             children:
             - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
               left:
                 type: variable
+                children:
+                - text: number_small
+                  type: identifier
                 variable_name:
                   text: number_small
                   type: identifier
@@ -622,7 +2659,106 @@ output:
               right:
                 text: '1'
                 type: integer
-  - type: command
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
     rule:
       type: rule
       children:
@@ -630,9 +2766,12 @@ output:
         children:
         - text: select
           type: word
-        - text: right
+        - text: left
           type: word
         - type: capture
+          children:
+          - text: number_small
+            type: identifier
           capture_name:
             text: number_small
             type: identifier
@@ -648,173 +2787,26 @@ output:
       type: block
       children:
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: edit.extend_word_left
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
-            text: edit.extend_word_right
+            text: edit.extend_word_left
             type: identifier
           arguments:
             type: argument_list
             children: []
-      - type: expression
         expression:
           type: action
-          action_name:
-            text: repeat
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: binary_operator
-              left:
-                type: variable
-                variable_name:
-                  text: number_small
-                  type: identifier
-              operator:
-                text: '-'
-                type: operator
-              right:
-                text: '1'
-                type: integer
-  - type: command
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: select
-          type: word
-        - text: left
-          type: word
-        - type: capture
-          capture_name:
-            text: number_small
-            type: identifier
-        - type: parenthesized_rule
           children:
-          - type: choice
-            children:
-            - text: character
-              type: word
-            - text: characters
-              type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        expression:
-          type: action
-          action_name:
-            text: edit.extend_left
+          - text: edit.extend_word_left
             type: identifier
-          arguments:
-            type: argument_list
+          - type: argument_list
             children: []
-      - type: expression
-        expression:
-          type: action
-          action_name:
-            text: repeat
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: binary_operator
-              left:
-                type: variable
-                variable_name:
-                  text: number_small
-                  type: identifier
-              operator:
-                text: '-'
-                type: operator
-              right:
-                text: '1'
-                type: integer
-  - type: command
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: select
-          type: word
-        - text: right
-          type: word
-        - type: capture
-          capture_name:
-            text: number_small
-            type: identifier
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: character
-              type: word
-            - text: characters
-              type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        expression:
-          type: action
-          action_name:
-            text: edit.extend_right
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-      - type: expression
-        expression:
-          type: action
-          action_name:
-            text: repeat
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: binary_operator
-              left:
-                type: variable
-                variable_name:
-                  text: number_small
-                  type: identifier
-              operator:
-                text: '-'
-                type: operator
-              right:
-                text: '1'
-                type: integer
-  - type: command
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: clear
-          type: word
-        - text: left
-          type: word
-        - type: capture
-          capture_name:
-            text: number_small
-            type: identifier
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: word
-              type: word
-            - text: words
-              type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        expression:
-          type: action
           action_name:
             text: edit.extend_word_left
             type: identifier
@@ -822,17 +2814,31 @@ output:
             type: argument_list
             children: []
       - type: expression
-        expression:
-          type: action
-          action_name:
-            text: repeat
+        children:
+        - type: action
+          children:
+          - text: repeat
             type: identifier
-          arguments:
-            type: argument_list
+          - type: argument_list
             children:
             - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
               left:
                 type: variable
+                children:
+                - text: number_small
+                  type: identifier
                 variable_name:
                   text: number_small
                   type: identifier
@@ -842,26 +2848,308 @@ output:
               right:
                 text: '1'
                 type: integer
-      - type: expression
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
         expression:
           type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
           action_name:
-            text: edit.delete
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+  - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: select
+          type: word
+        - text: right
+          type: word
+        - type: capture
+          children:
+          - text: number_small
+            type: identifier
+          capture_name:
+            text: number_small
+            type: identifier
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: word
+              type: word
+            - text: words
+              type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.extend_word_right
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.extend_word_right
             type: identifier
           arguments:
             type: argument_list
             children: []
-  - type: command
+        expression:
+          type: action
+          children:
+          - text: edit.extend_word_right
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.extend_word_right
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
     rule:
       type: rule
       children:
       - type: seq
         children:
-        - text: clear
+        - text: select
           type: word
         - text: right
           type: word
         - type: capture
+          children:
+          - text: number_small
+            type: identifier
           capture_name:
             text: number_small
             type: identifier
@@ -877,8 +3165,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.extend_word_right
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.extend_word_right
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: edit.extend_word_right
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: edit.extend_word_right
             type: identifier
@@ -886,8 +3192,40 @@ output:
             type: argument_list
             children: []
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
           action_name:
             text: repeat
             type: identifier
@@ -895,8 +3233,1035 @@ output:
             type: argument_list
             children:
             - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
               left:
                 type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+  - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: select
+          type: word
+        - text: left
+          type: word
+        - type: capture
+          children:
+          - text: number_small
+            type: identifier
+          capture_name:
+            text: number_small
+            type: identifier
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: character
+              type: word
+            - text: characters
+              type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.extend_left
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.extend_left
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: edit.extend_left
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.extend_left
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - text: select
+          type: word
+        - text: left
+          type: word
+        - type: capture
+          children:
+          - text: number_small
+            type: identifier
+          capture_name:
+            text: number_small
+            type: identifier
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: character
+              type: word
+            - text: characters
+              type: word
+    script:
+      type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.extend_left
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.extend_left
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: edit.extend_left
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.extend_left
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+  - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: select
+          type: word
+        - text: right
+          type: word
+        - type: capture
+          children:
+          - text: number_small
+            type: identifier
+          capture_name:
+            text: number_small
+            type: identifier
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: character
+              type: word
+            - text: characters
+              type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.extend_right
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.extend_right
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: edit.extend_right
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.extend_right
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - text: select
+          type: word
+        - text: right
+          type: word
+        - type: capture
+          children:
+          - text: number_small
+            type: identifier
+          capture_name:
+            text: number_small
+            type: identifier
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: character
+              type: word
+            - text: characters
+              type: word
+    script:
+      type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.extend_right
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.extend_right
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: edit.extend_right
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.extend_right
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+  - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: clear
+          type: word
+        - text: left
+          type: word
+        - type: capture
+          children:
+          - text: number_small
+            type: identifier
+          capture_name:
+            text: number_small
+            type: identifier
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: word
+              type: word
+            - text: words
+              type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.extend_word_left
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.extend_word_left
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: edit.extend_word_left
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.extend_word_left
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
                 variable_name:
                   text: number_small
                   type: identifier
@@ -907,15 +4272,32 @@ output:
                 text: '1'
                 type: integer
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: edit.delete
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: edit.delete
             type: identifier
           arguments:
             type: argument_list
             children: []
-  - type: command
+        expression:
+          type: action
+          children:
+          - text: edit.delete
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.delete
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
     rule:
       type: rule
       children:
@@ -926,6 +4308,9 @@ output:
         - text: left
           type: word
         - type: capture
+          children:
+          - text: number_small
+            type: identifier
           capture_name:
             text: number_small
             type: identifier
@@ -933,25 +4318,75 @@ output:
           children:
           - type: choice
             children:
-            - text: character
+            - text: word
               type: word
-            - text: characters
+            - text: words
               type: word
     script:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.extend_word_left
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.extend_word_left
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: edit.extend_word_left
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
-            text: edit.extend_left
+            text: edit.extend_word_left
             type: identifier
           arguments:
             type: argument_list
             children: []
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
           action_name:
             text: repeat
             type: identifier
@@ -959,8 +4394,90 @@ output:
             type: argument_list
             children:
             - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
               left:
                 type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
                 variable_name:
                   text: number_small
                   type: identifier
@@ -971,8 +4488,26 @@ output:
                 text: '1'
                 type: integer
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.delete
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.delete
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: edit.delete
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: edit.delete
             type: identifier
@@ -980,6 +4515,221 @@ output:
             type: argument_list
             children: []
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: clear
+          type: word
+        - text: right
+          type: word
+        - type: capture
+          children:
+          - text: number_small
+            type: identifier
+          capture_name:
+            text: number_small
+            type: identifier
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: word
+              type: word
+            - text: words
+              type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.extend_word_right
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.extend_word_right
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: edit.extend_word_right
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.extend_word_right
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.delete
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.delete
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: edit.delete
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.delete
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
     rule:
       type: rule
       children:
@@ -990,6 +4740,441 @@ output:
         - text: right
           type: word
         - type: capture
+          children:
+          - text: number_small
+            type: identifier
+          capture_name:
+            text: number_small
+            type: identifier
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: word
+              type: word
+            - text: words
+              type: word
+    script:
+      type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.extend_word_right
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.extend_word_right
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: edit.extend_word_right
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.extend_word_right
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.delete
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.delete
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: edit.delete
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.delete
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+  - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: clear
+          type: word
+        - text: left
+          type: word
+        - type: capture
+          children:
+          - text: number_small
+            type: identifier
+          capture_name:
+            text: number_small
+            type: identifier
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: character
+              type: word
+            - text: characters
+              type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.extend_left
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.extend_left
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: edit.extend_left
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.extend_left
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.delete
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.delete
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: edit.delete
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.delete
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - text: clear
+          type: word
+        - text: left
+          type: word
+        - type: capture
+          children:
+          - text: number_small
+            type: identifier
           capture_name:
             text: number_small
             type: identifier
@@ -1005,17 +5190,67 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.extend_left
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.extend_left
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: edit.extend_left
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
-            text: edit.extend_right
+            text: edit.extend_left
             type: identifier
           arguments:
             type: argument_list
             children: []
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
           action_name:
             text: repeat
             type: identifier
@@ -1023,8 +5258,90 @@ output:
             type: argument_list
             children:
             - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
               left:
                 type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
                 variable_name:
                   text: number_small
                   type: identifier
@@ -1035,8 +5352,458 @@ output:
                 text: '1'
                 type: integer
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.delete
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.delete
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: edit.delete
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.delete
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+  - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: clear
+          type: word
+        - text: right
+          type: word
+        - type: capture
+          children:
+          - text: number_small
+            type: identifier
+          capture_name:
+            text: number_small
+            type: identifier
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: character
+              type: word
+            - text: characters
+              type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.extend_right
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.extend_right
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: edit.extend_right
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.extend_right
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.delete
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.delete
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: edit.delete
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.delete
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - text: clear
+          type: word
+        - text: right
+          type: word
+        - type: capture
+          children:
+          - text: number_small
+            type: identifier
+          capture_name:
+            text: number_small
+            type: identifier
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: character
+              type: word
+            - text: characters
+              type: word
+    script:
+      type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.extend_right
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.extend_right
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: edit.extend_right
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.extend_right
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+        expression:
+          type: action
+          children:
+          - text: repeat
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+          action_name:
+            text: repeat
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: number_small
+                  type: identifier
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.delete
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.delete
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: edit.delete
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: edit.delete
             type: identifier
@@ -1046,6 +5813,77 @@ output:
   - text: '# Formatting'
     type: comment
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: formatted
+          type: word
+        - type: capture
+          children:
+          - text: user.format_text
+            type: identifier
+          capture_name:
+            text: user.format_text
+            type: identifier
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.dictation_insert_raw
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: format_text
+                type: identifier
+              variable_name:
+                text: format_text
+                type: identifier
+          action_name:
+            text: user.dictation_insert_raw
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: format_text
+                type: identifier
+              variable_name:
+                text: format_text
+                type: identifier
+        expression:
+          type: action
+          children:
+          - text: user.dictation_insert_raw
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: format_text
+                type: identifier
+              variable_name:
+                text: format_text
+                type: identifier
+          action_name:
+            text: user.dictation_insert_raw
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: format_text
+                type: identifier
+              variable_name:
+                text: format_text
+                type: identifier
     rule:
       type: rule
       children:
@@ -1054,6 +5892,9 @@ output:
         - text: formatted
           type: word
         - type: capture
+          children:
+          - text: user.format_text
+            type: identifier
           capture_name:
             text: user.format_text
             type: identifier
@@ -1061,8 +5902,20 @@ output:
       type: block
       children:
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: user.dictation_insert_raw
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: format_text
+                type: identifier
+              variable_name:
+                text: format_text
+                type: identifier
           action_name:
             text: user.dictation_insert_raw
             type: identifier
@@ -1070,10 +5923,117 @@ output:
             type: argument_list
             children:
             - type: variable
+              children:
+              - text: format_text
+                type: identifier
+              variable_name:
+                text: format_text
+                type: identifier
+        expression:
+          type: action
+          children:
+          - text: user.dictation_insert_raw
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: format_text
+                type: identifier
+              variable_name:
+                text: format_text
+                type: identifier
+          action_name:
+            text: user.dictation_insert_raw
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: format_text
+                type: identifier
               variable_name:
                 text: format_text
                 type: identifier
   - type: command
+    children:
+    - type: rule
+      children:
+      - text: ^
+        type: start_anchor
+      - type: seq
+        children:
+        - text: format
+          type: word
+        - text: selection
+          type: word
+        - type: capture
+          children:
+          - text: user.formatters
+            type: identifier
+          capture_name:
+            text: user.formatters
+            type: identifier
+      - text: $
+        type: end_anchor
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.formatters_reformat_selection
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: formatters
+                type: identifier
+              variable_name:
+                text: formatters
+                type: identifier
+          action_name:
+            text: user.formatters_reformat_selection
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: formatters
+                type: identifier
+              variable_name:
+                text: formatters
+                type: identifier
+        expression:
+          type: action
+          children:
+          - text: user.formatters_reformat_selection
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: formatters
+                type: identifier
+              variable_name:
+                text: formatters
+                type: identifier
+          action_name:
+            text: user.formatters_reformat_selection
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: formatters
+                type: identifier
+              variable_name:
+                text: formatters
+                type: identifier
     rule:
       type: rule
       children:
@@ -1086,6 +6046,9 @@ output:
         - text: selection
           type: word
         - type: capture
+          children:
+          - text: user.formatters
+            type: identifier
           capture_name:
             text: user.formatters
             type: identifier
@@ -1095,8 +6058,20 @@ output:
       type: block
       children:
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: user.formatters_reformat_selection
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: formatters
+                type: identifier
+              variable_name:
+                text: formatters
+                type: identifier
           action_name:
             text: user.formatters_reformat_selection
             type: identifier
@@ -1104,12 +6079,80 @@ output:
             type: argument_list
             children:
             - type: variable
+              children:
+              - text: formatters
+                type: identifier
+              variable_name:
+                text: formatters
+                type: identifier
+        expression:
+          type: action
+          children:
+          - text: user.formatters_reformat_selection
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: formatters
+                type: identifier
+              variable_name:
+                text: formatters
+                type: identifier
+          action_name:
+            text: user.formatters_reformat_selection
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: formatters
+                type: identifier
               variable_name:
                 text: formatters
                 type: identifier
   - text: '# Corrections'
     type: comment
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: scratch
+          type: word
+        - text: that
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.clear_last_phrase
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.clear_last_phrase
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: user.clear_last_phrase
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.clear_last_phrase
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
     rule:
       type: rule
       children:
@@ -1123,8 +6166,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.clear_last_phrase
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.clear_last_phrase
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: user.clear_last_phrase
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: user.clear_last_phrase
             type: identifier
@@ -1132,6 +6193,44 @@ output:
             type: argument_list
             children: []
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: scratch
+          type: word
+        - text: selection
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.delete
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.delete
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: edit.delete
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.delete
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
     rule:
       type: rule
       children:
@@ -1145,8 +6244,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.delete
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.delete
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: edit.delete
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: edit.delete
             type: identifier
@@ -1154,6 +6271,44 @@ output:
             type: argument_list
             children: []
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: select
+          type: word
+        - text: that
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.select_last_phrase
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.select_last_phrase
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: user.select_last_phrase
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.select_last_phrase
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
     rule:
       type: rule
       children:
@@ -1167,8 +6322,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.select_last_phrase
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.select_last_phrase
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: user.select_last_phrase
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: user.select_last_phrase
             type: identifier
@@ -1176,8 +6349,8 @@ output:
             type: argument_list
             children: []
   - type: command
-    rule:
-      type: rule
+    children:
+    - type: rule
       children:
       - type: seq
         children:
@@ -1186,15 +6359,29 @@ output:
         - text: that
           type: word
         - type: capture
+          children:
+          - text: user.letters
+            type: identifier
           capture_name:
             text: user.letters
             type: identifier
-    script:
-      type: block
+    - type: block
       children:
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: auto_insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: letters
+                type: identifier
+              variable_name:
+                text: letters
+                type: identifier
           action_name:
             text: auto_insert
             type: identifier
@@ -1202,10 +6389,39 @@ output:
             type: argument_list
             children:
             - type: variable
+              children:
+              - text: letters
+                type: identifier
               variable_name:
                 text: letters
                 type: identifier
-  - type: command
+        expression:
+          type: action
+          children:
+          - text: auto_insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: letters
+                type: identifier
+              variable_name:
+                text: letters
+                type: identifier
+          action_name:
+            text: auto_insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: letters
+                type: identifier
+              variable_name:
+                text: letters
+                type: identifier
     rule:
       type: rule
       children:
@@ -1216,22 +6432,120 @@ output:
         - text: that
           type: word
         - type: capture
-          capture_name:
-            text: user.formatters
+          children:
+          - text: user.letters
             type: identifier
-        - type: capture
           capture_name:
             text: user.letters
             type: identifier
     script:
       type: block
       children:
-      - type: assignment
-        left:
-          text: result
-          type: identifier
-        right:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: auto_insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: letters
+                type: identifier
+              variable_name:
+                text: letters
+                type: identifier
+          action_name:
+            text: auto_insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: letters
+                type: identifier
+              variable_name:
+                text: letters
+                type: identifier
+        expression:
           type: action
+          children:
+          - text: auto_insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: letters
+                type: identifier
+              variable_name:
+                text: letters
+                type: identifier
+          action_name:
+            text: auto_insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: letters
+                type: identifier
+              variable_name:
+                text: letters
+                type: identifier
+  - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: spell
+          type: word
+        - text: that
+          type: word
+        - type: capture
+          children:
+          - text: user.formatters
+            type: identifier
+          capture_name:
+            text: user.formatters
+            type: identifier
+        - type: capture
+          children:
+          - text: user.letters
+            type: identifier
+          capture_name:
+            text: user.letters
+            type: identifier
+    - type: block
+      children:
+      - type: assignment
+        children:
+        - text: result
+          type: identifier
+        - type: action
+          children:
+          - text: user.formatted_text
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: letters
+                type: identifier
+              variable_name:
+                text: letters
+                type: identifier
+            - type: variable
+              children:
+              - text: formatters
+                type: identifier
+              variable_name:
+                text: formatters
+                type: identifier
           action_name:
             text: user.formatted_text
             type: identifier
@@ -1239,16 +6553,78 @@ output:
             type: argument_list
             children:
             - type: variable
+              children:
+              - text: letters
+                type: identifier
               variable_name:
                 text: letters
                 type: identifier
             - type: variable
+              children:
+              - text: formatters
+                type: identifier
+              variable_name:
+                text: formatters
+                type: identifier
+        left:
+          text: result
+          type: identifier
+        right:
+          type: action
+          children:
+          - text: user.formatted_text
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: letters
+                type: identifier
+              variable_name:
+                text: letters
+                type: identifier
+            - type: variable
+              children:
+              - text: formatters
+                type: identifier
+              variable_name:
+                text: formatters
+                type: identifier
+          action_name:
+            text: user.formatted_text
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: letters
+                type: identifier
+              variable_name:
+                text: letters
+                type: identifier
+            - type: variable
+              children:
+              - text: formatters
+                type: identifier
               variable_name:
                 text: formatters
                 type: identifier
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: user.dictation_insert_raw
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: result
+                type: identifier
+              variable_name:
+                text: result
+                type: identifier
           action_name:
             text: user.dictation_insert_raw
             type: identifier
@@ -1256,12 +6632,286 @@ output:
             type: argument_list
             children:
             - type: variable
+              children:
+              - text: result
+                type: identifier
+              variable_name:
+                text: result
+                type: identifier
+        expression:
+          type: action
+          children:
+          - text: user.dictation_insert_raw
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: result
+                type: identifier
+              variable_name:
+                text: result
+                type: identifier
+          action_name:
+            text: user.dictation_insert_raw
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: result
+                type: identifier
+              variable_name:
+                text: result
+                type: identifier
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - text: spell
+          type: word
+        - text: that
+          type: word
+        - type: capture
+          children:
+          - text: user.formatters
+            type: identifier
+          capture_name:
+            text: user.formatters
+            type: identifier
+        - type: capture
+          children:
+          - text: user.letters
+            type: identifier
+          capture_name:
+            text: user.letters
+            type: identifier
+    script:
+      type: block
+      children:
+      - type: assignment
+        children:
+        - text: result
+          type: identifier
+        - type: action
+          children:
+          - text: user.formatted_text
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: letters
+                type: identifier
+              variable_name:
+                text: letters
+                type: identifier
+            - type: variable
+              children:
+              - text: formatters
+                type: identifier
+              variable_name:
+                text: formatters
+                type: identifier
+          action_name:
+            text: user.formatted_text
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: letters
+                type: identifier
+              variable_name:
+                text: letters
+                type: identifier
+            - type: variable
+              children:
+              - text: formatters
+                type: identifier
+              variable_name:
+                text: formatters
+                type: identifier
+        left:
+          text: result
+          type: identifier
+        right:
+          type: action
+          children:
+          - text: user.formatted_text
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: letters
+                type: identifier
+              variable_name:
+                text: letters
+                type: identifier
+            - type: variable
+              children:
+              - text: formatters
+                type: identifier
+              variable_name:
+                text: formatters
+                type: identifier
+          action_name:
+            text: user.formatted_text
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: letters
+                type: identifier
+              variable_name:
+                text: letters
+                type: identifier
+            - type: variable
+              children:
+              - text: formatters
+                type: identifier
+              variable_name:
+                text: formatters
+                type: identifier
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.dictation_insert_raw
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: result
+                type: identifier
+              variable_name:
+                text: result
+                type: identifier
+          action_name:
+            text: user.dictation_insert_raw
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: result
+                type: identifier
+              variable_name:
+                text: result
+                type: identifier
+        expression:
+          type: action
+          children:
+          - text: user.dictation_insert_raw
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: result
+                type: identifier
+              variable_name:
+                text: result
+                type: identifier
+          action_name:
+            text: user.dictation_insert_raw
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: result
+                type: identifier
               variable_name:
                 text: result
                 type: identifier
   - text: '# Escape, type things that would otherwise be commands'
     type: comment
   - type: command
+    children:
+    - type: rule
+      children:
+      - text: ^
+        type: start_anchor
+      - type: seq
+        children:
+        - text: escape
+          type: word
+        - type: capture
+          children:
+          - text: user.text
+            type: identifier
+          capture_name:
+            text: user.text
+            type: identifier
+      - text: $
+        type: end_anchor
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: auto_insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: user.text
+                type: identifier
+              variable_name:
+                text: user.text
+                type: identifier
+          action_name:
+            text: auto_insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: user.text
+                type: identifier
+              variable_name:
+                text: user.text
+                type: identifier
+        expression:
+          type: action
+          children:
+          - text: auto_insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: user.text
+                type: identifier
+              variable_name:
+                text: user.text
+                type: identifier
+          action_name:
+            text: auto_insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: user.text
+                type: identifier
+              variable_name:
+                text: user.text
+                type: identifier
     rule:
       type: rule
       children:
@@ -1272,6 +6922,9 @@ output:
         - text: escape
           type: word
         - type: capture
+          children:
+          - text: user.text
+            type: identifier
           capture_name:
             text: user.text
             type: identifier
@@ -1281,8 +6934,20 @@ output:
       type: block
       children:
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: auto_insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: user.text
+                type: identifier
+              variable_name:
+                text: user.text
+                type: identifier
           action_name:
             text: auto_insert
             type: identifier
@@ -1290,6 +6955,36 @@ output:
             type: argument_list
             children:
             - type: variable
+              children:
+              - text: user.text
+                type: identifier
+              variable_name:
+                text: user.text
+                type: identifier
+        expression:
+          type: action
+          children:
+          - text: auto_insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: user.text
+                type: identifier
+              variable_name:
+                text: user.text
+                type: identifier
+          action_name:
+            text: auto_insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: user.text
+                type: identifier
               variable_name:
                 text: user.text
                 type: identifier

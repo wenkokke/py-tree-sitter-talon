@@ -1,9 +1,9 @@
 from pathlib import Path
-from tree_sitter_type_provider import TreeSitterTypeProvider, NodeType, Node, Point, ERROR
 from pkg_resources import resource_filename  # type: ignore
+from tree_sitter_type_provider import *
 
 import sys
-import tree_sitter as ts
+import tree_sitter
 import typing
 import os
 
@@ -45,10 +45,10 @@ class TreeSitterTalon(TreeSitterTypeProvider):
     def node_types_path(self) -> Path:
         return self.resource_path("data/tree-sitter-talon/src/node-types.json")
 
-    def __init__(self):
+    def __init__(self, *, encoding: str = "utf-8"):
         # Read node-types.json
-        node_types = NodeType.schema().loads(
-            self.node_types_path.read_text(encoding="utf-8"), many=True
+        node_types = NodeType.schema().loads( # type: ignore
+            self.node_types_path.read_text(encoding=encoding), many=True
         )
 
         # Conversion from tree-sitter names to Python names
@@ -59,16 +59,27 @@ class TreeSitterTalon(TreeSitterTypeProvider):
             return "".join(buffer)
 
         # Initialize module
-        super().__init__("tree_sitter_talon", node_types, as_class_name=as_class_name)
+        super().__init__(
+            "tree_sitter_talon",
+            node_types,
+            error_as_node=True,
+            as_class_name=as_class_name,
+            extra=["comment"],
+        )
 
         # Build tree-sitter-talon
-        ts.Language.build_library(self.library_path, [self.repository_path])
-        self.language = ts.Language(self.library_path, "talon")
-        self.parser = ts.Parser()
+        tree_sitter.Language.build_library(self.library_path, [self.repository_path])
+        self.language = tree_sitter.Language(self.library_path, "talon")
+        self.parser = tree_sitter.Parser()
         self.parser.set_language(self.language)
+
+        self.NodeTypeName = NodeTypeName
+        self.NodeFieldName = NodeFieldName
+        self.NodeTypeError = NodeTypeError
         self.Point = Point
         self.Node = Node
-        self.ERROR = ERROR
+        self.Leaf = Leaf
+        self.Branch = Branch
 
     def parse(
         self,
@@ -100,7 +111,7 @@ class TreeSitterTalon(TreeSitterTypeProvider):
         *,
         has_header: typing.Optional[bool] = None,
         encoding: str = "utf-8",
-    ) -> ts.Tree:
+    ) -> tree_sitter.Tree:
         if isinstance(contents, str):
             contents = bytes(contents, encoding)
         if has_header is None:
@@ -115,7 +126,7 @@ class TreeSitterTalon(TreeSitterTypeProvider):
         *,
         has_header: typing.Optional[bool] = None,
         encoding: str = "utf-8",
-    ) -> ts.Tree:
+    ) -> tree_sitter.Tree:
         if not isinstance(path, Path):
             path = Path(path)
         contents = path.read_bytes()

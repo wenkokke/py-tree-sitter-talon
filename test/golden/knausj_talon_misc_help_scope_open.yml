@@ -5,6 +5,11 @@ output:
   - type: context
     children:
     - type: match
+      children:
+      - text: mode
+        type: identifier
+      - text: ' user.help_scope'
+        type: implicit_string
       key:
         text: mode
         type: identifier
@@ -12,6 +17,52 @@ output:
         text: ' user.help_scope'
         type: implicit_string
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: scope
+          type: word
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: hide
+              type: word
+            - text: close
+              type: word
+      - text: $
+        type: end_anchor
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.help_scope_toggle
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.help_scope_toggle
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: user.help_scope_toggle
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.help_scope_toggle
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
     rule:
       type: rule
       children:
@@ -33,8 +84,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.help_scope_toggle
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: user.help_scope_toggle
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: user.help_scope_toggle
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: user.help_scope_toggle
             type: identifier

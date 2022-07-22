@@ -18,6 +18,11 @@ output:
   - type: context
     children:
     - type: match
+      children:
+      - text: tag
+        type: identifier
+      - text: ' user.code_functions'
+        type: implicit_string
       key:
         text: tag
         type: identifier
@@ -58,8 +63,8 @@ output:
   - text: '#'
     type: comment
   - type: command
-    rule:
-      type: rule
+    children:
+    - type: rule
       children:
       - text: ^
         type: start_anchor
@@ -68,32 +73,51 @@ output:
         - type: repeat
           children:
           - type: list
+            children:
+            - text: user.code_function_modifier
+              type: identifier
             list_name:
               text: user.code_function_modifier
               type: identifier
         - text: funky
           type: word
         - type: capture
+          children:
+          - text: user.text
+            type: identifier
           capture_name:
             text: user.text
             type: identifier
       - text: $
         type: end_anchor
-    script:
-      type: block
+    - type: block
       children:
       - type: expression
-        expression:
-          type: action
-          action_name:
-            text: user.code_modified_function
+        children:
+        - type: action
+          children:
+          - text: user.code_modified_function
             type: identifier
-          arguments:
-            type: argument_list
+          - type: argument_list
             children:
             - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: code_function_modifier_list
+                  type: identifier
+                variable_name:
+                  text: code_function_modifier_list
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '0'
+                type: integer
               left:
                 type: variable
+                children:
+                - text: code_function_modifier_list
+                  type: identifier
                 variable_name:
                   text: code_function_modifier_list
                   type: identifier
@@ -104,12 +128,402 @@ output:
                 text: '0'
                 type: integer
             - type: variable
+              children:
+              - text: text
+                type: identifier
+              variable_name:
+                text: text
+                type: identifier
+          action_name:
+            text: user.code_modified_function
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: code_function_modifier_list
+                  type: identifier
+                variable_name:
+                  text: code_function_modifier_list
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '0'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: code_function_modifier_list
+                  type: identifier
+                variable_name:
+                  text: code_function_modifier_list
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '0'
+                type: integer
+            - type: variable
+              children:
+              - text: text
+                type: identifier
+              variable_name:
+                text: text
+                type: identifier
+        expression:
+          type: action
+          children:
+          - text: user.code_modified_function
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: code_function_modifier_list
+                  type: identifier
+                variable_name:
+                  text: code_function_modifier_list
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '0'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: code_function_modifier_list
+                  type: identifier
+                variable_name:
+                  text: code_function_modifier_list
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '0'
+                type: integer
+            - type: variable
+              children:
+              - text: text
+                type: identifier
+              variable_name:
+                text: text
+                type: identifier
+          action_name:
+            text: user.code_modified_function
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: code_function_modifier_list
+                  type: identifier
+                variable_name:
+                  text: code_function_modifier_list
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '0'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: code_function_modifier_list
+                  type: identifier
+                variable_name:
+                  text: code_function_modifier_list
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '0'
+                type: integer
+            - type: variable
+              children:
+              - text: text
+                type: identifier
+              variable_name:
+                text: text
+                type: identifier
+    rule:
+      type: rule
+      children:
+      - text: ^
+        type: start_anchor
+      - type: seq
+        children:
+        - type: repeat
+          children:
+          - type: list
+            children:
+            - text: user.code_function_modifier
+              type: identifier
+            list_name:
+              text: user.code_function_modifier
+              type: identifier
+        - text: funky
+          type: word
+        - type: capture
+          children:
+          - text: user.text
+            type: identifier
+          capture_name:
+            text: user.text
+            type: identifier
+      - text: $
+        type: end_anchor
+    script:
+      type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_modified_function
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: code_function_modifier_list
+                  type: identifier
+                variable_name:
+                  text: code_function_modifier_list
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '0'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: code_function_modifier_list
+                  type: identifier
+                variable_name:
+                  text: code_function_modifier_list
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '0'
+                type: integer
+            - type: variable
+              children:
+              - text: text
+                type: identifier
+              variable_name:
+                text: text
+                type: identifier
+          action_name:
+            text: user.code_modified_function
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: code_function_modifier_list
+                  type: identifier
+                variable_name:
+                  text: code_function_modifier_list
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '0'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: code_function_modifier_list
+                  type: identifier
+                variable_name:
+                  text: code_function_modifier_list
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '0'
+                type: integer
+            - type: variable
+              children:
+              - text: text
+                type: identifier
+              variable_name:
+                text: text
+                type: identifier
+        expression:
+          type: action
+          children:
+          - text: user.code_modified_function
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: code_function_modifier_list
+                  type: identifier
+                variable_name:
+                  text: code_function_modifier_list
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '0'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: code_function_modifier_list
+                  type: identifier
+                variable_name:
+                  text: code_function_modifier_list
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '0'
+                type: integer
+            - type: variable
+              children:
+              - text: text
+                type: identifier
+              variable_name:
+                text: text
+                type: identifier
+          action_name:
+            text: user.code_modified_function
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: code_function_modifier_list
+                  type: identifier
+                variable_name:
+                  text: code_function_modifier_list
+                  type: identifier
+              - text: or
+                type: operator
+              - text: '0'
+                type: integer
+              left:
+                type: variable
+                children:
+                - text: code_function_modifier_list
+                  type: identifier
+                variable_name:
+                  text: code_function_modifier_list
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                text: '0'
+                type: integer
+            - type: variable
+              children:
+              - text: text
+                type: identifier
               variable_name:
                 text: text
                 type: identifier
   - text: '# for annotating function parameters'
     type: comment
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: is
+          type: word
+        - text: type
+          type: word
+        - type: capture
+          children:
+          - text: user.code_type
+            type: identifier
+          capture_name:
+            text: user.code_type
+            type: identifier
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_insert_type_annotation
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_type
+                type: identifier
+              variable_name:
+                text: code_type
+                type: identifier
+          action_name:
+            text: user.code_insert_type_annotation
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_type
+                type: identifier
+              variable_name:
+                text: code_type
+                type: identifier
+        expression:
+          type: action
+          children:
+          - text: user.code_insert_type_annotation
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_type
+                type: identifier
+              variable_name:
+                text: code_type
+                type: identifier
+          action_name:
+            text: user.code_insert_type_annotation
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_type
+                type: identifier
+              variable_name:
+                text: code_type
+                type: identifier
     rule:
       type: rule
       children:
@@ -120,6 +534,9 @@ output:
         - text: type
           type: word
         - type: capture
+          children:
+          - text: user.code_type
+            type: identifier
           capture_name:
             text: user.code_type
             type: identifier
@@ -127,8 +544,20 @@ output:
       type: block
       children:
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: user.code_insert_type_annotation
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_type
+                type: identifier
+              variable_name:
+                text: code_type
+                type: identifier
           action_name:
             text: user.code_insert_type_annotation
             type: identifier
@@ -136,10 +565,115 @@ output:
             type: argument_list
             children:
             - type: variable
+              children:
+              - text: code_type
+                type: identifier
+              variable_name:
+                text: code_type
+                type: identifier
+        expression:
+          type: action
+          children:
+          - text: user.code_insert_type_annotation
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_type
+                type: identifier
+              variable_name:
+                text: code_type
+                type: identifier
+          action_name:
+            text: user.code_insert_type_annotation
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_type
+                type: identifier
               variable_name:
                 text: code_type
                 type: identifier
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: returns
+          type: word
+        - type: optional
+          children:
+          - text: type
+            type: word
+        - type: capture
+          children:
+          - text: user.code_type
+            type: identifier
+          capture_name:
+            text: user.code_type
+            type: identifier
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_insert_return_type
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_type
+                type: identifier
+              variable_name:
+                text: code_type
+                type: identifier
+          action_name:
+            text: user.code_insert_return_type
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_type
+                type: identifier
+              variable_name:
+                text: code_type
+                type: identifier
+        expression:
+          type: action
+          children:
+          - text: user.code_insert_return_type
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_type
+                type: identifier
+              variable_name:
+                text: code_type
+                type: identifier
+          action_name:
+            text: user.code_insert_return_type
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_type
+                type: identifier
+              variable_name:
+                text: code_type
+                type: identifier
     rule:
       type: rule
       children:
@@ -152,6 +686,9 @@ output:
           - text: type
             type: word
         - type: capture
+          children:
+          - text: user.code_type
+            type: identifier
           capture_name:
             text: user.code_type
             type: identifier
@@ -159,8 +696,20 @@ output:
       type: block
       children:
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: user.code_insert_return_type
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_type
+                type: identifier
+              variable_name:
+                text: code_type
+                type: identifier
           action_name:
             text: user.code_insert_return_type
             type: identifier
@@ -168,12 +717,113 @@ output:
             type: argument_list
             children:
             - type: variable
+              children:
+              - text: code_type
+                type: identifier
+              variable_name:
+                text: code_type
+                type: identifier
+        expression:
+          type: action
+          children:
+          - text: user.code_insert_return_type
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_type
+                type: identifier
+              variable_name:
+                text: code_type
+                type: identifier
+          action_name:
+            text: user.code_insert_return_type
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_type
+                type: identifier
               variable_name:
                 text: code_type
                 type: identifier
   - text: '# for generic reference of types'
     type: comment
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: type
+          type: word
+        - type: capture
+          children:
+          - text: user.code_type
+            type: identifier
+          capture_name:
+            text: user.code_type
+            type: identifier
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_type
+                type: identifier
+              variable_name:
+                text: code_type
+                type: identifier
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_type
+                type: identifier
+              variable_name:
+                text: code_type
+                type: identifier
+        expression:
+          type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_type
+                type: identifier
+              variable_name:
+                text: code_type
+                type: identifier
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_type
+                type: identifier
+              variable_name:
+                text: code_type
+                type: identifier
     rule:
       type: rule
       children:
@@ -182,6 +832,9 @@ output:
         - text: type
           type: word
         - type: capture
+          children:
+          - text: user.code_type
+            type: identifier
           capture_name:
             text: user.code_type
             type: identifier
@@ -189,8 +842,20 @@ output:
       type: block
       children:
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_type
+                type: identifier
+              variable_name:
+                text: code_type
+                type: identifier
           action_name:
             text: insert
             type: identifier
@@ -198,6 +863,36 @@ output:
             type: argument_list
             children:
             - type: variable
+              children:
+              - text: code_type
+                type: identifier
+              variable_name:
+                text: code_type
+                type: identifier
+        expression:
+          type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_type
+                type: identifier
+              variable_name:
+                text: code_type
+                type: identifier
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: code_type
+                type: identifier
               variable_name:
                 text: code_type
                 type: identifier

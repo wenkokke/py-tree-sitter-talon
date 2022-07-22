@@ -9,6 +9,11 @@ output:
     - type: or
       children:
       - type: match
+        children:
+        - text: mode
+          type: identifier
+        - text: ' sleep'
+          type: implicit_string
         key:
           text: mode
           type: identifier
@@ -16,6 +21,11 @@ output:
           text: ' sleep'
           type: implicit_string
       - type: match
+        children:
+        - text: speech.engine
+          type: identifier
+        - text: ' wav2letter'
+          type: implicit_string
         key:
           text: speech.engine
           type: identifier
@@ -28,10 +38,52 @@ output:
   - text: "#you probably shouldn't have any other commands here"
     type: comment
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: capture
+        children:
+        - text: phrase
+          type: identifier
+        capture_name:
+          text: phrase
+          type: identifier
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: skip
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: skip
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: skip
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: skip
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
     rule:
       type: rule
       children:
       - type: capture
+        children:
+        - text: phrase
+          type: identifier
         capture_name:
           text: phrase
           type: identifier
@@ -39,8 +91,26 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: skip
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: skip
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: skip
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: skip
             type: identifier

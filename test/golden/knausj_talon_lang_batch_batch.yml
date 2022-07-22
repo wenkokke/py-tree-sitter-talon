@@ -10,6 +10,11 @@ output:
   - type: context
     children:
     - type: match
+      children:
+      - text: tag
+        type: identifier
+      - text: ' user.batch'
+        type: implicit_string
       key:
         text: tag
         type: identifier
@@ -17,12 +22,41 @@ output:
         text: ' user.batch'
         type: implicit_string
   - type: include_tag
+    children:
+    - text: user.code_comment_line
+      type: identifier
     tag:
       text: user.code_comment_line
       type: identifier
   - text: '# exit without killing cmd shell'
     type: comment
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: soft
+          type: word
+        - text: exit
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: exit /B 1
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+        expression:
+          type: string
+          children:
+          - text: exit /B 1
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
     rule:
       type: rule
       children:
@@ -36,6 +70,13 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: exit /B 1
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
         expression:
           type: string
           children:
@@ -46,6 +87,32 @@ output:
   - text: '# exit with killing cmd shell'
     type: comment
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: hard
+          type: word
+        - text: exit
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: exit 1
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+        expression:
+          type: string
+          children:
+          - text: exit 1
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
     rule:
       type: rule
       children:
@@ -59,6 +126,13 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: exit 1
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
         expression:
           type: string
           children:
@@ -67,6 +141,24 @@ output:
           - text: \n
             type: string_escape_sequence
   - type: command
+    children:
+    - type: rule
+      children:
+      - text: echo
+        type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'echo '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'echo '
+            type: string_content
     rule:
       type: rule
       children:
@@ -76,12 +168,43 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'echo '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'echo '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: echo
+          type: word
+        - text: off
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: '@echo off'
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+        expression:
+          type: string
+          children:
+          - text: '@echo off'
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
     rule:
       type: rule
       children:
@@ -95,6 +218,13 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: '@echo off'
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
         expression:
           type: string
           children:
@@ -103,6 +233,24 @@ output:
           - text: \n
             type: string_escape_sequence
   - type: command
+    children:
+    - type: rule
+      children:
+      - text: call
+        type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'call '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'call '
+            type: string_content
     rule:
       type: rule
       children:
@@ -112,12 +260,47 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'call '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'call '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: call
+          type: word
+        - text: shell
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'call cmd '
+            type: string_content
+          - text: \\
+            type: string_escape_sequence
+          - text: 'c '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'call cmd '
+            type: string_content
+          - text: \\
+            type: string_escape_sequence
+          - text: 'c '
+            type: string_content
     rule:
       type: rule
       children:
@@ -131,6 +314,15 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'call cmd '
+            type: string_content
+          - text: \\
+            type: string_escape_sequence
+          - text: 'c '
+            type: string_content
         expression:
           type: string
           children:
@@ -141,6 +333,28 @@ output:
           - text: 'c '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: if
+          type: word
+        - text: error
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'if errorlevel 1 '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'if errorlevel 1 '
+            type: string_content
     rule:
       type: rule
       children:
@@ -154,12 +368,39 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'if errorlevel 1 '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'if errorlevel 1 '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: go
+          type: word
+        - text: to
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'goto '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'goto '
+            type: string_content
     rule:
       type: rule
       children:
@@ -173,12 +414,43 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'goto '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'goto '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: delayed
+          type: word
+        - text: expansion
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: SETLOCAL EnableDelayedExpansion
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+        expression:
+          type: string
+          children:
+          - text: SETLOCAL EnableDelayedExpansion
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
     rule:
       type: rule
       children:
@@ -192,6 +464,13 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: SETLOCAL EnableDelayedExpansion
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
         expression:
           type: string
           children:
@@ -200,6 +479,45 @@ output:
           - text: \n
             type: string_escape_sequence
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: arg
+          type: word
+        - type: capture
+          children:
+          - text: number_small
+            type: identifier
+          capture_name:
+            text: number_small
+            type: identifier
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: '%'
+            type: string_content
+          - text: '{'
+            type: string_content
+          - text: number_small
+            type: string_content
+          - text: '}'
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: '%'
+            type: string_content
+          - text: '{'
+            type: string_content
+          - text: number_small
+            type: string_content
+          - text: '}'
+            type: string_content
     rule:
       type: rule
       children:
@@ -208,6 +526,9 @@ output:
         - text: arg
           type: word
         - type: capture
+          children:
+          - text: number_small
+            type: identifier
           capture_name:
             text: number_small
             type: identifier
@@ -215,6 +536,17 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: '%'
+            type: string_content
+          - text: '{'
+            type: string_content
+          - text: number_small
+            type: string_content
+          - text: '}'
+            type: string_content
         expression:
           type: string
           children:

@@ -24,6 +24,11 @@ output:
   - type: context
     children:
     - type: match
+      children:
+      - text: mode
+        type: identifier
+      - text: ' user.windbg'
+        type: implicit_string
       key:
         text: mode
         type: identifier
@@ -31,14 +36,112 @@ output:
         text: ' user.windbg'
         type: implicit_string
   - type: include_tag
+    children:
+    - text: user.debugger
+      type: identifier
     tag:
       text: user.debugger
       type: identifier
   - type: include_tag
+    children:
+    - text: user.windbg
+      type: identifier
     tag:
       text: user.windbg
       type: identifier
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: register
+          type: word
+        - type: capture
+          children:
+          - text: user.registers
+            type: identifier
+          capture_name:
+            text: user.registers
+            type: identifier
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: '@'
+            type: implicit_string
+          arguments:
+            text: '@'
+            type: implicit_string
+        expression:
+          type: key_action
+          children:
+          - text: '@'
+            type: implicit_string
+          arguments:
+            text: '@'
+            type: implicit_string
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '{'
+                type: string_content
+              - text: registers
+                type: string_content
+              - text: '}'
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '{'
+                type: string_content
+              - text: registers
+                type: string_content
+              - text: '}'
+                type: string_content
+        expression:
+          type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '{'
+                type: string_content
+              - text: registers
+                type: string_content
+              - text: '}'
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '{'
+                type: string_content
+              - text: registers
+                type: string_content
+              - text: '}'
+                type: string_content
     rule:
       type: rule
       children:
@@ -47,6 +150,9 @@ output:
         - text: register
           type: word
         - type: capture
+          children:
+          - text: user.registers
+            type: identifier
           capture_name:
             text: user.registers
             type: identifier
@@ -54,14 +160,67 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: '@'
+            type: implicit_string
+          arguments:
+            text: '@'
+            type: implicit_string
         expression:
           type: key_action
+          children:
+          - text: '@'
+            type: implicit_string
           arguments:
             text: '@'
             type: implicit_string
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '{'
+                type: string_content
+              - text: registers
+                type: string_content
+              - text: '}'
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '{'
+                type: string_content
+              - text: registers
+                type: string_content
+              - text: '}'
+                type: string_content
         expression:
           type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '{'
+                type: string_content
+              - text: registers
+                type: string_content
+              - text: '}'
+                type: string_content
           action_name:
             text: insert
             type: identifier
@@ -77,6 +236,68 @@ output:
               - text: '}'
                 type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: open
+          type: word
+        - text: help
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: .hh
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: .hh
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+        expression:
+          type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: .hh
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: .hh
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
     rule:
       type: rule
       children:
@@ -90,8 +311,44 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: .hh
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: .hh
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
         expression:
           type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: .hh
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
           action_name:
             text: insert
             type: identifier
@@ -107,6 +364,86 @@ output:
   - text: '# xxx - add window switching'
     type: comment
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: add
+          type: word
+        - text: microsoft
+          type: word
+        - text: symbols
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'srv*C:'
+                type: string_content
+              - text: \\
+                type: string_escape_sequence
+              - text: symbols*http://msdl.microsoft.com/download/symbols;
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'srv*C:'
+                type: string_content
+              - text: \\
+                type: string_escape_sequence
+              - text: symbols*http://msdl.microsoft.com/download/symbols;
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+        expression:
+          type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'srv*C:'
+                type: string_content
+              - text: \\
+                type: string_escape_sequence
+              - text: symbols*http://msdl.microsoft.com/download/symbols;
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'srv*C:'
+                type: string_content
+              - text: \\
+                type: string_escape_sequence
+              - text: symbols*http://msdl.microsoft.com/download/symbols;
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
     rule:
       type: rule
       children:
@@ -122,8 +459,56 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'srv*C:'
+                type: string_content
+              - text: \\
+                type: string_escape_sequence
+              - text: symbols*http://msdl.microsoft.com/download/symbols;
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'srv*C:'
+                type: string_content
+              - text: \\
+                type: string_escape_sequence
+              - text: symbols*http://msdl.microsoft.com/download/symbols;
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
         expression:
           type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'srv*C:'
+                type: string_content
+              - text: \\
+                type: string_escape_sequence
+              - text: symbols*http://msdl.microsoft.com/download/symbols;
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
           action_name:
             text: insert
             type: identifier
@@ -141,6 +526,70 @@ output:
               - text: \n
                 type: string_escape_sequence
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: force
+          type: word
+        - text: reload
+          type: word
+        - text: symbols
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: .reload /f
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: .reload /f
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+        expression:
+          type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: .reload /f
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: .reload /f
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
     rule:
       type: rule
       children:
@@ -156,8 +605,44 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: .reload /f
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: .reload /f
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
         expression:
           type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: .reload /f
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
           action_name:
             text: insert
             type: identifier
@@ -171,6 +656,68 @@ output:
               - text: \n
                 type: string_escape_sequence
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: reload
+          type: word
+        - text: symbols
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: .reload
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: .reload
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+        expression:
+          type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: .reload
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: .reload
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
     rule:
       type: rule
       children:
@@ -184,8 +731,44 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: .reload
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: .reload
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
         expression:
           type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: .reload
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
           action_name:
             text: insert
             type: identifier
@@ -199,6 +782,68 @@ output:
               - text: \n
                 type: string_escape_sequence
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: loaded
+          type: word
+        - text: modules
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: lm l
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: lm l
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+        expression:
+          type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: lm l
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: lm l
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
     rule:
       type: rule
       children:
@@ -212,8 +857,44 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: lm l
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: lm l
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
         expression:
           type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: lm l
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
           action_name:
             text: insert
             type: identifier
@@ -227,6 +908,60 @@ output:
               - text: \n
                 type: string_escape_sequence
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: display
+          type: word
+        - text: pointers
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'dps '
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'dps '
+                type: string_content
+        expression:
+          type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'dps '
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'dps '
+                type: string_content
     rule:
       type: rule
       children:
@@ -240,8 +975,38 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'dps '
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'dps '
+                type: string_content
         expression:
           type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'dps '
+                type: string_content
           action_name:
             text: insert
             type: identifier
@@ -255,6 +1020,76 @@ output:
   - text: '# XXX - should be generic'
     type: comment
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: dereference
+          type: word
+        - text: pointer
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: poi(
+                type: string_content
+            - type: string
+              children:
+              - text: )
+                type: string_content
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: poi(
+                type: string_content
+            - type: string
+              children:
+              - text: )
+                type: string_content
+        expression:
+          type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: poi(
+                type: string_content
+            - type: string
+              children:
+              - text: )
+                type: string_content
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: poi(
+                type: string_content
+            - type: string
+              children:
+              - text: )
+                type: string_content
     rule:
       type: rule
       children:
@@ -268,8 +1103,50 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: poi(
+                type: string_content
+            - type: string
+              children:
+              - text: )
+                type: string_content
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: poi(
+                type: string_content
+            - type: string
+              children:
+              - text: )
+                type: string_content
         expression:
           type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: poi(
+                type: string_content
+            - type: string
+              children:
+              - text: )
+                type: string_content
           action_name:
             text: user.insert_between
             type: identifier
@@ -285,6 +1162,34 @@ output:
               - text: )
                 type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: show
+          type: word
+        - text: version
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: ctrl-alt-w
+            type: implicit_string
+          arguments:
+            text: ctrl-alt-w
+            type: implicit_string
+        expression:
+          type: key_action
+          children:
+          - text: ctrl-alt-w
+            type: implicit_string
+          arguments:
+            text: ctrl-alt-w
+            type: implicit_string
     rule:
       type: rule
       children:
@@ -298,8 +1203,19 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: ctrl-alt-w
+            type: implicit_string
+          arguments:
+            text: ctrl-alt-w
+            type: implicit_string
         expression:
           type: key_action
+          children:
+          - text: ctrl-alt-w
+            type: implicit_string
           arguments:
             text: ctrl-alt-w
             type: implicit_string
@@ -310,6 +1226,34 @@ output:
   - text: '##'
     type: comment
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: view
+          type: word
+        - text: command
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: alt-1
+            type: implicit_string
+          arguments:
+            text: alt-1
+            type: implicit_string
+        expression:
+          type: key_action
+          children:
+          - text: alt-1
+            type: implicit_string
+          arguments:
+            text: alt-1
+            type: implicit_string
     rule:
       type: rule
       children:
@@ -323,12 +1267,51 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: alt-1
+            type: implicit_string
+          arguments:
+            text: alt-1
+            type: implicit_string
         expression:
           type: key_action
+          children:
+          - text: alt-1
+            type: implicit_string
           arguments:
             text: alt-1
             type: implicit_string
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: view
+          type: word
+        - text: watch
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: alt-2
+            type: implicit_string
+          arguments:
+            text: alt-2
+            type: implicit_string
+        expression:
+          type: key_action
+          children:
+          - text: alt-2
+            type: implicit_string
+          arguments:
+            text: alt-2
+            type: implicit_string
     rule:
       type: rule
       children:
@@ -342,12 +1325,51 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: alt-2
+            type: implicit_string
+          arguments:
+            text: alt-2
+            type: implicit_string
         expression:
           type: key_action
+          children:
+          - text: alt-2
+            type: implicit_string
           arguments:
             text: alt-2
             type: implicit_string
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: view
+          type: word
+        - text: locals
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: alt-3
+            type: implicit_string
+          arguments:
+            text: alt-3
+            type: implicit_string
+        expression:
+          type: key_action
+          children:
+          - text: alt-3
+            type: implicit_string
+          arguments:
+            text: alt-3
+            type: implicit_string
     rule:
       type: rule
       children:
@@ -361,12 +1383,51 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: alt-3
+            type: implicit_string
+          arguments:
+            text: alt-3
+            type: implicit_string
         expression:
           type: key_action
+          children:
+          - text: alt-3
+            type: implicit_string
           arguments:
             text: alt-3
             type: implicit_string
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: view
+          type: word
+        - text: registers
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: alt-4
+            type: implicit_string
+          arguments:
+            text: alt-4
+            type: implicit_string
+        expression:
+          type: key_action
+          children:
+          - text: alt-4
+            type: implicit_string
+          arguments:
+            text: alt-4
+            type: implicit_string
     rule:
       type: rule
       children:
@@ -380,12 +1441,51 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: alt-4
+            type: implicit_string
+          arguments:
+            text: alt-4
+            type: implicit_string
         expression:
           type: key_action
+          children:
+          - text: alt-4
+            type: implicit_string
           arguments:
             text: alt-4
             type: implicit_string
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: view
+          type: word
+        - text: memory
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: alt-5
+            type: implicit_string
+          arguments:
+            text: alt-5
+            type: implicit_string
+        expression:
+          type: key_action
+          children:
+          - text: alt-5
+            type: implicit_string
+          arguments:
+            text: alt-5
+            type: implicit_string
     rule:
       type: rule
       children:
@@ -399,12 +1499,53 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: alt-5
+            type: implicit_string
+          arguments:
+            text: alt-5
+            type: implicit_string
         expression:
           type: key_action
+          children:
+          - text: alt-5
+            type: implicit_string
           arguments:
             text: alt-5
             type: implicit_string
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: view
+          type: word
+        - text: call
+          type: word
+        - text: stack
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: alt-6
+            type: implicit_string
+          arguments:
+            text: alt-6
+            type: implicit_string
+        expression:
+          type: key_action
+          children:
+          - text: alt-6
+            type: implicit_string
+          arguments:
+            text: alt-6
+            type: implicit_string
     rule:
       type: rule
       children:
@@ -420,12 +1561,51 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: alt-6
+            type: implicit_string
+          arguments:
+            text: alt-6
+            type: implicit_string
         expression:
           type: key_action
+          children:
+          - text: alt-6
+            type: implicit_string
           arguments:
             text: alt-6
             type: implicit_string
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: view
+          type: word
+        - text: disassembly
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: alt-7
+            type: implicit_string
+          arguments:
+            text: alt-7
+            type: implicit_string
+        expression:
+          type: key_action
+          children:
+          - text: alt-7
+            type: implicit_string
+          arguments:
+            text: alt-7
+            type: implicit_string
     rule:
       type: rule
       children:
@@ -439,12 +1619,53 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: alt-7
+            type: implicit_string
+          arguments:
+            text: alt-7
+            type: implicit_string
         expression:
           type: key_action
+          children:
+          - text: alt-7
+            type: implicit_string
           arguments:
             text: alt-7
             type: implicit_string
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: view
+          type: word
+        - text: scratch
+          type: word
+        - text: pad
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: alt-8
+            type: implicit_string
+          arguments:
+            text: alt-8
+            type: implicit_string
+        expression:
+          type: key_action
+          children:
+          - text: alt-8
+            type: implicit_string
+          arguments:
+            text: alt-8
+            type: implicit_string
     rule:
       type: rule
       children:
@@ -460,12 +1681,57 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: alt-8
+            type: implicit_string
+          arguments:
+            text: alt-8
+            type: implicit_string
         expression:
           type: key_action
+          children:
+          - text: alt-8
+            type: implicit_string
           arguments:
             text: alt-8
             type: implicit_string
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: view
+          type: word
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: processes
+              type: word
+            - text: threads
+              type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: alt-9
+            type: implicit_string
+          arguments:
+            text: alt-9
+            type: implicit_string
+        expression:
+          type: key_action
+          children:
+          - text: alt-9
+            type: implicit_string
+          arguments:
+            text: alt-9
+            type: implicit_string
     rule:
       type: rule
       children:
@@ -485,14 +1751,53 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: alt-9
+            type: implicit_string
+          arguments:
+            text: alt-9
+            type: implicit_string
         expression:
           type: key_action
+          children:
+          - text: alt-9
+            type: implicit_string
           arguments:
             text: alt-9
             type: implicit_string
   - text: '# XXX - temp'
     type: comment
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: dump
+          type: word
+        - text: function
+          type: word
+        - text: params
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: r @rcx,@rdx,@r8,@r9
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+        expression:
+          type: string
+          children:
+          - text: r @rcx,@rdx,@r8,@r9
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
     rule:
       type: rule
       children:
@@ -508,6 +1813,13 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: r @rcx,@rdx,@r8,@r9
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
         expression:
           type: string
           children:
@@ -516,6 +1828,47 @@ output:
           - text: \n
             type: string_escape_sequence
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: lib
+              type: word
+            - text: library
+              type: word
+        - type: capture
+          children:
+          - text: user.windows_dlls
+            type: identifier
+          capture_name:
+            text: user.windows_dlls
+            type: identifier
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: '{'
+            type: string_content
+          - text: windows_dlls
+            type: string_content
+          - text: '}'
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: '{'
+            type: string_content
+          - text: windows_dlls
+            type: string_content
+          - text: '}'
+            type: string_content
     rule:
       type: rule
       children:
@@ -530,6 +1883,9 @@ output:
             - text: library
               type: word
         - type: capture
+          children:
+          - text: user.windows_dlls
+            type: identifier
           capture_name:
             text: user.windows_dlls
             type: identifier
@@ -537,6 +1893,15 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: '{'
+            type: string_content
+          - text: windows_dlls
+            type: string_content
+          - text: '}'
+            type: string_content
         expression:
           type: string
           children:

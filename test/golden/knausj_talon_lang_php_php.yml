@@ -16,6 +16,11 @@ output:
   - type: context
     children:
     - type: match
+      children:
+      - text: tag
+        type: identifier
+      - text: ' user.php'
+        type: implicit_string
       key:
         text: tag
         type: identifier
@@ -23,46 +28,79 @@ output:
         text: ' user.php'
         type: implicit_string
   - type: include_tag
+    children:
+    - text: user.code_imperative
+      type: identifier
     tag:
       text: user.code_imperative
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_object_oriented
+      type: identifier
     tag:
       text: user.code_object_oriented
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_libraries
+      type: identifier
     tag:
       text: user.code_libraries
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_comment_line
+      type: identifier
     tag:
       text: user.code_comment_line
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_comment_block
+      type: identifier
     tag:
       text: user.code_comment_block
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_comment_documentation
+      type: identifier
     tag:
       text: user.code_comment_documentation
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_data_bool
+      type: identifier
     tag:
       text: user.code_data_bool
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_data_null
+      type: identifier
     tag:
       text: user.code_data_null
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_operators_assignment
+      type: identifier
     tag:
       text: user.code_operators_assignment
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_operators_math
+      type: identifier
     tag:
       text: user.code_operators_math
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_functions
+      type: identifier
     tag:
       text: user.code_functions
       type: identifier
@@ -71,6 +109,13 @@ output:
     - type: block
       children:
       - type: assignment
+        children:
+        - text: user.code_private_function_formatter
+          type: identifier
+        - type: string
+          children:
+          - text: PRIVATE_CAMEL_CASE
+            type: string_content
         left:
           text: user.code_private_function_formatter
           type: identifier
@@ -80,6 +125,13 @@ output:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
       - type: assignment
+        children:
+        - text: user.code_protected_function_formatter
+          type: identifier
+        - type: string
+          children:
+          - text: PRIVATE_CAMEL_CASE
+            type: string_content
         left:
           text: user.code_protected_function_formatter
           type: identifier
@@ -89,6 +141,13 @@ output:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
       - type: assignment
+        children:
+        - text: user.code_public_function_formatter
+          type: identifier
+        - type: string
+          children:
+          - text: PRIVATE_CAMEL_CASE
+            type: string_content
         left:
           text: user.code_public_function_formatter
           type: identifier
@@ -98,6 +157,13 @@ output:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
       - type: assignment
+        children:
+        - text: user.code_private_variable_formatter
+          type: identifier
+        - type: string
+          children:
+          - text: PRIVATE_CAMEL_CASE
+            type: string_content
         left:
           text: user.code_private_variable_formatter
           type: identifier
@@ -107,6 +173,13 @@ output:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
       - type: assignment
+        children:
+        - text: user.code_protected_variable_formatter
+          type: identifier
+        - type: string
+          children:
+          - text: PRIVATE_CAMEL_CASE
+            type: string_content
         left:
           text: user.code_protected_variable_formatter
           type: identifier
@@ -116,6 +189,13 @@ output:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
       - type: assignment
+        children:
+        - text: user.code_public_variable_formatter
+          type: identifier
+        - type: string
+          children:
+          - text: PRIVATE_CAMEL_CASE
+            type: string_content
         left:
           text: user.code_public_variable_formatter
           type: identifier
@@ -125,6 +205,36 @@ output:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: op
+              type: word
+            - text: is
+              type: word
+        - text: loosely
+          type: word
+        - text: equal
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: ' == '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: ' == '
+            type: string_content
     rule:
       type: rule
       children:
@@ -146,12 +256,49 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: ' == '
+            type: string_content
         expression:
           type: string
           children:
           - text: ' == '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: op
+              type: word
+            - text: is
+              type: word
+        - text: loosely
+          type: word
+        - text: not
+          type: word
+        - text: equal
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: ' != '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: ' != '
+            type: string_content
     rule:
       type: rule
       children:
@@ -175,12 +322,47 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: ' != '
+            type: string_content
         expression:
           type: string
           children:
           - text: ' != '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - text: try
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'try '
+            type: string_content
+          - text: '{'
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+        expression:
+          type: string
+          children:
+          - text: 'try '
+            type: string_content
+          - text: '{'
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
     rule:
       type: rule
       children:
@@ -194,6 +376,15 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'try '
+            type: string_content
+          - text: '{'
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
         expression:
           type: string
           children:
@@ -204,6 +395,44 @@ output:
           - text: \n
             type: string_escape_sequence
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - text: catch
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: catch (
+            type: string_content
+          - text: \\
+            type: string_escape_sequence
+          - text: 'Throwable $exception) '
+            type: string_content
+          - text: '{'
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+        expression:
+          type: string
+          children:
+          - text: catch (
+            type: string_content
+          - text: \\
+            type: string_escape_sequence
+          - text: 'Throwable $exception) '
+            type: string_content
+          - text: '{'
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
     rule:
       type: rule
       children:
@@ -217,6 +446,19 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: catch (
+            type: string_content
+          - text: \\
+            type: string_escape_sequence
+          - text: 'Throwable $exception) '
+            type: string_content
+          - text: '{'
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
         expression:
           type: string
           children:
@@ -231,14 +473,17 @@ output:
           - text: \n
             type: string_escape_sequence
   - type: command
-    rule:
-      type: rule
+    children:
+    - type: rule
       children:
       - type: seq
         children:
         - text: var
           type: word
         - type: capture
+          children:
+          - text: phrase
+            type: identifier
           capture_name:
             text: phrase
             type: identifier
@@ -246,12 +491,41 @@ output:
           children:
           - text: over
             type: word
-    script:
-      type: block
+    - type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: $
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: $
+                type: string_content
         expression:
           type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: $
+                type: string_content
           action_name:
             text: insert
             type: identifier
@@ -263,15 +537,30 @@ output:
               - text: $
                 type: string_content
       - type: expression
-        expression:
-          type: action
-          action_name:
-            text: insert
+        children:
+        - type: action
+          children:
+          - text: insert
             type: identifier
-          arguments:
-            type: argument_list
+          - type: argument_list
             children:
             - type: action
+              children:
+              - text: user.formatted_text
+                type: identifier
+              - type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: phrase
+                    type: identifier
+                  variable_name:
+                    text: phrase
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PRIVATE_CAMEL_CASE
+                    type: string_content
               action_name:
                 text: user.formatted_text
                 type: identifier
@@ -279,6 +568,357 @@ output:
                 type: argument_list
                 children:
                 - type: variable
+                  children:
+                  - text: phrase
+                    type: identifier
+                  variable_name:
+                    text: phrase
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PRIVATE_CAMEL_CASE
+                    type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: action
+              children:
+              - text: user.formatted_text
+                type: identifier
+              - type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: phrase
+                    type: identifier
+                  variable_name:
+                    text: phrase
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PRIVATE_CAMEL_CASE
+                    type: string_content
+              action_name:
+                text: user.formatted_text
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: phrase
+                    type: identifier
+                  variable_name:
+                    text: phrase
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PRIVATE_CAMEL_CASE
+                    type: string_content
+        expression:
+          type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: action
+              children:
+              - text: user.formatted_text
+                type: identifier
+              - type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: phrase
+                    type: identifier
+                  variable_name:
+                    text: phrase
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PRIVATE_CAMEL_CASE
+                    type: string_content
+              action_name:
+                text: user.formatted_text
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: phrase
+                    type: identifier
+                  variable_name:
+                    text: phrase
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PRIVATE_CAMEL_CASE
+                    type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: action
+              children:
+              - text: user.formatted_text
+                type: identifier
+              - type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: phrase
+                    type: identifier
+                  variable_name:
+                    text: phrase
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PRIVATE_CAMEL_CASE
+                    type: string_content
+              action_name:
+                text: user.formatted_text
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: phrase
+                    type: identifier
+                  variable_name:
+                    text: phrase
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PRIVATE_CAMEL_CASE
+                    type: string_content
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - text: var
+          type: word
+        - type: capture
+          children:
+          - text: phrase
+            type: identifier
+          capture_name:
+            text: phrase
+            type: identifier
+        - type: optional
+          children:
+          - text: over
+            type: word
+    script:
+      type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: $
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: $
+                type: string_content
+        expression:
+          type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: $
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: $
+                type: string_content
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: action
+              children:
+              - text: user.formatted_text
+                type: identifier
+              - type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: phrase
+                    type: identifier
+                  variable_name:
+                    text: phrase
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PRIVATE_CAMEL_CASE
+                    type: string_content
+              action_name:
+                text: user.formatted_text
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: phrase
+                    type: identifier
+                  variable_name:
+                    text: phrase
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PRIVATE_CAMEL_CASE
+                    type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: action
+              children:
+              - text: user.formatted_text
+                type: identifier
+              - type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: phrase
+                    type: identifier
+                  variable_name:
+                    text: phrase
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PRIVATE_CAMEL_CASE
+                    type: string_content
+              action_name:
+                text: user.formatted_text
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: phrase
+                    type: identifier
+                  variable_name:
+                    text: phrase
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PRIVATE_CAMEL_CASE
+                    type: string_content
+        expression:
+          type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: action
+              children:
+              - text: user.formatted_text
+                type: identifier
+              - type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: phrase
+                    type: identifier
+                  variable_name:
+                    text: phrase
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PRIVATE_CAMEL_CASE
+                    type: string_content
+              action_name:
+                text: user.formatted_text
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: phrase
+                    type: identifier
+                  variable_name:
+                    text: phrase
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PRIVATE_CAMEL_CASE
+                    type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: action
+              children:
+              - text: user.formatted_text
+                type: identifier
+              - type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: phrase
+                    type: identifier
+                  variable_name:
+                    text: phrase
+                    type: identifier
+                - type: string
+                  children:
+                  - text: PRIVATE_CAMEL_CASE
+                    type: string_content
+              action_name:
+                text: user.formatted_text
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                - type: variable
+                  children:
+                  - text: phrase
+                    type: identifier
                   variable_name:
                     text: phrase
                     type: identifier

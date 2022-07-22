@@ -17,6 +17,11 @@ output:
   - type: context
     children:
     - type: match
+      children:
+      - text: tag
+        type: identifier
+      - text: ' user.sql'
+        type: implicit_string
       key:
         text: tag
         type: identifier
@@ -24,26 +29,59 @@ output:
         text: ' user.sql'
         type: implicit_string
   - type: include_tag
+    children:
+    - text: user.code_operators_math
+      type: identifier
     tag:
       text: user.code_operators_math
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_comment_line
+      type: identifier
     tag:
       text: user.code_comment_line
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_comment_block_c_like
+      type: identifier
     tag:
       text: user.code_comment_block_c_like
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_data_null
+      type: identifier
     tag:
       text: user.code_data_null
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_functions_common
+      type: identifier
     tag:
       text: user.code_functions_common
       type: identifier
   - type: command
+    children:
+    - type: rule
+      children:
+      - text: select
+        type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'SELECT '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'SELECT '
+            type: string_content
     rule:
       type: rule
       children:
@@ -53,12 +91,35 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'SELECT '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'SELECT '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - text: distinct
+        type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'DISTINCT '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'DISTINCT '
+            type: string_content
     rule:
       type: rule
       children:
@@ -68,12 +129,35 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'DISTINCT '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'DISTINCT '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - text: from
+        type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'FROM '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'FROM '
+            type: string_content
     rule:
       type: rule
       children:
@@ -83,12 +167,49 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'FROM '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'FROM '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: select
+          type: word
+        - text: star
+          type: word
+        - text: from
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: SELECT *
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          - text: 'FROM '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: SELECT *
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          - text: 'FROM '
+            type: string_content
     rule:
       type: rule
       children:
@@ -104,6 +225,15 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: SELECT *
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          - text: 'FROM '
+            type: string_content
         expression:
           type: string
           children:
@@ -114,6 +244,24 @@ output:
           - text: 'FROM '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - text: where
+        type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'WHERE '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'WHERE '
+            type: string_content
     rule:
       type: rule
       children:
@@ -123,12 +271,39 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'WHERE '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'WHERE '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: order
+          type: word
+        - text: by
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'ORDER BY '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'ORDER BY '
+            type: string_content
     rule:
       type: rule
       children:
@@ -142,12 +317,39 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'ORDER BY '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'ORDER BY '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: group
+          type: word
+        - text: by
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'GROUP BY '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'GROUP BY '
+            type: string_content
     rule:
       type: rule
       children:
@@ -161,12 +363,35 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'GROUP BY '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'GROUP BY '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - text: having
+        type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'HAVING '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'HAVING '
+            type: string_content
     rule:
       type: rule
       children:
@@ -176,12 +401,35 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'HAVING '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'HAVING '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - text: descending
+        type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: ' DESC'
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: ' DESC'
+            type: string_content
     rule:
       type: rule
       children:
@@ -191,12 +439,35 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: ' DESC'
+            type: string_content
         expression:
           type: string
           children:
           - text: ' DESC'
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - text: ascending
+        type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: ' ASC'
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: ' ASC'
+            type: string_content
     rule:
       type: rule
       children:
@@ -206,12 +477,41 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: ' ASC'
+            type: string_content
         expression:
           type: string
           children:
           - text: ' ASC'
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: dot
+          type: word
+        - text: i
+          type: word
+        - text: d
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: .id
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: .id
+            type: string_content
     rule:
       type: rule
       children:
@@ -227,12 +527,87 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: .id
+            type: string_content
         expression:
           type: string
           children:
           - text: .id
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: inner
+          type: word
+        - text: join
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'INNER JOIN '
+                type: string_content
+            - type: string
+              children:
+              - text: ' ON '
+                type: string_content
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'INNER JOIN '
+                type: string_content
+            - type: string
+              children:
+              - text: ' ON '
+                type: string_content
+        expression:
+          type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'INNER JOIN '
+                type: string_content
+            - type: string
+              children:
+              - text: ' ON '
+                type: string_content
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'INNER JOIN '
+                type: string_content
+            - type: string
+              children:
+              - text: ' ON '
+                type: string_content
     rule:
       type: rule
       children:
@@ -246,8 +621,50 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'INNER JOIN '
+                type: string_content
+            - type: string
+              children:
+              - text: ' ON '
+                type: string_content
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'INNER JOIN '
+                type: string_content
+            - type: string
+              children:
+              - text: ' ON '
+                type: string_content
         expression:
           type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'INNER JOIN '
+                type: string_content
+            - type: string
+              children:
+              - text: ' ON '
+                type: string_content
           action_name:
             text: user.insert_between
             type: identifier
@@ -263,6 +680,78 @@ output:
               - text: ' ON '
                 type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: inner
+          type: word
+        - text: join
+          type: word
+        - text: using
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'INNER JOIN '
+                type: string_content
+            - type: string
+              children:
+              - text: ' USING '
+                type: string_content
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'INNER JOIN '
+                type: string_content
+            - type: string
+              children:
+              - text: ' USING '
+                type: string_content
+        expression:
+          type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'INNER JOIN '
+                type: string_content
+            - type: string
+              children:
+              - text: ' USING '
+                type: string_content
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'INNER JOIN '
+                type: string_content
+            - type: string
+              children:
+              - text: ' USING '
+                type: string_content
     rule:
       type: rule
       children:
@@ -278,8 +767,50 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'INNER JOIN '
+                type: string_content
+            - type: string
+              children:
+              - text: ' USING '
+                type: string_content
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'INNER JOIN '
+                type: string_content
+            - type: string
+              children:
+              - text: ' USING '
+                type: string_content
         expression:
           type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'INNER JOIN '
+                type: string_content
+            - type: string
+              children:
+              - text: ' USING '
+                type: string_content
           action_name:
             text: user.insert_between
             type: identifier
@@ -295,6 +826,78 @@ output:
               - text: ' USING '
                 type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: left
+          type: word
+        - text: outer
+          type: word
+        - text: join
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'LEFT OUTER JOIN '
+                type: string_content
+            - type: string
+              children:
+              - text: ' ON '
+                type: string_content
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'LEFT OUTER JOIN '
+                type: string_content
+            - type: string
+              children:
+              - text: ' ON '
+                type: string_content
+        expression:
+          type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'LEFT OUTER JOIN '
+                type: string_content
+            - type: string
+              children:
+              - text: ' ON '
+                type: string_content
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'LEFT OUTER JOIN '
+                type: string_content
+            - type: string
+              children:
+              - text: ' ON '
+                type: string_content
     rule:
       type: rule
       children:
@@ -310,8 +913,50 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'LEFT OUTER JOIN '
+                type: string_content
+            - type: string
+              children:
+              - text: ' ON '
+                type: string_content
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'LEFT OUTER JOIN '
+                type: string_content
+            - type: string
+              children:
+              - text: ' ON '
+                type: string_content
         expression:
           type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'LEFT OUTER JOIN '
+                type: string_content
+            - type: string
+              children:
+              - text: ' ON '
+                type: string_content
           action_name:
             text: user.insert_between
             type: identifier
@@ -327,6 +972,78 @@ output:
               - text: ' ON '
                 type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: right
+          type: word
+        - text: outer
+          type: word
+        - text: join
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'RIGHT OUTER JOIN '
+                type: string_content
+            - type: string
+              children:
+              - text: ' ON '
+                type: string_content
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'RIGHT OUTER JOIN '
+                type: string_content
+            - type: string
+              children:
+              - text: ' ON '
+                type: string_content
+        expression:
+          type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'RIGHT OUTER JOIN '
+                type: string_content
+            - type: string
+              children:
+              - text: ' ON '
+                type: string_content
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'RIGHT OUTER JOIN '
+                type: string_content
+            - type: string
+              children:
+              - text: ' ON '
+                type: string_content
     rule:
       type: rule
       children:
@@ -342,8 +1059,50 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'RIGHT OUTER JOIN '
+                type: string_content
+            - type: string
+              children:
+              - text: ' ON '
+                type: string_content
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'RIGHT OUTER JOIN '
+                type: string_content
+            - type: string
+              children:
+              - text: ' ON '
+                type: string_content
         expression:
           type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'RIGHT OUTER JOIN '
+                type: string_content
+            - type: string
+              children:
+              - text: ' ON '
+                type: string_content
           action_name:
             text: user.insert_between
             type: identifier
@@ -359,6 +1118,168 @@ output:
               - text: ' ON '
                 type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - text: with
+        type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: enter up
+            type: implicit_string
+          arguments:
+            text: enter up
+            type: implicit_string
+        expression:
+          type: key_action
+          children:
+          - text: enter up
+            type: implicit_string
+          arguments:
+            text: enter up
+            type: implicit_string
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: WITH  AS (
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: WITH  AS (
+            type: string_content
+      - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: enter tab
+            type: implicit_string
+          arguments:
+            text: enter tab
+            type: implicit_string
+        expression:
+          type: key_action
+          children:
+          - text: enter tab
+            type: implicit_string
+          arguments:
+            text: enter tab
+            type: implicit_string
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'SELECT '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'SELECT '
+            type: string_content
+      - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: enter shift-tab
+            type: implicit_string
+          arguments:
+            text: enter shift-tab
+            type: implicit_string
+        expression:
+          type: key_action
+          children:
+          - text: enter shift-tab
+            type: implicit_string
+          arguments:
+            text: enter shift-tab
+            type: implicit_string
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.extend_line_end
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.extend_line_end
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: edit.extend_line_end
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.extend_line_end
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.delete
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.delete
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+        expression:
+          type: action
+          children:
+          - text: edit.delete
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.delete
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: ') '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: ') '
+            type: string_content
+      - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: delete up:2 right:3
+            type: implicit_string
+          arguments:
+            text: delete up:2 right:3
+            type: implicit_string
+        expression:
+          type: key_action
+          children:
+          - text: delete up:2 right:3
+            type: implicit_string
+          arguments:
+            text: delete up:2 right:3
+            type: implicit_string
     rule:
       type: rule
       children:
@@ -368,38 +1289,99 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: enter up
+            type: implicit_string
+          arguments:
+            text: enter up
+            type: implicit_string
         expression:
           type: key_action
+          children:
+          - text: enter up
+            type: implicit_string
           arguments:
             text: enter up
             type: implicit_string
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: WITH  AS (
+            type: string_content
         expression:
           type: string
           children:
           - text: WITH  AS (
             type: string_content
       - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: enter tab
+            type: implicit_string
+          arguments:
+            text: enter tab
+            type: implicit_string
         expression:
           type: key_action
+          children:
+          - text: enter tab
+            type: implicit_string
           arguments:
             text: enter tab
             type: implicit_string
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'SELECT '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'SELECT '
             type: string_content
       - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: enter shift-tab
+            type: implicit_string
+          arguments:
+            text: enter shift-tab
+            type: implicit_string
         expression:
           type: key_action
+          children:
+          - text: enter shift-tab
+            type: implicit_string
           arguments:
             text: enter shift-tab
             type: implicit_string
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.extend_line_end
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.extend_line_end
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: edit.extend_line_end
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: edit.extend_line_end
             type: identifier
@@ -407,8 +1389,26 @@ output:
             type: argument_list
             children: []
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: edit.delete
+            type: identifier
+          - type: argument_list
+            children: []
+          action_name:
+            text: edit.delete
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
         expression:
           type: action
+          children:
+          - text: edit.delete
+            type: identifier
+          - type: argument_list
+            children: []
           action_name:
             text: edit.delete
             type: identifier
@@ -416,18 +1416,69 @@ output:
             type: argument_list
             children: []
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: ') '
+            type: string_content
         expression:
           type: string
           children:
           - text: ') '
             type: string_content
       - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: delete up:2 right:3
+            type: implicit_string
+          arguments:
+            text: delete up:2 right:3
+            type: implicit_string
         expression:
           type: key_action
+          children:
+          - text: delete up:2 right:3
+            type: implicit_string
           arguments:
             text: delete up:2 right:3
             type: implicit_string
   - type: command
+    children:
+    - type: rule
+      children:
+      - text: column
+        type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: return
+            type: implicit_string
+          arguments:
+            text: return
+            type: implicit_string
+        expression:
+          type: key_action
+          children:
+          - text: return
+            type: implicit_string
+          arguments:
+            text: return
+            type: implicit_string
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: ', '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: ', '
+            type: string_content
     rule:
       type: rule
       children:
@@ -437,18 +1488,92 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: return
+            type: implicit_string
+          arguments:
+            text: return
+            type: implicit_string
         expression:
           type: key_action
+          children:
+          - text: return
+            type: implicit_string
           arguments:
             text: return
             type: implicit_string
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: ', '
+            type: string_content
         expression:
           type: string
           children:
           - text: ', '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - text: count
+        type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_insert_function
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: Count
+                type: string_content
+            - type: string
+              children: []
+          action_name:
+            text: user.code_insert_function
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: Count
+                type: string_content
+            - type: string
+              children: []
+        expression:
+          type: action
+          children:
+          - text: user.code_insert_function
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: Count
+                type: string_content
+            - type: string
+              children: []
+          action_name:
+            text: user.code_insert_function
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: Count
+                type: string_content
+            - type: string
+              children: []
     rule:
       type: rule
       children:
@@ -458,8 +1583,44 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_insert_function
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: Count
+                type: string_content
+            - type: string
+              children: []
+          action_name:
+            text: user.code_insert_function
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: Count
+                type: string_content
+            - type: string
+              children: []
         expression:
           type: action
+          children:
+          - text: user.code_insert_function
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: Count
+                type: string_content
+            - type: string
+              children: []
           action_name:
             text: user.code_insert_function
             type: identifier
@@ -473,6 +1634,72 @@ output:
             - type: string
               children: []
   - type: command
+    children:
+    - type: rule
+      children:
+      - text: date
+        type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: DATE '
+                type: string_content
+            - type: string
+              children:
+              - text: "'"
+                type: string_content
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: DATE '
+                type: string_content
+            - type: string
+              children:
+              - text: "'"
+                type: string_content
+        expression:
+          type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: DATE '
+                type: string_content
+            - type: string
+              children:
+              - text: "'"
+                type: string_content
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: DATE '
+                type: string_content
+            - type: string
+              children:
+              - text: "'"
+                type: string_content
     rule:
       type: rule
       children:
@@ -482,8 +1709,50 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: DATE '
+                type: string_content
+            - type: string
+              children:
+              - text: "'"
+                type: string_content
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: DATE '
+                type: string_content
+            - type: string
+              children:
+              - text: "'"
+                type: string_content
         expression:
           type: action
+          children:
+          - text: user.insert_between
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: DATE '
+                type: string_content
+            - type: string
+              children:
+              - text: "'"
+                type: string_content
           action_name:
             text: user.insert_between
             type: identifier

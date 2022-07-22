@@ -11,6 +11,11 @@ output:
   - type: context
     children:
     - type: match
+      children:
+      - text: app
+        type: identifier
+      - text: ' apple_terminal'
+        type: implicit_string
       key:
         text: app
         type: identifier
@@ -20,12 +25,18 @@ output:
   - text: '# makes the commands in generic_terminal available'
     type: comment
   - type: include_tag
+    children:
+    - text: terminal
+      type: identifier
     tag:
       text: terminal
       type: identifier
   - text: '# activates the implementation of the commands/functions in generic_terminal'
     type: comment
   - type: include_tag
+    children:
+    - text: user.generic_unix_shell
+      type: identifier
     tag:
       text: user.generic_unix_shell
       type: identifier
@@ -34,28 +45,67 @@ output:
   - text: '# you can deactivate them if you do not use the application'
     type: comment
   - type: include_tag
+    children:
+    - text: user.git
+      type: identifier
     tag:
       text: user.git
       type: identifier
   - type: include_tag
+    children:
+    - text: user.anaconda
+      type: identifier
     tag:
       text: user.anaconda
       type: identifier
   - type: include_tag
+    children:
+    - text: user.kubectl
+      type: identifier
     tag:
       text: user.kubectl
       type: identifier
   - text: '# TODO: explain'
     type: comment
   - type: include_tag
+    children:
+    - text: user.tabs
+      type: identifier
     tag:
       text: user.tabs
       type: identifier
   - type: include_tag
+    children:
+    - text: user.file_manager
+      type: identifier
     tag:
       text: user.file_manager
       type: identifier
   - type: command
+    children:
+    - type: rule
+      children:
+      - text: suspend
+        type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: ctrl-z
+            type: implicit_string
+          arguments:
+            text: ctrl-z
+            type: implicit_string
+        expression:
+          type: key_action
+          children:
+          - text: ctrl-z
+            type: implicit_string
+          arguments:
+            text: ctrl-z
+            type: implicit_string
     rule:
       type: rule
       children:
@@ -65,23 +115,63 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: ctrl-z
+            type: implicit_string
+          arguments:
+            text: ctrl-z
+            type: implicit_string
         expression:
           type: key_action
+          children:
+          - text: ctrl-z
+            type: implicit_string
           arguments:
             text: ctrl-z
             type: implicit_string
   - type: command
-    rule:
-      type: rule
+    children:
+    - type: rule
       children:
       - text: resume
         type: word
-    script:
-      type: block
+    - type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: fg
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: fg
+                type: string_content
         expression:
           type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: fg
+                type: string_content
           action_name:
             text: insert
             type: identifier
@@ -93,8 +183,87 @@ output:
               - text: fg
                 type: string_content
       - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: enter
+            type: implicit_string
+          arguments:
+            text: enter
+            type: implicit_string
         expression:
           type: key_action
+          children:
+          - text: enter
+            type: implicit_string
+          arguments:
+            text: enter
+            type: implicit_string
+    rule:
+      type: rule
+      children:
+      - text: resume
+        type: word
+    script:
+      type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: fg
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: fg
+                type: string_content
+        expression:
+          type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: fg
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: fg
+                type: string_content
+      - type: expression
+        children:
+        - type: key_action
+          children:
+          - text: enter
+            type: implicit_string
+          arguments:
+            text: enter
+            type: implicit_string
+        expression:
+          type: key_action
+          children:
+          - text: enter
+            type: implicit_string
           arguments:
             text: enter
             type: implicit_string

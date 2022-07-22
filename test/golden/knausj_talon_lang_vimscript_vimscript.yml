@@ -19,6 +19,11 @@ output:
   - type: context
     children:
     - type: match
+      children:
+      - text: tag
+        type: identifier
+      - text: ' user.vimscript'
+        type: implicit_string
       key:
         text: tag
         type: identifier
@@ -26,18 +31,30 @@ output:
         text: ' user.vimscript'
         type: implicit_string
   - type: include_tag
+    children:
+    - text: user.code_imperative
+      type: identifier
     tag:
       text: user.code_imperative
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_operators_assignment
+      type: identifier
     tag:
       text: user.code_operators_assignment
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_operators_math
+      type: identifier
     tag:
       text: user.code_operators_math
       type: identifier
   - type: include_tag
+    children:
+    - text: user.code_comment_line
+      type: identifier
     tag:
       text: user.code_comment_line
       type: identifier
@@ -48,6 +65,13 @@ output:
     - type: block
       children:
       - type: assignment
+        children:
+        - text: user.code_private_function_formatter
+          type: identifier
+        - type: string
+          children:
+          - text: SNAKE_CASE
+            type: string_content
         left:
           text: user.code_private_function_formatter
           type: identifier
@@ -57,6 +81,13 @@ output:
           - text: SNAKE_CASE
             type: string_content
       - type: assignment
+        children:
+        - text: user.code_protected_function_formatter
+          type: identifier
+        - type: string
+          children:
+          - text: SNAKE_CASE
+            type: string_content
         left:
           text: user.code_protected_function_formatter
           type: identifier
@@ -66,6 +97,13 @@ output:
           - text: SNAKE_CASE
             type: string_content
       - type: assignment
+        children:
+        - text: user.code_public_function_formatter
+          type: identifier
+        - type: string
+          children:
+          - text: SNAKE_CASE
+            type: string_content
         left:
           text: user.code_public_function_formatter
           type: identifier
@@ -75,6 +113,13 @@ output:
           - text: SNAKE_CASE
             type: string_content
       - type: assignment
+        children:
+        - text: user.code_private_variable_formatter
+          type: identifier
+        - type: string
+          children:
+          - text: SNAKE_CASE
+            type: string_content
         left:
           text: user.code_private_variable_formatter
           type: identifier
@@ -84,6 +129,13 @@ output:
           - text: SNAKE_CASE
             type: string_content
       - type: assignment
+        children:
+        - text: user.code_protected_variable_formatter
+          type: identifier
+        - type: string
+          children:
+          - text: SNAKE_CASE
+            type: string_content
         left:
           text: user.code_protected_variable_formatter
           type: identifier
@@ -93,6 +145,13 @@ output:
           - text: SNAKE_CASE
             type: string_content
       - type: assignment
+        children:
+        - text: user.code_public_variable_formatter
+          type: identifier
+        - type: string
+          children:
+          - text: SNAKE_CASE
+            type: string_content
         left:
           text: user.code_public_variable_formatter
           type: identifier
@@ -108,8 +167,8 @@ output:
   - text: '###'
     type: comment
   - type: command
-    rule:
-      type: rule
+    children:
+    - type: rule
       children:
       - type: seq
         children:
@@ -118,6 +177,9 @@ output:
         - type: optional
           children:
           - type: capture
+            children:
+            - text: user.vimscript_scope
+              type: identifier
             capture_name:
               text: user.vimscript_scope
               type: identifier
@@ -132,6 +194,9 @@ output:
         - type: optional
           children:
           - type: capture
+            children:
+            - text: user.text
+              type: identifier
             capture_name:
               text: user.text
               type: identifier
@@ -139,12 +204,41 @@ output:
           children:
           - text: over
             type: word
-    script:
-      type: block
+    - type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'let '
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'let '
+                type: string_content
         expression:
           type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'let '
+                type: string_content
           action_name:
             text: insert
             type: identifier
@@ -156,8 +250,40 @@ output:
               - text: 'let '
                 type: string_content
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
+                variable_name:
+                  text: vimscript_scope
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children: []
+              left:
+                type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
+                variable_name:
+                  text: vimscript_scope
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                type: string
+                children: []
           action_name:
             text: insert
             type: identifier
@@ -165,8 +291,90 @@ output:
             type: argument_list
             children:
             - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
+                variable_name:
+                  text: vimscript_scope
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children: []
               left:
                 type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
+                variable_name:
+                  text: vimscript_scope
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                type: string
+                children: []
+        expression:
+          type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
+                variable_name:
+                  text: vimscript_scope
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children: []
+              left:
+                type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
+                variable_name:
+                  text: vimscript_scope
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                type: string
+                children: []
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
+                variable_name:
+                  text: vimscript_scope
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children: []
+              left:
+                type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
                 variable_name:
                   text: vimscript_scope
                   type: identifier
@@ -177,8 +385,20 @@ output:
                 type: string
                 children: []
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: user.code_private_variable_formatter
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: text
+                type: identifier
+              variable_name:
+                text: text
+                type: identifier
           action_name:
             text: user.code_private_variable_formatter
             type: identifier
@@ -186,18 +406,52 @@ output:
             type: argument_list
             children:
             - type: variable
+              children:
+              - text: text
+                type: identifier
               variable_name:
                 text: text
                 type: identifier
-  - type: command
+        expression:
+          type: action
+          children:
+          - text: user.code_private_variable_formatter
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: text
+                type: identifier
+              variable_name:
+                text: text
+                type: identifier
+          action_name:
+            text: user.code_private_variable_formatter
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: text
+                type: identifier
+              variable_name:
+                text: text
+                type: identifier
     rule:
       type: rule
       children:
       - type: seq
         children:
+        - text: assign
+          type: word
         - type: optional
           children:
           - type: capture
+            children:
+            - text: user.vimscript_scope
+              type: identifier
             capture_name:
               text: user.vimscript_scope
               type: identifier
@@ -212,6 +466,9 @@ output:
         - type: optional
           children:
           - type: capture
+            children:
+            - text: user.text
+              type: identifier
             capture_name:
               text: user.text
               type: identifier
@@ -223,8 +480,83 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'let '
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'let '
+                type: string_content
         expression:
           type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'let '
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: 'let '
+                type: string_content
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
+                variable_name:
+                  text: vimscript_scope
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children: []
+              left:
+                type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
+                variable_name:
+                  text: vimscript_scope
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                type: string
+                children: []
           action_name:
             text: insert
             type: identifier
@@ -232,8 +564,90 @@ output:
             type: argument_list
             children:
             - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
+                variable_name:
+                  text: vimscript_scope
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children: []
               left:
                 type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
+                variable_name:
+                  text: vimscript_scope
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                type: string
+                children: []
+        expression:
+          type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
+                variable_name:
+                  text: vimscript_scope
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children: []
+              left:
+                type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
+                variable_name:
+                  text: vimscript_scope
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                type: string
+                children: []
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
+                variable_name:
+                  text: vimscript_scope
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children: []
+              left:
+                type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
                 variable_name:
                   text: vimscript_scope
                   type: identifier
@@ -244,8 +658,20 @@ output:
                 type: string
                 children: []
       - type: expression
-        expression:
-          type: action
+        children:
+        - type: action
+          children:
+          - text: user.code_private_variable_formatter
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: text
+                type: identifier
+              variable_name:
+                text: text
+                type: identifier
           action_name:
             text: user.code_private_variable_formatter
             type: identifier
@@ -253,16 +679,584 @@ output:
             type: argument_list
             children:
             - type: variable
+              children:
+              - text: text
+                type: identifier
+              variable_name:
+                text: text
+                type: identifier
+        expression:
+          type: action
+          children:
+          - text: user.code_private_variable_formatter
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: text
+                type: identifier
+              variable_name:
+                text: text
+                type: identifier
+          action_name:
+            text: user.code_private_variable_formatter
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: text
+                type: identifier
+              variable_name:
+                text: text
+                type: identifier
+  - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - type: optional
+          children:
+          - type: capture
+            children:
+            - text: user.vimscript_scope
+              type: identifier
+            capture_name:
+              text: user.vimscript_scope
+              type: identifier
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: variable
+              type: word
+            - text: var
+              type: word
+        - type: optional
+          children:
+          - type: capture
+            children:
+            - text: user.text
+              type: identifier
+            capture_name:
+              text: user.text
+              type: identifier
+        - type: optional
+          children:
+          - text: over
+            type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
+                variable_name:
+                  text: vimscript_scope
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children: []
+              left:
+                type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
+                variable_name:
+                  text: vimscript_scope
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                type: string
+                children: []
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
+                variable_name:
+                  text: vimscript_scope
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children: []
+              left:
+                type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
+                variable_name:
+                  text: vimscript_scope
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                type: string
+                children: []
+        expression:
+          type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
+                variable_name:
+                  text: vimscript_scope
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children: []
+              left:
+                type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
+                variable_name:
+                  text: vimscript_scope
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                type: string
+                children: []
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
+                variable_name:
+                  text: vimscript_scope
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children: []
+              left:
+                type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
+                variable_name:
+                  text: vimscript_scope
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                type: string
+                children: []
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_private_variable_formatter
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: text
+                type: identifier
+              variable_name:
+                text: text
+                type: identifier
+          action_name:
+            text: user.code_private_variable_formatter
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: text
+                type: identifier
+              variable_name:
+                text: text
+                type: identifier
+        expression:
+          type: action
+          children:
+          - text: user.code_private_variable_formatter
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: text
+                type: identifier
+              variable_name:
+                text: text
+                type: identifier
+          action_name:
+            text: user.code_private_variable_formatter
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: text
+                type: identifier
+              variable_name:
+                text: text
+                type: identifier
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: optional
+          children:
+          - type: capture
+            children:
+            - text: user.vimscript_scope
+              type: identifier
+            capture_name:
+              text: user.vimscript_scope
+              type: identifier
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: variable
+              type: word
+            - text: var
+              type: word
+        - type: optional
+          children:
+          - type: capture
+            children:
+            - text: user.text
+              type: identifier
+            capture_name:
+              text: user.text
+              type: identifier
+        - type: optional
+          children:
+          - text: over
+            type: word
+    script:
+      type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
+                variable_name:
+                  text: vimscript_scope
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children: []
+              left:
+                type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
+                variable_name:
+                  text: vimscript_scope
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                type: string
+                children: []
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
+                variable_name:
+                  text: vimscript_scope
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children: []
+              left:
+                type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
+                variable_name:
+                  text: vimscript_scope
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                type: string
+                children: []
+        expression:
+          type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
+                variable_name:
+                  text: vimscript_scope
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children: []
+              left:
+                type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
+                variable_name:
+                  text: vimscript_scope
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                type: string
+                children: []
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: binary_operator
+              children:
+              - type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
+                variable_name:
+                  text: vimscript_scope
+                  type: identifier
+              - text: or
+                type: operator
+              - type: string
+                children: []
+              left:
+                type: variable
+                children:
+                - text: vimscript_scope
+                  type: identifier
+                variable_name:
+                  text: vimscript_scope
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                type: string
+                children: []
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.code_private_variable_formatter
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: text
+                type: identifier
+              variable_name:
+                text: text
+                type: identifier
+          action_name:
+            text: user.code_private_variable_formatter
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: text
+                type: identifier
+              variable_name:
+                text: text
+                type: identifier
+        expression:
+          type: action
+          children:
+          - text: user.code_private_variable_formatter
+            type: identifier
+          - type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: text
+                type: identifier
+              variable_name:
+                text: text
+                type: identifier
+          action_name:
+            text: user.code_private_variable_formatter
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children:
+              - text: text
+                type: identifier
               variable_name:
                 text: text
                 type: identifier
   - text: '# see lang/vimscript/vimscript.py for list'
     type: comment
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: capture
+        children:
+        - text: user.vimscript_functions
+          type: identifier
+        capture_name:
+          text: user.vimscript_functions
+          type: identifier
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '{'
+                type: string_content
+              - text: vimscript_functions
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ' '
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '{'
+                type: string_content
+              - text: vimscript_functions
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ' '
+                type: string_content
+        expression:
+          type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '{'
+                type: string_content
+              - text: vimscript_functions
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ' '
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '{'
+                type: string_content
+              - text: vimscript_functions
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ' '
+                type: string_content
     rule:
       type: rule
       children:
       - type: capture
+        children:
+        - text: user.vimscript_functions
+          type: identifier
         capture_name:
           text: user.vimscript_functions
           type: identifier
@@ -270,8 +1264,56 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '{'
+                type: string_content
+              - text: vimscript_functions
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ' '
+                type: string_content
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '{'
+                type: string_content
+              - text: vimscript_functions
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ' '
+                type: string_content
         expression:
           type: action
+          children:
+          - text: insert
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '{'
+                type: string_content
+              - text: vimscript_functions
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ' '
+                type: string_content
           action_name:
             text: insert
             type: identifier
@@ -291,6 +1333,28 @@ output:
   - text: '# XXX - possibly overlap with some programming.talon'
     type: comment
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - text: command
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'command! '
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: 'command! '
+            type: string_content
     rule:
       type: rule
       children:
@@ -304,12 +1368,41 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: 'command! '
+            type: string_content
         expression:
           type: string
           children:
           - text: 'command! '
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - text: end
+          type: word
+        - text: if
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: endif
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: endif
+            type: string_content
     rule:
       type: rule
       children:
@@ -325,12 +1418,41 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: endif
+            type: string_content
         expression:
           type: string
           children:
           - text: endif
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - text: end
+          type: word
+        - text: for
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: endfor
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: endfor
+            type: string_content
     rule:
       type: rule
       children:
@@ -346,12 +1468,41 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: endfor
+            type: string_content
         expression:
           type: string
           children:
           - text: endfor
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - text: end
+          type: word
+        - text: while
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: endwhile
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: endwhile
+            type: string_content
     rule:
       type: rule
       children:
@@ -367,12 +1518,41 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: endwhile
+            type: string_content
         expression:
           type: string
           children:
           - text: endwhile
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - text: end
+          type: word
+        - text: function
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: endfunction
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: endfunction
+            type: string_content
     rule:
       type: rule
       children:
@@ -388,12 +1568,39 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: endfunction
+            type: string_content
         expression:
           type: string
           children:
           - text: endfunction
             type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: state
+          type: word
+        - text: continue
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: string
+          children:
+          - text: continue
+            type: string_content
+        expression:
+          type: string
+          children:
+          - text: continue
+            type: string_content
     rule:
       type: rule
       children:
@@ -407,6 +1614,11 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: string
+          children:
+          - text: continue
+            type: string_content
         expression:
           type: string
           children:

@@ -10,6 +10,11 @@ output:
     - type: or
       children:
       - type: match
+        children:
+        - text: app
+          type: identifier
+        - text: ' windows_explorer'
+          type: implicit_string
         key:
           text: app
           type: identifier
@@ -17,6 +22,11 @@ output:
           text: ' windows_explorer'
           type: implicit_string
       - type: match
+        children:
+        - text: app
+          type: identifier
+        - text: ' windows_file_browser'
+          type: implicit_string
         key:
           text: app
           type: identifier
@@ -24,10 +34,100 @@ output:
           text: ' windows_file_browser'
           type: implicit_string
   - type: include_tag
+    children:
+    - text: user.file_manager
+      type: identifier
     tag:
       text: user.file_manager
       type: identifier
   - type: command
+    children:
+    - type: rule
+      children:
+      - text: ^
+        type: start_anchor
+      - type: seq
+        children:
+        - text: go
+          type: word
+        - type: capture
+          children:
+          - text: user.letter
+            type: identifier
+          capture_name:
+            text: user.letter
+            type: identifier
+      - text: $
+        type: end_anchor
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.file_manager_open_volume
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '{'
+                type: string_content
+              - text: letter
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ':'
+                type: string_content
+          action_name:
+            text: user.file_manager_open_volume
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '{'
+                type: string_content
+              - text: letter
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ':'
+                type: string_content
+        expression:
+          type: action
+          children:
+          - text: user.file_manager_open_volume
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '{'
+                type: string_content
+              - text: letter
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ':'
+                type: string_content
+          action_name:
+            text: user.file_manager_open_volume
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '{'
+                type: string_content
+              - text: letter
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ':'
+                type: string_content
     rule:
       type: rule
       children:
@@ -38,6 +138,9 @@ output:
         - text: go
           type: word
         - type: capture
+          children:
+          - text: user.letter
+            type: identifier
           capture_name:
             text: user.letter
             type: identifier
@@ -47,8 +150,56 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.file_manager_open_volume
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '{'
+                type: string_content
+              - text: letter
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ':'
+                type: string_content
+          action_name:
+            text: user.file_manager_open_volume
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '{'
+                type: string_content
+              - text: letter
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ':'
+                type: string_content
         expression:
           type: action
+          children:
+          - text: user.file_manager_open_volume
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '{'
+                type: string_content
+              - text: letter
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ':'
+                type: string_content
           action_name:
             text: user.file_manager_open_volume
             type: identifier
@@ -66,6 +217,62 @@ output:
               - text: ':'
                 type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: go
+          type: word
+        - text: app
+          type: word
+        - text: data
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.file_manager_open_directory
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '%AppData%'
+                type: string_content
+          action_name:
+            text: user.file_manager_open_directory
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '%AppData%'
+                type: string_content
+        expression:
+          type: action
+          children:
+          - text: user.file_manager_open_directory
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '%AppData%'
+                type: string_content
+          action_name:
+            text: user.file_manager_open_directory
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '%AppData%'
+                type: string_content
     rule:
       type: rule
       children:
@@ -81,8 +288,38 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.file_manager_open_directory
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '%AppData%'
+                type: string_content
+          action_name:
+            text: user.file_manager_open_directory
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '%AppData%'
+                type: string_content
         expression:
           type: action
+          children:
+          - text: user.file_manager_open_directory
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '%AppData%'
+                type: string_content
           action_name:
             text: user.file_manager_open_directory
             type: identifier
@@ -94,6 +331,62 @@ output:
               - text: '%AppData%'
                 type: string_content
   - type: command
+    children:
+    - type: rule
+      children:
+      - type: seq
+        children:
+        - text: go
+          type: word
+        - text: program
+          type: word
+        - text: files
+          type: word
+    - type: block
+      children:
+      - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.file_manager_open_directory
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '%programfiles%'
+                type: string_content
+          action_name:
+            text: user.file_manager_open_directory
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '%programfiles%'
+                type: string_content
+        expression:
+          type: action
+          children:
+          - text: user.file_manager_open_directory
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '%programfiles%'
+                type: string_content
+          action_name:
+            text: user.file_manager_open_directory
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '%programfiles%'
+                type: string_content
     rule:
       type: rule
       children:
@@ -109,8 +402,38 @@ output:
       type: block
       children:
       - type: expression
+        children:
+        - type: action
+          children:
+          - text: user.file_manager_open_directory
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '%programfiles%'
+                type: string_content
+          action_name:
+            text: user.file_manager_open_directory
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '%programfiles%'
+                type: string_content
         expression:
           type: action
+          children:
+          - text: user.file_manager_open_directory
+            type: identifier
+          - type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '%programfiles%'
+                type: string_content
           action_name:
             text: user.file_manager_open_directory
             type: identifier
