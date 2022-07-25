@@ -49,8 +49,8 @@ def from_tree_sitter(
 @dataclass
 class TalonAction(Branch):
     children: list[TalonComment]
-    action_name: list[Union[TalonIdentifier, TalonComment]]
-    arguments: list[Union[TalonArgumentList, TalonComment]]
+    action_name: TalonIdentifier
+    arguments: TalonArgumentList
 
 
 @dataclass_json
@@ -69,17 +69,17 @@ class TalonArgumentList(Branch):
 @dataclass
 class TalonAssignment(Branch):
     children: list[TalonComment]
-    left: list[Union[TalonIdentifier, TalonComment]]
-    right: list[Union[TalonAction, TalonBinaryOperator, TalonFloat, TalonInteger, TalonKeyAction, TalonParenthesizedExpression, TalonSleepAction, TalonString, TalonVariable, TalonComment]]
+    left: TalonIdentifier
+    right: Union[TalonAction, TalonBinaryOperator, TalonFloat, TalonInteger, TalonKeyAction, TalonParenthesizedExpression, TalonSleepAction, TalonString, TalonVariable, TalonComment]
 
 
 @dataclass_json
 @dataclass
 class TalonBinaryOperator(Branch):
     children: list[TalonComment]
-    left: list[Union[TalonAction, TalonBinaryOperator, TalonFloat, TalonInteger, TalonKeyAction, TalonParenthesizedExpression, TalonSleepAction, TalonString, TalonVariable, TalonComment]]
-    operator: list[Union[TalonOperator, TalonComment]]
-    right: list[Union[TalonAction, TalonBinaryOperator, TalonFloat, TalonInteger, TalonKeyAction, TalonParenthesizedExpression, TalonSleepAction, TalonString, TalonVariable, TalonComment]]
+    left: Union[TalonAction, TalonBinaryOperator, TalonFloat, TalonInteger, TalonKeyAction, TalonParenthesizedExpression, TalonSleepAction, TalonString, TalonVariable, TalonComment]
+    operator: TalonOperator
+    right: Union[TalonAction, TalonBinaryOperator, TalonFloat, TalonInteger, TalonKeyAction, TalonParenthesizedExpression, TalonSleepAction, TalonString, TalonVariable, TalonComment]
 
 
 @dataclass_json
@@ -92,7 +92,7 @@ class TalonBlock(Branch):
 @dataclass
 class TalonCapture(Branch):
     children: list[TalonComment]
-    capture_name: list[Union[TalonIdentifier, TalonComment]]
+    capture_name: TalonIdentifier
 
 
 @dataclass_json
@@ -105,8 +105,8 @@ class TalonChoice(Branch):
 @dataclass
 class TalonCommand(Branch):
     children: list[TalonComment]
-    rule: list[Union[TalonRule, TalonComment]]
-    script: list[Union[TalonBlock, TalonComment]]
+    rule: TalonRule
+    script: TalonBlock
 
 
 @dataclass_json
@@ -143,7 +143,7 @@ class TalonError(Branch):
 @dataclass
 class TalonExpression(Branch):
     children: list[TalonComment]
-    expression: list[Union[TalonAction, TalonBinaryOperator, TalonFloat, TalonInteger, TalonKeyAction, TalonParenthesizedExpression, TalonSleepAction, TalonString, TalonVariable, TalonComment]]
+    expression: Union[TalonAction, TalonBinaryOperator, TalonFloat, TalonInteger, TalonKeyAction, TalonParenthesizedExpression, TalonSleepAction, TalonString, TalonVariable, TalonComment]
 
 
 @dataclass_json
@@ -168,7 +168,7 @@ class TalonImplicitString(Leaf):
 @dataclass
 class TalonIncludeTag(Branch):
     children: list[TalonComment]
-    tag: list[Union[TalonIdentifier, TalonComment]]
+    tag: TalonIdentifier
 
 
 @dataclass_json
@@ -187,22 +187,22 @@ class TalonInterpolation(Branch):
 @dataclass
 class TalonKeyAction(Branch):
     children: list[TalonComment]
-    arguments: list[Union[TalonImplicitString, TalonComment]]
+    arguments: TalonImplicitString
 
 
 @dataclass_json
 @dataclass
 class TalonList(Branch):
     children: list[TalonComment]
-    list_name: list[Union[TalonIdentifier, TalonComment]]
+    list_name: TalonIdentifier
 
 
 @dataclass_json
 @dataclass
 class TalonMatch(Branch):
     children: list[TalonComment]
-    key: list[Union[TalonIdentifier, TalonComment]]
-    pattern: list[Union[TalonImplicitString, TalonComment]]
+    key: TalonIdentifier
+    pattern: TalonImplicitString
 
 
 @dataclass_json
@@ -287,7 +287,7 @@ class TalonSettings(Branch):
 @dataclass
 class TalonSleepAction(Branch):
     children: list[TalonComment]
-    arguments: list[Union[TalonImplicitString, TalonComment]]
+    arguments: TalonImplicitString
 
 
 @dataclass_json
@@ -324,7 +324,7 @@ class TalonStringEscapeSequence(Leaf):
 @dataclass
 class TalonVariable(Branch):
     children: list[TalonComment]
-    variable_name: list[Union[TalonIdentifier, TalonComment]]
+    variable_name: TalonIdentifier
 
 
 @dataclass_json
