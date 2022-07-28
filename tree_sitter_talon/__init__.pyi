@@ -40,7 +40,8 @@ def parse_file_as_tree_sitter(
 
 
 def from_tree_sitter(
-    tsnode: tree_sitter.Node,
+    tsvalue: Union[tree_sitter.Tree, tree_sitter.Node, tree_sitter.TreeCursor],
+    *,
     encoding: str = "utf-8"
 ) -> Node: ...
 
