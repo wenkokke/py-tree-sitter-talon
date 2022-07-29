@@ -30,8 +30,6 @@ All AST nodes inherit from the Node class.
 
 .. autoclass:: Node
 
-   .. _Node:
-
    Nodes store the following information the text and the start and end
    positions corresponding to this node in the source file, as well as the
    tree-sitter name for the node type:
@@ -61,6 +59,20 @@ All AST nodes inherit from the Node class.
       )
 
    .. automethod:: schema
+
+There are two subclasses of `Node`:
+
+.. autoclass:: Leaf
+
+   Leaf nodes have no fields other than those inherited from Node.
+
+.. autoclass:: Branch
+
+   Branch nodes are guaranteed to have a field `children`, as well as other fields corresponding to the named fields in the tree-sitter grammar.
+
+   Each subclass provides a more specific typing for `children`, including `None` if the subclass only has named fields.
+
+   .. autoattribute:: children
 
 Each explicit node in the tree-sitter grammar corresponds to a dataclass.
 
