@@ -1,14 +1,18 @@
-input: "mode: user.homophones\n-\nchoose <number_small>:\n    result = user.homophones_select(number_small)\n\
-  \    insert(result)\n    user.homophones_hide()\nchoose <user.formatters> <number_small>:\n\
-  \    result = user.homophones_select(number_small)\n    insert(user.formatted_text(result,\
-  \ formatters))\n    user.homophones_hide()\n"
+input: |
+  mode: user.homophones
+  -
+  choose <number_small>:
+      result = user.homophones_select(number_small)
+      insert(result)
+      user.homophones_hide()
+  choose <user.formatters> <number_small>:
+      result = user.homophones_select(number_small)
+      insert(user.formatted_text(result, formatters))
+      user.homophones_hide()
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: match
-      children:
+  - children:
+    - children:
       - text: mode
         type: identifier
       - text: ' user.homophones'
@@ -19,917 +23,920 @@ output:
       pattern:
         text: ' user.homophones'
         type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+      type: match
+    type: context
+  - children:
+    - children:
+      - children:
         - text: choose
           type: word
-        - type: capture
+        - capture_name:
+            text: number_small
+            type: identifier
           children:
           - text: number_small
             type: identifier
-          capture_name:
-            text: number_small
-            type: identifier
-    - type: block
-      children:
-      - type: assignment
-        children:
-        - text: result
-          type: identifier
-        - type: action
-          children:
-          - text: user.homophones_select
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number_small
-                type: identifier
-              variable_name:
-                text: number_small
-                type: identifier
-          action_name:
-            text: user.homophones_select
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number_small
-                type: identifier
-              variable_name:
-                text: number_small
-                type: identifier
-        left:
-          text: result
-          type: identifier
-        right:
-          type: action
-          children:
-          - text: user.homophones_select
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number_small
-                type: identifier
-              variable_name:
-                text: number_small
-                type: identifier
-          action_name:
-            text: user.homophones_select
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number_small
-                type: identifier
-              variable_name:
-                text: number_small
-                type: identifier
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: result
-                type: identifier
-              variable_name:
-                text: result
-                type: identifier
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: result
-                type: identifier
-              variable_name:
-                text: result
-                type: identifier
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: result
-                type: identifier
-              variable_name:
-                text: result
-                type: identifier
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: result
-                type: identifier
-              variable_name:
-                text: result
-                type: identifier
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.homophones_hide
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.homophones_hide
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.homophones_hide
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.homophones_hide
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+          type: capture
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - text: choose
-          type: word
-        - type: capture
-          children:
-          - text: number_small
-            type: identifier
-          capture_name:
-            text: number_small
-            type: identifier
-    script:
-      type: block
-      children:
-      - type: assignment
-        children:
+    - children:
+      - children:
         - text: result
           type: identifier
-        - type: action
-          children:
-          - text: user.homophones_select
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number_small
-                type: identifier
-              variable_name:
-                text: number_small
-                type: identifier
-          action_name:
+        - action_name:
             text: user.homophones_select
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: number_small
                 type: identifier
+              type: variable
               variable_name:
                 text: number_small
                 type: identifier
+            type: argument_list
+          children:
+          - text: user.homophones_select
+            type: identifier
+          - children:
+            - children:
+              - text: number_small
+                type: identifier
+              type: variable
+              variable_name:
+                text: number_small
+                type: identifier
+            type: argument_list
+          type: action
         left:
           text: result
           type: identifier
         right:
-          type: action
-          children:
-          - text: user.homophones_select
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number_small
-                type: identifier
-              variable_name:
-                text: number_small
-                type: identifier
           action_name:
             text: user.homophones_select
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: number_small
                 type: identifier
+              type: variable
               variable_name:
                 text: number_small
                 type: identifier
-      - type: expression
-        children:
-        - type: action
+            type: argument_list
           children:
-          - text: insert
+          - text: user.homophones_select
             type: identifier
-          - type: argument_list
+          - children:
+            - children:
+              - text: number_small
+                type: identifier
+              type: variable
+              variable_name:
+                text: number_small
+                type: identifier
+            type: argument_list
+          type: action
+        type: assignment
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
             children:
-            - type: variable
-              children:
+            - children:
               - text: result
                 type: identifier
+              type: variable
               variable_name:
                 text: result
                 type: identifier
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: result
+                type: identifier
+              type: variable
+              variable_name:
+                text: result
+                type: identifier
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: result
                 type: identifier
+              type: variable
               variable_name:
                 text: result
                 type: identifier
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: insert
             type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
+          - children:
+            - children:
               - text: result
                 type: identifier
+              type: variable
               variable_name:
                 text: result
                 type: identifier
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
             type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: result
-                type: identifier
-              variable_name:
-                text: result
-                type: identifier
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.homophones_hide
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.homophones_hide
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
           type: action
+        type: expression
+      - children:
+        - action_name:
+            text: user.homophones_hide
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.homophones_hide
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.homophones_hide
             type: identifier
           arguments:
-            type: argument_list
             children: []
-  - type: command
-    children:
-    - type: rule
+            type: argument_list
+          children:
+          - text: user.homophones_hide
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: choose
           type: word
-        - type: capture
+        - capture_name:
+            text: number_small
+            type: identifier
+          children:
+          - text: number_small
+            type: identifier
+          type: capture
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - text: result
+          type: identifier
+        - action_name:
+            text: user.homophones_select
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: number_small
+                type: identifier
+              type: variable
+              variable_name:
+                text: number_small
+                type: identifier
+            type: argument_list
+          children:
+          - text: user.homophones_select
+            type: identifier
+          - children:
+            - children:
+              - text: number_small
+                type: identifier
+              type: variable
+              variable_name:
+                text: number_small
+                type: identifier
+            type: argument_list
+          type: action
+        left:
+          text: result
+          type: identifier
+        right:
+          action_name:
+            text: user.homophones_select
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: number_small
+                type: identifier
+              type: variable
+              variable_name:
+                text: number_small
+                type: identifier
+            type: argument_list
+          children:
+          - text: user.homophones_select
+            type: identifier
+          - children:
+            - children:
+              - text: number_small
+                type: identifier
+              type: variable
+              variable_name:
+                text: number_small
+                type: identifier
+            type: argument_list
+          type: action
+        type: assignment
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: result
+                type: identifier
+              type: variable
+              variable_name:
+                text: result
+                type: identifier
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: result
+                type: identifier
+              type: variable
+              variable_name:
+                text: result
+                type: identifier
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: result
+                type: identifier
+              type: variable
+              variable_name:
+                text: result
+                type: identifier
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: result
+                type: identifier
+              type: variable
+              variable_name:
+                text: result
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - action_name:
+            text: user.homophones_hide
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.homophones_hide
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.homophones_hide
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.homophones_hide
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - text: choose
+          type: word
+        - capture_name:
+            text: user.formatters
+            type: identifier
           children:
           - text: user.formatters
             type: identifier
-          capture_name:
-            text: user.formatters
+          type: capture
+        - capture_name:
+            text: number_small
             type: identifier
-        - type: capture
           children:
           - text: number_small
             type: identifier
-          capture_name:
-            text: number_small
-            type: identifier
-    - type: block
-      children:
-      - type: assignment
-        children:
+          type: capture
+        type: seq
+      type: rule
+    - children:
+      - children:
         - text: result
           type: identifier
-        - type: action
-          children:
-          - text: user.homophones_select
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number_small
-                type: identifier
-              variable_name:
-                text: number_small
-                type: identifier
-          action_name:
+        - action_name:
             text: user.homophones_select
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: number_small
                 type: identifier
+              type: variable
               variable_name:
                 text: number_small
                 type: identifier
+            type: argument_list
+          children:
+          - text: user.homophones_select
+            type: identifier
+          - children:
+            - children:
+              - text: number_small
+                type: identifier
+              type: variable
+              variable_name:
+                text: number_small
+                type: identifier
+            type: argument_list
+          type: action
         left:
           text: result
           type: identifier
         right:
-          type: action
-          children:
-          - text: user.homophones_select
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number_small
-                type: identifier
-              variable_name:
-                text: number_small
-                type: identifier
           action_name:
             text: user.homophones_select
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: number_small
                 type: identifier
+              type: variable
               variable_name:
                 text: number_small
                 type: identifier
-      - type: expression
-        children:
-        - type: action
+            type: argument_list
           children:
-          - text: insert
+          - text: user.homophones_select
             type: identifier
-          - type: argument_list
-            children:
-            - type: action
-              children:
-              - text: user.formatted_text
+          - children:
+            - children:
+              - text: number_small
                 type: identifier
-              - type: argument_list
-                children:
-                - type: variable
-                  children:
-                  - text: result
-                    type: identifier
-                  variable_name:
-                    text: result
-                    type: identifier
-                - type: variable
-                  children:
-                  - text: formatters
-                    type: identifier
-                  variable_name:
-                    text: formatters
-                    type: identifier
-              action_name:
+              type: variable
+              variable_name:
+                text: number_small
+                type: identifier
+            type: argument_list
+          type: action
+        type: assignment
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - action_name:
                 text: user.formatted_text
                 type: identifier
               arguments:
-                type: argument_list
                 children:
-                - type: variable
-                  children:
+                - children:
                   - text: result
                     type: identifier
+                  type: variable
                   variable_name:
                     text: result
                     type: identifier
-                - type: variable
-                  children:
+                - children:
                   - text: formatters
                     type: identifier
+                  type: variable
                   variable_name:
                     text: formatters
                     type: identifier
+                type: argument_list
+              children:
+              - text: user.formatted_text
+                type: identifier
+              - children:
+                - children:
+                  - text: result
+                    type: identifier
+                  type: variable
+                  variable_name:
+                    text: result
+                    type: identifier
+                - children:
+                  - text: formatters
+                    type: identifier
+                  type: variable
+                  variable_name:
+                    text: formatters
+                    type: identifier
+                type: argument_list
+              type: action
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - action_name:
+                text: user.formatted_text
+                type: identifier
+              arguments:
+                children:
+                - children:
+                  - text: result
+                    type: identifier
+                  type: variable
+                  variable_name:
+                    text: result
+                    type: identifier
+                - children:
+                  - text: formatters
+                    type: identifier
+                  type: variable
+                  variable_name:
+                    text: formatters
+                    type: identifier
+                type: argument_list
+              children:
+              - text: user.formatted_text
+                type: identifier
+              - children:
+                - children:
+                  - text: result
+                    type: identifier
+                  type: variable
+                  variable_name:
+                    text: result
+                    type: identifier
+                - children:
+                  - text: formatters
+                    type: identifier
+                  type: variable
+                  variable_name:
+                    text: formatters
+                    type: identifier
+                type: argument_list
+              type: action
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: action
-              children:
-              - text: user.formatted_text
-                type: identifier
-              - type: argument_list
-                children:
-                - type: variable
-                  children:
-                  - text: result
-                    type: identifier
-                  variable_name:
-                    text: result
-                    type: identifier
-                - type: variable
-                  children:
-                  - text: formatters
-                    type: identifier
-                  variable_name:
-                    text: formatters
-                    type: identifier
-              action_name:
+            - action_name:
                 text: user.formatted_text
                 type: identifier
               arguments:
-                type: argument_list
                 children:
-                - type: variable
-                  children:
+                - children:
                   - text: result
                     type: identifier
+                  type: variable
                   variable_name:
                     text: result
                     type: identifier
-                - type: variable
-                  children:
+                - children:
                   - text: formatters
                     type: identifier
+                  type: variable
                   variable_name:
                     text: formatters
                     type: identifier
-        expression:
-          type: action
+                type: argument_list
+              children:
+              - text: user.formatted_text
+                type: identifier
+              - children:
+                - children:
+                  - text: result
+                    type: identifier
+                  type: variable
+                  variable_name:
+                    text: result
+                    type: identifier
+                - children:
+                  - text: formatters
+                    type: identifier
+                  type: variable
+                  variable_name:
+                    text: formatters
+                    type: identifier
+                type: argument_list
+              type: action
+            type: argument_list
           children:
           - text: insert
             type: identifier
-          - type: argument_list
-            children:
-            - type: action
-              children:
-              - text: user.formatted_text
-                type: identifier
-              - type: argument_list
-                children:
-                - type: variable
-                  children:
-                  - text: result
-                    type: identifier
-                  variable_name:
-                    text: result
-                    type: identifier
-                - type: variable
-                  children:
-                  - text: formatters
-                    type: identifier
-                  variable_name:
-                    text: formatters
-                    type: identifier
-              action_name:
+          - children:
+            - action_name:
                 text: user.formatted_text
                 type: identifier
               arguments:
-                type: argument_list
                 children:
-                - type: variable
-                  children:
+                - children:
                   - text: result
                     type: identifier
+                  type: variable
                   variable_name:
                     text: result
                     type: identifier
-                - type: variable
-                  children:
+                - children:
                   - text: formatters
                     type: identifier
+                  type: variable
                   variable_name:
                     text: formatters
                     type: identifier
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: action
+                type: argument_list
               children:
               - text: user.formatted_text
                 type: identifier
-              - type: argument_list
-                children:
-                - type: variable
-                  children:
+              - children:
+                - children:
                   - text: result
                     type: identifier
+                  type: variable
                   variable_name:
                     text: result
                     type: identifier
-                - type: variable
-                  children:
+                - children:
                   - text: formatters
                     type: identifier
+                  type: variable
                   variable_name:
                     text: formatters
                     type: identifier
-              action_name:
-                text: user.formatted_text
-                type: identifier
-              arguments:
                 type: argument_list
-                children:
-                - type: variable
-                  children:
-                  - text: result
-                    type: identifier
-                  variable_name:
-                    text: result
-                    type: identifier
-                - type: variable
-                  children:
-                  - text: formatters
-                    type: identifier
-                  variable_name:
-                    text: formatters
-                    type: identifier
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.homophones_hide
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.homophones_hide
-            type: identifier
-          arguments:
+              type: action
             type: argument_list
-            children: []
-        expression:
           type: action
+        type: expression
+      - children:
+        - action_name:
+            text: user.homophones_hide
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.homophones_hide
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.homophones_hide
             type: identifier
           arguments:
-            type: argument_list
             children: []
+            type: argument_list
+          children:
+          - text: user.homophones_hide
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
     rule:
-      type: rule
       children:
-      - type: seq
-        children:
+      - children:
         - text: choose
           type: word
-        - type: capture
+        - capture_name:
+            text: user.formatters
+            type: identifier
           children:
           - text: user.formatters
             type: identifier
-          capture_name:
-            text: user.formatters
+          type: capture
+        - capture_name:
+            text: number_small
             type: identifier
-        - type: capture
           children:
           - text: number_small
             type: identifier
-          capture_name:
-            text: number_small
-            type: identifier
+          type: capture
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: assignment
-        children:
+      - children:
         - text: result
           type: identifier
-        - type: action
-          children:
-          - text: user.homophones_select
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number_small
-                type: identifier
-              variable_name:
-                text: number_small
-                type: identifier
-          action_name:
+        - action_name:
             text: user.homophones_select
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: number_small
                 type: identifier
+              type: variable
               variable_name:
                 text: number_small
                 type: identifier
+            type: argument_list
+          children:
+          - text: user.homophones_select
+            type: identifier
+          - children:
+            - children:
+              - text: number_small
+                type: identifier
+              type: variable
+              variable_name:
+                text: number_small
+                type: identifier
+            type: argument_list
+          type: action
         left:
           text: result
           type: identifier
         right:
-          type: action
-          children:
-          - text: user.homophones_select
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number_small
-                type: identifier
-              variable_name:
-                text: number_small
-                type: identifier
           action_name:
             text: user.homophones_select
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: number_small
                 type: identifier
+              type: variable
               variable_name:
                 text: number_small
                 type: identifier
-      - type: expression
-        children:
-        - type: action
+            type: argument_list
           children:
-          - text: insert
+          - text: user.homophones_select
             type: identifier
-          - type: argument_list
-            children:
-            - type: action
-              children:
-              - text: user.formatted_text
+          - children:
+            - children:
+              - text: number_small
                 type: identifier
-              - type: argument_list
-                children:
-                - type: variable
-                  children:
-                  - text: result
-                    type: identifier
-                  variable_name:
-                    text: result
-                    type: identifier
-                - type: variable
-                  children:
-                  - text: formatters
-                    type: identifier
-                  variable_name:
-                    text: formatters
-                    type: identifier
-              action_name:
+              type: variable
+              variable_name:
+                text: number_small
+                type: identifier
+            type: argument_list
+          type: action
+        type: assignment
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - action_name:
                 text: user.formatted_text
                 type: identifier
               arguments:
-                type: argument_list
                 children:
-                - type: variable
-                  children:
+                - children:
                   - text: result
                     type: identifier
+                  type: variable
                   variable_name:
                     text: result
                     type: identifier
-                - type: variable
-                  children:
+                - children:
                   - text: formatters
                     type: identifier
+                  type: variable
                   variable_name:
                     text: formatters
                     type: identifier
+                type: argument_list
+              children:
+              - text: user.formatted_text
+                type: identifier
+              - children:
+                - children:
+                  - text: result
+                    type: identifier
+                  type: variable
+                  variable_name:
+                    text: result
+                    type: identifier
+                - children:
+                  - text: formatters
+                    type: identifier
+                  type: variable
+                  variable_name:
+                    text: formatters
+                    type: identifier
+                type: argument_list
+              type: action
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - action_name:
+                text: user.formatted_text
+                type: identifier
+              arguments:
+                children:
+                - children:
+                  - text: result
+                    type: identifier
+                  type: variable
+                  variable_name:
+                    text: result
+                    type: identifier
+                - children:
+                  - text: formatters
+                    type: identifier
+                  type: variable
+                  variable_name:
+                    text: formatters
+                    type: identifier
+                type: argument_list
+              children:
+              - text: user.formatted_text
+                type: identifier
+              - children:
+                - children:
+                  - text: result
+                    type: identifier
+                  type: variable
+                  variable_name:
+                    text: result
+                    type: identifier
+                - children:
+                  - text: formatters
+                    type: identifier
+                  type: variable
+                  variable_name:
+                    text: formatters
+                    type: identifier
+                type: argument_list
+              type: action
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: action
-              children:
-              - text: user.formatted_text
-                type: identifier
-              - type: argument_list
-                children:
-                - type: variable
-                  children:
-                  - text: result
-                    type: identifier
-                  variable_name:
-                    text: result
-                    type: identifier
-                - type: variable
-                  children:
-                  - text: formatters
-                    type: identifier
-                  variable_name:
-                    text: formatters
-                    type: identifier
-              action_name:
+            - action_name:
                 text: user.formatted_text
                 type: identifier
               arguments:
-                type: argument_list
                 children:
-                - type: variable
-                  children:
+                - children:
                   - text: result
                     type: identifier
+                  type: variable
                   variable_name:
                     text: result
                     type: identifier
-                - type: variable
-                  children:
+                - children:
                   - text: formatters
                     type: identifier
+                  type: variable
                   variable_name:
                     text: formatters
                     type: identifier
-        expression:
-          type: action
+                type: argument_list
+              children:
+              - text: user.formatted_text
+                type: identifier
+              - children:
+                - children:
+                  - text: result
+                    type: identifier
+                  type: variable
+                  variable_name:
+                    text: result
+                    type: identifier
+                - children:
+                  - text: formatters
+                    type: identifier
+                  type: variable
+                  variable_name:
+                    text: formatters
+                    type: identifier
+                type: argument_list
+              type: action
+            type: argument_list
           children:
           - text: insert
             type: identifier
-          - type: argument_list
-            children:
-            - type: action
-              children:
-              - text: user.formatted_text
-                type: identifier
-              - type: argument_list
-                children:
-                - type: variable
-                  children:
-                  - text: result
-                    type: identifier
-                  variable_name:
-                    text: result
-                    type: identifier
-                - type: variable
-                  children:
-                  - text: formatters
-                    type: identifier
-                  variable_name:
-                    text: formatters
-                    type: identifier
-              action_name:
+          - children:
+            - action_name:
                 text: user.formatted_text
                 type: identifier
               arguments:
-                type: argument_list
                 children:
-                - type: variable
-                  children:
+                - children:
                   - text: result
                     type: identifier
+                  type: variable
                   variable_name:
                     text: result
                     type: identifier
-                - type: variable
-                  children:
+                - children:
                   - text: formatters
                     type: identifier
+                  type: variable
                   variable_name:
                     text: formatters
                     type: identifier
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: action
+                type: argument_list
               children:
               - text: user.formatted_text
                 type: identifier
-              - type: argument_list
-                children:
-                - type: variable
-                  children:
+              - children:
+                - children:
                   - text: result
                     type: identifier
+                  type: variable
                   variable_name:
                     text: result
                     type: identifier
-                - type: variable
-                  children:
+                - children:
                   - text: formatters
                     type: identifier
+                  type: variable
                   variable_name:
                     text: formatters
                     type: identifier
-              action_name:
-                text: user.formatted_text
-                type: identifier
-              arguments:
                 type: argument_list
-                children:
-                - type: variable
-                  children:
-                  - text: result
-                    type: identifier
-                  variable_name:
-                    text: result
-                    type: identifier
-                - type: variable
-                  children:
-                  - text: formatters
-                    type: identifier
-                  variable_name:
-                    text: formatters
-                    type: identifier
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.homophones_hide
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.homophones_hide
-            type: identifier
-          arguments:
+              type: action
             type: argument_list
-            children: []
-        expression:
           type: action
+        type: expression
+      - children:
+        - action_name:
+            text: user.homophones_hide
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.homophones_hide
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.homophones_hide
             type: identifier
           arguments:
-            type: argument_list
             children: []
+            type: argument_list
+          children:
+          - text: user.homophones_hide
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  type: source_file

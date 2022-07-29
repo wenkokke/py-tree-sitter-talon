@@ -1,18 +1,29 @@
-input: "tag: terminal\n-\n# tags should be activated for each specific terminal in\
-  \ the respective talon file\n\nlisa:\n    user.terminal_list_directories()\nlisa\
-  \ all:\n    user.terminal_list_all_directories()\nkatie [<user.text>]: user.terminal_change_directory(text\
-  \ or \"\")\nkatie root: user.terminal_change_directory_root()\ngo <user.system_path>:\
-  \ insert(\"cd \\\"{system_path}\\\"\\n\")\nclear screen: user.terminal_clear_screen()\n\
-  run last: user.terminal_run_last()\nrerun [<user.text>]: user.terminal_rerun_search(text\
-  \ or \"\")\nrerun search: user.terminal_rerun_search(\"\")\nkill all: user.terminal_kill_all()\n\
-  \ncopy paste:\n    edit.copy()\n    sleep(50ms)\n    edit.paste()\n"
+input: |
+  tag: terminal
+  -
+  # tags should be activated for each specific terminal in the respective talon file
+
+  lisa:
+      user.terminal_list_directories()
+  lisa all:
+      user.terminal_list_all_directories()
+  katie [<user.text>]: user.terminal_change_directory(text or "")
+  katie root: user.terminal_change_directory_root()
+  go <user.system_path>: insert("cd \"{system_path}\"\n")
+  clear screen: user.terminal_clear_screen()
+  run last: user.terminal_run_last()
+  rerun [<user.text>]: user.terminal_rerun_search(text or "")
+  rerun search: user.terminal_rerun_search("")
+  kill all: user.terminal_kill_all()
+
+  copy paste:
+      edit.copy()
+      sleep(50ms)
+      edit.paste()
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: match
-      children:
+  - children:
+    - children:
       - text: tag
         type: identifier
       - text: ' terminal'
@@ -23,389 +34,199 @@ output:
       pattern:
         text: ' terminal'
         type: implicit_string
+      type: match
+    type: context
   - text: '# tags should be activated for each specific terminal in the respective
       talon file'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
+  - children:
+    - children:
       - text: lisa
         type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.terminal_list_directories
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.terminal_list_directories
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.terminal_list_directories
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.terminal_list_directories
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.terminal_list_directories
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.terminal_list_directories
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.terminal_list_directories
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.terminal_list_directories
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
       - text: lisa
         type: word
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.terminal_list_directories
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+      - children:
+        - action_name:
             text: user.terminal_list_directories
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: user.terminal_list_directories
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: user.terminal_list_directories
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: user.terminal_list_directories
             type: identifier
           arguments:
-            type: argument_list
             children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+            type: argument_list
+          children:
+          - text: user.terminal_list_directories
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: lisa
           type: word
         - text: all
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.terminal_list_all_directories
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.terminal_list_all_directories
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.terminal_list_all_directories
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.terminal_list_all_directories
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.terminal_list_all_directories
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.terminal_list_all_directories
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.terminal_list_all_directories
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.terminal_list_all_directories
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: lisa
           type: word
         - text: all
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.terminal_list_all_directories
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.terminal_list_all_directories
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.terminal_list_all_directories
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.terminal_list_all_directories
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.terminal_list_all_directories
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: katie
-          type: word
-        - type: optional
-          children:
-          - type: capture
-            children:
-            - text: user.text
-              type: identifier
-            capture_name:
-              text: user.text
-              type: identifier
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.terminal_change_directory
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: text
-                  type: identifier
-                variable_name:
-                  text: text
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: text
-                  type: identifier
-                variable_name:
-                  text: text
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
-          action_name:
-            text: user.terminal_change_directory
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: text
-                  type: identifier
-                variable_name:
-                  text: text
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: text
-                  type: identifier
-                variable_name:
-                  text: text
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
-        expression:
           type: action
-          children:
-          - text: user.terminal_change_directory
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: text
-                  type: identifier
-                variable_name:
-                  text: text
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: text
-                  type: identifier
-                variable_name:
-                  text: text
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
-          action_name:
-            text: user.terminal_change_directory
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: text
-                  type: identifier
-                variable_name:
-                  text: text
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: text
-                  type: identifier
-                variable_name:
-                  text: text
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: katie
-          type: word
-        - type: optional
-          children:
-          - type: capture
-            children:
-            - text: user.text
-              type: identifier
-            capture_name:
-              text: user.text
-              type: identifier
-    script:
+        type: expression
       type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.terminal_change_directory
-            type: identifier
-          - type: argument_list
+    type: command
+  - children:
+    - children:
+      - children:
+        - text: katie
+          type: word
+        - children:
+          - capture_name:
+              text: user.text
+              type: identifier
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: text
-                  type: identifier
-                variable_name:
-                  text: text
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: text
-                  type: identifier
-                variable_name:
-                  text: text
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
-          action_name:
+            - text: user.text
+              type: identifier
+            type: capture
+          type: optional
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: user.terminal_change_directory
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: text
                   type: identifier
+                type: variable
                 variable_name:
                   text: text
                   type: identifier
               - text: or
                 type: operator
-              - type: string
-                children: []
+              - children: []
+                type: string
               left:
-                type: variable
                 children:
                 - text: text
                   type: identifier
+                type: variable
                 variable_name:
                   text: text
                   type: identifier
@@ -413,66 +234,66 @@ output:
                 text: or
                 type: operator
               right:
-                type: string
                 children: []
-        expression:
+                type: string
+              type: binary_operator
+            type: argument_list
+          children:
+          - text: user.terminal_change_directory
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: text
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: text
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: text
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: text
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            type: argument_list
           type: action
-          children:
-          - text: user.terminal_change_directory
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: text
-                  type: identifier
-                variable_name:
-                  text: text
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: text
-                  type: identifier
-                variable_name:
-                  text: text
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
+        expression:
           action_name:
             text: user.terminal_change_directory
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: text
                   type: identifier
+                type: variable
                 variable_name:
                   text: text
                   type: identifier
               - text: or
                 type: operator
-              - type: string
-                children: []
+              - children: []
+                type: string
               left:
-                type: variable
                 children:
                 - text: text
                   type: identifier
+                type: variable
                 variable_name:
                   text: text
                   type: identifier
@@ -480,243 +301,300 @@ output:
                 text: or
                 type: operator
               right:
-                type: string
                 children: []
-  - type: command
-    children:
-    - type: rule
+                type: string
+              type: binary_operator
+            type: argument_list
+          children:
+          - text: user.terminal_change_directory
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: text
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: text
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: text
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: text
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
+        - text: katie
+          type: word
+        - children:
+          - capture_name:
+              text: user.text
+              type: identifier
+            children:
+            - text: user.text
+              type: identifier
+            type: capture
+          type: optional
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: user.terminal_change_directory
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - children:
+                - text: text
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: text
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: text
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: text
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            type: argument_list
+          children:
+          - text: user.terminal_change_directory
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: text
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: text
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: text
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: text
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.terminal_change_directory
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - children:
+                - text: text
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: text
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: text
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: text
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            type: argument_list
+          children:
+          - text: user.terminal_change_directory
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: text
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: text
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: text
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: text
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: katie
           type: word
         - text: root
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.terminal_change_directory_root
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.terminal_change_directory_root
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.terminal_change_directory_root
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.terminal_change_directory_root
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.terminal_change_directory_root
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.terminal_change_directory_root
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.terminal_change_directory_root
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.terminal_change_directory_root
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: katie
           type: word
         - text: root
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.terminal_change_directory_root
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.terminal_change_directory_root
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.terminal_change_directory_root
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.terminal_change_directory_root
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.terminal_change_directory_root
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: go
-          type: word
-        - type: capture
-          children:
-          - text: user.system_path
-            type: identifier
-          capture_name:
-            text: user.system_path
-            type: identifier
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'cd '
-                type: string_content
-              - text: \"
-                type: string_escape_sequence
-              - text: '{'
-                type: string_content
-              - text: system_path
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: \"
-                type: string_escape_sequence
-              - text: \n
-                type: string_escape_sequence
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'cd '
-                type: string_content
-              - text: \"
-                type: string_escape_sequence
-              - text: '{'
-                type: string_content
-              - text: system_path
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: \"
-                type: string_escape_sequence
-              - text: \n
-                type: string_escape_sequence
-        expression:
           type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'cd '
-                type: string_content
-              - text: \"
-                type: string_escape_sequence
-              - text: '{'
-                type: string_content
-              - text: system_path
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: \"
-                type: string_escape_sequence
-              - text: \n
-                type: string_escape_sequence
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'cd '
-                type: string_content
-              - text: \"
-                type: string_escape_sequence
-              - text: '{'
-                type: string_content
-              - text: system_path
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: \"
-                type: string_escape_sequence
-              - text: \n
-                type: string_escape_sequence
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: go
-          type: word
-        - type: capture
-          children:
-          - text: user.system_path
-            type: identifier
-          capture_name:
-            text: user.system_path
-            type: identifier
-    script:
+        type: expression
       type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
+    type: command
+  - children:
+    - children:
+      - children:
+        - text: go
+          type: word
+        - capture_name:
+            text: user.system_path
             type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'cd '
-                type: string_content
-              - text: \"
-                type: string_escape_sequence
-              - text: '{'
-                type: string_content
-              - text: system_path
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: \"
-                type: string_escape_sequence
-              - text: \n
-                type: string_escape_sequence
-          action_name:
+          children:
+          - text: user.system_path
+            type: identifier
+          type: capture
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'cd '
                 type: string_content
               - text: \"
@@ -731,37 +609,37 @@ output:
                 type: string_escape_sequence
               - text: \n
                 type: string_escape_sequence
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'cd '
+                type: string_content
+              - text: \"
+                type: string_escape_sequence
+              - text: '{'
+                type: string_content
+              - text: system_path
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: \"
+                type: string_escape_sequence
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'cd '
-                type: string_content
-              - text: \"
-                type: string_escape_sequence
-              - text: '{'
-                type: string_content
-              - text: system_path
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: \"
-                type: string_escape_sequence
-              - text: \n
-                type: string_escape_sequence
+        expression:
           action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'cd '
                 type: string_content
               - text: \"
@@ -776,394 +654,337 @@ output:
                 type: string_escape_sequence
               - text: \n
                 type: string_escape_sequence
-  - type: command
-    children:
-    - type: rule
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'cd '
+                type: string_content
+              - text: \"
+                type: string_escape_sequence
+              - text: '{'
+                type: string_content
+              - text: system_path
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: \"
+                type: string_escape_sequence
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
+        - text: go
+          type: word
+        - capture_name:
+            text: user.system_path
+            type: identifier
+          children:
+          - text: user.system_path
+            type: identifier
+          type: capture
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'cd '
+                type: string_content
+              - text: \"
+                type: string_escape_sequence
+              - text: '{'
+                type: string_content
+              - text: system_path
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: \"
+                type: string_escape_sequence
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'cd '
+                type: string_content
+              - text: \"
+                type: string_escape_sequence
+              - text: '{'
+                type: string_content
+              - text: system_path
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: \"
+                type: string_escape_sequence
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'cd '
+                type: string_content
+              - text: \"
+                type: string_escape_sequence
+              - text: '{'
+                type: string_content
+              - text: system_path
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: \"
+                type: string_escape_sequence
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'cd '
+                type: string_content
+              - text: \"
+                type: string_escape_sequence
+              - text: '{'
+                type: string_content
+              - text: system_path
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: \"
+                type: string_escape_sequence
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: clear
           type: word
         - text: screen
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.terminal_clear_screen
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.terminal_clear_screen
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.terminal_clear_screen
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.terminal_clear_screen
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.terminal_clear_screen
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.terminal_clear_screen
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.terminal_clear_screen
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.terminal_clear_screen
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: clear
           type: word
         - text: screen
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.terminal_clear_screen
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.terminal_clear_screen
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.terminal_clear_screen
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.terminal_clear_screen
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.terminal_clear_screen
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: run
           type: word
         - text: last
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.terminal_run_last
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.terminal_run_last
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.terminal_run_last
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.terminal_run_last
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.terminal_run_last
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.terminal_run_last
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.terminal_run_last
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.terminal_run_last
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: run
           type: word
         - text: last
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.terminal_run_last
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.terminal_run_last
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.terminal_run_last
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.terminal_run_last
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.terminal_run_last
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: rerun
-          type: word
-        - type: optional
-          children:
-          - type: capture
-            children:
-            - text: user.text
-              type: identifier
-            capture_name:
-              text: user.text
-              type: identifier
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.terminal_rerun_search
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: text
-                  type: identifier
-                variable_name:
-                  text: text
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: text
-                  type: identifier
-                variable_name:
-                  text: text
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
-          action_name:
-            text: user.terminal_rerun_search
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: text
-                  type: identifier
-                variable_name:
-                  text: text
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: text
-                  type: identifier
-                variable_name:
-                  text: text
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
-        expression:
           type: action
-          children:
-          - text: user.terminal_rerun_search
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: text
-                  type: identifier
-                variable_name:
-                  text: text
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: text
-                  type: identifier
-                variable_name:
-                  text: text
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
-          action_name:
-            text: user.terminal_rerun_search
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: text
-                  type: identifier
-                variable_name:
-                  text: text
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: text
-                  type: identifier
-                variable_name:
-                  text: text
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: rerun
-          type: word
-        - type: optional
-          children:
-          - type: capture
-            children:
-            - text: user.text
-              type: identifier
-            capture_name:
-              text: user.text
-              type: identifier
-    script:
+        type: expression
       type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.terminal_rerun_search
-            type: identifier
-          - type: argument_list
+    type: command
+  - children:
+    - children:
+      - children:
+        - text: rerun
+          type: word
+        - children:
+          - capture_name:
+              text: user.text
+              type: identifier
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: text
-                  type: identifier
-                variable_name:
-                  text: text
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: text
-                  type: identifier
-                variable_name:
-                  text: text
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
-          action_name:
+            - text: user.text
+              type: identifier
+            type: capture
+          type: optional
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: user.terminal_rerun_search
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: text
                   type: identifier
+                type: variable
                 variable_name:
                   text: text
                   type: identifier
               - text: or
                 type: operator
-              - type: string
-                children: []
+              - children: []
+                type: string
               left:
-                type: variable
                 children:
                 - text: text
                   type: identifier
+                type: variable
                 variable_name:
                   text: text
                   type: identifier
@@ -1171,66 +992,66 @@ output:
                 text: or
                 type: operator
               right:
-                type: string
                 children: []
-        expression:
+                type: string
+              type: binary_operator
+            type: argument_list
+          children:
+          - text: user.terminal_rerun_search
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: text
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: text
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: text
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: text
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            type: argument_list
           type: action
-          children:
-          - text: user.terminal_rerun_search
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: text
-                  type: identifier
-                variable_name:
-                  text: text
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: text
-                  type: identifier
-                variable_name:
-                  text: text
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
+        expression:
           action_name:
             text: user.terminal_rerun_search
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: text
                   type: identifier
+                type: variable
                 variable_name:
                   text: text
                   type: identifier
               - text: or
                 type: operator
-              - type: string
-                children: []
+              - children: []
+                type: string
               left:
-                type: variable
                 children:
                 - text: text
                   type: identifier
+                type: variable
                 variable_name:
                   text: text
                   type: identifier
@@ -1238,343 +1059,536 @@ output:
                 text: or
                 type: operator
               right:
-                type: string
                 children: []
-  - type: command
-    children:
-    - type: rule
+                type: string
+              type: binary_operator
+            type: argument_list
+          children:
+          - text: user.terminal_rerun_search
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: text
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: text
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: text
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: text
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
+        - text: rerun
+          type: word
+        - children:
+          - capture_name:
+              text: user.text
+              type: identifier
+            children:
+            - text: user.text
+              type: identifier
+            type: capture
+          type: optional
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: user.terminal_rerun_search
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - children:
+                - text: text
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: text
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: text
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: text
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            type: argument_list
+          children:
+          - text: user.terminal_rerun_search
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: text
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: text
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: text
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: text
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.terminal_rerun_search
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - children:
+                - text: text
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: text
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: text
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: text
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            type: argument_list
+          children:
+          - text: user.terminal_rerun_search
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: text
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: text
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: text
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: text
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: rerun
           type: word
         - text: search
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.terminal_rerun_search
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children: []
-          action_name:
-            text: user.terminal_rerun_search
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children: []
-        expression:
-          type: action
-          children:
-          - text: user.terminal_rerun_search
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children: []
-          action_name:
-            text: user.terminal_rerun_search
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.terminal_rerun_search
+            type: identifier
+          arguments:
+            children:
+            - children: []
+              type: string
+            type: argument_list
+          children:
+          - text: user.terminal_rerun_search
+            type: identifier
+          - children:
+            - children: []
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.terminal_rerun_search
+            type: identifier
+          arguments:
+            children:
+            - children: []
+              type: string
+            type: argument_list
+          children:
+          - text: user.terminal_rerun_search
+            type: identifier
+          - children:
+            - children: []
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: rerun
           type: word
         - text: search
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.terminal_rerun_search
+            type: identifier
+          arguments:
+            children:
+            - children: []
+              type: string
+            type: argument_list
           children:
           - text: user.terminal_rerun_search
             type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children: []
+          - children:
+            - children: []
+              type: string
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.terminal_rerun_search
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children: []
-        expression:
-          type: action
+            - children: []
+              type: string
+            type: argument_list
           children:
           - text: user.terminal_rerun_search
             type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children: []
-          action_name:
-            text: user.terminal_rerun_search
-            type: identifier
-          arguments:
+          - children:
+            - children: []
+              type: string
             type: argument_list
-            children:
-            - type: string
-              children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: kill
           type: word
         - text: all
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.terminal_kill_all
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.terminal_kill_all
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.terminal_kill_all
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.terminal_kill_all
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.terminal_kill_all
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.terminal_kill_all
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.terminal_kill_all
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.terminal_kill_all
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: kill
           type: word
         - text: all
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.terminal_kill_all
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.terminal_kill_all
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.terminal_kill_all
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.terminal_kill_all
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: copy
-          type: word
-        - text: paste
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: edit.copy
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: edit.copy
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: edit.copy
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: edit.copy
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-      - type: expression
-        children:
-        - type: sleep_action
-          children:
-          - text: 50ms
-            type: implicit_string
-          arguments:
-            text: 50ms
-            type: implicit_string
-        expression:
-          type: sleep_action
-          children:
-          - text: 50ms
-            type: implicit_string
-          arguments:
-            text: 50ms
-            type: implicit_string
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: edit.paste
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: edit.paste
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: edit.paste
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: edit.paste
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - action_name:
+            text: user.terminal_kill_all
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.terminal_kill_all
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.terminal_kill_all
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.terminal_kill_all
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: copy
           type: word
         - text: paste
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: edit.copy
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: edit.copy
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: edit.copy
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: edit.copy
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: edit.copy
             type: identifier
           arguments:
-            type: argument_list
             children: []
-      - type: expression
-        children:
-        - type: sleep_action
+            type: argument_list
+          children:
+          - text: edit.copy
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - arguments:
+            text: 50ms
+            type: implicit_string
           children:
           - text: 50ms
             type: implicit_string
-          arguments:
-            text: 50ms
-            type: implicit_string
-        expression:
           type: sleep_action
-          children:
-          - text: 50ms
-            type: implicit_string
+        expression:
           arguments:
             text: 50ms
             type: implicit_string
-      - type: expression
-        children:
-        - type: action
           children:
-          - text: edit.paste
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+          - text: 50ms
+            type: implicit_string
+          type: sleep_action
+        type: expression
+      - children:
+        - action_name:
             text: edit.paste
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: edit.paste
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: edit.paste
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: edit.paste
             type: identifier
           arguments:
-            type: argument_list
             children: []
+            type: argument_list
+          children:
+          - text: edit.paste
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: copy
+          type: word
+        - text: paste
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: edit.copy
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: edit.copy
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: edit.copy
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: edit.copy
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - arguments:
+            text: 50ms
+            type: implicit_string
+          children:
+          - text: 50ms
+            type: implicit_string
+          type: sleep_action
+        expression:
+          arguments:
+            text: 50ms
+            type: implicit_string
+          children:
+          - text: 50ms
+            type: implicit_string
+          type: sleep_action
+        type: expression
+      - children:
+        - action_name:
+            text: edit.paste
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: edit.paste
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: edit.paste
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: edit.paste
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  type: source_file

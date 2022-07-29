@@ -1,11 +1,12 @@
-input: "app: evince\n-\n# Set tags\ntag(): user.pages\n"
+input: |
+  app: evince
+  -
+  # Set tags
+  tag(): user.pages
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: match
-      children:
+  - children:
+    - children:
       - text: app
         type: identifier
       - text: ' evince'
@@ -16,12 +17,15 @@ output:
       pattern:
         text: ' evince'
         type: implicit_string
+      type: match
+    type: context
   - text: '# Set tags'
     type: comment
-  - type: include_tag
-    children:
+  - children:
     - text: user.pages
       type: identifier
     tag:
       text: user.pages
       type: identifier
+    type: include_tag
+  type: source_file

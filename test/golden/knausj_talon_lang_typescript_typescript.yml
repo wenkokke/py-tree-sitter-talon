@@ -1,11 +1,11 @@
-input: "tag: user.typescript\n-\ntag(): user.javascript\n"
+input: |
+  tag: user.typescript
+  -
+  tag(): user.javascript
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: match
-      children:
+  - children:
+    - children:
       - text: tag
         type: identifier
       - text: ' user.typescript'
@@ -16,10 +16,13 @@ output:
       pattern:
         text: ' user.typescript'
         type: implicit_string
-  - type: include_tag
-    children:
+      type: match
+    type: context
+  - children:
     - text: user.javascript
       type: identifier
     tag:
       text: user.javascript
       type: identifier
+    type: include_tag
+  type: source_file

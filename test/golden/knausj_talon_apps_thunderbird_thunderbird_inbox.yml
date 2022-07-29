@@ -1,24 +1,37 @@
-input: "app: thunderbird_inbox\n-\n# navigate\n(mail | message) open: key(enter)\n\
-  (mail | message) (up | last): key(b)\n(mail | message) (down | next): key(f)\nunread\
-  \ [mail | message] (up | last): key(p)\nunread [mail | message] (down | next): key(n)\n\
-  go home: key(alt-home)\ntoggle (mail | message) [pane]: key(f8)\n# mark\n(mail |\
-  \ message) (favorite | unfavorite): key(s)\n(mail | message) (read | unread): key(m)\n\
-  (mail | message) (watch | unwatch): key(w)\n(mail | message) (ignore | unignore):\
-  \ key(k)\n(mail | message) suspend: key(c)\n(mail | message) spam: key(j)\n# send\n\
-  (mail | message) new: user.thunderbird_mod(\"n\")\n(mail | message) edit: user.thunderbird_mod(\"\
-  e\")\n(mail | message) reply sender: user.thunderbird_mod(\"r\")\n(mail | message)\
-  \ reply all: user.thunderbird_mod(\"shift-r\")\n(mail | message) reply list: user.thunderbird_mod(\"\
-  shift-l\")\n(mail | message) forward: user.thunderbird_mod(\"l\")\n# organize\n\
-  (mail | message) delete: key(delete)\n(mail | message) archive: key(a)\n(mail |\
-  \ message) save: user.thunderbird_mod(\"s\")\n(mail | message) print: user.thunderbird_mod(\"\
-  p\")\n"
+input: |
+  app: thunderbird_inbox
+  -
+  # navigate
+  (mail | message) open: key(enter)
+  (mail | message) (up | last): key(b)
+  (mail | message) (down | next): key(f)
+  unread [mail | message] (up | last): key(p)
+  unread [mail | message] (down | next): key(n)
+  go home: key(alt-home)
+  toggle (mail | message) [pane]: key(f8)
+  # mark
+  (mail | message) (favorite | unfavorite): key(s)
+  (mail | message) (read | unread): key(m)
+  (mail | message) (watch | unwatch): key(w)
+  (mail | message) (ignore | unignore): key(k)
+  (mail | message) suspend: key(c)
+  (mail | message) spam: key(j)
+  # send
+  (mail | message) new: user.thunderbird_mod("n")
+  (mail | message) edit: user.thunderbird_mod("e")
+  (mail | message) reply sender: user.thunderbird_mod("r")
+  (mail | message) reply all: user.thunderbird_mod("shift-r")
+  (mail | message) reply list: user.thunderbird_mod("shift-l")
+  (mail | message) forward: user.thunderbird_mod("l")
+  # organize
+  (mail | message) delete: key(delete)
+  (mail | message) archive: key(a)
+  (mail | message) save: user.thunderbird_mod("s")
+  (mail | message) print: user.thunderbird_mod("p")
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: match
-      children:
+  - children:
+    - children:
       - text: app
         type: identifier
       - text: ' thunderbird_inbox'
@@ -29,2149 +42,2152 @@ output:
       pattern:
         text: ' thunderbird_inbox'
         type: implicit_string
+      type: match
+    type: context
   - text: '# navigate'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: open
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
           children:
-          - type: choice
-            children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: open
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
           children:
           - text: enter
             type: implicit_string
+          type: key_action
+        expression:
           arguments:
             text: enter
             type: implicit_string
-        expression:
-          type: key_action
           children:
           - text: enter
             type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+            type: choice
+          type: parenthesized_rule
+        - children:
+          - children:
             - text: up
               type: word
             - text: last
               type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: b
-            type: implicit_string
-          arguments:
-            text: b
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: b
-            type: implicit_string
-          arguments:
-            text: b
-            type: implicit_string
-    rule:
+            type: choice
+          type: parenthesized_rule
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - arguments:
+            text: b
+            type: implicit_string
           children:
-          - type: choice
-            children:
+          - text: b
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: b
+            type: implicit_string
+          children:
+          - text: b
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+            type: choice
+          type: parenthesized_rule
+        - children:
+          - children:
             - text: up
               type: word
             - text: last
               type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: b
-            type: implicit_string
-          arguments:
-            text: b
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: b
-            type: implicit_string
-          arguments:
-            text: b
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: mail
-              type: word
-            - text: message
-              type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: down
-              type: word
-            - text: next
-              type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: f
-            type: implicit_string
-          arguments:
-            text: f
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: f
-            type: implicit_string
-          arguments:
-            text: f
-            type: implicit_string
-    rule:
+            type: choice
+          type: parenthesized_rule
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+      - children:
+        - arguments:
+            text: b
+            type: implicit_string
           children:
-          - type: choice
-            children:
+          - text: b
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: b
+            type: implicit_string
+          children:
+          - text: b
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+            type: choice
+          type: parenthesized_rule
+        - children:
+          - children:
             - text: down
               type: word
             - text: next
               type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - arguments:
+            text: f
+            type: implicit_string
           children:
           - text: f
             type: implicit_string
-          arguments:
-            text: f
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: f
-            type: implicit_string
+        expression:
           arguments:
             text: f
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
+          children:
+          - text: f
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
+        - children:
+          - children:
+            - text: mail
+              type: word
+            - text: message
+              type: word
+            type: choice
+          type: parenthesized_rule
+        - children:
+          - children:
+            - text: down
+              type: word
+            - text: next
+              type: word
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - arguments:
+            text: f
+            type: implicit_string
+          children:
+          - text: f
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: f
+            type: implicit_string
+          children:
+          - text: f
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: unread
           type: word
-        - type: optional
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+            type: choice
+          type: optional
+        - children:
+          - children:
             - text: up
               type: word
             - text: last
               type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: p
-            type: implicit_string
-          arguments:
-            text: p
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: p
-            type: implicit_string
-          arguments:
-            text: p
-            type: implicit_string
-    rule:
+            type: choice
+          type: parenthesized_rule
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: p
+            type: implicit_string
+          children:
+          - text: p
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: p
+            type: implicit_string
+          children:
+          - text: p
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: unread
           type: word
-        - type: optional
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+            type: choice
+          type: optional
+        - children:
+          - children:
             - text: up
               type: word
             - text: last
               type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: p
-            type: implicit_string
-          arguments:
-            text: p
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: p
-            type: implicit_string
-          arguments:
-            text: p
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: unread
-          type: word
-        - type: optional
-          children:
-          - type: choice
-            children:
-            - text: mail
-              type: word
-            - text: message
-              type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: down
-              type: word
-            - text: next
-              type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: n
-            type: implicit_string
-          arguments:
-            text: n
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: n
-            type: implicit_string
-          arguments:
-            text: n
-            type: implicit_string
-    rule:
+            type: choice
+          type: parenthesized_rule
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - arguments:
+            text: p
+            type: implicit_string
+          children:
+          - text: p
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: p
+            type: implicit_string
+          children:
+          - text: p
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: unread
           type: word
-        - type: optional
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+            type: choice
+          type: optional
+        - children:
+          - children:
             - text: down
               type: word
             - text: next
               type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - arguments:
+            text: n
+            type: implicit_string
           children:
           - text: n
             type: implicit_string
-          arguments:
-            text: n
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: n
-            type: implicit_string
+        expression:
           arguments:
             text: n
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
+          children:
+          - text: n
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
+        - text: unread
+          type: word
+        - children:
+          - children:
+            - text: mail
+              type: word
+            - text: message
+              type: word
+            type: choice
+          type: optional
+        - children:
+          - children:
+            - text: down
+              type: word
+            - text: next
+              type: word
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - arguments:
+            text: n
+            type: implicit_string
+          children:
+          - text: n
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: n
+            type: implicit_string
+          children:
+          - text: n
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: go
           type: word
         - text: home
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: alt-home
-            type: implicit_string
-          arguments:
-            text: alt-home
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: alt-home
-            type: implicit_string
-          arguments:
-            text: alt-home
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: alt-home
+            type: implicit_string
+          children:
+          - text: alt-home
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: alt-home
+            type: implicit_string
+          children:
+          - text: alt-home
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: go
           type: word
         - text: home
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: alt-home
-            type: implicit_string
-          arguments:
-            text: alt-home
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: alt-home
-            type: implicit_string
-          arguments:
-            text: alt-home
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: toggle
-          type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: mail
-              type: word
-            - text: message
-              type: word
-        - type: optional
-          children:
-          - text: pane
-            type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: f8
-            type: implicit_string
-          arguments:
-            text: f8
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: f8
-            type: implicit_string
-          arguments:
-            text: f8
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - arguments:
+            text: alt-home
+            type: implicit_string
+          children:
+          - text: alt-home
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: alt-home
+            type: implicit_string
+          children:
+          - text: alt-home
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: toggle
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
-        - type: optional
-          children:
+            type: choice
+          type: parenthesized_rule
+        - children:
           - text: pane
             type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
+          type: optional
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - arguments:
+            text: f8
+            type: implicit_string
           children:
           - text: f8
             type: implicit_string
-          arguments:
-            text: f8
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: f8
-            type: implicit_string
+        expression:
           arguments:
             text: f8
             type: implicit_string
+          children:
+          - text: f8
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: toggle
+          type: word
+        - children:
+          - children:
+            - text: mail
+              type: word
+            - text: message
+              type: word
+            type: choice
+          type: parenthesized_rule
+        - children:
+          - text: pane
+            type: word
+          type: optional
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - arguments:
+            text: f8
+            type: implicit_string
+          children:
+          - text: f8
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: f8
+            type: implicit_string
+          children:
+          - text: f8
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
   - text: '# mark'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+            type: choice
+          type: parenthesized_rule
+        - children:
+          - children:
             - text: favorite
               type: word
             - text: unfavorite
               type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: s
-            type: implicit_string
-          arguments:
-            text: s
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: s
-            type: implicit_string
-          arguments:
-            text: s
-            type: implicit_string
-    rule:
+            type: choice
+          type: parenthesized_rule
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - arguments:
+            text: s
+            type: implicit_string
           children:
-          - type: choice
-            children:
+          - text: s
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: s
+            type: implicit_string
+          children:
+          - text: s
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+            type: choice
+          type: parenthesized_rule
+        - children:
+          - children:
             - text: favorite
               type: word
             - text: unfavorite
               type: word
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: s
+            type: implicit_string
           children:
           - text: s
             type: implicit_string
-          arguments:
-            text: s
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: s
-            type: implicit_string
+        expression:
           arguments:
             text: s
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
           children:
-          - type: choice
-            children:
+          - text: s
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+            type: choice
+          type: parenthesized_rule
+        - children:
+          - children:
             - text: read
               type: word
             - text: unread
               type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: m
-            type: implicit_string
-          arguments:
-            text: m
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: m
-            type: implicit_string
-          arguments:
-            text: m
-            type: implicit_string
-    rule:
+            type: choice
+          type: parenthesized_rule
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - arguments:
+            text: m
+            type: implicit_string
           children:
-          - type: choice
-            children:
+          - text: m
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: m
+            type: implicit_string
+          children:
+          - text: m
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+            type: choice
+          type: parenthesized_rule
+        - children:
+          - children:
             - text: read
               type: word
             - text: unread
               type: word
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: m
+            type: implicit_string
           children:
           - text: m
             type: implicit_string
-          arguments:
-            text: m
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: m
-            type: implicit_string
+        expression:
           arguments:
             text: m
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
           children:
-          - type: choice
-            children:
+          - text: m
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+            type: choice
+          type: parenthesized_rule
+        - children:
+          - children:
             - text: watch
               type: word
             - text: unwatch
               type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: w
-            type: implicit_string
-          arguments:
-            text: w
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: w
-            type: implicit_string
-          arguments:
-            text: w
-            type: implicit_string
-    rule:
+            type: choice
+          type: parenthesized_rule
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - arguments:
+            text: w
+            type: implicit_string
           children:
-          - type: choice
-            children:
+          - text: w
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: w
+            type: implicit_string
+          children:
+          - text: w
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+            type: choice
+          type: parenthesized_rule
+        - children:
+          - children:
             - text: watch
               type: word
             - text: unwatch
               type: word
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: w
+            type: implicit_string
           children:
           - text: w
             type: implicit_string
-          arguments:
-            text: w
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: w
-            type: implicit_string
+        expression:
           arguments:
             text: w
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
           children:
-          - type: choice
-            children:
+          - text: w
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+            type: choice
+          type: parenthesized_rule
+        - children:
+          - children:
             - text: ignore
               type: word
             - text: unignore
               type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: k
-            type: implicit_string
-          arguments:
-            text: k
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: k
-            type: implicit_string
-          arguments:
-            text: k
-            type: implicit_string
-    rule:
+            type: choice
+          type: parenthesized_rule
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - arguments:
+            text: k
+            type: implicit_string
           children:
-          - type: choice
-            children:
+          - text: k
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: k
+            type: implicit_string
+          children:
+          - text: k
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+            type: choice
+          type: parenthesized_rule
+        - children:
+          - children:
             - text: ignore
               type: word
             - text: unignore
               type: word
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: k
+            type: implicit_string
           children:
           - text: k
             type: implicit_string
+          type: key_action
+        expression:
           arguments:
             text: k
             type: implicit_string
-        expression:
-          type: key_action
           children:
           - text: k
             type: implicit_string
-          arguments:
-            text: k
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: suspend
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: c
-            type: implicit_string
-          arguments:
-            text: c
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: c
-            type: implicit_string
-          arguments:
-            text: c
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - arguments:
+            text: c
+            type: implicit_string
           children:
-          - type: choice
-            children:
+          - text: c
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: c
+            type: implicit_string
+          children:
+          - text: c
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: suspend
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: c
-            type: implicit_string
-          arguments:
-            text: c
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: c
-            type: implicit_string
-          arguments:
-            text: c
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: mail
-              type: word
-            - text: message
-              type: word
-        - text: spam
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: j
-            type: implicit_string
-          arguments:
-            text: j
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: j
-            type: implicit_string
-          arguments:
-            text: j
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+      - children:
+        - arguments:
+            text: c
+            type: implicit_string
           children:
-          - type: choice
-            children:
+          - text: c
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: c
+            type: implicit_string
+          children:
+          - text: c
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: spam
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - arguments:
+            text: j
+            type: implicit_string
           children:
           - text: j
             type: implicit_string
-          arguments:
-            text: j
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: j
-            type: implicit_string
+        expression:
           arguments:
             text: j
             type: implicit_string
+          children:
+          - text: j
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
+            - text: mail
+              type: word
+            - text: message
+              type: word
+            type: choice
+          type: parenthesized_rule
+        - text: spam
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - arguments:
+            text: j
+            type: implicit_string
+          children:
+          - text: j
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: j
+            type: implicit_string
+          children:
+          - text: j
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
   - text: '# send'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: new
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: n
-                type: string_content
-          action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: n
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: n
-                type: string_content
-          action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: n
-                type: string_content
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
+    - children:
+      - children:
+        - action_name:
+            text: user.thunderbird_mod
+            type: identifier
+          arguments:
             children:
+            - children:
+              - text: n
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: n
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.thunderbird_mod
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: n
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: n
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: new
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: n
-                type: string_content
-          action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: n
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: n
-                type: string_content
-          action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: n
-                type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: mail
-              type: word
-            - text: message
-              type: word
-        - text: edit
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: e
-                type: string_content
-          action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: e
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: e
-                type: string_content
-          action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: e
-                type: string_content
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
+      - children:
+        - action_name:
+            text: user.thunderbird_mod
+            type: identifier
+          arguments:
             children:
+            - children:
+              - text: n
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: n
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.thunderbird_mod
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: n
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: n
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: edit
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: e
-                type: string_content
-          action_name:
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: user.thunderbird_mod
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: e
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: e
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: e
-                type: string_content
+        expression:
           action_name:
             text: user.thunderbird_mod
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: e
                 type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+              type: string
+            type: argument_list
           children:
-          - type: choice
-            children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: e
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
+            type: choice
+          type: parenthesized_rule
+        - text: edit
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: user.thunderbird_mod
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: e
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: e
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.thunderbird_mod
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: e
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: e
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
+            - text: mail
+              type: word
+            - text: message
+              type: word
+            type: choice
+          type: parenthesized_rule
         - text: reply
           type: word
         - text: sender
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: r
-                type: string_content
-          action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: r
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: r
-                type: string_content
-          action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: r
-                type: string_content
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
+    - children:
+      - children:
+        - action_name:
+            text: user.thunderbird_mod
+            type: identifier
+          arguments:
             children:
+            - children:
+              - text: r
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: r
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.thunderbird_mod
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: r
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: r
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: reply
           type: word
         - text: sender
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: r
-                type: string_content
-          action_name:
+      - children:
+        - action_name:
             text: user.thunderbird_mod
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: r
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: r
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: r
-                type: string_content
+        expression:
           action_name:
             text: user.thunderbird_mod
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: r
                 type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+              type: string
+            type: argument_list
           children:
-          - type: choice
-            children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: r
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: reply
           type: word
         - text: all
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: shift-r
-                type: string_content
-          action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: shift-r
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: shift-r
-                type: string_content
-          action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: shift-r
-                type: string_content
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
+    - children:
+      - children:
+        - action_name:
+            text: user.thunderbird_mod
+            type: identifier
+          arguments:
             children:
+            - children:
+              - text: shift-r
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: shift-r
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.thunderbird_mod
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: shift-r
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: shift-r
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: reply
           type: word
         - text: all
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: shift-r
-                type: string_content
-          action_name:
+      - children:
+        - action_name:
             text: user.thunderbird_mod
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: shift-r
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: shift-r
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: shift-r
-                type: string_content
+        expression:
           action_name:
             text: user.thunderbird_mod
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: shift-r
                 type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+              type: string
+            type: argument_list
           children:
-          - type: choice
-            children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: shift-r
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: reply
           type: word
         - text: list
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: shift-l
-                type: string_content
-          action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: shift-l
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: shift-l
-                type: string_content
-          action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: shift-l
-                type: string_content
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
+    - children:
+      - children:
+        - action_name:
+            text: user.thunderbird_mod
+            type: identifier
+          arguments:
             children:
+            - children:
+              - text: shift-l
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: shift-l
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.thunderbird_mod
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: shift-l
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: shift-l
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: reply
           type: word
         - text: list
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: shift-l
-                type: string_content
-          action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: shift-l
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: shift-l
-                type: string_content
-          action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: shift-l
-                type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: mail
-              type: word
-            - text: message
-              type: word
-        - text: forward
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: l
-                type: string_content
-          action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: l
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: l
-                type: string_content
-          action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: l
-                type: string_content
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
+      - children:
+        - action_name:
+            text: user.thunderbird_mod
+            type: identifier
+          arguments:
             children:
+            - children:
+              - text: shift-l
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: shift-l
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.thunderbird_mod
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: shift-l
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: shift-l
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: forward
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: l
-                type: string_content
-          action_name:
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: user.thunderbird_mod
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: l
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: l
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: l
-                type: string_content
+        expression:
           action_name:
             text: user.thunderbird_mod
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: l
                 type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: l
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
+            - text: mail
+              type: word
+            - text: message
+              type: word
+            type: choice
+          type: parenthesized_rule
+        - text: forward
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: user.thunderbird_mod
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: l
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: l
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.thunderbird_mod
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: l
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: l
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
   - text: '# organize'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: delete
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: delete
-            type: implicit_string
-          arguments:
-            text: delete
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: delete
-            type: implicit_string
-          arguments:
-            text: delete
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - arguments:
+            text: delete
+            type: implicit_string
           children:
-          - type: choice
-            children:
+          - text: delete
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: delete
+            type: implicit_string
+          children:
+          - text: delete
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: delete
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: delete
+            type: implicit_string
           children:
           - text: delete
             type: implicit_string
+          type: key_action
+        expression:
           arguments:
             text: delete
             type: implicit_string
-        expression:
-          type: key_action
           children:
           - text: delete
             type: implicit_string
-          arguments:
-            text: delete
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: archive
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: a
-            type: implicit_string
-          arguments:
-            text: a
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: a
-            type: implicit_string
-          arguments:
-            text: a
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - arguments:
+            text: a
+            type: implicit_string
           children:
-          - type: choice
-            children:
+          - text: a
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: a
+            type: implicit_string
+          children:
+          - text: a
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: archive
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: a
+            type: implicit_string
           children:
           - text: a
             type: implicit_string
-          arguments:
-            text: a
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: a
-            type: implicit_string
+        expression:
           arguments:
             text: a
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
           children:
-          - type: choice
-            children:
+          - text: a
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: save
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: s
-                type: string_content
-          action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: s
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: s
-                type: string_content
-          action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: s
-                type: string_content
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
+    - children:
+      - children:
+        - action_name:
+            text: user.thunderbird_mod
+            type: identifier
+          arguments:
             children:
+            - children:
+              - text: s
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: s
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.thunderbird_mod
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: s
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: s
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: save
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: s
-                type: string_content
-          action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: s
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: s
-                type: string_content
-          action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: s
-                type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: mail
-              type: word
-            - text: message
-              type: word
-        - text: print
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: p
-                type: string_content
-          action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: p
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: p
-                type: string_content
-          action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: p
-                type: string_content
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
+      - children:
+        - action_name:
+            text: user.thunderbird_mod
+            type: identifier
+          arguments:
             children:
+            - children:
+              - text: s
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: s
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.thunderbird_mod
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: s
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: s
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: mail
               type: word
             - text: message
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: print
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: p
-                type: string_content
-          action_name:
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: user.thunderbird_mod
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: p
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: p
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: p
-                type: string_content
+        expression:
           action_name:
             text: user.thunderbird_mod
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: p
                 type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: p
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
+            - text: mail
+              type: word
+            - text: message
+              type: word
+            type: choice
+          type: parenthesized_rule
+        - text: print
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: user.thunderbird_mod
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: p
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: p
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.thunderbird_mod
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: p
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.thunderbird_mod
+            type: identifier
+          - children:
+            - children:
+              - text: p
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  type: source_file

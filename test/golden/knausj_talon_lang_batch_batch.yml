@@ -1,16 +1,24 @@
-input: "tag: user.batch\n-\ntag(): user.code_comment_line\n\n# exit without killing\
-  \ cmd shell\nsoft exit: \"exit /B 1\\n\"\n# exit with killing cmd shell\nhard exit:\
-  \ \"exit 1\\n\"\necho: \"echo \"\necho off: \"@echo off\\n\"\ncall: \"call \"\n\
-  call shell: \"call cmd \\\\c \"\nif error: \"if errorlevel 1 \"\ngo to: \"goto \"\
-  \ndelayed expansion: \"SETLOCAL EnableDelayedExpansion\\n\"\narg <number_small>:\
-  \ \"%{number_small}\"\n"
+input: |
+  tag: user.batch
+  -
+  tag(): user.code_comment_line
+
+  # exit without killing cmd shell
+  soft exit: "exit /B 1\n"
+  # exit with killing cmd shell
+  hard exit: "exit 1\n"
+  echo: "echo "
+  echo off: "@echo off\n"
+  call: "call "
+  call shell: "call cmd \\c "
+  if error: "if errorlevel 1 "
+  go to: "goto "
+  delayed expansion: "SETLOCAL EnableDelayedExpansion\n"
+  arg <number_small>: "%{number_small}"
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: match
-      children:
+  - children:
+    - children:
       - text: tag
         type: identifier
       - text: ' user.batch'
@@ -21,301 +29,308 @@ output:
       pattern:
         text: ' user.batch'
         type: implicit_string
-  - type: include_tag
-    children:
+      type: match
+    type: context
+  - children:
     - text: user.code_comment_line
       type: identifier
     tag:
       text: user.code_comment_line
       type: identifier
+    type: include_tag
   - text: '# exit without killing cmd shell'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: soft
           type: word
         - text: exit
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: exit /B 1
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-        expression:
-          type: string
-          children:
-          - text: exit /B 1
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - children:
+          - text: exit /B 1
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        expression:
+          children:
+          - text: exit /B 1
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: soft
           type: word
         - text: exit
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: string
-          children:
+      - children:
+        - children:
           - text: exit /B 1
             type: string_content
           - text: \n
             type: string_escape_sequence
-        expression:
           type: string
+        expression:
           children:
           - text: exit /B 1
             type: string_content
           - text: \n
             type: string_escape_sequence
+          type: string
+        type: expression
+      type: block
+    type: command
   - text: '# exit with killing cmd shell'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: hard
           type: word
         - text: exit
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: exit 1
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-        expression:
-          type: string
-          children:
-          - text: exit 1
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - children:
+          - text: exit 1
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        expression:
+          children:
+          - text: exit 1
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: hard
           type: word
         - text: exit
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: string
+      - children:
+        - children:
+          - text: exit 1
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        expression:
           children:
           - text: exit 1
             type: string_content
           - text: \n
             type: string_escape_sequence
-        expression:
           type: string
-          children:
-          - text: exit 1
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - text: echo
+        type: word
+      type: rule
+    - children:
+      - children:
+        - children:
+          - text: 'echo '
             type: string_content
-          - text: \n
-            type: string_escape_sequence
-  - type: command
-    children:
-    - type: rule
+          type: string
+        expression:
+          children:
+          - text: 'echo '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
       - text: echo
         type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: 'echo '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: 'echo '
-            type: string_content
-    rule:
       type: rule
+    script:
       children:
-      - text: echo
+      - children:
+        - children:
+          - text: 'echo '
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: 'echo '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - text: echo
+          type: word
+        - text: false
+          type: word
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - children:
+          - text: '@echo off'
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        expression:
+          children:
+          - text: '@echo off'
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: echo
+          type: word
+        - text: false
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - children:
+          - text: '@echo off'
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        expression:
+          children:
+          - text: '@echo off'
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - text: call
         type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: 'echo '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: 'echo '
-            type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: echo
-          type: word
-        - text: off
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: '@echo off'
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-        expression:
-          type: string
-          children:
-          - text: '@echo off'
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-    rule:
       type: rule
-      children:
-      - type: seq
-        children:
-        - text: echo
-          type: word
-        - text: off
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: '@echo off'
+    - children:
+      - children:
+        - children:
+          - text: 'call '
             type: string_content
-          - text: \n
-            type: string_escape_sequence
-        expression:
           type: string
+        expression:
           children:
-          - text: '@echo off'
+          - text: 'call '
             type: string_content
-          - text: \n
-            type: string_escape_sequence
-  - type: command
-    children:
-    - type: rule
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
       - text: call
         type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: 'call '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: 'call '
-            type: string_content
-    rule:
       type: rule
-      children:
-      - text: call
-        type: word
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: string
-          children:
+      - children:
+        - children:
           - text: 'call '
             type: string_content
-        expression:
           type: string
+        expression:
           children:
           - text: 'call '
             type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: call
           type: word
         - text: shell
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: 'call cmd '
-            type: string_content
-          - text: \\
-            type: string_escape_sequence
-          - text: 'c '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: 'call cmd '
-            type: string_content
-          - text: \\
-            type: string_escape_sequence
-          - text: 'c '
-            type: string_content
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - children:
+          - text: 'call cmd '
+            type: string_content
+          - text: \\
+            type: string_escape_sequence
+          - text: 'c '
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: 'call cmd '
+            type: string_content
+          - text: \\
+            type: string_escape_sequence
+          - text: 'c '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: call
           type: word
         - text: shell
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: string
+      - children:
+        - children:
+          - text: 'call cmd '
+            type: string_content
+          - text: \\
+            type: string_escape_sequence
+          - text: 'c '
+            type: string_content
+          type: string
+        expression:
           children:
           - text: 'call cmd '
             type: string_content
@@ -323,222 +338,173 @@ output:
             type: string_escape_sequence
           - text: 'c '
             type: string_content
-        expression:
           type: string
-          children:
-          - text: 'call cmd '
-            type: string_content
-          - text: \\
-            type: string_escape_sequence
-          - text: 'c '
-            type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: if
           type: word
         - text: error
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: 'if errorlevel 1 '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: 'if errorlevel 1 '
-            type: string_content
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - children:
+          - text: 'if errorlevel 1 '
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: 'if errorlevel 1 '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: if
           type: word
         - text: error
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: string
-          children:
+      - children:
+        - children:
           - text: 'if errorlevel 1 '
             type: string_content
-        expression:
           type: string
+        expression:
           children:
           - text: 'if errorlevel 1 '
             type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: go
           type: word
         - text: to
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: 'goto '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: 'goto '
-            type: string_content
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - children:
+          - text: 'goto '
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: 'goto '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: go
           type: word
         - text: to
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: string
-          children:
+      - children:
+        - children:
           - text: 'goto '
             type: string_content
-        expression:
           type: string
+        expression:
           children:
           - text: 'goto '
             type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: delayed
           type: word
         - text: expansion
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: SETLOCAL EnableDelayedExpansion
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-        expression:
-          type: string
-          children:
-          - text: SETLOCAL EnableDelayedExpansion
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - children:
+          - text: SETLOCAL EnableDelayedExpansion
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        expression:
+          children:
+          - text: SETLOCAL EnableDelayedExpansion
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: delayed
           type: word
         - text: expansion
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: SETLOCAL EnableDelayedExpansion
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-        expression:
-          type: string
-          children:
-          - text: SETLOCAL EnableDelayedExpansion
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: arg
-          type: word
-        - type: capture
-          children:
-          - text: number_small
-            type: identifier
-          capture_name:
-            text: number_small
-            type: identifier
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: '%'
-            type: string_content
-          - text: '{'
-            type: string_content
-          - text: number_small
-            type: string_content
-          - text: '}'
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: '%'
-            type: string_content
-          - text: '{'
-            type: string_content
-          - text: number_small
-            type: string_content
-          - text: '}'
-            type: string_content
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - children:
+          - text: SETLOCAL EnableDelayedExpansion
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        expression:
+          children:
+          - text: SETLOCAL EnableDelayedExpansion
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: arg
           type: word
-        - type: capture
-          children:
-          - text: number_small
-            type: identifier
-          capture_name:
+        - capture_name:
             text: number_small
             type: identifier
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: string
           children:
+          - text: number_small
+            type: identifier
+          type: capture
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - children:
           - text: '%'
             type: string_content
           - text: '{'
@@ -547,8 +513,8 @@ output:
             type: string_content
           - text: '}'
             type: string_content
-        expression:
           type: string
+        expression:
           children:
           - text: '%'
             type: string_content
@@ -558,3 +524,48 @@ output:
             type: string_content
           - text: '}'
             type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: arg
+          type: word
+        - capture_name:
+            text: number_small
+            type: identifier
+          children:
+          - text: number_small
+            type: identifier
+          type: capture
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - children:
+          - text: '%'
+            type: string_content
+          - text: '{'
+            type: string_content
+          - text: number_small
+            type: string_content
+          - text: '}'
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: '%'
+            type: string_content
+          - text: '{'
+            type: string_content
+          - text: number_small
+            type: string_content
+          - text: '}'
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    type: command
+  type: source_file

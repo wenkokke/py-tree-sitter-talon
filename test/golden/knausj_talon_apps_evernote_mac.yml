@@ -1,14 +1,15 @@
-input: "app: evernote\nos: mac\n-\nsettings():\n    # Necessary to stop commands like\
-  \ 'slap' getting jumbled\n    key_wait = 9.0\n"
+input: |
+  app: evernote
+  os: mac
+  -
+  settings():
+      # Necessary to stop commands like 'slap' getting jumbled
+      key_wait = 9.0
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: or
-      children:
-      - type: match
-        children:
+  - children:
+    - children:
+      - children:
         - text: app
           type: identifier
         - text: ' evernote'
@@ -19,8 +20,8 @@ output:
         pattern:
           text: ' evernote'
           type: implicit_string
-      - type: match
-        children:
+        type: match
+      - children:
         - text: os
           type: identifier
         - text: ' mac'
@@ -31,14 +32,14 @@ output:
         pattern:
           text: ' mac'
           type: implicit_string
-  - type: settings
-    children:
-    - text: "# Necessary to stop commands like 'slap' getting jumbled"
+        type: match
+      type: or
+    type: context
+  - children:
+    - text: '# Necessary to stop commands like ''slap'' getting jumbled'
       type: comment
-    - type: block
-      children:
-      - type: assignment
-        children:
+    - children:
+      - children:
         - text: key_wait
           type: identifier
         - text: '9.0'
@@ -49,3 +50,7 @@ output:
         right:
           text: '9.0'
           type: float
+        type: assignment
+      type: block
+    type: settings
+  type: source_file

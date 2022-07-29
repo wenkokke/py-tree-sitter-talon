@@ -1,19 +1,24 @@
-input: "tag: terminal\nand tag: user.terraform_client\n-\nterraform: \"terraform \"\
-  \n\nterraform apply: \"terraform apply \"\nterraform destroy: \"terraform destroy\
-  \ \"\nterraform format recursive: \"terraform fmt -recursive\\n\"\nterraform format:\
-  \ \"terraform fmt\\n\"\nterraform help: \"terraform -help\"\nterraform init upgrade:\
-  \ \"terraform init -upgrade\\n\"\nterraform init: \"terraform init\\n\"\nterraform\
-  \ plan: \"terraform plan\\n\"\nterraform state move: \"terraform state mv \"\nterraform\
-  \ validate: \"terraform validate\\n\"\n"
+input: |
+  tag: terminal
+  and tag: user.terraform_client
+  -
+  terraform: "terraform "
+
+  terraform apply: "terraform apply "
+  terraform destroy: "terraform destroy "
+  terraform format recursive: "terraform fmt -recursive\n"
+  terraform format: "terraform fmt\n"
+  terraform help: "terraform -help"
+  terraform init upgrade: "terraform init -upgrade\n"
+  terraform init: "terraform init\n"
+  terraform plan: "terraform plan\n"
+  terraform state move: "terraform state mv "
+  terraform validate: "terraform validate\n"
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: and
-      children:
-      - type: match
-        children:
+  - children:
+    - children:
+      - children:
         - text: tag
           type: identifier
         - text: ' terminal'
@@ -24,8 +29,8 @@ output:
         pattern:
           text: ' terminal'
           type: implicit_string
-      - type: match
-        children:
+        type: match
+      - children:
         - text: tag
           type: identifier
         - text: ' user.terraform_client'
@@ -36,561 +41,565 @@ output:
         pattern:
           text: ' user.terraform_client'
           type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
+        type: match
+      type: and
+    type: context
+  - children:
+    - children:
       - text: terraform
         type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: 'terraform '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: 'terraform '
-            type: string_content
-    rule:
       type: rule
+    - children:
+      - children:
+        - children:
+          - text: 'terraform '
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: 'terraform '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
       - text: terraform
         type: word
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: string
-          children:
+      - children:
+        - children:
           - text: 'terraform '
             type: string_content
-        expression:
           type: string
+        expression:
           children:
           - text: 'terraform '
             type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: terraform
           type: word
         - text: apply
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: 'terraform apply '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: 'terraform apply '
-            type: string_content
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - children:
+          - text: 'terraform apply '
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: 'terraform apply '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: terraform
           type: word
         - text: apply
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: 'terraform apply '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: 'terraform apply '
-            type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: terraform
-          type: word
-        - text: destroy
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: 'terraform destroy '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: 'terraform destroy '
-            type: string_content
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - children:
+          - text: 'terraform apply '
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: 'terraform apply '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: terraform
           type: word
         - text: destroy
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - children:
           - text: 'terraform destroy '
             type: string_content
-        expression:
           type: string
+        expression:
           children:
           - text: 'terraform destroy '
             type: string_content
-  - type: command
-    children:
-    - type: rule
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
+        - text: terraform
+          type: word
+        - text: destroy
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - children:
+          - text: 'terraform destroy '
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: 'terraform destroy '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: terraform
           type: word
         - text: format
           type: word
         - text: recursive
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: terraform fmt -recursive
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-        expression:
-          type: string
-          children:
-          - text: terraform fmt -recursive
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - children:
+          - text: terraform fmt -recursive
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        expression:
+          children:
+          - text: terraform fmt -recursive
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: terraform
           type: word
         - text: format
           type: word
         - text: recursive
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: string
+      - children:
+        - children:
+          - text: terraform fmt -recursive
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        expression:
           children:
           - text: terraform fmt -recursive
             type: string_content
           - text: \n
             type: string_escape_sequence
-        expression:
           type: string
-          children:
-          - text: terraform fmt -recursive
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: terraform
           type: word
         - text: format
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: terraform fmt
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-        expression:
-          type: string
-          children:
-          - text: terraform fmt
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - children:
+          - text: terraform fmt
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        expression:
+          children:
+          - text: terraform fmt
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: terraform
           type: word
         - text: format
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: terraform fmt
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-        expression:
-          type: string
-          children:
-          - text: terraform fmt
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: terraform
-          type: word
-        - text: help
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: terraform -help
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: terraform -help
-            type: string_content
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - children:
+          - text: terraform fmt
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        expression:
+          children:
+          - text: terraform fmt
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: terraform
           type: word
         - text: help
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - children:
           - text: terraform -help
             type: string_content
-        expression:
           type: string
+        expression:
           children:
           - text: terraform -help
             type: string_content
-  - type: command
-    children:
-    - type: rule
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
+        - text: terraform
+          type: word
+        - text: help
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - children:
+          - text: terraform -help
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: terraform -help
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: terraform
           type: word
         - text: init
           type: word
         - text: upgrade
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: terraform init -upgrade
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-        expression:
-          type: string
-          children:
-          - text: terraform init -upgrade
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - children:
+          - text: terraform init -upgrade
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        expression:
+          children:
+          - text: terraform init -upgrade
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: terraform
           type: word
         - text: init
           type: word
         - text: upgrade
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: string
+      - children:
+        - children:
+          - text: terraform init -upgrade
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        expression:
           children:
           - text: terraform init -upgrade
             type: string_content
           - text: \n
             type: string_escape_sequence
-        expression:
           type: string
-          children:
-          - text: terraform init -upgrade
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: terraform
           type: word
         - text: init
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: terraform init
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-        expression:
-          type: string
-          children:
-          - text: terraform init
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - children:
+          - text: terraform init
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        expression:
+          children:
+          - text: terraform init
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: terraform
           type: word
         - text: init
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: terraform init
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-        expression:
-          type: string
-          children:
-          - text: terraform init
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: terraform
-          type: word
-        - text: plan
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: terraform plan
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-        expression:
-          type: string
-          children:
-          - text: terraform plan
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - children:
+          - text: terraform init
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        expression:
+          children:
+          - text: terraform init
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: terraform
           type: word
         - text: plan
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - children:
           - text: terraform plan
             type: string_content
           - text: \n
             type: string_escape_sequence
-        expression:
           type: string
+        expression:
           children:
           - text: terraform plan
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
-    children:
-    - type: rule
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
+        - text: terraform
+          type: word
+        - text: plan
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - children:
+          - text: terraform plan
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        expression:
+          children:
+          - text: terraform plan
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: terraform
           type: word
         - text: state
           type: word
         - text: move
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: 'terraform state mv '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: 'terraform state mv '
-            type: string_content
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - children:
+          - text: 'terraform state mv '
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: 'terraform state mv '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: terraform
           type: word
         - text: state
           type: word
         - text: move
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: 'terraform state mv '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: 'terraform state mv '
-            type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: terraform
-          type: word
-        - text: validate
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: terraform validate
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-        expression:
-          type: string
-          children:
-          - text: terraform validate
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - children:
+          - text: 'terraform state mv '
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: 'terraform state mv '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: terraform
           type: word
         - text: validate
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - children:
           - text: terraform validate
             type: string_content
           - text: \n
             type: string_escape_sequence
-        expression:
           type: string
+        expression:
           children:
           - text: terraform validate
             type: string_content
           - text: \n
             type: string_escape_sequence
+          type: string
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: terraform
+          type: word
+        - text: validate
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - children:
+          - text: terraform validate
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        expression:
+          children:
+          - text: terraform validate
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        type: expression
+      type: block
+    type: command
+  type: source_file

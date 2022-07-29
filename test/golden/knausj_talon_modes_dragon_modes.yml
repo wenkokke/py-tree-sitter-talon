@@ -1,17 +1,19 @@
-input: "#defines modes specific to Dragon.\nspeech.engine: dragon\nmode: all\n-\n\
-  # wakes Dragon on Mac, deactivates talon speech commands\ndragon mode: user.dragon_mode()\n\
-  #sleep dragon on Mac, activates talon speech commands\ntalon mode: user.talon_mode()\n"
+input: |
+  #defines modes specific to Dragon.
+  speech.engine: dragon
+  mode: all
+  -
+  # wakes Dragon on Mac, deactivates talon speech commands
+  dragon mode: user.dragon_mode()
+  #sleep dragon on Mac, activates talon speech commands
+  talon mode: user.talon_mode()
 output:
-  type: source_file
   children:
   - text: '#defines modes specific to Dragon.'
     type: comment
-  - type: context
-    children:
-    - type: or
-      children:
-      - type: match
-        children:
+  - children:
+    - children:
+      - children:
         - text: speech.engine
           type: identifier
         - text: ' dragon'
@@ -22,8 +24,8 @@ output:
         pattern:
           text: ' dragon'
           type: implicit_string
-      - type: match
-        children:
+        type: match
+      - children:
         - text: mode
           type: identifier
         - text: ' all'
@@ -34,163 +36,167 @@ output:
         pattern:
           text: ' all'
           type: implicit_string
+        type: match
+      type: or
+    type: context
   - text: '# wakes Dragon on Mac, deactivates talon speech commands'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: dragon
           type: word
         - text: mode
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.dragon_mode
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.dragon_mode
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.dragon_mode
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.dragon_mode
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.dragon_mode
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.dragon_mode
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.dragon_mode
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.dragon_mode
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: dragon
           type: word
         - text: mode
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.dragon_mode
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+      - children:
+        - action_name:
             text: user.dragon_mode
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: user.dragon_mode
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: user.dragon_mode
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: user.dragon_mode
             type: identifier
           arguments:
-            type: argument_list
             children: []
+            type: argument_list
+          children:
+          - text: user.dragon_mode
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
   - text: '#sleep dragon on Mac, activates talon speech commands'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: talon
           type: word
         - text: mode
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.talon_mode
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.talon_mode
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.talon_mode
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.talon_mode
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.talon_mode
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.talon_mode
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.talon_mode
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.talon_mode
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: talon
           type: word
         - text: mode
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.talon_mode
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+      - children:
+        - action_name:
             text: user.talon_mode
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: user.talon_mode
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: user.talon_mode
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: user.talon_mode
             type: identifier
           arguments:
-            type: argument_list
             children: []
+            type: argument_list
+          children:
+          - text: user.talon_mode
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  type: source_file

@@ -1,11 +1,11 @@
-input: "tag: user.scss\n-\ntag(): user.css\n"
+input: |
+  tag: user.scss
+  -
+  tag(): user.css
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: match
-      children:
+  - children:
+    - children:
       - text: tag
         type: identifier
       - text: ' user.scss'
@@ -16,10 +16,13 @@ output:
       pattern:
         text: ' user.scss'
         type: implicit_string
-  - type: include_tag
-    children:
+      type: match
+    type: context
+  - children:
     - text: user.css
       type: identifier
     tag:
       text: user.css
       type: identifier
+    type: include_tag
+  type: source_file

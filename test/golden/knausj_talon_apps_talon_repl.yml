@@ -1,34 +1,65 @@
-input: "win.title:/repl/\nwin.title:/Talon - REPL/\n-\ntag(): user.talon_python\n\n\
-  # uncomment user.talon_populate_lists tag to activate talon-specific lists of actions,\
-  \ scopes, modes etcetera.\n# Do not enable this tag with dragon, as it will be unusable.\n\
-  # with conformer, the latency increase may also be unacceptable depending on your\
-  \ cpu\n# see https://github.com/knausj85/knausj_talon/issues/600\n# tag(): user.talon_populate_lists\n\
-  \n^test last$:\n    phrase = user.history_get(1)\n    command = \"sim('{phrase}')\"\
-  \n    insert(command)\n    key(enter)\n^test <phrase>$:\n    insert(\"sim('{phrase}')\"\
-  )\n    key(enter)\n^test numb <number_small>$:\n    phrase = user.history_get(number_small)\n\
-  \    command = \"sim('{phrase}')\"\n    #to do: shouldn't this work?\n    #user.paste(\"\
-  sim({phrase})\")\n    insert(command)\n    key(enter)\n# requires user.talon_populate_lists\
-  \ tag. do not use with dragon\n^debug action {user.talon_actions}$:\n    insert(\"\
-  actions.find('{user.talon_actions}')\")\n    key(enter)\n# requires user.talon_populate_lists\
-  \ tag. do not use with dragon\n^debug list {user.talon_lists}$:\n    insert(\"actions.user.talon_pretty_print(registry.lists['{talon_lists}'])\"\
-  )\n    key(enter)\n^debug tags$:\n    insert(\"actions.user.talon_pretty_print(registry.tags)\"\
-  )\n    key(enter)\n^debug settings$:\n    insert(\"actions.user.talon_pretty_print(registry.settings)\"\
-  )\n    key(enter)\n^debug modes$:\n    insert(\"actions.user.talon_pretty_print(scope.get('mode'))\"\
-  )\n    key(enter)\n# requires user.talon_populate_lists tag. do not use with dragon\n\
-  ^debug scope {user.talon_scopes}$:\n    insert(\"actions.user.talon_pretty_print(scope.get('{talon_scopes}'))\"\
-  )\n    key(enter)\n^debug running apps$:\n    insert(\"actions.user.talon_pretty_print(ui.apps(background=False))\"\
-  )\n    key(enter)\n^debug all windows$:\n    insert(\"actions.user.talon_pretty_print(ui.windows())\"\
-  )\n    key(enter)\n^debug {user.running} windows$:\n    insert(\"actions.user.talon_debug_app_windows('{running}')\"\
-  )\n    key(enter)\n"
+input: |
+  win.title:/repl/
+  win.title:/Talon - REPL/
+  -
+  tag(): user.talon_python
+
+  # uncomment user.talon_populate_lists tag to activate talon-specific lists of actions, scopes, modes etcetera.
+  # Do not enable this tag with dragon, as it will be unusable.
+  # with conformer, the latency increase may also be unacceptable depending on your cpu
+  # see https://github.com/knausj85/knausj_talon/issues/600
+  # tag(): user.talon_populate_lists
+
+  ^test last$:
+      phrase = user.history_get(1)
+      command = "sim('{phrase}')"
+      insert(command)
+      key(enter)
+  ^test <phrase>$:
+      insert("sim('{phrase}')")
+      key(enter)
+  ^test numb <number_small>$:
+      phrase = user.history_get(number_small)
+      command = "sim('{phrase}')"
+      #to do: shouldn't this work?
+      #user.paste("sim({phrase})")
+      insert(command)
+      key(enter)
+  # requires user.talon_populate_lists tag. do not use with dragon
+  ^debug action {user.talon_actions}$:
+      insert("actions.find('{user.talon_actions}')")
+      key(enter)
+  # requires user.talon_populate_lists tag. do not use with dragon
+  ^debug list {user.talon_lists}$:
+      insert("actions.user.talon_pretty_print(registry.lists['{talon_lists}'])")
+      key(enter)
+  ^debug tags$:
+      insert("actions.user.talon_pretty_print(registry.tags)")
+      key(enter)
+  ^debug settings$:
+      insert("actions.user.talon_pretty_print(registry.settings)")
+      key(enter)
+  ^debug modes$:
+      insert("actions.user.talon_pretty_print(scope.get('mode'))")
+      key(enter)
+  # requires user.talon_populate_lists tag. do not use with dragon
+  ^debug scope {user.talon_scopes}$:
+      insert("actions.user.talon_pretty_print(scope.get('{talon_scopes}'))")
+      key(enter)
+  ^debug running apps$:
+      insert("actions.user.talon_pretty_print(ui.apps(background=False))")
+      key(enter)
+  ^debug all windows$:
+      insert("actions.user.talon_pretty_print(ui.windows())")
+      key(enter)
+  ^debug {user.running} windows$:
+      insert("actions.user.talon_debug_app_windows('{running}')")
+      key(enter)
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: or
-      children:
-      - type: match
-        children:
+  - children:
+    - children:
+      - children:
         - text: win.title
           type: identifier
         - text: /repl/
@@ -39,8 +70,8 @@ output:
         pattern:
           text: /repl/
           type: implicit_string
-      - type: match
-        children:
+        type: match
+      - children:
         - text: win.title
           type: identifier
         - text: /Talon - REPL/
@@ -51,13 +82,16 @@ output:
         pattern:
           text: /Talon - REPL/
           type: implicit_string
-  - type: include_tag
-    children:
+        type: match
+      type: or
+    type: context
+  - children:
     - text: user.talon_python
       type: identifier
     tag:
       text: user.talon_python
       type: identifier
+    type: include_tag
   - text: '# uncomment user.talon_populate_lists tag to activate talon-specific lists
       of actions, scopes, modes etcetera.'
     type: comment
@@ -70,68 +104,64 @@ output:
     type: comment
   - text: '# tag(): user.talon_populate_lists'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
+  - children:
+    - children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
+      - children:
         - text: test
           type: word
         - text: last
           type: word
+        type: seq
       - text: $
         type: end_anchor
-    - type: block
-      children:
-      - type: assignment
-        children:
+      type: rule
+    - children:
+      - children:
         - text: phrase
           type: identifier
-        - type: action
-          children:
-          - text: user.history_get
-            type: identifier
-          - type: argument_list
-            children:
-            - text: '1'
-              type: integer
-          action_name:
+        - action_name:
             text: user.history_get
             type: identifier
           arguments:
-            type: argument_list
             children:
             - text: '1'
               type: integer
+            type: argument_list
+          children:
+          - text: user.history_get
+            type: identifier
+          - children:
+            - text: '1'
+              type: integer
+            type: argument_list
+          type: action
         left:
           text: phrase
           type: identifier
         right:
-          type: action
-          children:
-          - text: user.history_get
-            type: identifier
-          - type: argument_list
-            children:
-            - text: '1'
-              type: integer
           action_name:
             text: user.history_get
             type: identifier
           arguments:
-            type: argument_list
             children:
             - text: '1'
               type: integer
-      - type: assignment
-        children:
+            type: argument_list
+          children:
+          - text: user.history_get
+            type: identifier
+          - children:
+            - text: '1'
+              type: integer
+            type: argument_list
+          type: action
+        type: assignment
+      - children:
         - text: command
           type: identifier
-        - type: string
-          children:
+        - children:
           - text: sim('
             type: string_content
           - text: '{'
@@ -140,13 +170,13 @@ output:
             type: string_content
           - text: '}'
             type: string_content
-          - text: "')"
+          - text: ''')'
             type: string_content
+          type: string
         left:
           text: command
           type: identifier
         right:
-          type: string
           children:
           - text: sim('
             type: string_content
@@ -156,142 +186,142 @@ output:
             type: string_content
           - text: '}'
             type: string_content
-          - text: "')"
+          - text: ''')'
             type: string_content
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: command
-                type: identifier
-              variable_name:
-                text: command
-                type: identifier
-          action_name:
+          type: string
+        type: assignment
+      - children:
+        - action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: command
                 type: identifier
+              type: variable
               variable_name:
                 text: command
                 type: identifier
-        expression:
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: command
+                type: identifier
+              type: variable
+              variable_name:
+                text: command
+                type: identifier
+            type: argument_list
           type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: command
-                type: identifier
-              variable_name:
-                text: command
-                type: identifier
+        expression:
           action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: command
                 type: identifier
+              type: variable
               variable_name:
                 text: command
                 type: identifier
-      - type: expression
-        children:
-        - type: key_action
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: command
+                type: identifier
+              type: variable
+              variable_name:
+                text: command
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
           children:
           - text: enter
             type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: enter
-            type: implicit_string
+        expression:
           arguments:
             text: enter
             type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
     rule:
-      type: rule
       children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
+      - children:
         - text: test
           type: word
         - text: last
           type: word
+        type: seq
       - text: $
         type: end_anchor
+      type: rule
     script:
-      type: block
       children:
-      - type: assignment
-        children:
+      - children:
         - text: phrase
           type: identifier
-        - type: action
-          children:
-          - text: user.history_get
-            type: identifier
-          - type: argument_list
-            children:
-            - text: '1'
-              type: integer
-          action_name:
+        - action_name:
             text: user.history_get
             type: identifier
           arguments:
-            type: argument_list
             children:
             - text: '1'
               type: integer
+            type: argument_list
+          children:
+          - text: user.history_get
+            type: identifier
+          - children:
+            - text: '1'
+              type: integer
+            type: argument_list
+          type: action
         left:
           text: phrase
           type: identifier
         right:
-          type: action
-          children:
-          - text: user.history_get
-            type: identifier
-          - type: argument_list
-            children:
-            - text: '1'
-              type: integer
           action_name:
             text: user.history_get
             type: identifier
           arguments:
-            type: argument_list
             children:
             - text: '1'
               type: integer
-      - type: assignment
-        children:
+            type: argument_list
+          children:
+          - text: user.history_get
+            type: identifier
+          - children:
+            - text: '1'
+              type: integer
+            type: argument_list
+          type: action
+        type: assignment
+      - children:
         - text: command
           type: identifier
-        - type: string
-          children:
+        - children:
           - text: sim('
             type: string_content
           - text: '{'
@@ -300,13 +330,13 @@ output:
             type: string_content
           - text: '}'
             type: string_content
-          - text: "')"
+          - text: ''')'
             type: string_content
+          type: string
         left:
           text: command
           type: identifier
         right:
-          type: string
           children:
           - text: sim('
             type: string_content
@@ -316,242 +346,110 @@ output:
             type: string_content
           - text: '}'
             type: string_content
-          - text: "')"
+          - text: ''')'
             type: string_content
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: command
-                type: identifier
-              variable_name:
-                text: command
-                type: identifier
-          action_name:
+          type: string
+        type: assignment
+      - children:
+        - action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: command
                 type: identifier
+              type: variable
               variable_name:
                 text: command
                 type: identifier
-        expression:
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: command
+                type: identifier
+              type: variable
+              variable_name:
+                text: command
+                type: identifier
+            type: argument_list
           type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: command
-                type: identifier
-              variable_name:
-                text: command
-                type: identifier
+        expression:
           action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: command
                 type: identifier
+              type: variable
               variable_name:
                 text: command
                 type: identifier
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - text: ^
-        type: start_anchor
-      - type: seq
-        children:
-        - text: test
-          type: word
-        - type: capture
-          children:
-          - text: phrase
-            type: identifier
-          capture_name:
-            text: phrase
-            type: identifier
-      - text: $
-        type: end_anchor
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
+            type: argument_list
           children:
           - text: insert
             type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: sim('
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: phrase
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: "')"
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
+          - children:
+            - children:
+              - text: command
+                type: identifier
+              type: variable
+              variable_name:
+                text: command
+                type: identifier
             type: argument_list
-            children:
-            - type: string
-              children:
-              - text: sim('
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: phrase
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: "')"
-                type: string_content
-        expression:
           type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: sim('
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: phrase
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: "')"
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: sim('
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: phrase
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: "')"
-                type: string_content
-      - type: expression
-        children:
-        - type: key_action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
           children:
           - text: enter
             type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: enter
-            type: implicit_string
+        expression:
           arguments:
             text: enter
             type: implicit_string
-    rule:
-      type: rule
-      children:
-      - text: ^
-        type: start_anchor
-      - type: seq
-        children:
-        - text: test
-          type: word
-        - type: capture
           children:
-          - text: phrase
-            type: identifier
-          capture_name:
-            text: phrase
-            type: identifier
-      - text: $
-        type: end_anchor
-    script:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
       type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
+    type: command
+  - children:
+    - children:
+      - text: ^
+        type: start_anchor
+      - children:
+        - text: test
+          type: word
+        - capture_name:
+            text: phrase
             type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: sim('
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: phrase
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: "')"
-                type: string_content
-          action_name:
+          children:
+          - text: phrase
+            type: identifier
+          type: capture
+        type: seq
+      - text: $
+        type: end_anchor
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: sim('
                 type: string_content
               - text: '{'
@@ -560,35 +458,35 @@ output:
                 type: string_content
               - text: '}'
                 type: string_content
-              - text: "')"
+              - text: ''')'
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: sim('
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: phrase
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ''')'
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: sim('
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: phrase
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: "')"
-                type: string_content
+        expression:
           action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: sim('
                 type: string_content
               - text: '{'
@@ -597,114 +495,246 @@ output:
                 type: string_content
               - text: '}'
                 type: string_content
-              - text: "')"
+              - text: ''')'
                 type: string_content
-      - type: expression
-        children:
-        - type: key_action
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: sim('
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: phrase
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ''')'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
           children:
           - text: enter
             type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: enter
-            type: implicit_string
+        expression:
           arguments:
             text: enter
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
+      - children:
+        - text: test
+          type: word
+        - capture_name:
+            text: phrase
+            type: identifier
+          children:
+          - text: phrase
+            type: identifier
+          type: capture
+        type: seq
+      - text: $
+        type: end_anchor
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: sim('
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: phrase
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ''')'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: sim('
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: phrase
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ''')'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: sim('
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: phrase
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ''')'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: sim('
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: phrase
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ''')'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - text: ^
+        type: start_anchor
+      - children:
         - text: test
           type: word
         - text: numb
           type: word
-        - type: capture
+        - capture_name:
+            text: number_small
+            type: identifier
           children:
           - text: number_small
             type: identifier
-          capture_name:
-            text: number_small
-            type: identifier
+          type: capture
+        type: seq
       - text: $
         type: end_anchor
-    - type: block
-      children:
-      - type: assignment
-        children:
+      type: rule
+    - children:
+      - children:
         - text: phrase
           type: identifier
-        - type: action
-          children:
-          - text: user.history_get
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number_small
-                type: identifier
-              variable_name:
-                text: number_small
-                type: identifier
-          action_name:
+        - action_name:
             text: user.history_get
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: number_small
                 type: identifier
+              type: variable
               variable_name:
                 text: number_small
                 type: identifier
+            type: argument_list
+          children:
+          - text: user.history_get
+            type: identifier
+          - children:
+            - children:
+              - text: number_small
+                type: identifier
+              type: variable
+              variable_name:
+                text: number_small
+                type: identifier
+            type: argument_list
+          type: action
         left:
           text: phrase
           type: identifier
         right:
-          type: action
-          children:
-          - text: user.history_get
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number_small
-                type: identifier
-              variable_name:
-                text: number_small
-                type: identifier
           action_name:
             text: user.history_get
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: number_small
                 type: identifier
+              type: variable
               variable_name:
                 text: number_small
                 type: identifier
-      - type: assignment
-        children:
+            type: argument_list
+          children:
+          - text: user.history_get
+            type: identifier
+          - children:
+            - children:
+              - text: number_small
+                type: identifier
+              type: variable
+              variable_name:
+                text: number_small
+                type: identifier
+            type: argument_list
+          type: action
+        type: assignment
+      - children:
         - text: command
           type: identifier
-        - type: string
-          children:
+        - children:
           - text: sim('
             type: string_content
           - text: '{'
@@ -713,13 +743,13 @@ output:
             type: string_content
           - text: '}'
             type: string_content
-          - text: "')"
+          - text: ''')'
             type: string_content
+          type: string
         left:
           text: command
           type: identifier
         right:
-          type: string
           children:
           - text: sim('
             type: string_content
@@ -729,173 +759,173 @@ output:
             type: string_content
           - text: '}'
             type: string_content
-          - text: "')"
+          - text: ''')'
             type: string_content
-      - text: "#to do: shouldn't this work?"
+          type: string
+        type: assignment
+      - text: '#to do: shouldn''t this work?'
         type: comment
       - text: '#user.paste("sim({phrase})")'
         type: comment
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: command
-                type: identifier
-              variable_name:
-                text: command
-                type: identifier
-          action_name:
+      - children:
+        - action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: command
                 type: identifier
+              type: variable
               variable_name:
                 text: command
                 type: identifier
-        expression:
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: command
+                type: identifier
+              type: variable
+              variable_name:
+                text: command
+                type: identifier
+            type: argument_list
           type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: command
-                type: identifier
-              variable_name:
-                text: command
-                type: identifier
+        expression:
           action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: command
                 type: identifier
+              type: variable
               variable_name:
                 text: command
                 type: identifier
-      - type: expression
-        children:
-        - type: key_action
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: command
+                type: identifier
+              type: variable
+              variable_name:
+                text: command
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
           children:
           - text: enter
             type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: enter
-            type: implicit_string
+        expression:
           arguments:
             text: enter
             type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
     rule:
-      type: rule
       children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
+      - children:
         - text: test
           type: word
         - text: numb
           type: word
-        - type: capture
+        - capture_name:
+            text: number_small
+            type: identifier
           children:
           - text: number_small
             type: identifier
-          capture_name:
-            text: number_small
-            type: identifier
+          type: capture
+        type: seq
       - text: $
         type: end_anchor
+      type: rule
     script:
-      type: block
       children:
-      - type: assignment
-        children:
+      - children:
         - text: phrase
           type: identifier
-        - type: action
-          children:
-          - text: user.history_get
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number_small
-                type: identifier
-              variable_name:
-                text: number_small
-                type: identifier
-          action_name:
+        - action_name:
             text: user.history_get
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: number_small
                 type: identifier
+              type: variable
               variable_name:
                 text: number_small
                 type: identifier
+            type: argument_list
+          children:
+          - text: user.history_get
+            type: identifier
+          - children:
+            - children:
+              - text: number_small
+                type: identifier
+              type: variable
+              variable_name:
+                text: number_small
+                type: identifier
+            type: argument_list
+          type: action
         left:
           text: phrase
           type: identifier
         right:
-          type: action
-          children:
-          - text: user.history_get
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number_small
-                type: identifier
-              variable_name:
-                text: number_small
-                type: identifier
           action_name:
             text: user.history_get
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: number_small
                 type: identifier
+              type: variable
               variable_name:
                 text: number_small
                 type: identifier
-      - type: assignment
-        children:
+            type: argument_list
+          children:
+          - text: user.history_get
+            type: identifier
+          - children:
+            - children:
+              - text: number_small
+                type: identifier
+              type: variable
+              variable_name:
+                text: number_small
+                type: identifier
+            type: argument_list
+          type: action
+        type: assignment
+      - children:
         - text: command
           type: identifier
-        - type: string
-          children:
+        - children:
           - text: sim('
             type: string_content
           - text: '{'
@@ -904,13 +934,13 @@ output:
             type: string_content
           - text: '}'
             type: string_content
-          - text: "')"
+          - text: ''')'
             type: string_content
+          type: string
         left:
           text: command
           type: identifier
         right:
-          type: string
           children:
           - text: sim('
             type: string_content
@@ -920,252 +950,233 @@ output:
             type: string_content
           - text: '}'
             type: string_content
-          - text: "')"
+          - text: ''')'
             type: string_content
-      - text: "#to do: shouldn't this work?"
+          type: string
+        type: assignment
+      - text: '#to do: shouldn''t this work?'
         type: comment
       - text: '#user.paste("sim({phrase})")'
         type: comment
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: command
-                type: identifier
-              variable_name:
-                text: command
-                type: identifier
-          action_name:
+      - children:
+        - action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: command
                 type: identifier
+              type: variable
               variable_name:
                 text: command
                 type: identifier
-        expression:
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: command
+                type: identifier
+              type: variable
+              variable_name:
+                text: command
+                type: identifier
+            type: argument_list
           type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: command
-                type: identifier
-              variable_name:
-                text: command
-                type: identifier
+        expression:
           action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: command
                 type: identifier
+              type: variable
               variable_name:
                 text: command
                 type: identifier
-      - type: expression
-        children:
-        - type: key_action
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: command
+                type: identifier
+              type: variable
+              variable_name:
+                text: command
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
           children:
           - text: enter
             type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: enter
-            type: implicit_string
+        expression:
           arguments:
             text: enter
             type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
   - text: '# requires user.talon_populate_lists tag. do not use with dragon'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
+  - children:
+    - children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
+      - children:
         - text: debug
           type: word
         - text: action
           type: word
-        - type: list
-          children:
+        - children:
           - text: user.talon_actions
             type: identifier
           list_name:
             text: user.talon_actions
             type: identifier
+          type: list
+        type: seq
       - text: $
         type: end_anchor
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.find('
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: user.talon_actions
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: "')"
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.find('
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: user.talon_actions
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: "')"
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.find('
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: user.talon_actions
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: "')"
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.find('
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: user.talon_actions
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: "')"
-                type: string_content
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-    rule:
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: actions.find('
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: user.talon_actions
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ''')'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.find('
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: user.talon_actions
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ''')'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: actions.find('
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: user.talon_actions
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ''')'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.find('
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: user.talon_actions
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ''')'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
+      - children:
         - text: debug
           type: word
         - text: action
           type: word
-        - type: list
-          children:
+        - children:
           - text: user.talon_actions
             type: identifier
           list_name:
             text: user.talon_actions
             type: identifier
+          type: list
+        type: seq
       - text: $
         type: end_anchor
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.find('
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: user.talon_actions
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: "')"
-                type: string_content
-          action_name:
+      - children:
+        - action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: actions.find('
                 type: string_content
               - text: '{'
@@ -1174,35 +1185,35 @@ output:
                 type: string_content
               - text: '}'
                 type: string_content
-              - text: "')"
+              - text: ''')'
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.find('
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: user.talon_actions
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ''')'
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.find('
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: user.talon_actions
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: "')"
-                type: string_content
+        expression:
           action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: actions.find('
                 type: string_content
               - text: '{'
@@ -1211,193 +1222,193 @@ output:
                 type: string_content
               - text: '}'
                 type: string_content
-              - text: "')"
+              - text: ''')'
                 type: string_content
-      - type: expression
-        children:
-        - type: key_action
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.find('
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: user.talon_actions
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ''')'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
           children:
           - text: enter
             type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: enter
-            type: implicit_string
+        expression:
           arguments:
             text: enter
             type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
   - text: '# requires user.talon_populate_lists tag. do not use with dragon'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
+  - children:
+    - children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
+      - children:
         - text: debug
           type: word
         - text: list
           type: word
-        - type: list
-          children:
+        - children:
           - text: user.talon_lists
             type: identifier
           list_name:
             text: user.talon_lists
             type: identifier
+          type: list
+        type: seq
       - text: $
         type: end_anchor
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(registry.lists['
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: talon_lists
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: "'])"
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(registry.lists['
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: talon_lists
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: "'])"
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(registry.lists['
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: talon_lists
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: "'])"
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(registry.lists['
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: talon_lists
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: "'])"
-                type: string_content
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-    rule:
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: actions.user.talon_pretty_print(registry.lists['
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: talon_lists
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: '''])'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_pretty_print(registry.lists['
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: talon_lists
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: '''])'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: actions.user.talon_pretty_print(registry.lists['
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: talon_lists
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: '''])'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_pretty_print(registry.lists['
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: talon_lists
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: '''])'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
+      - children:
         - text: debug
           type: word
         - text: list
           type: word
-        - type: list
-          children:
+        - children:
           - text: user.talon_lists
             type: identifier
           list_name:
             text: user.talon_lists
             type: identifier
+          type: list
+        type: seq
       - text: $
         type: end_anchor
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(registry.lists['
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: talon_lists
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: "'])"
-                type: string_content
-          action_name:
+      - children:
+        - action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: actions.user.talon_pretty_print(registry.lists['
                 type: string_content
               - text: '{'
@@ -1406,35 +1417,35 @@ output:
                 type: string_content
               - text: '}'
                 type: string_content
-              - text: "'])"
+              - text: '''])'
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_pretty_print(registry.lists['
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: talon_lists
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: '''])'
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(registry.lists['
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: talon_lists
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: "'])"
-                type: string_content
+        expression:
           action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: actions.user.talon_pretty_print(registry.lists['
                 type: string_content
               - text: '{'
@@ -1443,649 +1454,649 @@ output:
                 type: string_content
               - text: '}'
                 type: string_content
-              - text: "'])"
+              - text: '''])'
                 type: string_content
-      - type: expression
-        children:
-        - type: key_action
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_pretty_print(registry.lists['
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: talon_lists
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: '''])'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
           children:
           - text: enter
             type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: enter
-            type: implicit_string
+        expression:
           arguments:
             text: enter
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
+      - children:
         - text: debug
           type: word
         - text: tags
           type: word
+        type: seq
       - text: $
         type: end_anchor
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(registry.tags)
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(registry.tags)
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(registry.tags)
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(registry.tags)
-                type: string_content
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-    rule:
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: actions.user.talon_pretty_print(registry.tags)
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_pretty_print(registry.tags)
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: actions.user.talon_pretty_print(registry.tags)
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_pretty_print(registry.tags)
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
+      - children:
         - text: debug
           type: word
         - text: tags
           type: word
+        type: seq
       - text: $
         type: end_anchor
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(registry.tags)
-                type: string_content
-          action_name:
+      - children:
+        - action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: actions.user.talon_pretty_print(registry.tags)
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_pretty_print(registry.tags)
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(registry.tags)
-                type: string_content
+        expression:
           action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: actions.user.talon_pretty_print(registry.tags)
                 type: string_content
-      - type: expression
-        children:
-        - type: key_action
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_pretty_print(registry.tags)
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
           children:
           - text: enter
             type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: enter
-            type: implicit_string
+        expression:
           arguments:
             text: enter
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
+      - children:
         - text: debug
           type: word
         - text: settings
           type: word
+        type: seq
       - text: $
         type: end_anchor
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(registry.settings)
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(registry.settings)
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(registry.settings)
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(registry.settings)
-                type: string_content
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-    rule:
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: actions.user.talon_pretty_print(registry.settings)
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_pretty_print(registry.settings)
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: actions.user.talon_pretty_print(registry.settings)
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_pretty_print(registry.settings)
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
+      - children:
         - text: debug
           type: word
         - text: settings
           type: word
+        type: seq
       - text: $
         type: end_anchor
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(registry.settings)
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(registry.settings)
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(registry.settings)
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(registry.settings)
-                type: string_content
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - text: ^
-        type: start_anchor
-      - type: seq
-        children:
-        - text: debug
-          type: word
-        - text: modes
-          type: word
-      - text: $
-        type: end_anchor
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(scope.get('mode'))
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(scope.get('mode'))
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(scope.get('mode'))
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(scope.get('mode'))
-                type: string_content
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-    rule:
       type: rule
+    script:
       children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: actions.user.talon_pretty_print(registry.settings)
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_pretty_print(registry.settings)
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: actions.user.talon_pretty_print(registry.settings)
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_pretty_print(registry.settings)
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
+      - children:
         - text: debug
           type: word
         - text: modes
           type: word
+        type: seq
       - text: $
         type: end_anchor
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(scope.get('mode'))
-                type: string_content
-          action_name:
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: actions.user.talon_pretty_print(scope.get('mode'))
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_pretty_print(scope.get('mode'))
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(scope.get('mode'))
-                type: string_content
+        expression:
           action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: actions.user.talon_pretty_print(scope.get('mode'))
                 type: string_content
-      - type: expression
-        children:
-        - type: key_action
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_pretty_print(scope.get('mode'))
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
           children:
           - text: enter
             type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: enter
-            type: implicit_string
+        expression:
           arguments:
             text: enter
             type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - text: ^
+        type: start_anchor
+      - children:
+        - text: debug
+          type: word
+        - text: modes
+          type: word
+        type: seq
+      - text: $
+        type: end_anchor
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: actions.user.talon_pretty_print(scope.get('mode'))
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_pretty_print(scope.get('mode'))
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: actions.user.talon_pretty_print(scope.get('mode'))
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_pretty_print(scope.get('mode'))
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
   - text: '# requires user.talon_populate_lists tag. do not use with dragon'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
+  - children:
+    - children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
+      - children:
         - text: debug
           type: word
         - text: scope
           type: word
-        - type: list
-          children:
+        - children:
           - text: user.talon_scopes
             type: identifier
           list_name:
             text: user.talon_scopes
             type: identifier
+          type: list
+        type: seq
       - text: $
         type: end_anchor
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(scope.get('
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: talon_scopes
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: "'))"
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(scope.get('
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: talon_scopes
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: "'))"
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(scope.get('
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: talon_scopes
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: "'))"
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(scope.get('
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: talon_scopes
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: "'))"
-                type: string_content
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-    rule:
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: actions.user.talon_pretty_print(scope.get('
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: talon_scopes
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: '''))'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_pretty_print(scope.get('
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: talon_scopes
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: '''))'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: actions.user.talon_pretty_print(scope.get('
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: talon_scopes
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: '''))'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_pretty_print(scope.get('
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: talon_scopes
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: '''))'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
+      - children:
         - text: debug
           type: word
         - text: scope
           type: word
-        - type: list
-          children:
+        - children:
           - text: user.talon_scopes
             type: identifier
           list_name:
             text: user.talon_scopes
             type: identifier
+          type: list
+        type: seq
       - text: $
         type: end_anchor
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(scope.get('
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: talon_scopes
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: "'))"
-                type: string_content
-          action_name:
+      - children:
+        - action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: actions.user.talon_pretty_print(scope.get('
                 type: string_content
               - text: '{'
@@ -2094,35 +2105,35 @@ output:
                 type: string_content
               - text: '}'
                 type: string_content
-              - text: "'))"
+              - text: '''))'
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_pretty_print(scope.get('
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: talon_scopes
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: '''))'
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(scope.get('
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: talon_scopes
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: "'))"
-                type: string_content
+        expression:
           action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: actions.user.talon_pretty_print(scope.get('
                 type: string_content
               - text: '{'
@@ -2131,503 +2142,388 @@ output:
                 type: string_content
               - text: '}'
                 type: string_content
-              - text: "'))"
+              - text: '''))'
                 type: string_content
-      - type: expression
-        children:
-        - type: key_action
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_pretty_print(scope.get('
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: talon_scopes
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: '''))'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
           children:
           - text: enter
             type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: enter
-            type: implicit_string
+        expression:
           arguments:
             text: enter
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
+      - children:
         - text: debug
           type: word
         - text: running
           type: word
         - text: apps
           type: word
+        type: seq
       - text: $
         type: end_anchor
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(ui.apps(background=False))
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(ui.apps(background=False))
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(ui.apps(background=False))
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(ui.apps(background=False))
-                type: string_content
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-    rule:
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: actions.user.talon_pretty_print(ui.apps(background=False))
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_pretty_print(ui.apps(background=False))
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: actions.user.talon_pretty_print(ui.apps(background=False))
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_pretty_print(ui.apps(background=False))
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
+      - children:
         - text: debug
           type: word
         - text: running
           type: word
         - text: apps
           type: word
+        type: seq
       - text: $
         type: end_anchor
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(ui.apps(background=False))
-                type: string_content
-          action_name:
+      - children:
+        - action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: actions.user.talon_pretty_print(ui.apps(background=False))
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_pretty_print(ui.apps(background=False))
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(ui.apps(background=False))
-                type: string_content
+        expression:
           action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: actions.user.talon_pretty_print(ui.apps(background=False))
                 type: string_content
-      - type: expression
-        children:
-        - type: key_action
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_pretty_print(ui.apps(background=False))
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
           children:
           - text: enter
             type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: enter
-            type: implicit_string
+        expression:
           arguments:
             text: enter
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
+      - children:
         - text: debug
           type: word
         - text: all
           type: word
         - text: windows
           type: word
+        type: seq
       - text: $
         type: end_anchor
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(ui.windows())
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(ui.windows())
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(ui.windows())
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(ui.windows())
-                type: string_content
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-    rule:
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: actions.user.talon_pretty_print(ui.windows())
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_pretty_print(ui.windows())
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: actions.user.talon_pretty_print(ui.windows())
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_pretty_print(ui.windows())
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
+      - children:
         - text: debug
           type: word
         - text: all
           type: word
         - text: windows
           type: word
+        type: seq
       - text: $
         type: end_anchor
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(ui.windows())
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(ui.windows())
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(ui.windows())
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_pretty_print(ui.windows())
-                type: string_content
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - text: ^
-        type: start_anchor
-      - type: seq
-        children:
-        - text: debug
-          type: word
-        - type: list
-          children:
-          - text: user.running
-            type: identifier
-          list_name:
-            text: user.running
-            type: identifier
-        - text: windows
-          type: word
-      - text: $
-        type: end_anchor
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_debug_app_windows('
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: running
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: "')"
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_debug_app_windows('
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: running
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: "')"
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_debug_app_windows('
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: running
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: "')"
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_debug_app_windows('
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: running
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: "')"
-                type: string_content
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-    rule:
       type: rule
+    script:
       children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: actions.user.talon_pretty_print(ui.windows())
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_pretty_print(ui.windows())
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: actions.user.talon_pretty_print(ui.windows())
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_pretty_print(ui.windows())
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
+      - children:
         - text: debug
           type: word
-        - type: list
-          children:
+        - children:
           - text: user.running
             type: identifier
           list_name:
             text: user.running
             type: identifier
+          type: list
         - text: windows
           type: word
+        type: seq
       - text: $
         type: end_anchor
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_debug_app_windows('
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: running
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: "')"
-                type: string_content
-          action_name:
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: actions.user.talon_debug_app_windows('
                 type: string_content
               - text: '{'
@@ -2636,35 +2532,35 @@ output:
                 type: string_content
               - text: '}'
                 type: string_content
-              - text: "')"
+              - text: ''')'
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_debug_app_windows('
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: running
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ''')'
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: actions.user.talon_debug_app_windows('
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: running
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: "')"
-                type: string_content
+        expression:
           action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: actions.user.talon_debug_app_windows('
                 type: string_content
               - text: '{'
@@ -2673,22 +2569,161 @@ output:
                 type: string_content
               - text: '}'
                 type: string_content
-              - text: "')"
+              - text: ''')'
                 type: string_content
-      - type: expression
-        children:
-        - type: key_action
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_debug_app_windows('
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: running
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ''')'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
           children:
           - text: enter
             type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: enter
-            type: implicit_string
+        expression:
           arguments:
             text: enter
             type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - text: ^
+        type: start_anchor
+      - children:
+        - text: debug
+          type: word
+        - children:
+          - text: user.running
+            type: identifier
+          list_name:
+            text: user.running
+            type: identifier
+          type: list
+        - text: windows
+          type: word
+        type: seq
+      - text: $
+        type: end_anchor
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: actions.user.talon_debug_app_windows('
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: running
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ''')'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_debug_app_windows('
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: running
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ''')'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: actions.user.talon_debug_app_windows('
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: running
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ''')'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: actions.user.talon_debug_app_windows('
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: running
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ''')'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  type: source_file

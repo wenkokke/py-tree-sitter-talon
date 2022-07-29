@@ -1,11 +1,12 @@
-input: "mode: user.help_scope\n-\n\nscope (hide | close)$:   user.help_scope_toggle()\n"
+input: |
+  mode: user.help_scope
+  -
+
+  scope (hide | close)$:   user.help_scope_toggle()
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: match
-      children:
+  - children:
+    - children:
       - text: mode
         type: identifier
       - text: ' user.help_scope'
@@ -16,97 +17,100 @@ output:
       pattern:
         text: ' user.help_scope'
         type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+      type: match
+    type: context
+  - children:
+    - children:
+      - children:
         - text: scope
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: hide
               type: word
             - text: close
               type: word
+            type: choice
+          type: parenthesized_rule
+        type: seq
       - text: $
         type: end_anchor
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.help_scope_toggle
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.help_scope_toggle
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.help_scope_toggle
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.help_scope_toggle
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.help_scope_toggle
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.help_scope_toggle
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.help_scope_toggle
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.help_scope_toggle
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: scope
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: hide
               type: word
             - text: close
               type: word
+            type: choice
+          type: parenthesized_rule
+        type: seq
       - text: $
         type: end_anchor
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.help_scope_toggle
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+      - children:
+        - action_name:
             text: user.help_scope_toggle
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: user.help_scope_toggle
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: user.help_scope_toggle
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: user.help_scope_toggle
             type: identifier
           arguments:
-            type: argument_list
             children: []
+            type: argument_list
+          children:
+          - text: user.help_scope_toggle
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  type: source_file

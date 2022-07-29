@@ -1,14 +1,12 @@
-input: "not tag: user.mouse_grid_showing\n-\n<user.number_string>: \"{number_string}\"\
-  \n"
+input: |
+  not tag: user.mouse_grid_showing
+  -
+  <user.number_string>: "{number_string}"
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: not
-      children:
-      - type: match
-        children:
+  - children:
+    - children:
+      - children:
         - text: tag
           type: identifier
         - text: ' user.mouse_grid_showing'
@@ -19,63 +17,62 @@ output:
         pattern:
           text: ' user.mouse_grid_showing'
           type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: capture
+        type: match
+      type: not
+    type: context
+  - children:
+    - children:
+      - capture_name:
+          text: user.number_string
+          type: identifier
         children:
         - text: user.number_string
           type: identifier
-        capture_name:
-          text: user.number_string
-          type: identifier
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: '{'
-            type: string_content
-          - text: number_string
-            type: string_content
-          - text: '}'
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: '{'
-            type: string_content
-          - text: number_string
-            type: string_content
-          - text: '}'
-            type: string_content
-    rule:
+        type: capture
       type: rule
+    - children:
+      - children:
+        - children:
+          - text: '{'
+            type: string_content
+          - text: number_string
+            type: string_content
+          - text: '}'
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: '{'
+            type: string_content
+          - text: number_string
+            type: string_content
+          - text: '}'
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: capture
+      - capture_name:
+          text: user.number_string
+          type: identifier
         children:
         - text: user.number_string
           type: identifier
-        capture_name:
-          text: user.number_string
-          type: identifier
+        type: capture
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: string
-          children:
+      - children:
+        - children:
           - text: '{'
             type: string_content
           - text: number_string
             type: string_content
           - text: '}'
             type: string_content
-        expression:
           type: string
+        expression:
           children:
           - text: '{'
             type: string_content
@@ -83,3 +80,8 @@ output:
             type: string_content
           - text: '}'
             type: string_content
+          type: string
+        type: expression
+      type: block
+    type: command
+  type: source_file

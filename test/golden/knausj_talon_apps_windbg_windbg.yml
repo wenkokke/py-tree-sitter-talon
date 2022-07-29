@@ -1,19 +1,57 @@
-input: "# XXX - trigger alt-1 to hit command window for necessary commands?\n# ex:\
-  \ user.windbg_insert_in_cmd()\n#    edit.left()\n\nmode: user.windbg\n-\ntag():\
-  \ user.debugger\ntag(): user.windbg\nregister <user.registers>:\n    key(@)\n  \
-  \  insert(\"{registers}\")\n\nopen help: insert(\".hh\\n\")\n\n# xxx - add window\
-  \ switching\n\nadd microsoft symbols:\n    insert(\"srv*C:\\\\symbols*http://msdl.microsoft.com/download/symbols;\\\
-  n\")\nforce reload symbols:\n    insert(\".reload /f\\n\")\nreload symbols:\n  \
-  \  insert(\".reload\\n\")\nloaded modules:\n    insert(\"lm l\\n\")\n\ndisplay pointers:\n\
-  \    insert(\"dps \")\n\n# XXX - should be generic\ndereference pointer:\n    user.insert_between(\"\
-  poi(\", \")\")\n\nshow version: key(ctrl-alt-w)\n\n##\n# Windows\n##\n\nview command:\
-  \ key(alt-1)\nview watch: key(alt-2)\nview locals: key(alt-3)\nview registers: key(alt-4)\n\
-  view memory: key(alt-5)\nview call stack: key(alt-6)\nview disassembly: key(alt-7)\n\
-  view scratch pad: key(alt-8)\nview (processes|threads): key(alt-9)\n\n# XXX - temp\n\
-  dump function params: \"r @rcx,@rdx,@r8,@r9\\n\"\n\n(lib|library) <user.windows_dlls>:\
-  \ \"{windows_dlls}\"\n"
+input: |
+  # XXX - trigger alt-1 to hit command window for necessary commands?
+  # ex: user.windbg_insert_in_cmd()
+  #    edit.left()
+
+  mode: user.windbg
+  -
+  tag(): user.debugger
+  tag(): user.windbg
+  register <user.registers>:
+      key(@)
+      insert("{registers}")
+
+  open help: insert(".hh\n")
+
+  # xxx - add window switching
+
+  add microsoft symbols:
+      insert("srv*C:\\symbols*http://msdl.microsoft.com/download/symbols;\n")
+  force reload symbols:
+      insert(".reload /f\n")
+  reload symbols:
+      insert(".reload\n")
+  loaded modules:
+      insert("lm l\n")
+
+  display pointers:
+      insert("dps ")
+
+  # XXX - should be generic
+  dereference pointer:
+      user.insert_between("poi(", ")")
+
+  show version: key(ctrl-alt-w)
+
+  ##
+  # Windows
+  ##
+
+  view command: key(alt-1)
+  view watch: key(alt-2)
+  view locals: key(alt-3)
+  view registers: key(alt-4)
+  view memory: key(alt-5)
+  view call stack: key(alt-6)
+  view disassembly: key(alt-7)
+  view scratch pad: key(alt-8)
+  view (processes|threads): key(alt-9)
+
+  # XXX - temp
+  dump function params: "r @rcx,@rdx,@r8,@r9\n"
+
+  (lib|library) <user.windows_dlls>: "{windows_dlls}"
 output:
-  type: source_file
   children:
   - text: '# XXX - trigger alt-1 to hit command window for necessary commands?'
     type: comment
@@ -21,10 +59,8 @@ output:
     type: comment
   - text: '#    edit.left()'
     type: comment
-  - type: context
-    children:
-    - type: match
-      children:
+  - children:
+    - children:
       - text: mode
         type: identifier
       - text: ' user.windbg'
@@ -35,455 +71,436 @@ output:
       pattern:
         text: ' user.windbg'
         type: implicit_string
-  - type: include_tag
-    children:
+      type: match
+    type: context
+  - children:
     - text: user.debugger
       type: identifier
     tag:
       text: user.debugger
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.windbg
       type: identifier
     tag:
       text: user.windbg
       type: identifier
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+    type: include_tag
+  - children:
+    - children:
+      - children:
         - text: register
           type: word
-        - type: capture
+        - capture_name:
+            text: user.registers
+            type: identifier
           children:
           - text: user.registers
             type: identifier
-          capture_name:
-            text: user.registers
-            type: identifier
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: '@'
-            type: implicit_string
-          arguments:
-            text: '@'
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: '@'
-            type: implicit_string
-          arguments:
-            text: '@'
-            type: implicit_string
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '{'
-                type: string_content
-              - text: registers
-                type: string_content
-              - text: '}'
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '{'
-                type: string_content
-              - text: registers
-                type: string_content
-              - text: '}'
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '{'
-                type: string_content
-              - text: registers
-                type: string_content
-              - text: '}'
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '{'
-                type: string_content
-              - text: registers
-                type: string_content
-              - text: '}'
-                type: string_content
-    rule:
+          type: capture
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: '@'
+            type: implicit_string
+          children:
+          - text: '@'
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: '@'
+            type: implicit_string
+          children:
+          - text: '@'
+            type: implicit_string
+          type: key_action
+        type: expression
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: '{'
+                type: string_content
+              - text: registers
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: '{'
+                type: string_content
+              - text: registers
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: '{'
+                type: string_content
+              - text: registers
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: '{'
+                type: string_content
+              - text: registers
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: register
           type: word
-        - type: capture
+        - capture_name:
+            text: user.registers
+            type: identifier
           children:
           - text: user.registers
             type: identifier
-          capture_name:
-            text: user.registers
-            type: identifier
+          type: capture
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: '@'
+            type: implicit_string
           children:
           - text: '@'
             type: implicit_string
-          arguments:
-            text: '@'
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: '@'
-            type: implicit_string
+        expression:
           arguments:
             text: '@'
             type: implicit_string
-      - type: expression
-        children:
-        - type: action
           children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '{'
-                type: string_content
-              - text: registers
-                type: string_content
-              - text: '}'
-                type: string_content
-          action_name:
+          - text: '@'
+            type: implicit_string
+          type: key_action
+        type: expression
+      - children:
+        - action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: '{'
                 type: string_content
               - text: registers
                 type: string_content
               - text: '}'
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: '{'
+                type: string_content
+              - text: registers
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '{'
-                type: string_content
-              - text: registers
-                type: string_content
-              - text: '}'
-                type: string_content
+        expression:
           action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: '{'
                 type: string_content
               - text: registers
                 type: string_content
               - text: '}'
                 type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: '{'
+                type: string_content
+              - text: registers
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: open
           type: word
         - text: help
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: .hh
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: .hh
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: .hh
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: .hh
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: .hh
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: .hh
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: .hh
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: .hh
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: open
           type: word
         - text: help
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: .hh
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-          action_name:
+      - children:
+        - action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: .hh
                 type: string_content
               - text: \n
                 type: string_escape_sequence
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: .hh
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: .hh
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
+        expression:
           action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: .hh
                 type: string_content
               - text: \n
                 type: string_escape_sequence
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: .hh
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
   - text: '# xxx - add window switching'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: add
           type: word
         - text: microsoft
           type: word
         - text: symbols
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'srv*C:'
-                type: string_content
-              - text: \\
-                type: string_escape_sequence
-              - text: symbols*http://msdl.microsoft.com/download/symbols;
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'srv*C:'
-                type: string_content
-              - text: \\
-                type: string_escape_sequence
-              - text: symbols*http://msdl.microsoft.com/download/symbols;
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'srv*C:'
-                type: string_content
-              - text: \\
-                type: string_escape_sequence
-              - text: symbols*http://msdl.microsoft.com/download/symbols;
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'srv*C:'
-                type: string_content
-              - text: \\
-                type: string_escape_sequence
-              - text: symbols*http://msdl.microsoft.com/download/symbols;
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'srv*C:'
+                type: string_content
+              - text: \\
+                type: string_escape_sequence
+              - text: symbols*http://msdl.microsoft.com/download/symbols;
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'srv*C:'
+                type: string_content
+              - text: \\
+                type: string_escape_sequence
+              - text: symbols*http://msdl.microsoft.com/download/symbols;
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'srv*C:'
+                type: string_content
+              - text: \\
+                type: string_escape_sequence
+              - text: symbols*http://msdl.microsoft.com/download/symbols;
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'srv*C:'
+                type: string_content
+              - text: \\
+                type: string_escape_sequence
+              - text: symbols*http://msdl.microsoft.com/download/symbols;
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: add
           type: word
         - text: microsoft
           type: word
         - text: symbols
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'srv*C:'
-                type: string_content
-              - text: \\
-                type: string_escape_sequence
-              - text: symbols*http://msdl.microsoft.com/download/symbols;
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-          action_name:
+      - children:
+        - action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'srv*C:'
                 type: string_content
               - text: \\
@@ -492,31 +509,31 @@ output:
                 type: string_content
               - text: \n
                 type: string_escape_sequence
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'srv*C:'
+                type: string_content
+              - text: \\
+                type: string_escape_sequence
+              - text: symbols*http://msdl.microsoft.com/download/symbols;
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'srv*C:'
-                type: string_content
-              - text: \\
-                type: string_escape_sequence
-              - text: symbols*http://msdl.microsoft.com/download/symbols;
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
+        expression:
           action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'srv*C:'
                 type: string_content
               - text: \\
@@ -525,1385 +542,1402 @@ output:
                 type: string_content
               - text: \n
                 type: string_escape_sequence
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'srv*C:'
+                type: string_content
+              - text: \\
+                type: string_escape_sequence
+              - text: symbols*http://msdl.microsoft.com/download/symbols;
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: force
           type: word
         - text: reload
           type: word
         - text: symbols
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: .reload /f
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: .reload /f
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: .reload /f
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: .reload /f
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: .reload /f
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: .reload /f
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: .reload /f
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: .reload /f
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: force
           type: word
         - text: reload
           type: word
         - text: symbols
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: .reload /f
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-          action_name:
+      - children:
+        - action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: .reload /f
                 type: string_content
               - text: \n
                 type: string_escape_sequence
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: .reload /f
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: .reload /f
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
+        expression:
           action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: .reload /f
                 type: string_content
               - text: \n
                 type: string_escape_sequence
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: .reload /f
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: reload
           type: word
         - text: symbols
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: .reload
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: .reload
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: .reload
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: .reload
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: .reload
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: .reload
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: .reload
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: .reload
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: reload
           type: word
         - text: symbols
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: .reload
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-          action_name:
+      - children:
+        - action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: .reload
                 type: string_content
               - text: \n
                 type: string_escape_sequence
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: .reload
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: .reload
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
+        expression:
           action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: .reload
                 type: string_content
               - text: \n
                 type: string_escape_sequence
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: .reload
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: loaded
           type: word
         - text: modules
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: lm l
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: lm l
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: lm l
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: lm l
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: lm l
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: lm l
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: lm l
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: lm l
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: loaded
           type: word
         - text: modules
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: lm l
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: lm l
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: lm l
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: lm l
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: display
-          type: word
-        - text: pointers
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'dps '
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'dps '
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'dps '
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'dps '
-                type: string_content
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: lm l
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: lm l
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: lm l
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: lm l
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: display
           type: word
         - text: pointers
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'dps '
-                type: string_content
-          action_name:
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'dps '
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'dps '
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'dps '
-                type: string_content
+        expression:
           action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'dps '
                 type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'dps '
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: display
+          type: word
+        - text: pointers
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'dps '
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'dps '
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'dps '
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'dps '
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
   - text: '# XXX - should be generic'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: dereference
           type: word
         - text: pointer
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: poi(
-                type: string_content
-            - type: string
-              children:
-              - text: )
-                type: string_content
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: poi(
-                type: string_content
-            - type: string
-              children:
-              - text: )
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: poi(
-                type: string_content
-            - type: string
-              children:
-              - text: )
-                type: string_content
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: poi(
-                type: string_content
-            - type: string
-              children:
-              - text: )
-                type: string_content
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: poi(
+                type: string_content
+              type: string
+            - children:
+              - text: )
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: poi(
+                type: string_content
+              type: string
+            - children:
+              - text: )
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: poi(
+                type: string_content
+              type: string
+            - children:
+              - text: )
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: poi(
+                type: string_content
+              type: string
+            - children:
+              - text: )
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: dereference
           type: word
         - text: pointer
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: poi(
-                type: string_content
-            - type: string
-              children:
-              - text: )
-                type: string_content
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: poi(
-                type: string_content
-            - type: string
-              children:
-              - text: )
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: poi(
-                type: string_content
-            - type: string
-              children:
-              - text: )
-                type: string_content
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: poi(
-                type: string_content
-            - type: string
-              children:
-              - text: )
-                type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: show
-          type: word
-        - text: version
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: ctrl-alt-w
-            type: implicit_string
-          arguments:
-            text: ctrl-alt-w
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: ctrl-alt-w
-            type: implicit_string
-          arguments:
-            text: ctrl-alt-w
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: poi(
+                type: string_content
+              type: string
+            - children:
+              - text: )
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: poi(
+                type: string_content
+              type: string
+            - children:
+              - text: )
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: poi(
+                type: string_content
+              type: string
+            - children:
+              - text: )
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: poi(
+                type: string_content
+              type: string
+            - children:
+              - text: )
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: show
           type: word
         - text: version
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - arguments:
+            text: ctrl-alt-w
+            type: implicit_string
           children:
           - text: ctrl-alt-w
             type: implicit_string
-          arguments:
-            text: ctrl-alt-w
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: ctrl-alt-w
-            type: implicit_string
+        expression:
           arguments:
             text: ctrl-alt-w
             type: implicit_string
+          children:
+          - text: ctrl-alt-w
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: show
+          type: word
+        - text: version
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - arguments:
+            text: ctrl-alt-w
+            type: implicit_string
+          children:
+          - text: ctrl-alt-w
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: ctrl-alt-w
+            type: implicit_string
+          children:
+          - text: ctrl-alt-w
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
   - text: '##'
     type: comment
   - text: '# Windows'
     type: comment
   - text: '##'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: view
           type: word
         - text: command
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: alt-1
-            type: implicit_string
-          arguments:
-            text: alt-1
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: alt-1
-            type: implicit_string
-          arguments:
-            text: alt-1
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: alt-1
+            type: implicit_string
+          children:
+          - text: alt-1
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: alt-1
+            type: implicit_string
+          children:
+          - text: alt-1
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: view
           type: word
         - text: command
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: alt-1
+            type: implicit_string
           children:
           - text: alt-1
             type: implicit_string
-          arguments:
-            text: alt-1
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: alt-1
-            type: implicit_string
+        expression:
           arguments:
             text: alt-1
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          children:
+          - text: alt-1
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: view
           type: word
         - text: watch
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: alt-2
-            type: implicit_string
-          arguments:
-            text: alt-2
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: alt-2
-            type: implicit_string
-          arguments:
-            text: alt-2
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: alt-2
+            type: implicit_string
+          children:
+          - text: alt-2
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: alt-2
+            type: implicit_string
+          children:
+          - text: alt-2
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: view
           type: word
         - text: watch
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: alt-2
+            type: implicit_string
           children:
           - text: alt-2
             type: implicit_string
-          arguments:
-            text: alt-2
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: alt-2
-            type: implicit_string
+        expression:
           arguments:
             text: alt-2
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          children:
+          - text: alt-2
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: view
           type: word
         - text: locals
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: alt-3
-            type: implicit_string
-          arguments:
-            text: alt-3
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: alt-3
-            type: implicit_string
-          arguments:
-            text: alt-3
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: alt-3
+            type: implicit_string
+          children:
+          - text: alt-3
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: alt-3
+            type: implicit_string
+          children:
+          - text: alt-3
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: view
           type: word
         - text: locals
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: alt-3
+            type: implicit_string
           children:
           - text: alt-3
             type: implicit_string
-          arguments:
-            text: alt-3
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: alt-3
-            type: implicit_string
+        expression:
           arguments:
             text: alt-3
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          children:
+          - text: alt-3
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: view
           type: word
         - text: registers
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: alt-4
-            type: implicit_string
-          arguments:
-            text: alt-4
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: alt-4
-            type: implicit_string
-          arguments:
-            text: alt-4
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: alt-4
+            type: implicit_string
+          children:
+          - text: alt-4
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: alt-4
+            type: implicit_string
+          children:
+          - text: alt-4
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: view
           type: word
         - text: registers
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: alt-4
-            type: implicit_string
-          arguments:
-            text: alt-4
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: alt-4
-            type: implicit_string
-          arguments:
-            text: alt-4
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: view
-          type: word
-        - text: memory
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: alt-5
-            type: implicit_string
-          arguments:
-            text: alt-5
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: alt-5
-            type: implicit_string
-          arguments:
-            text: alt-5
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - arguments:
+            text: alt-4
+            type: implicit_string
+          children:
+          - text: alt-4
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: alt-4
+            type: implicit_string
+          children:
+          - text: alt-4
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: view
           type: word
         - text: memory
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - arguments:
+            text: alt-5
+            type: implicit_string
           children:
           - text: alt-5
             type: implicit_string
-          arguments:
-            text: alt-5
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: alt-5
-            type: implicit_string
+        expression:
           arguments:
             text: alt-5
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
+          children:
+          - text: alt-5
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
+        - text: view
+          type: word
+        - text: memory
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - arguments:
+            text: alt-5
+            type: implicit_string
+          children:
+          - text: alt-5
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: alt-5
+            type: implicit_string
+          children:
+          - text: alt-5
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: view
           type: word
         - text: call
           type: word
         - text: stack
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: alt-6
-            type: implicit_string
-          arguments:
-            text: alt-6
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: alt-6
-            type: implicit_string
-          arguments:
-            text: alt-6
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: alt-6
+            type: implicit_string
+          children:
+          - text: alt-6
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: alt-6
+            type: implicit_string
+          children:
+          - text: alt-6
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: view
           type: word
         - text: call
           type: word
         - text: stack
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: alt-6
-            type: implicit_string
-          arguments:
-            text: alt-6
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: alt-6
-            type: implicit_string
-          arguments:
-            text: alt-6
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: view
-          type: word
-        - text: disassembly
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: alt-7
-            type: implicit_string
-          arguments:
-            text: alt-7
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: alt-7
-            type: implicit_string
-          arguments:
-            text: alt-7
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - arguments:
+            text: alt-6
+            type: implicit_string
+          children:
+          - text: alt-6
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: alt-6
+            type: implicit_string
+          children:
+          - text: alt-6
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: view
           type: word
         - text: disassembly
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - arguments:
+            text: alt-7
+            type: implicit_string
           children:
           - text: alt-7
             type: implicit_string
-          arguments:
-            text: alt-7
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: alt-7
-            type: implicit_string
+        expression:
           arguments:
             text: alt-7
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
+          children:
+          - text: alt-7
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
+        - text: view
+          type: word
+        - text: disassembly
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - arguments:
+            text: alt-7
+            type: implicit_string
+          children:
+          - text: alt-7
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: alt-7
+            type: implicit_string
+          children:
+          - text: alt-7
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: view
           type: word
         - text: scratch
           type: word
         - text: pad
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: alt-8
-            type: implicit_string
-          arguments:
-            text: alt-8
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: alt-8
-            type: implicit_string
-          arguments:
-            text: alt-8
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: alt-8
+            type: implicit_string
+          children:
+          - text: alt-8
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: alt-8
+            type: implicit_string
+          children:
+          - text: alt-8
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: view
           type: word
         - text: scratch
           type: word
         - text: pad
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: alt-8
-            type: implicit_string
-          arguments:
-            text: alt-8
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: alt-8
-            type: implicit_string
-          arguments:
-            text: alt-8
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: view
-          type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: processes
-              type: word
-            - text: threads
-              type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: alt-9
-            type: implicit_string
-          arguments:
-            text: alt-9
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: alt-9
-            type: implicit_string
-          arguments:
-            text: alt-9
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - arguments:
+            text: alt-8
+            type: implicit_string
+          children:
+          - text: alt-8
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: alt-8
+            type: implicit_string
+          children:
+          - text: alt-8
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: view
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: processes
               type: word
             - text: threads
               type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - arguments:
+            text: alt-9
+            type: implicit_string
           children:
           - text: alt-9
             type: implicit_string
-          arguments:
-            text: alt-9
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: alt-9
-            type: implicit_string
+        expression:
           arguments:
             text: alt-9
             type: implicit_string
+          children:
+          - text: alt-9
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: view
+          type: word
+        - children:
+          - children:
+            - text: processes
+              type: word
+            - text: threads
+              type: word
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - arguments:
+            text: alt-9
+            type: implicit_string
+          children:
+          - text: alt-9
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: alt-9
+            type: implicit_string
+          children:
+          - text: alt-9
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
   - text: '# XXX - temp'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: dump
           type: word
         - text: function
           type: word
         - text: params
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: r @rcx,@rdx,@r8,@r9
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-        expression:
-          type: string
-          children:
-          - text: r @rcx,@rdx,@r8,@r9
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - children:
+          - text: r @rcx,@rdx,@r8,@r9
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        expression:
+          children:
+          - text: r @rcx,@rdx,@r8,@r9
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: dump
           type: word
         - text: function
           type: word
         - text: params
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: r @rcx,@rdx,@r8,@r9
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-        expression:
-          type: string
-          children:
-          - text: r @rcx,@rdx,@r8,@r9
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: lib
-              type: word
-            - text: library
-              type: word
-        - type: capture
-          children:
-          - text: user.windows_dlls
-            type: identifier
-          capture_name:
-            text: user.windows_dlls
-            type: identifier
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: '{'
-            type: string_content
-          - text: windows_dlls
-            type: string_content
-          - text: '}'
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: '{'
-            type: string_content
-          - text: windows_dlls
-            type: string_content
-          - text: '}'
-            type: string_content
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+      - children:
+        - children:
+          - text: r @rcx,@rdx,@r8,@r9
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        expression:
           children:
-          - type: choice
-            children:
+          - text: r @rcx,@rdx,@r8,@r9
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: lib
               type: word
             - text: library
               type: word
-        - type: capture
+            type: choice
+          type: parenthesized_rule
+        - capture_name:
+            text: user.windows_dlls
+            type: identifier
           children:
           - text: user.windows_dlls
             type: identifier
-          capture_name:
+          type: capture
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - children:
+          - text: '{'
+            type: string_content
+          - text: windows_dlls
+            type: string_content
+          - text: '}'
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: '{'
+            type: string_content
+          - text: windows_dlls
+            type: string_content
+          - text: '}'
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
+            - text: lib
+              type: word
+            - text: library
+              type: word
+            type: choice
+          type: parenthesized_rule
+        - capture_name:
             text: user.windows_dlls
             type: identifier
+          children:
+          - text: user.windows_dlls
+            type: identifier
+          type: capture
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: string
-          children:
+      - children:
+        - children:
           - text: '{'
             type: string_content
           - text: windows_dlls
             type: string_content
           - text: '}'
             type: string_content
-        expression:
           type: string
+        expression:
           children:
           - text: '{'
             type: string_content
@@ -1911,3 +1945,8 @@ output:
             type: string_content
           - text: '}'
             type: string_content
+          type: string
+        type: expression
+      type: block
+    type: command
+  type: source_file

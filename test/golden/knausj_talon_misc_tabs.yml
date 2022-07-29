@@ -1,14 +1,18 @@
-input: "tag: user.tabs\n-\ntab (open | new): app.tab_open()\ntab (last | previous):\
-  \ app.tab_previous()\ntab next: app.tab_next()\ntab close: user.tab_close_wrapper()\n\
-  tab (reopen|restore): app.tab_reopen()\ngo tab <number>: user.tab_jump(number)\n\
-  go tab final: user.tab_final()\ntab duplicate: user.tab_duplicate()\n"
+input: |
+  tag: user.tabs
+  -
+  tab (open | new): app.tab_open()
+  tab (last | previous): app.tab_previous()
+  tab next: app.tab_next()
+  tab close: user.tab_close_wrapper()
+  tab (reopen|restore): app.tab_reopen()
+  go tab <number>: user.tab_jump(number)
+  go tab final: user.tab_final()
+  tab duplicate: user.tab_duplicate()
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: match
-      children:
+  - children:
+    - children:
       - text: tag
         type: identifier
       - text: ' user.tabs'
@@ -19,737 +23,740 @@ output:
       pattern:
         text: ' user.tabs'
         type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+      type: match
+    type: context
+  - children:
+    - children:
+      - children:
         - text: tab
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: open
               type: word
             - text: new
               type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: app.tab_open
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: app.tab_open
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: app.tab_open
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: app.tab_open
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+            type: choice
+          type: parenthesized_rule
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: app.tab_open
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: app.tab_open
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: app.tab_open
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: app.tab_open
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: tab
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: open
               type: word
             - text: new
               type: word
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: app.tab_open
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: app.tab_open
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: app.tab_open
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: app.tab_open
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: app.tab_open
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: tab
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: last
               type: word
             - text: previous
               type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: app.tab_previous
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: app.tab_previous
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: app.tab_previous
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: app.tab_previous
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+            type: choice
+          type: parenthesized_rule
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: app.tab_previous
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: app.tab_previous
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: app.tab_previous
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: app.tab_previous
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: tab
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: last
               type: word
             - text: previous
               type: word
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: app.tab_previous
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: app.tab_previous
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: app.tab_previous
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: app.tab_previous
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: app.tab_previous
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: tab
           type: word
         - text: next
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: app.tab_next
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: app.tab_next
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: app.tab_next
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: app.tab_next
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: app.tab_next
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: app.tab_next
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: app.tab_next
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: app.tab_next
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: tab
           type: word
         - text: next
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: app.tab_next
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: app.tab_next
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: app.tab_next
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: app.tab_next
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: app.tab_next
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: tab
           type: word
         - text: close
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.tab_close_wrapper
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.tab_close_wrapper
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.tab_close_wrapper
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.tab_close_wrapper
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.tab_close_wrapper
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.tab_close_wrapper
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.tab_close_wrapper
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.tab_close_wrapper
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: tab
           type: word
         - text: close
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.tab_close_wrapper
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.tab_close_wrapper
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.tab_close_wrapper
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.tab_close_wrapper
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.tab_close_wrapper
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: tab
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: reopen
               type: word
             - text: restore
               type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: app.tab_reopen
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: app.tab_reopen
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: app.tab_reopen
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: app.tab_reopen
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+            type: choice
+          type: parenthesized_rule
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: app.tab_reopen
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: app.tab_reopen
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: app.tab_reopen
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: app.tab_reopen
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: tab
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: reopen
               type: word
             - text: restore
               type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: app.tab_reopen
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: app.tab_reopen
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: app.tab_reopen
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: app.tab_reopen
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: go
-          type: word
-        - text: tab
-          type: word
-        - type: capture
-          children:
-          - text: number
-            type: identifier
-          capture_name:
-            text: number
-            type: identifier
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.tab_jump
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number
-                type: identifier
-              variable_name:
-                text: number
-                type: identifier
-          action_name:
-            text: user.tab_jump
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number
-                type: identifier
-              variable_name:
-                text: number
-                type: identifier
-        expression:
-          type: action
-          children:
-          - text: user.tab_jump
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number
-                type: identifier
-              variable_name:
-                text: number
-                type: identifier
-          action_name:
-            text: user.tab_jump
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number
-                type: identifier
-              variable_name:
-                text: number
-                type: identifier
-    rule:
+            type: choice
+          type: parenthesized_rule
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - action_name:
+            text: app.tab_reopen
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: app.tab_reopen
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: app.tab_reopen
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: app.tab_reopen
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: go
           type: word
         - text: tab
           type: word
-        - type: capture
+        - capture_name:
+            text: number
+            type: identifier
           children:
           - text: number
             type: identifier
-          capture_name:
+          type: capture
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.tab_jump
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: number
+                type: identifier
+              type: variable
+              variable_name:
+                text: number
+                type: identifier
+            type: argument_list
+          children:
+          - text: user.tab_jump
+            type: identifier
+          - children:
+            - children:
+              - text: number
+                type: identifier
+              type: variable
+              variable_name:
+                text: number
+                type: identifier
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.tab_jump
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: number
+                type: identifier
+              type: variable
+              variable_name:
+                text: number
+                type: identifier
+            type: argument_list
+          children:
+          - text: user.tab_jump
+            type: identifier
+          - children:
+            - children:
+              - text: number
+                type: identifier
+              type: variable
+              variable_name:
+                text: number
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: go
+          type: word
+        - text: tab
+          type: word
+        - capture_name:
             text: number
             type: identifier
+          children:
+          - text: number
+            type: identifier
+          type: capture
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.tab_jump
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number
-                type: identifier
-              variable_name:
-                text: number
-                type: identifier
-          action_name:
+      - children:
+        - action_name:
             text: user.tab_jump
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: number
                 type: identifier
+              type: variable
               variable_name:
                 text: number
                 type: identifier
-        expression:
+            type: argument_list
+          children:
+          - text: user.tab_jump
+            type: identifier
+          - children:
+            - children:
+              - text: number
+                type: identifier
+              type: variable
+              variable_name:
+                text: number
+                type: identifier
+            type: argument_list
           type: action
-          children:
-          - text: user.tab_jump
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number
-                type: identifier
-              variable_name:
-                text: number
-                type: identifier
+        expression:
           action_name:
             text: user.tab_jump
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: number
                 type: identifier
+              type: variable
               variable_name:
                 text: number
                 type: identifier
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+            type: argument_list
+          children:
+          - text: user.tab_jump
+            type: identifier
+          - children:
+            - children:
+              - text: number
+                type: identifier
+              type: variable
+              variable_name:
+                text: number
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: go
           type: word
         - text: tab
           type: word
         - text: final
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.tab_final
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.tab_final
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.tab_final
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.tab_final
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.tab_final
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.tab_final
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.tab_final
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.tab_final
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: go
           type: word
         - text: tab
           type: word
         - text: final
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.tab_final
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.tab_final
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.tab_final
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.tab_final
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: tab
-          type: word
-        - text: duplicate
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.tab_duplicate
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.tab_duplicate
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.tab_duplicate
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.tab_duplicate
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - action_name:
+            text: user.tab_final
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.tab_final
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.tab_final
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.tab_final
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: tab
           type: word
         - text: duplicate
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.tab_duplicate
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: user.tab_duplicate
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: user.tab_duplicate
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: user.tab_duplicate
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: user.tab_duplicate
             type: identifier
           arguments:
-            type: argument_list
             children: []
+            type: argument_list
+          children:
+          - text: user.tab_duplicate
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: tab
+          type: word
+        - text: duplicate
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: user.tab_duplicate
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.tab_duplicate
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.tab_duplicate
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.tab_duplicate
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  type: source_file

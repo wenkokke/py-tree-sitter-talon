@@ -1,11 +1,12 @@
-input: "tag: user.typescriptreact\n-\ntag(): user.typescript\ntag(): user.javascriptreact\n"
+input: |
+  tag: user.typescriptreact
+  -
+  tag(): user.typescript
+  tag(): user.javascriptreact
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: match
-      children:
+  - children:
+    - children:
       - text: tag
         type: identifier
       - text: ' user.typescriptreact'
@@ -16,17 +17,20 @@ output:
       pattern:
         text: ' user.typescriptreact'
         type: implicit_string
-  - type: include_tag
-    children:
+      type: match
+    type: context
+  - children:
     - text: user.typescript
       type: identifier
     tag:
       text: user.typescript
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.javascriptreact
       type: identifier
     tag:
       text: user.javascriptreact
       type: identifier
+    type: include_tag
+  type: source_file

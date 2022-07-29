@@ -1,564 +1,569 @@
-input: "volume up: key(volup)\nvolume down: key(voldown)\nset volume <number>: user.media_set_volume(number)\n\
-  (volume|media) mute: key(mute)\n[media] play next: key(next)\n[media] play previous:\
-  \ key(prev)\nmedia (play | pause): user.play_pause()\n"
+input: |
+  volume up: key(volup)
+  volume down: key(voldown)
+  set volume <number>: user.media_set_volume(number)
+  (volume|media) mute: key(mute)
+  [media] play next: key(next)
+  [media] play previous: key(prev)
+  media (play | pause): user.play_pause()
 output:
-  type: source_file
   children:
-  - type: context
-    children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children: []
+    type: context
+  - children:
+    - children:
+      - children:
         - text: volume
           type: word
         - text: up
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: volup
-            type: implicit_string
-          arguments:
-            text: volup
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: volup
-            type: implicit_string
-          arguments:
-            text: volup
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: volup
+            type: implicit_string
+          children:
+          - text: volup
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: volup
+            type: implicit_string
+          children:
+          - text: volup
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: volume
           type: word
         - text: up
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: volup
+            type: implicit_string
           children:
           - text: volup
             type: implicit_string
-          arguments:
-            text: volup
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: volup
-            type: implicit_string
+        expression:
           arguments:
             text: volup
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          children:
+          - text: volup
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: volume
           type: word
         - text: down
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: voldown
-            type: implicit_string
-          arguments:
-            text: voldown
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: voldown
-            type: implicit_string
-          arguments:
-            text: voldown
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: voldown
+            type: implicit_string
+          children:
+          - text: voldown
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: voldown
+            type: implicit_string
+          children:
+          - text: voldown
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: volume
           type: word
         - text: down
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: voldown
+            type: implicit_string
           children:
           - text: voldown
             type: implicit_string
-          arguments:
-            text: voldown
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: voldown
-            type: implicit_string
+        expression:
           arguments:
             text: voldown
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          children:
+          - text: voldown
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: set
           type: word
         - text: volume
           type: word
-        - type: capture
+        - capture_name:
+            text: number
+            type: identifier
           children:
           - text: number
             type: identifier
-          capture_name:
-            text: number
-            type: identifier
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.media_set_volume
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number
-                type: identifier
-              variable_name:
-                text: number
-                type: identifier
-          action_name:
-            text: user.media_set_volume
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number
-                type: identifier
-              variable_name:
-                text: number
-                type: identifier
-        expression:
-          type: action
-          children:
-          - text: user.media_set_volume
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number
-                type: identifier
-              variable_name:
-                text: number
-                type: identifier
-          action_name:
-            text: user.media_set_volume
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number
-                type: identifier
-              variable_name:
-                text: number
-                type: identifier
-    rule:
+          type: capture
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.media_set_volume
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: number
+                type: identifier
+              type: variable
+              variable_name:
+                text: number
+                type: identifier
+            type: argument_list
+          children:
+          - text: user.media_set_volume
+            type: identifier
+          - children:
+            - children:
+              - text: number
+                type: identifier
+              type: variable
+              variable_name:
+                text: number
+                type: identifier
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.media_set_volume
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: number
+                type: identifier
+              type: variable
+              variable_name:
+                text: number
+                type: identifier
+            type: argument_list
+          children:
+          - text: user.media_set_volume
+            type: identifier
+          - children:
+            - children:
+              - text: number
+                type: identifier
+              type: variable
+              variable_name:
+                text: number
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: set
           type: word
         - text: volume
           type: word
-        - type: capture
+        - capture_name:
+            text: number
+            type: identifier
           children:
           - text: number
             type: identifier
-          capture_name:
-            text: number
-            type: identifier
+          type: capture
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.media_set_volume
+      - children:
+        - action_name:
+            text: user.media_set_volume
             type: identifier
-          - type: argument_list
+          arguments:
             children:
-            - type: variable
-              children:
+            - children:
               - text: number
                 type: identifier
+              type: variable
               variable_name:
                 text: number
                 type: identifier
+            type: argument_list
+          children:
+          - text: user.media_set_volume
+            type: identifier
+          - children:
+            - children:
+              - text: number
+                type: identifier
+              type: variable
+              variable_name:
+                text: number
+                type: identifier
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.media_set_volume
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: number
                 type: identifier
+              type: variable
               variable_name:
                 text: number
                 type: identifier
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.media_set_volume
             type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
+          - children:
+            - children:
               - text: number
                 type: identifier
+              type: variable
               variable_name:
                 text: number
                 type: identifier
-          action_name:
-            text: user.media_set_volume
-            type: identifier
-          arguments:
             type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number
-                type: identifier
-              variable_name:
-                text: number
-                type: identifier
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: volume
               type: word
             - text: media
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: mute
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: mute
-            type: implicit_string
-          arguments:
-            text: mute
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: mute
-            type: implicit_string
-          arguments:
-            text: mute
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - arguments:
+            text: mute
+            type: implicit_string
           children:
-          - type: choice
-            children:
+          - text: mute
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: mute
+            type: implicit_string
+          children:
+          - text: mute
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: volume
               type: word
             - text: media
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: mute
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: mute
+            type: implicit_string
           children:
           - text: mute
             type: implicit_string
-          arguments:
-            text: mute
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: mute
-            type: implicit_string
+        expression:
           arguments:
             text: mute
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: optional
           children:
+          - text: mute
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
           - text: media
             type: word
+          type: optional
         - text: play
           type: word
         - text: next
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: next
-            type: implicit_string
-          arguments:
-            text: next
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: next
-            type: implicit_string
-          arguments:
-            text: next
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: optional
+    - children:
+      - children:
+        - arguments:
+            text: next
+            type: implicit_string
           children:
+          - text: next
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: next
+            type: implicit_string
+          children:
+          - text: next
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
           - text: media
             type: word
+          type: optional
         - text: play
           type: word
         - text: next
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: next
+            type: implicit_string
           children:
           - text: next
             type: implicit_string
-          arguments:
-            text: next
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: next
-            type: implicit_string
+        expression:
           arguments:
             text: next
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: optional
           children:
+          - text: next
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
           - text: media
             type: word
+          type: optional
         - text: play
           type: word
         - text: previous
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: prev
-            type: implicit_string
-          arguments:
-            text: prev
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: prev
-            type: implicit_string
-          arguments:
-            text: prev
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: optional
+    - children:
+      - children:
+        - arguments:
+            text: prev
+            type: implicit_string
           children:
+          - text: prev
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: prev
+            type: implicit_string
+          children:
+          - text: prev
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
           - text: media
             type: word
+          type: optional
         - text: play
           type: word
         - text: previous
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: prev
-            type: implicit_string
-          arguments:
-            text: prev
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: prev
-            type: implicit_string
-          arguments:
-            text: prev
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: media
-          type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: play
-              type: word
-            - text: pause
-              type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.play_pause
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.play_pause
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.play_pause
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.play_pause
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - arguments:
+            text: prev
+            type: implicit_string
+          children:
+          - text: prev
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: prev
+            type: implicit_string
+          children:
+          - text: prev
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: media
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: play
               type: word
             - text: pause
               type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.play_pause
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: user.play_pause
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: user.play_pause
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: user.play_pause
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: user.play_pause
             type: identifier
           arguments:
-            type: argument_list
             children: []
+            type: argument_list
+          children:
+          - text: user.play_pause
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: media
+          type: word
+        - children:
+          - children:
+            - text: play
+              type: word
+            - text: pause
+              type: word
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: user.play_pause
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.play_pause
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.play_pause
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.play_pause
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  type: source_file

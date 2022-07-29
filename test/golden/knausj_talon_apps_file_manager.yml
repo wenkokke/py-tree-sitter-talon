@@ -1,31 +1,50 @@
-input: "tag: user.file_manager\n-\ntitle force: user.file_manager_refresh_title()\n\
-  manager show: user.file_manager_toggle_pickers()\nmanager close: user.file_manager_hide_pickers()\n\
-  manager refresh: user.file_manager_update_lists()\ngo <user.system_path>: user.file_manager_open_directory(system_path)\n\
-  go back: user.file_manager_go_back()\ngo forward: user.file_manager_go_forward()\n\
-  (go parent | daddy): user.file_manager_open_parent()\n^follow numb <number_small>$:\n\
-  \    directory = user.file_manager_get_directory_by_index(number_small - 1)\n  \
-  \  user.file_manager_open_directory(directory)\n^follow {user.file_manager_directories}$:\
-  \ user.file_manager_open_directory(file_manager_directories)\n^(select|cell) folder\
-  \ {user.file_manager_directories}$: user.file_manager_select_directory(file_manager_directories)\n\
-  ^open <number_small>$:\n    file = user.file_manager_get_file_by_index(number_small\
-  \ - 1)\n    user.file_manager_open_file(file)\n^folder numb <number_small>$:\n \
-  \   directory = user.file_manager_get_directory_by_index(number_small - 1)\n   \
-  \ user.file_manager_select_directory(directory)\n^file numb <number_small>$:\n \
-  \   file = user.file_manager_get_file_by_index(number_small - 1)\n    user.file_manager_select_file(file)\n\
-  ^file {user.file_manager_files}$: user.file_manager_select_file(file_manager_files)\n\
-  ^(select|cell) file {user.file_manager_files}$: user.file_manager_select_file(file_manager_files)\n\
-  \n#new folder\nfolder new <user.text>:\n    user.file_manager_new_folder(text)\n\
-  \n#show properties\nproperties show: user.file_manager_show_properties()\n\n# open\
-  \ terminal at location\nterminal here: user.file_manager_terminal_here()\n\nfolder\
-  \ next: user.file_manager_next_folder_page()\nfolder last: user.file_manager_previous_folder_page()\n\
-  \nfile next: user.file_manager_next_file_page()\nfile last: user.file_manager_previous_file_page()\n"
+input: |
+  tag: user.file_manager
+  -
+  title force: user.file_manager_refresh_title()
+  manager show: user.file_manager_toggle_pickers()
+  manager close: user.file_manager_hide_pickers()
+  manager refresh: user.file_manager_update_lists()
+  go <user.system_path>: user.file_manager_open_directory(system_path)
+  go back: user.file_manager_go_back()
+  go forward: user.file_manager_go_forward()
+  (go parent | daddy): user.file_manager_open_parent()
+  ^follow numb <number_small>$:
+      directory = user.file_manager_get_directory_by_index(number_small - 1)
+      user.file_manager_open_directory(directory)
+  ^follow {user.file_manager_directories}$: user.file_manager_open_directory(file_manager_directories)
+  ^(select|cell) folder {user.file_manager_directories}$: user.file_manager_select_directory(file_manager_directories)
+  ^open <number_small>$:
+      file = user.file_manager_get_file_by_index(number_small - 1)
+      user.file_manager_open_file(file)
+  ^folder numb <number_small>$:
+      directory = user.file_manager_get_directory_by_index(number_small - 1)
+      user.file_manager_select_directory(directory)
+  ^file numb <number_small>$:
+      file = user.file_manager_get_file_by_index(number_small - 1)
+      user.file_manager_select_file(file)
+  ^file {user.file_manager_files}$: user.file_manager_select_file(file_manager_files)
+  ^(select|cell) file {user.file_manager_files}$: user.file_manager_select_file(file_manager_files)
+
+  #new folder
+  folder new <user.text>:
+      user.file_manager_new_folder(text)
+
+  #show properties
+  properties show: user.file_manager_show_properties()
+
+  # open terminal at location
+  terminal here: user.file_manager_terminal_here()
+
+  folder next: user.file_manager_next_folder_page()
+  folder last: user.file_manager_previous_folder_page()
+
+  file next: user.file_manager_next_file_page()
+  file last: user.file_manager_previous_file_page()
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: match
-      children:
+  - children:
+    - children:
       - text: tag
         type: identifier
       - text: ' user.file_manager'
@@ -36,780 +55,744 @@ output:
       pattern:
         text: ' user.file_manager'
         type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+      type: match
+    type: context
+  - children:
+    - children:
+      - children:
         - text: title
           type: word
         - text: force
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_refresh_title
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_refresh_title
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.file_manager_refresh_title
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_refresh_title
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.file_manager_refresh_title
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.file_manager_refresh_title
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.file_manager_refresh_title
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.file_manager_refresh_title
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: title
           type: word
         - text: force
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.file_manager_refresh_title
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.file_manager_refresh_title
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.file_manager_refresh_title
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.file_manager_refresh_title
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_refresh_title
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: manager
           type: word
         - text: show
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_toggle_pickers
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_toggle_pickers
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.file_manager_toggle_pickers
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_toggle_pickers
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.file_manager_toggle_pickers
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.file_manager_toggle_pickers
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.file_manager_toggle_pickers
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.file_manager_toggle_pickers
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: manager
           type: word
         - text: show
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.file_manager_toggle_pickers
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.file_manager_toggle_pickers
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.file_manager_toggle_pickers
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.file_manager_toggle_pickers
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_toggle_pickers
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: manager
           type: word
         - text: close
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_hide_pickers
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_hide_pickers
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.file_manager_hide_pickers
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_hide_pickers
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.file_manager_hide_pickers
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.file_manager_hide_pickers
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.file_manager_hide_pickers
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.file_manager_hide_pickers
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: manager
           type: word
         - text: close
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.file_manager_hide_pickers
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.file_manager_hide_pickers
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.file_manager_hide_pickers
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.file_manager_hide_pickers
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_hide_pickers
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: manager
           type: word
         - text: refresh
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_update_lists
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_update_lists
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.file_manager_update_lists
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_update_lists
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.file_manager_update_lists
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.file_manager_update_lists
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.file_manager_update_lists
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.file_manager_update_lists
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: manager
           type: word
         - text: refresh
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.file_manager_update_lists
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.file_manager_update_lists
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.file_manager_update_lists
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.file_manager_update_lists
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_update_lists
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: go
-          type: word
-        - type: capture
-          children:
-          - text: user.system_path
-            type: identifier
-          capture_name:
-            text: user.system_path
-            type: identifier
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_open_directory
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: system_path
-                type: identifier
-              variable_name:
-                text: system_path
-                type: identifier
-          action_name:
-            text: user.file_manager_open_directory
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: system_path
-                type: identifier
-              variable_name:
-                text: system_path
-                type: identifier
-        expression:
           type: action
-          children:
-          - text: user.file_manager_open_directory
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: system_path
-                type: identifier
-              variable_name:
-                text: system_path
-                type: identifier
-          action_name:
-            text: user.file_manager_open_directory
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: system_path
-                type: identifier
-              variable_name:
-                text: system_path
-                type: identifier
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: go
-          type: word
-        - type: capture
-          children:
-          - text: user.system_path
-            type: identifier
-          capture_name:
-            text: user.system_path
-            type: identifier
-    script:
+        type: expression
       type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_open_directory
+    type: command
+  - children:
+    - children:
+      - children:
+        - text: go
+          type: word
+        - capture_name:
+            text: user.system_path
             type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: system_path
-                type: identifier
-              variable_name:
-                text: system_path
-                type: identifier
-          action_name:
+          children:
+          - text: user.system_path
+            type: identifier
+          type: capture
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: user.file_manager_open_directory
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: system_path
                 type: identifier
+              type: variable
               variable_name:
                 text: system_path
                 type: identifier
-        expression:
+            type: argument_list
+          children:
+          - text: user.file_manager_open_directory
+            type: identifier
+          - children:
+            - children:
+              - text: system_path
+                type: identifier
+              type: variable
+              variable_name:
+                text: system_path
+                type: identifier
+            type: argument_list
           type: action
-          children:
-          - text: user.file_manager_open_directory
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: system_path
-                type: identifier
-              variable_name:
-                text: system_path
-                type: identifier
+        expression:
           action_name:
             text: user.file_manager_open_directory
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: system_path
                 type: identifier
+              type: variable
               variable_name:
                 text: system_path
                 type: identifier
-  - type: command
-    children:
-    - type: rule
+            type: argument_list
+          children:
+          - text: user.file_manager_open_directory
+            type: identifier
+          - children:
+            - children:
+              - text: system_path
+                type: identifier
+              type: variable
+              variable_name:
+                text: system_path
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
+        - text: go
+          type: word
+        - capture_name:
+            text: user.system_path
+            type: identifier
+          children:
+          - text: user.system_path
+            type: identifier
+          type: capture
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: user.file_manager_open_directory
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: system_path
+                type: identifier
+              type: variable
+              variable_name:
+                text: system_path
+                type: identifier
+            type: argument_list
+          children:
+          - text: user.file_manager_open_directory
+            type: identifier
+          - children:
+            - children:
+              - text: system_path
+                type: identifier
+              type: variable
+              variable_name:
+                text: system_path
+                type: identifier
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.file_manager_open_directory
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: system_path
+                type: identifier
+              type: variable
+              variable_name:
+                text: system_path
+                type: identifier
+            type: argument_list
+          children:
+          - text: user.file_manager_open_directory
+            type: identifier
+          - children:
+            - children:
+              - text: system_path
+                type: identifier
+              type: variable
+              variable_name:
+                text: system_path
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: go
           type: word
         - text: back
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_go_back
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_go_back
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.file_manager_go_back
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_go_back
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.file_manager_go_back
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.file_manager_go_back
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.file_manager_go_back
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.file_manager_go_back
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: go
           type: word
         - text: back
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.file_manager_go_back
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.file_manager_go_back
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.file_manager_go_back
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.file_manager_go_back
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_go_back
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: go
           type: word
         - text: forward
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_go_forward
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_go_forward
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.file_manager_go_forward
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_go_forward
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.file_manager_go_forward
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.file_manager_go_forward
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.file_manager_go_forward
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.file_manager_go_forward
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: go
           type: word
         - text: forward
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.file_manager_go_forward
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.file_manager_go_forward
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.file_manager_go_forward
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.file_manager_go_forward
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_go_forward
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: parenthesized_rule
-        children:
-        - type: choice
-          children:
-          - type: seq
-            children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: go
               type: word
             - text: parent
               type: word
+            type: seq
           - text: daddy
             type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_open_parent
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_open_parent
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.file_manager_open_parent
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_open_parent
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+          type: choice
+        type: parenthesized_rule
       type: rule
-      children:
-      - type: parenthesized_rule
-        children:
-        - type: choice
+    - children:
+      - children:
+        - action_name:
+            text: user.file_manager_open_parent
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
-          - type: seq
-            children:
+          - text: user.file_manager_open_parent
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.file_manager_open_parent
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.file_manager_open_parent
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: go
               type: word
             - text: parent
               type: word
+            type: seq
           - text: daddy
             type: word
+          type: choice
+        type: parenthesized_rule
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.file_manager_open_parent
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.file_manager_open_parent
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.file_manager_open_parent
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.file_manager_open_parent
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_open_parent
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
+      - children:
         - text: follow
           type: word
         - text: numb
           type: word
-        - type: capture
+        - capture_name:
+            text: number_small
+            type: identifier
           children:
           - text: number_small
             type: identifier
-          capture_name:
-            text: number_small
-            type: identifier
+          type: capture
+        type: seq
       - text: $
         type: end_anchor
-    - type: block
-      children:
-      - type: assignment
-        children:
+      type: rule
+    - children:
+      - children:
         - text: directory
           type: identifier
-        - type: action
-          children:
-          - text: user.file_manager_get_directory_by_index
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              - text: '-'
-                type: operator
-              - text: '1'
-                type: integer
-              left:
-                type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              operator:
-                text: '-'
-                type: operator
-              right:
-                text: '1'
-                type: integer
-          action_name:
+        - action_name:
             text: user.file_manager_get_directory_by_index
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -818,10 +801,10 @@ output:
               - text: '1'
                 type: integer
               left:
-                type: variable
                 children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -831,55 +814,55 @@ output:
               right:
                 text: '1'
                 type: integer
+              type: binary_operator
+            type: argument_list
+          children:
+          - text: user.file_manager_get_directory_by_index
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+              type: binary_operator
+            type: argument_list
+          type: action
         left:
           text: directory
           type: identifier
         right:
-          type: action
-          children:
-          - text: user.file_manager_get_directory_by_index
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              - text: '-'
-                type: operator
-              - text: '1'
-                type: integer
-              left:
-                type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              operator:
-                text: '-'
-                type: operator
-              right:
-                text: '1'
-                type: integer
           action_name:
             text: user.file_manager_get_directory_by_index
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -888,10 +871,10 @@ output:
               - text: '1'
                 type: integer
               left:
-                type: variable
                 children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -901,133 +884,133 @@ output:
               right:
                 text: '1'
                 type: integer
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_open_directory
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: directory
-                type: identifier
-              variable_name:
-                text: directory
-                type: identifier
-          action_name:
-            text: user.file_manager_open_directory
-            type: identifier
-          arguments:
+              type: binary_operator
             type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: directory
-                type: identifier
-              variable_name:
-                text: directory
-                type: identifier
-        expression:
+          children:
+          - text: user.file_manager_get_directory_by_index
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+              type: binary_operator
+            type: argument_list
           type: action
-          children:
-          - text: user.file_manager_open_directory
+        type: assignment
+      - children:
+        - action_name:
+            text: user.file_manager_open_directory
             type: identifier
-          - type: argument_list
+          arguments:
             children:
-            - type: variable
-              children:
+            - children:
               - text: directory
                 type: identifier
+              type: variable
               variable_name:
                 text: directory
                 type: identifier
+            type: argument_list
+          children:
+          - text: user.file_manager_open_directory
+            type: identifier
+          - children:
+            - children:
+              - text: directory
+                type: identifier
+              type: variable
+              variable_name:
+                text: directory
+                type: identifier
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.file_manager_open_directory
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: directory
                 type: identifier
+              type: variable
               variable_name:
                 text: directory
                 type: identifier
+            type: argument_list
+          children:
+          - text: user.file_manager_open_directory
+            type: identifier
+          - children:
+            - children:
+              - text: directory
+                type: identifier
+              type: variable
+              variable_name:
+                text: directory
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      type: block
     rule:
-      type: rule
       children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
+      - children:
         - text: follow
           type: word
         - text: numb
           type: word
-        - type: capture
+        - capture_name:
+            text: number_small
+            type: identifier
           children:
           - text: number_small
             type: identifier
-          capture_name:
-            text: number_small
-            type: identifier
+          type: capture
+        type: seq
       - text: $
         type: end_anchor
+      type: rule
     script:
-      type: block
       children:
-      - type: assignment
-        children:
+      - children:
         - text: directory
           type: identifier
-        - type: action
-          children:
-          - text: user.file_manager_get_directory_by_index
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              - text: '-'
-                type: operator
-              - text: '1'
-                type: integer
-              left:
-                type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              operator:
-                text: '-'
-                type: operator
-              right:
-                text: '1'
-                type: integer
-          action_name:
+        - action_name:
             text: user.file_manager_get_directory_by_index
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -1036,10 +1019,10 @@ output:
               - text: '1'
                 type: integer
               left:
-                type: variable
                 children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -1049,55 +1032,55 @@ output:
               right:
                 text: '1'
                 type: integer
+              type: binary_operator
+            type: argument_list
+          children:
+          - text: user.file_manager_get_directory_by_index
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+              type: binary_operator
+            type: argument_list
+          type: action
         left:
           text: directory
           type: identifier
         right:
-          type: action
-          children:
-          - text: user.file_manager_get_directory_by_index
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              - text: '-'
-                type: operator
-              - text: '1'
-                type: integer
-              left:
-                type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              operator:
-                text: '-'
-                type: operator
-              right:
-                text: '1'
-                type: integer
           action_name:
             text: user.file_manager_get_directory_by_index
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -1106,10 +1089,10 @@ output:
               - text: '1'
                 type: integer
               left:
-                type: variable
                 children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -1119,451 +1102,451 @@ output:
               right:
                 text: '1'
                 type: integer
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_open_directory
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: directory
-                type: identifier
-              variable_name:
-                text: directory
-                type: identifier
-          action_name:
-            text: user.file_manager_open_directory
-            type: identifier
-          arguments:
+              type: binary_operator
             type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: directory
-                type: identifier
-              variable_name:
-                text: directory
-                type: identifier
-        expression:
+          children:
+          - text: user.file_manager_get_directory_by_index
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+              type: binary_operator
+            type: argument_list
           type: action
-          children:
-          - text: user.file_manager_open_directory
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: directory
-                type: identifier
-              variable_name:
-                text: directory
-                type: identifier
-          action_name:
+        type: assignment
+      - children:
+        - action_name:
             text: user.file_manager_open_directory
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: directory
                 type: identifier
+              type: variable
               variable_name:
                 text: directory
                 type: identifier
-  - type: command
-    children:
-    - type: rule
-      children:
-      - text: ^
-        type: start_anchor
-      - type: seq
-        children:
-        - text: follow
-          type: word
-        - type: list
-          children:
-          - text: user.file_manager_directories
-            type: identifier
-          list_name:
-            text: user.file_manager_directories
-            type: identifier
-      - text: $
-        type: end_anchor
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
+            type: argument_list
           children:
           - text: user.file_manager_open_directory
             type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: file_manager_directories
+          - children:
+            - children:
+              - text: directory
                 type: identifier
+              type: variable
               variable_name:
-                text: file_manager_directories
+                text: directory
                 type: identifier
-          action_name:
-            text: user.file_manager_open_directory
-            type: identifier
-          arguments:
             type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: file_manager_directories
-                type: identifier
-              variable_name:
-                text: file_manager_directories
-                type: identifier
-        expression:
           type: action
-          children:
-          - text: user.file_manager_open_directory
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: file_manager_directories
-                type: identifier
-              variable_name:
-                text: file_manager_directories
-                type: identifier
+        expression:
           action_name:
             text: user.file_manager_open_directory
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
-              - text: file_manager_directories
+            - children:
+              - text: directory
                 type: identifier
+              type: variable
               variable_name:
-                text: file_manager_directories
+                text: directory
                 type: identifier
-    rule:
-      type: rule
-      children:
-      - text: ^
-        type: start_anchor
-      - type: seq
-        children:
-        - text: follow
-          type: word
-        - type: list
+            type: argument_list
           children:
-          - text: user.file_manager_directories
+          - text: user.file_manager_open_directory
             type: identifier
-          list_name:
-            text: user.file_manager_directories
-            type: identifier
-      - text: $
-        type: end_anchor
-    script:
+          - children:
+            - children:
+              - text: directory
+                type: identifier
+              type: variable
+              variable_name:
+                text: directory
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
       type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_open_directory
+    type: command
+  - children:
+    - children:
+      - text: ^
+        type: start_anchor
+      - children:
+        - text: follow
+          type: word
+        - children:
+          - text: user.file_manager_directories
             type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: file_manager_directories
-                type: identifier
-              variable_name:
-                text: file_manager_directories
-                type: identifier
-          action_name:
+          list_name:
+            text: user.file_manager_directories
+            type: identifier
+          type: list
+        type: seq
+      - text: $
+        type: end_anchor
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: user.file_manager_open_directory
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: file_manager_directories
                 type: identifier
+              type: variable
               variable_name:
                 text: file_manager_directories
                 type: identifier
-        expression:
+            type: argument_list
+          children:
+          - text: user.file_manager_open_directory
+            type: identifier
+          - children:
+            - children:
+              - text: file_manager_directories
+                type: identifier
+              type: variable
+              variable_name:
+                text: file_manager_directories
+                type: identifier
+            type: argument_list
           type: action
-          children:
-          - text: user.file_manager_open_directory
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: file_manager_directories
-                type: identifier
-              variable_name:
-                text: file_manager_directories
-                type: identifier
+        expression:
           action_name:
             text: user.file_manager_open_directory
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: file_manager_directories
                 type: identifier
+              type: variable
               variable_name:
                 text: file_manager_directories
                 type: identifier
-  - type: command
-    children:
-    - type: rule
+            type: argument_list
+          children:
+          - text: user.file_manager_open_directory
+            type: identifier
+          - children:
+            - children:
+              - text: file_manager_directories
+                type: identifier
+              type: variable
+              variable_name:
+                text: file_manager_directories
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
+      - children:
+        - text: follow
+          type: word
+        - children:
+          - text: user.file_manager_directories
+            type: identifier
+          list_name:
+            text: user.file_manager_directories
+            type: identifier
+          type: list
+        type: seq
+      - text: $
+        type: end_anchor
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: user.file_manager_open_directory
+            type: identifier
+          arguments:
             children:
+            - children:
+              - text: file_manager_directories
+                type: identifier
+              type: variable
+              variable_name:
+                text: file_manager_directories
+                type: identifier
+            type: argument_list
+          children:
+          - text: user.file_manager_open_directory
+            type: identifier
+          - children:
+            - children:
+              - text: file_manager_directories
+                type: identifier
+              type: variable
+              variable_name:
+                text: file_manager_directories
+                type: identifier
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.file_manager_open_directory
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: file_manager_directories
+                type: identifier
+              type: variable
+              variable_name:
+                text: file_manager_directories
+                type: identifier
+            type: argument_list
+          children:
+          - text: user.file_manager_open_directory
+            type: identifier
+          - children:
+            - children:
+              - text: file_manager_directories
+                type: identifier
+              type: variable
+              variable_name:
+                text: file_manager_directories
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - text: ^
+        type: start_anchor
+      - children:
+        - children:
+          - children:
             - text: select
               type: word
             - text: cell
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: folder
           type: word
-        - type: list
-          children:
+        - children:
           - text: user.file_manager_directories
             type: identifier
           list_name:
             text: user.file_manager_directories
             type: identifier
+          type: list
+        type: seq
       - text: $
         type: end_anchor
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_select_directory
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: file_manager_directories
-                type: identifier
-              variable_name:
-                text: file_manager_directories
-                type: identifier
-          action_name:
-            text: user.file_manager_select_directory
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: file_manager_directories
-                type: identifier
-              variable_name:
-                text: file_manager_directories
-                type: identifier
-        expression:
-          type: action
-          children:
-          - text: user.file_manager_select_directory
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: file_manager_directories
-                type: identifier
-              variable_name:
-                text: file_manager_directories
-                type: identifier
-          action_name:
-            text: user.file_manager_select_directory
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: file_manager_directories
-                type: identifier
-              variable_name:
-                text: file_manager_directories
-                type: identifier
-    rule:
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.file_manager_select_directory
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: file_manager_directories
+                type: identifier
+              type: variable
+              variable_name:
+                text: file_manager_directories
+                type: identifier
+            type: argument_list
+          children:
+          - text: user.file_manager_select_directory
+            type: identifier
+          - children:
+            - children:
+              - text: file_manager_directories
+                type: identifier
+              type: variable
+              variable_name:
+                text: file_manager_directories
+                type: identifier
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.file_manager_select_directory
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: file_manager_directories
+                type: identifier
+              type: variable
+              variable_name:
+                text: file_manager_directories
+                type: identifier
+            type: argument_list
+          children:
+          - text: user.file_manager_select_directory
+            type: identifier
+          - children:
+            - children:
+              - text: file_manager_directories
+                type: identifier
+              type: variable
+              variable_name:
+                text: file_manager_directories
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+      - children:
+        - children:
+          - children:
             - text: select
               type: word
             - text: cell
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: folder
           type: word
-        - type: list
-          children:
+        - children:
           - text: user.file_manager_directories
             type: identifier
           list_name:
             text: user.file_manager_directories
             type: identifier
+          type: list
+        type: seq
       - text: $
         type: end_anchor
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_select_directory
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: file_manager_directories
-                type: identifier
-              variable_name:
-                text: file_manager_directories
-                type: identifier
-          action_name:
+      - children:
+        - action_name:
             text: user.file_manager_select_directory
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: file_manager_directories
                 type: identifier
+              type: variable
               variable_name:
                 text: file_manager_directories
                 type: identifier
-        expression:
+            type: argument_list
+          children:
+          - text: user.file_manager_select_directory
+            type: identifier
+          - children:
+            - children:
+              - text: file_manager_directories
+                type: identifier
+              type: variable
+              variable_name:
+                text: file_manager_directories
+                type: identifier
+            type: argument_list
           type: action
-          children:
-          - text: user.file_manager_select_directory
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: file_manager_directories
-                type: identifier
-              variable_name:
-                text: file_manager_directories
-                type: identifier
+        expression:
           action_name:
             text: user.file_manager_select_directory
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: file_manager_directories
                 type: identifier
+              type: variable
               variable_name:
                 text: file_manager_directories
                 type: identifier
-  - type: command
-    children:
-    - type: rule
-      children:
+            type: argument_list
+          children:
+          - text: user.file_manager_select_directory
+            type: identifier
+          - children:
+            - children:
+              - text: file_manager_directories
+                type: identifier
+              type: variable
+              variable_name:
+                text: file_manager_directories
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
+      - children:
         - text: open
           type: word
-        - type: capture
+        - capture_name:
+            text: number_small
+            type: identifier
           children:
           - text: number_small
             type: identifier
-          capture_name:
-            text: number_small
-            type: identifier
+          type: capture
+        type: seq
       - text: $
         type: end_anchor
-    - type: block
-      children:
-      - type: assignment
-        children:
+      type: rule
+    - children:
+      - children:
         - text: file
           type: identifier
-        - type: action
-          children:
-          - text: user.file_manager_get_file_by_index
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              - text: '-'
-                type: operator
-              - text: '1'
-                type: integer
-              left:
-                type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              operator:
-                text: '-'
-                type: operator
-              right:
-                text: '1'
-                type: integer
-          action_name:
+        - action_name:
             text: user.file_manager_get_file_by_index
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -1572,10 +1555,10 @@ output:
               - text: '1'
                 type: integer
               left:
-                type: variable
                 children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -1585,55 +1568,55 @@ output:
               right:
                 text: '1'
                 type: integer
+              type: binary_operator
+            type: argument_list
+          children:
+          - text: user.file_manager_get_file_by_index
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+              type: binary_operator
+            type: argument_list
+          type: action
         left:
           text: file
           type: identifier
         right:
-          type: action
-          children:
-          - text: user.file_manager_get_file_by_index
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              - text: '-'
-                type: operator
-              - text: '1'
-                type: integer
-              left:
-                type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              operator:
-                text: '-'
-                type: operator
-              right:
-                text: '1'
-                type: integer
           action_name:
             text: user.file_manager_get_file_by_index
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -1642,10 +1625,10 @@ output:
               - text: '1'
                 type: integer
               left:
-                type: variable
                 children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -1655,131 +1638,131 @@ output:
               right:
                 text: '1'
                 type: integer
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_open_file
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: file
-                type: identifier
-              variable_name:
-                text: file
-                type: identifier
-          action_name:
-            text: user.file_manager_open_file
-            type: identifier
-          arguments:
+              type: binary_operator
             type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: file
-                type: identifier
-              variable_name:
-                text: file
-                type: identifier
-        expression:
+          children:
+          - text: user.file_manager_get_file_by_index
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+              type: binary_operator
+            type: argument_list
           type: action
-          children:
-          - text: user.file_manager_open_file
+        type: assignment
+      - children:
+        - action_name:
+            text: user.file_manager_open_file
             type: identifier
-          - type: argument_list
+          arguments:
             children:
-            - type: variable
-              children:
+            - children:
               - text: file
                 type: identifier
+              type: variable
               variable_name:
                 text: file
                 type: identifier
+            type: argument_list
+          children:
+          - text: user.file_manager_open_file
+            type: identifier
+          - children:
+            - children:
+              - text: file
+                type: identifier
+              type: variable
+              variable_name:
+                text: file
+                type: identifier
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.file_manager_open_file
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: file
                 type: identifier
+              type: variable
               variable_name:
                 text: file
                 type: identifier
+            type: argument_list
+          children:
+          - text: user.file_manager_open_file
+            type: identifier
+          - children:
+            - children:
+              - text: file
+                type: identifier
+              type: variable
+              variable_name:
+                text: file
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      type: block
     rule:
-      type: rule
       children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
+      - children:
         - text: open
           type: word
-        - type: capture
+        - capture_name:
+            text: number_small
+            type: identifier
           children:
           - text: number_small
             type: identifier
-          capture_name:
-            text: number_small
-            type: identifier
+          type: capture
+        type: seq
       - text: $
         type: end_anchor
+      type: rule
     script:
-      type: block
       children:
-      - type: assignment
-        children:
+      - children:
         - text: file
           type: identifier
-        - type: action
-          children:
-          - text: user.file_manager_get_file_by_index
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              - text: '-'
-                type: operator
-              - text: '1'
-                type: integer
-              left:
-                type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              operator:
-                text: '-'
-                type: operator
-              right:
-                text: '1'
-                type: integer
-          action_name:
+        - action_name:
             text: user.file_manager_get_file_by_index
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -1788,10 +1771,10 @@ output:
               - text: '1'
                 type: integer
               left:
-                type: variable
                 children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -1801,55 +1784,55 @@ output:
               right:
                 text: '1'
                 type: integer
+              type: binary_operator
+            type: argument_list
+          children:
+          - text: user.file_manager_get_file_by_index
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+              type: binary_operator
+            type: argument_list
+          type: action
         left:
           text: file
           type: identifier
         right:
-          type: action
-          children:
-          - text: user.file_manager_get_file_by_index
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              - text: '-'
-                type: operator
-              - text: '1'
-                type: integer
-              left:
-                type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              operator:
-                text: '-'
-                type: operator
-              right:
-                text: '1'
-                type: integer
           action_name:
             text: user.file_manager_get_file_by_index
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -1858,10 +1841,10 @@ output:
               - text: '1'
                 type: integer
               left:
-                type: variable
                 children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -1871,133 +1854,133 @@ output:
               right:
                 text: '1'
                 type: integer
-      - type: expression
-        children:
-        - type: action
+              type: binary_operator
+            type: argument_list
           children:
-          - text: user.file_manager_open_file
+          - text: user.file_manager_get_file_by_index
             type: identifier
-          - type: argument_list
+          - children:
+            - children:
+              - children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+              type: binary_operator
+            type: argument_list
+          type: action
+        type: assignment
+      - children:
+        - action_name:
+            text: user.file_manager_open_file
+            type: identifier
+          arguments:
             children:
-            - type: variable
-              children:
+            - children:
               - text: file
                 type: identifier
+              type: variable
               variable_name:
                 text: file
                 type: identifier
+            type: argument_list
+          children:
+          - text: user.file_manager_open_file
+            type: identifier
+          - children:
+            - children:
+              - text: file
+                type: identifier
+              type: variable
+              variable_name:
+                text: file
+                type: identifier
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.file_manager_open_file
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: file
                 type: identifier
+              type: variable
               variable_name:
                 text: file
                 type: identifier
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.file_manager_open_file
             type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
+          - children:
+            - children:
               - text: file
                 type: identifier
+              type: variable
               variable_name:
                 text: file
                 type: identifier
-          action_name:
-            text: user.file_manager_open_file
-            type: identifier
-          arguments:
             type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: file
-                type: identifier
-              variable_name:
-                text: file
-                type: identifier
-  - type: command
-    children:
-    - type: rule
-      children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
+      - children:
         - text: folder
           type: word
         - text: numb
           type: word
-        - type: capture
+        - capture_name:
+            text: number_small
+            type: identifier
           children:
           - text: number_small
             type: identifier
-          capture_name:
-            text: number_small
-            type: identifier
+          type: capture
+        type: seq
       - text: $
         type: end_anchor
-    - type: block
-      children:
-      - type: assignment
-        children:
+      type: rule
+    - children:
+      - children:
         - text: directory
           type: identifier
-        - type: action
-          children:
-          - text: user.file_manager_get_directory_by_index
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              - text: '-'
-                type: operator
-              - text: '1'
-                type: integer
-              left:
-                type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              operator:
-                text: '-'
-                type: operator
-              right:
-                text: '1'
-                type: integer
-          action_name:
+        - action_name:
             text: user.file_manager_get_directory_by_index
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -2006,10 +1989,10 @@ output:
               - text: '1'
                 type: integer
               left:
-                type: variable
                 children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -2019,55 +2002,55 @@ output:
               right:
                 text: '1'
                 type: integer
+              type: binary_operator
+            type: argument_list
+          children:
+          - text: user.file_manager_get_directory_by_index
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+              type: binary_operator
+            type: argument_list
+          type: action
         left:
           text: directory
           type: identifier
         right:
-          type: action
-          children:
-          - text: user.file_manager_get_directory_by_index
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              - text: '-'
-                type: operator
-              - text: '1'
-                type: integer
-              left:
-                type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              operator:
-                text: '-'
-                type: operator
-              right:
-                text: '1'
-                type: integer
           action_name:
             text: user.file_manager_get_directory_by_index
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -2076,10 +2059,10 @@ output:
               - text: '1'
                 type: integer
               left:
-                type: variable
                 children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -2089,133 +2072,133 @@ output:
               right:
                 text: '1'
                 type: integer
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_select_directory
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: directory
-                type: identifier
-              variable_name:
-                text: directory
-                type: identifier
-          action_name:
-            text: user.file_manager_select_directory
-            type: identifier
-          arguments:
+              type: binary_operator
             type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: directory
-                type: identifier
-              variable_name:
-                text: directory
-                type: identifier
-        expression:
+          children:
+          - text: user.file_manager_get_directory_by_index
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+              type: binary_operator
+            type: argument_list
           type: action
-          children:
-          - text: user.file_manager_select_directory
+        type: assignment
+      - children:
+        - action_name:
+            text: user.file_manager_select_directory
             type: identifier
-          - type: argument_list
+          arguments:
             children:
-            - type: variable
-              children:
+            - children:
               - text: directory
                 type: identifier
+              type: variable
               variable_name:
                 text: directory
                 type: identifier
+            type: argument_list
+          children:
+          - text: user.file_manager_select_directory
+            type: identifier
+          - children:
+            - children:
+              - text: directory
+                type: identifier
+              type: variable
+              variable_name:
+                text: directory
+                type: identifier
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.file_manager_select_directory
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: directory
                 type: identifier
+              type: variable
               variable_name:
                 text: directory
                 type: identifier
+            type: argument_list
+          children:
+          - text: user.file_manager_select_directory
+            type: identifier
+          - children:
+            - children:
+              - text: directory
+                type: identifier
+              type: variable
+              variable_name:
+                text: directory
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      type: block
     rule:
-      type: rule
       children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
+      - children:
         - text: folder
           type: word
         - text: numb
           type: word
-        - type: capture
+        - capture_name:
+            text: number_small
+            type: identifier
           children:
           - text: number_small
             type: identifier
-          capture_name:
-            text: number_small
-            type: identifier
+          type: capture
+        type: seq
       - text: $
         type: end_anchor
+      type: rule
     script:
-      type: block
       children:
-      - type: assignment
-        children:
+      - children:
         - text: directory
           type: identifier
-        - type: action
-          children:
-          - text: user.file_manager_get_directory_by_index
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              - text: '-'
-                type: operator
-              - text: '1'
-                type: integer
-              left:
-                type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              operator:
-                text: '-'
-                type: operator
-              right:
-                text: '1'
-                type: integer
-          action_name:
+        - action_name:
             text: user.file_manager_get_directory_by_index
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -2224,10 +2207,10 @@ output:
               - text: '1'
                 type: integer
               left:
-                type: variable
                 children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -2237,55 +2220,55 @@ output:
               right:
                 text: '1'
                 type: integer
+              type: binary_operator
+            type: argument_list
+          children:
+          - text: user.file_manager_get_directory_by_index
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+              type: binary_operator
+            type: argument_list
+          type: action
         left:
           text: directory
           type: identifier
         right:
-          type: action
-          children:
-          - text: user.file_manager_get_directory_by_index
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              - text: '-'
-                type: operator
-              - text: '1'
-                type: integer
-              left:
-                type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              operator:
-                text: '-'
-                type: operator
-              right:
-                text: '1'
-                type: integer
           action_name:
             text: user.file_manager_get_directory_by_index
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -2294,10 +2277,10 @@ output:
               - text: '1'
                 type: integer
               left:
-                type: variable
                 children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -2307,133 +2290,133 @@ output:
               right:
                 text: '1'
                 type: integer
-      - type: expression
-        children:
-        - type: action
+              type: binary_operator
+            type: argument_list
           children:
-          - text: user.file_manager_select_directory
+          - text: user.file_manager_get_directory_by_index
             type: identifier
-          - type: argument_list
+          - children:
+            - children:
+              - children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+              type: binary_operator
+            type: argument_list
+          type: action
+        type: assignment
+      - children:
+        - action_name:
+            text: user.file_manager_select_directory
+            type: identifier
+          arguments:
             children:
-            - type: variable
-              children:
+            - children:
               - text: directory
                 type: identifier
+              type: variable
               variable_name:
                 text: directory
                 type: identifier
+            type: argument_list
+          children:
+          - text: user.file_manager_select_directory
+            type: identifier
+          - children:
+            - children:
+              - text: directory
+                type: identifier
+              type: variable
+              variable_name:
+                text: directory
+                type: identifier
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.file_manager_select_directory
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: directory
                 type: identifier
+              type: variable
               variable_name:
                 text: directory
                 type: identifier
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.file_manager_select_directory
             type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
+          - children:
+            - children:
               - text: directory
                 type: identifier
+              type: variable
               variable_name:
                 text: directory
                 type: identifier
-          action_name:
-            text: user.file_manager_select_directory
-            type: identifier
-          arguments:
             type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: directory
-                type: identifier
-              variable_name:
-                text: directory
-                type: identifier
-  - type: command
-    children:
-    - type: rule
-      children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
+      - children:
         - text: file
           type: word
         - text: numb
           type: word
-        - type: capture
+        - capture_name:
+            text: number_small
+            type: identifier
           children:
           - text: number_small
             type: identifier
-          capture_name:
-            text: number_small
-            type: identifier
+          type: capture
+        type: seq
       - text: $
         type: end_anchor
-    - type: block
-      children:
-      - type: assignment
-        children:
+      type: rule
+    - children:
+      - children:
         - text: file
           type: identifier
-        - type: action
-          children:
-          - text: user.file_manager_get_file_by_index
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              - text: '-'
-                type: operator
-              - text: '1'
-                type: integer
-              left:
-                type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              operator:
-                text: '-'
-                type: operator
-              right:
-                text: '1'
-                type: integer
-          action_name:
+        - action_name:
             text: user.file_manager_get_file_by_index
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -2442,10 +2425,10 @@ output:
               - text: '1'
                 type: integer
               left:
-                type: variable
                 children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -2455,55 +2438,55 @@ output:
               right:
                 text: '1'
                 type: integer
+              type: binary_operator
+            type: argument_list
+          children:
+          - text: user.file_manager_get_file_by_index
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+              type: binary_operator
+            type: argument_list
+          type: action
         left:
           text: file
           type: identifier
         right:
-          type: action
-          children:
-          - text: user.file_manager_get_file_by_index
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              - text: '-'
-                type: operator
-              - text: '1'
-                type: integer
-              left:
-                type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              operator:
-                text: '-'
-                type: operator
-              right:
-                text: '1'
-                type: integer
           action_name:
             text: user.file_manager_get_file_by_index
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -2512,10 +2495,10 @@ output:
               - text: '1'
                 type: integer
               left:
-                type: variable
                 children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -2525,133 +2508,133 @@ output:
               right:
                 text: '1'
                 type: integer
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_select_file
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: file
-                type: identifier
-              variable_name:
-                text: file
-                type: identifier
-          action_name:
-            text: user.file_manager_select_file
-            type: identifier
-          arguments:
+              type: binary_operator
             type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: file
-                type: identifier
-              variable_name:
-                text: file
-                type: identifier
-        expression:
+          children:
+          - text: user.file_manager_get_file_by_index
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+              type: binary_operator
+            type: argument_list
           type: action
-          children:
-          - text: user.file_manager_select_file
+        type: assignment
+      - children:
+        - action_name:
+            text: user.file_manager_select_file
             type: identifier
-          - type: argument_list
+          arguments:
             children:
-            - type: variable
-              children:
+            - children:
               - text: file
                 type: identifier
+              type: variable
               variable_name:
                 text: file
                 type: identifier
+            type: argument_list
+          children:
+          - text: user.file_manager_select_file
+            type: identifier
+          - children:
+            - children:
+              - text: file
+                type: identifier
+              type: variable
+              variable_name:
+                text: file
+                type: identifier
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.file_manager_select_file
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: file
                 type: identifier
+              type: variable
               variable_name:
                 text: file
                 type: identifier
+            type: argument_list
+          children:
+          - text: user.file_manager_select_file
+            type: identifier
+          - children:
+            - children:
+              - text: file
+                type: identifier
+              type: variable
+              variable_name:
+                text: file
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      type: block
     rule:
-      type: rule
       children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
+      - children:
         - text: file
           type: word
         - text: numb
           type: word
-        - type: capture
+        - capture_name:
+            text: number_small
+            type: identifier
           children:
           - text: number_small
             type: identifier
-          capture_name:
-            text: number_small
-            type: identifier
+          type: capture
+        type: seq
       - text: $
         type: end_anchor
+      type: rule
     script:
-      type: block
       children:
-      - type: assignment
-        children:
+      - children:
         - text: file
           type: identifier
-        - type: action
-          children:
-          - text: user.file_manager_get_file_by_index
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              - text: '-'
-                type: operator
-              - text: '1'
-                type: integer
-              left:
-                type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              operator:
-                text: '-'
-                type: operator
-              right:
-                text: '1'
-                type: integer
-          action_name:
+        - action_name:
             text: user.file_manager_get_file_by_index
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -2660,10 +2643,10 @@ output:
               - text: '1'
                 type: integer
               left:
-                type: variable
                 children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -2673,55 +2656,55 @@ output:
               right:
                 text: '1'
                 type: integer
+              type: binary_operator
+            type: argument_list
+          children:
+          - text: user.file_manager_get_file_by_index
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+              type: binary_operator
+            type: argument_list
+          type: action
         left:
           text: file
           type: identifier
         right:
-          type: action
-          children:
-          - text: user.file_manager_get_file_by_index
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              - text: '-'
-                type: operator
-              - text: '1'
-                type: integer
-              left:
-                type: variable
-                children:
-                - text: number_small
-                  type: identifier
-                variable_name:
-                  text: number_small
-                  type: identifier
-              operator:
-                text: '-'
-                type: operator
-              right:
-                text: '1'
-                type: integer
           action_name:
             text: user.file_manager_get_file_by_index
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -2730,10 +2713,10 @@ output:
               - text: '1'
                 type: integer
               left:
-                type: variable
                 children:
                 - text: number_small
                   type: identifier
+                type: variable
                 variable_name:
                   text: number_small
                   type: identifier
@@ -2743,1000 +2726,1039 @@ output:
               right:
                 text: '1'
                 type: integer
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_select_file
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: file
-                type: identifier
-              variable_name:
-                text: file
-                type: identifier
-          action_name:
-            text: user.file_manager_select_file
-            type: identifier
-          arguments:
+              type: binary_operator
             type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: file
-                type: identifier
-              variable_name:
-                text: file
-                type: identifier
-        expression:
+          children:
+          - text: user.file_manager_get_file_by_index
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                children:
+                - text: number_small
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number_small
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+              type: binary_operator
+            type: argument_list
           type: action
-          children:
-          - text: user.file_manager_select_file
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: file
-                type: identifier
-              variable_name:
-                text: file
-                type: identifier
-          action_name:
+        type: assignment
+      - children:
+        - action_name:
             text: user.file_manager_select_file
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: file
                 type: identifier
+              type: variable
               variable_name:
                 text: file
                 type: identifier
-  - type: command
-    children:
-    - type: rule
-      children:
-      - text: ^
-        type: start_anchor
-      - type: seq
-        children:
-        - text: file
-          type: word
-        - type: list
-          children:
-          - text: user.file_manager_files
-            type: identifier
-          list_name:
-            text: user.file_manager_files
-            type: identifier
-      - text: $
-        type: end_anchor
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
+            type: argument_list
           children:
           - text: user.file_manager_select_file
             type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: file_manager_files
+          - children:
+            - children:
+              - text: file
                 type: identifier
+              type: variable
               variable_name:
-                text: file_manager_files
+                text: file
                 type: identifier
-          action_name:
-            text: user.file_manager_select_file
-            type: identifier
-          arguments:
             type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: file_manager_files
-                type: identifier
-              variable_name:
-                text: file_manager_files
-                type: identifier
-        expression:
           type: action
-          children:
-          - text: user.file_manager_select_file
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: file_manager_files
-                type: identifier
-              variable_name:
-                text: file_manager_files
-                type: identifier
+        expression:
           action_name:
             text: user.file_manager_select_file
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
-              - text: file_manager_files
+            - children:
+              - text: file
                 type: identifier
+              type: variable
               variable_name:
-                text: file_manager_files
+                text: file
                 type: identifier
-    rule:
-      type: rule
-      children:
-      - text: ^
-        type: start_anchor
-      - type: seq
-        children:
-        - text: file
-          type: word
-        - type: list
+            type: argument_list
           children:
-          - text: user.file_manager_files
+          - text: user.file_manager_select_file
             type: identifier
-          list_name:
-            text: user.file_manager_files
-            type: identifier
-      - text: $
-        type: end_anchor
-    script:
+          - children:
+            - children:
+              - text: file
+                type: identifier
+              type: variable
+              variable_name:
+                text: file
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
       type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_select_file
+    type: command
+  - children:
+    - children:
+      - text: ^
+        type: start_anchor
+      - children:
+        - text: file
+          type: word
+        - children:
+          - text: user.file_manager_files
             type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: file_manager_files
-                type: identifier
-              variable_name:
-                text: file_manager_files
-                type: identifier
-          action_name:
+          list_name:
+            text: user.file_manager_files
+            type: identifier
+          type: list
+        type: seq
+      - text: $
+        type: end_anchor
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: user.file_manager_select_file
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: file_manager_files
                 type: identifier
+              type: variable
               variable_name:
                 text: file_manager_files
                 type: identifier
-        expression:
+            type: argument_list
+          children:
+          - text: user.file_manager_select_file
+            type: identifier
+          - children:
+            - children:
+              - text: file_manager_files
+                type: identifier
+              type: variable
+              variable_name:
+                text: file_manager_files
+                type: identifier
+            type: argument_list
           type: action
-          children:
-          - text: user.file_manager_select_file
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: file_manager_files
-                type: identifier
-              variable_name:
-                text: file_manager_files
-                type: identifier
+        expression:
           action_name:
             text: user.file_manager_select_file
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: file_manager_files
                 type: identifier
+              type: variable
               variable_name:
                 text: file_manager_files
                 type: identifier
-  - type: command
-    children:
-    - type: rule
+            type: argument_list
+          children:
+          - text: user.file_manager_select_file
+            type: identifier
+          - children:
+            - children:
+              - text: file_manager_files
+                type: identifier
+              type: variable
+              variable_name:
+                text: file_manager_files
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
+      - children:
+        - text: file
+          type: word
+        - children:
+          - text: user.file_manager_files
+            type: identifier
+          list_name:
+            text: user.file_manager_files
+            type: identifier
+          type: list
+        type: seq
+      - text: $
+        type: end_anchor
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: user.file_manager_select_file
+            type: identifier
+          arguments:
             children:
+            - children:
+              - text: file_manager_files
+                type: identifier
+              type: variable
+              variable_name:
+                text: file_manager_files
+                type: identifier
+            type: argument_list
+          children:
+          - text: user.file_manager_select_file
+            type: identifier
+          - children:
+            - children:
+              - text: file_manager_files
+                type: identifier
+              type: variable
+              variable_name:
+                text: file_manager_files
+                type: identifier
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.file_manager_select_file
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: file_manager_files
+                type: identifier
+              type: variable
+              variable_name:
+                text: file_manager_files
+                type: identifier
+            type: argument_list
+          children:
+          - text: user.file_manager_select_file
+            type: identifier
+          - children:
+            - children:
+              - text: file_manager_files
+                type: identifier
+              type: variable
+              variable_name:
+                text: file_manager_files
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - text: ^
+        type: start_anchor
+      - children:
+        - children:
+          - children:
             - text: select
               type: word
             - text: cell
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: file
           type: word
-        - type: list
-          children:
+        - children:
           - text: user.file_manager_files
             type: identifier
           list_name:
             text: user.file_manager_files
             type: identifier
+          type: list
+        type: seq
       - text: $
         type: end_anchor
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_select_file
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: file_manager_files
-                type: identifier
-              variable_name:
-                text: file_manager_files
-                type: identifier
-          action_name:
-            text: user.file_manager_select_file
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: file_manager_files
-                type: identifier
-              variable_name:
-                text: file_manager_files
-                type: identifier
-        expression:
-          type: action
-          children:
-          - text: user.file_manager_select_file
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: file_manager_files
-                type: identifier
-              variable_name:
-                text: file_manager_files
-                type: identifier
-          action_name:
-            text: user.file_manager_select_file
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: file_manager_files
-                type: identifier
-              variable_name:
-                text: file_manager_files
-                type: identifier
-    rule:
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.file_manager_select_file
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: file_manager_files
+                type: identifier
+              type: variable
+              variable_name:
+                text: file_manager_files
+                type: identifier
+            type: argument_list
+          children:
+          - text: user.file_manager_select_file
+            type: identifier
+          - children:
+            - children:
+              - text: file_manager_files
+                type: identifier
+              type: variable
+              variable_name:
+                text: file_manager_files
+                type: identifier
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.file_manager_select_file
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: file_manager_files
+                type: identifier
+              type: variable
+              variable_name:
+                text: file_manager_files
+                type: identifier
+            type: argument_list
+          children:
+          - text: user.file_manager_select_file
+            type: identifier
+          - children:
+            - children:
+              - text: file_manager_files
+                type: identifier
+              type: variable
+              variable_name:
+                text: file_manager_files
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+      - children:
+        - children:
+          - children:
             - text: select
               type: word
             - text: cell
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: file
           type: word
-        - type: list
-          children:
+        - children:
           - text: user.file_manager_files
             type: identifier
           list_name:
             text: user.file_manager_files
             type: identifier
+          type: list
+        type: seq
       - text: $
         type: end_anchor
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_select_file
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: file_manager_files
-                type: identifier
-              variable_name:
-                text: file_manager_files
-                type: identifier
-          action_name:
+      - children:
+        - action_name:
             text: user.file_manager_select_file
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: file_manager_files
                 type: identifier
+              type: variable
               variable_name:
                 text: file_manager_files
                 type: identifier
-        expression:
+            type: argument_list
+          children:
+          - text: user.file_manager_select_file
+            type: identifier
+          - children:
+            - children:
+              - text: file_manager_files
+                type: identifier
+              type: variable
+              variable_name:
+                text: file_manager_files
+                type: identifier
+            type: argument_list
           type: action
-          children:
-          - text: user.file_manager_select_file
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: file_manager_files
-                type: identifier
-              variable_name:
-                text: file_manager_files
-                type: identifier
+        expression:
           action_name:
             text: user.file_manager_select_file
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: file_manager_files
                 type: identifier
+              type: variable
               variable_name:
                 text: file_manager_files
                 type: identifier
+            type: argument_list
+          children:
+          - text: user.file_manager_select_file
+            type: identifier
+          - children:
+            - children:
+              - text: file_manager_files
+                type: identifier
+              type: variable
+              variable_name:
+                text: file_manager_files
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
   - text: '#new folder'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: folder
           type: word
         - text: new
           type: word
-        - type: capture
+        - capture_name:
+            text: user.text
+            type: identifier
           children:
           - text: user.text
             type: identifier
-          capture_name:
-            text: user.text
-            type: identifier
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_new_folder
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: text
-                type: identifier
-              variable_name:
-                text: text
-                type: identifier
-          action_name:
-            text: user.file_manager_new_folder
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: text
-                type: identifier
-              variable_name:
-                text: text
-                type: identifier
-        expression:
-          type: action
-          children:
-          - text: user.file_manager_new_folder
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: text
-                type: identifier
-              variable_name:
-                text: text
-                type: identifier
-          action_name:
-            text: user.file_manager_new_folder
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: text
-                type: identifier
-              variable_name:
-                text: text
-                type: identifier
-    rule:
+          type: capture
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.file_manager_new_folder
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: text
+                type: identifier
+              type: variable
+              variable_name:
+                text: text
+                type: identifier
+            type: argument_list
+          children:
+          - text: user.file_manager_new_folder
+            type: identifier
+          - children:
+            - children:
+              - text: text
+                type: identifier
+              type: variable
+              variable_name:
+                text: text
+                type: identifier
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.file_manager_new_folder
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: text
+                type: identifier
+              type: variable
+              variable_name:
+                text: text
+                type: identifier
+            type: argument_list
+          children:
+          - text: user.file_manager_new_folder
+            type: identifier
+          - children:
+            - children:
+              - text: text
+                type: identifier
+              type: variable
+              variable_name:
+                text: text
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: folder
           type: word
         - text: new
           type: word
-        - type: capture
+        - capture_name:
+            text: user.text
+            type: identifier
           children:
           - text: user.text
             type: identifier
-          capture_name:
-            text: user.text
-            type: identifier
+          type: capture
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_new_folder
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: text
-                type: identifier
-              variable_name:
-                text: text
-                type: identifier
-          action_name:
+      - children:
+        - action_name:
             text: user.file_manager_new_folder
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: text
                 type: identifier
+              type: variable
               variable_name:
                 text: text
                 type: identifier
-        expression:
+            type: argument_list
+          children:
+          - text: user.file_manager_new_folder
+            type: identifier
+          - children:
+            - children:
+              - text: text
+                type: identifier
+              type: variable
+              variable_name:
+                text: text
+                type: identifier
+            type: argument_list
           type: action
-          children:
-          - text: user.file_manager_new_folder
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: text
-                type: identifier
-              variable_name:
-                text: text
-                type: identifier
+        expression:
           action_name:
             text: user.file_manager_new_folder
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: text
                 type: identifier
+              type: variable
               variable_name:
                 text: text
                 type: identifier
+            type: argument_list
+          children:
+          - text: user.file_manager_new_folder
+            type: identifier
+          - children:
+            - children:
+              - text: text
+                type: identifier
+              type: variable
+              variable_name:
+                text: text
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
   - text: '#show properties'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: properties
           type: word
         - text: show
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_show_properties
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_show_properties
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.file_manager_show_properties
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_show_properties
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.file_manager_show_properties
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.file_manager_show_properties
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.file_manager_show_properties
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.file_manager_show_properties
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: properties
           type: word
         - text: show
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_show_properties
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+      - children:
+        - action_name:
             text: user.file_manager_show_properties
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: user.file_manager_show_properties
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: user.file_manager_show_properties
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: user.file_manager_show_properties
             type: identifier
           arguments:
-            type: argument_list
             children: []
+            type: argument_list
+          children:
+          - text: user.file_manager_show_properties
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
   - text: '# open terminal at location'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: terminal
           type: word
         - text: here
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_terminal_here
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_terminal_here
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.file_manager_terminal_here
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_terminal_here
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.file_manager_terminal_here
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.file_manager_terminal_here
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.file_manager_terminal_here
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.file_manager_terminal_here
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: terminal
           type: word
         - text: here
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.file_manager_terminal_here
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.file_manager_terminal_here
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.file_manager_terminal_here
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.file_manager_terminal_here
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_terminal_here
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: folder
           type: word
         - text: next
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_next_folder_page
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_next_folder_page
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.file_manager_next_folder_page
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_next_folder_page
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.file_manager_next_folder_page
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.file_manager_next_folder_page
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.file_manager_next_folder_page
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.file_manager_next_folder_page
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: folder
           type: word
         - text: next
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.file_manager_next_folder_page
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.file_manager_next_folder_page
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.file_manager_next_folder_page
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.file_manager_next_folder_page
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_next_folder_page
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: folder
           type: word
         - text: last
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_previous_folder_page
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_previous_folder_page
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.file_manager_previous_folder_page
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_previous_folder_page
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.file_manager_previous_folder_page
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.file_manager_previous_folder_page
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.file_manager_previous_folder_page
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.file_manager_previous_folder_page
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: folder
           type: word
         - text: last
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.file_manager_previous_folder_page
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.file_manager_previous_folder_page
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.file_manager_previous_folder_page
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.file_manager_previous_folder_page
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_previous_folder_page
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: file
           type: word
         - text: next
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_next_file_page
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_next_file_page
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.file_manager_next_file_page
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_next_file_page
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.file_manager_next_file_page
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.file_manager_next_file_page
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.file_manager_next_file_page
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.file_manager_next_file_page
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: file
           type: word
         - text: next
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_next_file_page
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_next_file_page
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.file_manager_next_file_page
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_next_file_page
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: file
-          type: word
-        - text: last
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_previous_file_page
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_previous_file_page
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.file_manager_previous_file_page
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.file_manager_previous_file_page
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - action_name:
+            text: user.file_manager_next_file_page
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.file_manager_next_file_page
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.file_manager_next_file_page
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.file_manager_next_file_page
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: file
           type: word
         - text: last
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_previous_file_page
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: user.file_manager_previous_file_page
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: user.file_manager_previous_file_page
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: user.file_manager_previous_file_page
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: user.file_manager_previous_file_page
             type: identifier
           arguments:
-            type: argument_list
             children: []
+            type: argument_list
+          children:
+          - text: user.file_manager_previous_file_page
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: file
+          type: word
+        - text: last
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: user.file_manager_previous_file_page
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.file_manager_previous_file_page
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.file_manager_previous_file_page
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.file_manager_previous_file_page
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  type: source_file

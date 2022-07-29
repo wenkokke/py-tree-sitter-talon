@@ -1,20 +1,26 @@
-input: "os: windows\nand app.name: Windows PowerShell\nos: windows\nand app.exe: powershell.exe\n\
-  -\n# makes the commands in generic_terminal available\ntag(): terminal\n\n# activates\
-  \ the implementation of the commands/functions in generic_terminal\ntag(): user.generic_windows_shell\n\
-  \n# makes commands for certain applications available\n# you can deactivate them\
-  \ if you do not use the application\ntag(): user.git\ntag(): user.anaconda\n# tag():\
-  \ user.kubectl\n"
+input: |
+  os: windows
+  and app.name: Windows PowerShell
+  os: windows
+  and app.exe: powershell.exe
+  -
+  # makes the commands in generic_terminal available
+  tag(): terminal
+
+  # activates the implementation of the commands/functions in generic_terminal
+  tag(): user.generic_windows_shell
+
+  # makes commands for certain applications available
+  # you can deactivate them if you do not use the application
+  tag(): user.git
+  tag(): user.anaconda
+  # tag(): user.kubectl
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: or
-      children:
-      - type: and
-        children:
-        - type: match
-          children:
+  - children:
+    - children:
+      - children:
+        - children:
           - text: os
             type: identifier
           - text: ' windows'
@@ -25,8 +31,8 @@ output:
           pattern:
             text: ' windows'
             type: implicit_string
-        - type: match
-          children:
+          type: match
+        - children:
           - text: app.name
             type: identifier
           - text: ' Windows PowerShell'
@@ -37,10 +43,10 @@ output:
           pattern:
             text: ' Windows PowerShell'
             type: implicit_string
-      - type: and
-        children:
-        - type: match
-          children:
+          type: match
+        type: and
+      - children:
+        - children:
           - text: os
             type: identifier
           - text: ' windows'
@@ -51,8 +57,8 @@ output:
           pattern:
             text: ' windows'
             type: implicit_string
-        - type: match
-          children:
+          type: match
+        - children:
           - text: app.exe
             type: identifier
           - text: ' powershell.exe'
@@ -63,41 +69,46 @@ output:
           pattern:
             text: ' powershell.exe'
             type: implicit_string
+          type: match
+        type: and
+      type: or
+    type: context
   - text: '# makes the commands in generic_terminal available'
     type: comment
-  - type: include_tag
-    children:
+  - children:
     - text: terminal
       type: identifier
     tag:
       text: terminal
       type: identifier
+    type: include_tag
   - text: '# activates the implementation of the commands/functions in generic_terminal'
     type: comment
-  - type: include_tag
-    children:
+  - children:
     - text: user.generic_windows_shell
       type: identifier
     tag:
       text: user.generic_windows_shell
       type: identifier
+    type: include_tag
   - text: '# makes commands for certain applications available'
     type: comment
   - text: '# you can deactivate them if you do not use the application'
     type: comment
-  - type: include_tag
-    children:
+  - children:
     - text: user.git
       type: identifier
     tag:
       text: user.git
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.anaconda
       type: identifier
     tag:
       text: user.anaconda
       type: identifier
+    type: include_tag
   - text: '# tag(): user.kubectl'
     type: comment
+  type: source_file

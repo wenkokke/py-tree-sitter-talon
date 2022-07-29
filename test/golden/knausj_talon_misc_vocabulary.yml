@@ -1,22 +1,22 @@
-input: "mode: command\nmode: dictation\n-\ncopy to vocab [as <phrase>]$: user.add_selection_to_vocabulary(phrase\
-  \ or \"\")\n# Automatically adds possessive form by appending \"'s\".\ncopy name\
-  \ to vocab [as <phrase>]$: user.add_selection_to_vocabulary(phrase or \"\", \"name\"\
-  )\n# Automatically adds plural form by simply appending \"s\".\ncopy noun to vocab\
-  \ [as <phrase>]$: user.add_selection_to_vocabulary(phrase or \"\", \"noun\")\ncopy\
-  \ to replacements as <phrase>$: user.add_selection_to_words_to_replace(phrase)\n\
-  # Automatically adds possessive form by appending \"'s\".\ncopy name to replacements\
-  \ as <phrase>$: user.add_selection_to_words_to_replace(phrase, \"name\")\n# Automatically\
-  \ adds plural form by simply appending \"s\".\ncopy noun to replacements as <phrase>$:\
-  \ user.add_selection_to_words_to_replace(phrase, \"noun\")\n"
+input: |
+  mode: command
+  mode: dictation
+  -
+  copy to vocab [as <phrase>]$: user.add_selection_to_vocabulary(phrase or "")
+  # Automatically adds possessive form by appending "'s".
+  copy name to vocab [as <phrase>]$: user.add_selection_to_vocabulary(phrase or "", "name")
+  # Automatically adds plural form by simply appending "s".
+  copy noun to vocab [as <phrase>]$: user.add_selection_to_vocabulary(phrase or "", "noun")
+  copy to replacements as <phrase>$: user.add_selection_to_words_to_replace(phrase)
+  # Automatically adds possessive form by appending "'s".
+  copy name to replacements as <phrase>$: user.add_selection_to_words_to_replace(phrase, "name")
+  # Automatically adds plural form by simply appending "s".
+  copy noun to replacements as <phrase>$: user.add_selection_to_words_to_replace(phrase, "noun")
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: or
-      children:
-      - type: match
-        children:
+  - children:
+    - children:
+      - children:
         - text: mode
           type: identifier
         - text: ' command'
@@ -27,8 +27,8 @@ output:
         pattern:
           text: ' command'
           type: implicit_string
-      - type: match
-        children:
+        type: match
+      - children:
         - text: mode
           type: identifier
         - text: ' dictation'
@@ -39,258 +39,223 @@ output:
         pattern:
           text: ' dictation'
           type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+        type: match
+      type: or
+    type: context
+  - children:
+    - children:
+      - children:
         - text: copy
           type: word
         - text: to
           type: word
         - text: vocab
           type: word
-        - type: optional
-          children:
-          - type: seq
-            children:
+        - children:
+          - children:
             - text: as
               type: word
-            - type: capture
+            - capture_name:
+                text: phrase
+                type: identifier
               children:
               - text: phrase
                 type: identifier
-              capture_name:
-                text: phrase
-                type: identifier
+              type: capture
+            type: seq
+          type: optional
+        type: seq
       - text: $
         type: end_anchor
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.add_selection_to_vocabulary
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
-          action_name:
-            text: user.add_selection_to_vocabulary
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
-        expression:
-          type: action
-          children:
-          - text: user.add_selection_to_vocabulary
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
-          action_name:
-            text: user.add_selection_to_vocabulary
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
-    rule:
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.add_selection_to_vocabulary
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            type: argument_list
+          children:
+          - text: user.add_selection_to_vocabulary
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.add_selection_to_vocabulary
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            type: argument_list
+          children:
+          - text: user.add_selection_to_vocabulary
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: copy
           type: word
         - text: to
           type: word
         - text: vocab
           type: word
-        - type: optional
-          children:
-          - type: seq
-            children:
+        - children:
+          - children:
             - text: as
               type: word
-            - type: capture
+            - capture_name:
+                text: phrase
+                type: identifier
               children:
               - text: phrase
                 type: identifier
-              capture_name:
-                text: phrase
-                type: identifier
+              type: capture
+            type: seq
+          type: optional
+        type: seq
       - text: $
         type: end_anchor
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.add_selection_to_vocabulary
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
-          action_name:
+      - children:
+        - action_name:
             text: user.add_selection_to_vocabulary
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: phrase
                   type: identifier
+                type: variable
                 variable_name:
                   text: phrase
                   type: identifier
               - text: or
                 type: operator
-              - type: string
-                children: []
+              - children: []
+                type: string
               left:
-                type: variable
                 children:
                 - text: phrase
                   type: identifier
+                type: variable
                 variable_name:
                   text: phrase
                   type: identifier
@@ -298,66 +263,66 @@ output:
                 text: or
                 type: operator
               right:
-                type: string
                 children: []
-        expression:
+                type: string
+              type: binary_operator
+            type: argument_list
+          children:
+          - text: user.add_selection_to_vocabulary
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            type: argument_list
           type: action
-          children:
-          - text: user.add_selection_to_vocabulary
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
+        expression:
           action_name:
             text: user.add_selection_to_vocabulary
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: phrase
                   type: identifier
+                type: variable
                 variable_name:
                   text: phrase
                   type: identifier
               - text: or
                 type: operator
-              - type: string
-                children: []
+              - children: []
+                type: string
               left:
-                type: variable
                 children:
                 - text: phrase
                   type: identifier
+                type: variable
                 variable_name:
                   text: phrase
                   type: identifier
@@ -365,16 +330,51 @@ output:
                 text: or
                 type: operator
               right:
-                type: string
                 children: []
-  - text: "# Automatically adds possessive form by appending \"'s\"."
+                type: string
+              type: binary_operator
+            type: argument_list
+          children:
+          - text: user.add_selection_to_vocabulary
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - text: '# Automatically adds possessive form by appending "''s".'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: copy
           type: word
         - text: name
@@ -383,179 +383,179 @@ output:
           type: word
         - text: vocab
           type: word
-        - type: optional
-          children:
-          - type: seq
-            children:
+        - children:
+          - children:
             - text: as
               type: word
-            - type: capture
+            - capture_name:
+                text: phrase
+                type: identifier
               children:
               - text: phrase
                 type: identifier
-              capture_name:
-                text: phrase
-                type: identifier
+              type: capture
+            type: seq
+          type: optional
+        type: seq
       - text: $
         type: end_anchor
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.add_selection_to_vocabulary
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
-            - type: string
-              children:
-              - text: name
-                type: string_content
-          action_name:
-            text: user.add_selection_to_vocabulary
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
-            - type: string
-              children:
-              - text: name
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.add_selection_to_vocabulary
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
-            - type: string
-              children:
-              - text: name
-                type: string_content
-          action_name:
-            text: user.add_selection_to_vocabulary
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
-            - type: string
-              children:
-              - text: name
-                type: string_content
-    rule:
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.add_selection_to_vocabulary
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            - children:
+              - text: name
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.add_selection_to_vocabulary
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            - children:
+              - text: name
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.add_selection_to_vocabulary
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            - children:
+              - text: name
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.add_selection_to_vocabulary
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            - children:
+              - text: name
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: copy
           type: word
         - text: name
@@ -564,87 +564,48 @@ output:
           type: word
         - text: vocab
           type: word
-        - type: optional
-          children:
-          - type: seq
-            children:
+        - children:
+          - children:
             - text: as
               type: word
-            - type: capture
+            - capture_name:
+                text: phrase
+                type: identifier
               children:
               - text: phrase
                 type: identifier
-              capture_name:
-                text: phrase
-                type: identifier
+              type: capture
+            type: seq
+          type: optional
+        type: seq
       - text: $
         type: end_anchor
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.add_selection_to_vocabulary
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
-            - type: string
-              children:
-              - text: name
-                type: string_content
-          action_name:
+      - children:
+        - action_name:
             text: user.add_selection_to_vocabulary
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: phrase
                   type: identifier
+                type: variable
                 variable_name:
                   text: phrase
                   type: identifier
               - text: or
                 type: operator
-              - type: string
-                children: []
+              - children: []
+                type: string
               left:
-                type: variable
                 children:
                 - text: phrase
                   type: identifier
+                type: variable
                 variable_name:
                   text: phrase
                   type: identifier
@@ -652,74 +613,74 @@ output:
                 text: or
                 type: operator
               right:
-                type: string
                 children: []
-            - type: string
-              children:
+                type: string
+              type: binary_operator
+            - children:
               - text: name
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: user.add_selection_to_vocabulary
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            - children:
+              - text: name
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: user.add_selection_to_vocabulary
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
-            - type: string
-              children:
-              - text: name
-                type: string_content
+        expression:
           action_name:
             text: user.add_selection_to_vocabulary
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: phrase
                   type: identifier
+                type: variable
                 variable_name:
                   text: phrase
                   type: identifier
               - text: or
                 type: operator
-              - type: string
-                children: []
+              - children: []
+                type: string
               left:
-                type: variable
                 children:
                 - text: phrase
                   type: identifier
+                type: variable
                 variable_name:
                   text: phrase
                   type: identifier
@@ -727,20 +688,59 @@ output:
                 text: or
                 type: operator
               right:
-                type: string
                 children: []
-            - type: string
-              children:
+                type: string
+              type: binary_operator
+            - children:
               - text: name
                 type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.add_selection_to_vocabulary
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            - children:
+              - text: name
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
   - text: '# Automatically adds plural form by simply appending "s".'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: copy
           type: word
         - text: noun
@@ -749,179 +749,179 @@ output:
           type: word
         - text: vocab
           type: word
-        - type: optional
-          children:
-          - type: seq
-            children:
+        - children:
+          - children:
             - text: as
               type: word
-            - type: capture
+            - capture_name:
+                text: phrase
+                type: identifier
               children:
               - text: phrase
                 type: identifier
-              capture_name:
-                text: phrase
-                type: identifier
+              type: capture
+            type: seq
+          type: optional
+        type: seq
       - text: $
         type: end_anchor
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.add_selection_to_vocabulary
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
-            - type: string
-              children:
-              - text: noun
-                type: string_content
-          action_name:
-            text: user.add_selection_to_vocabulary
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
-            - type: string
-              children:
-              - text: noun
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.add_selection_to_vocabulary
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
-            - type: string
-              children:
-              - text: noun
-                type: string_content
-          action_name:
-            text: user.add_selection_to_vocabulary
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
-            - type: string
-              children:
-              - text: noun
-                type: string_content
-    rule:
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.add_selection_to_vocabulary
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            - children:
+              - text: noun
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.add_selection_to_vocabulary
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            - children:
+              - text: noun
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.add_selection_to_vocabulary
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            - children:
+              - text: noun
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.add_selection_to_vocabulary
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            - children:
+              - text: noun
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: copy
           type: word
         - text: noun
@@ -930,260 +930,181 @@ output:
           type: word
         - text: vocab
           type: word
-        - type: optional
-          children:
-          - type: seq
-            children:
+        - children:
+          - children:
             - text: as
               type: word
-            - type: capture
+            - capture_name:
+                text: phrase
+                type: identifier
               children:
               - text: phrase
                 type: identifier
-              capture_name:
-                text: phrase
-                type: identifier
+              type: capture
+            type: seq
+          type: optional
+        type: seq
       - text: $
         type: end_anchor
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.add_selection_to_vocabulary
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
-            - type: string
-              children:
-              - text: noun
-                type: string_content
-          action_name:
-            text: user.add_selection_to_vocabulary
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
-            - type: string
-              children:
-              - text: noun
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.add_selection_to_vocabulary
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
-            - type: string
-              children:
-              - text: noun
-                type: string_content
-          action_name:
-            text: user.add_selection_to_vocabulary
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              - text: or
-                type: operator
-              - type: string
-                children: []
-              left:
-                type: variable
-                children:
-                - text: phrase
-                  type: identifier
-                variable_name:
-                  text: phrase
-                  type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                type: string
-                children: []
-            - type: string
-              children:
-              - text: noun
-                type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: copy
-          type: word
-        - text: to
-          type: word
-        - text: replacements
-          type: word
-        - text: as
-          type: word
-        - type: capture
-          children:
-          - text: phrase
-            type: identifier
-          capture_name:
-            text: phrase
-            type: identifier
-      - text: $
-        type: end_anchor
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.add_selection_to_words_to_replace
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: phrase
-                type: identifier
-              variable_name:
-                text: phrase
-                type: identifier
-          action_name:
-            text: user.add_selection_to_words_to_replace
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: phrase
-                type: identifier
-              variable_name:
-                text: phrase
-                type: identifier
-        expression:
-          type: action
-          children:
-          - text: user.add_selection_to_words_to_replace
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: phrase
-                type: identifier
-              variable_name:
-                text: phrase
-                type: identifier
-          action_name:
-            text: user.add_selection_to_words_to_replace
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: phrase
-                type: identifier
-              variable_name:
-                text: phrase
-                type: identifier
-    rule:
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - action_name:
+            text: user.add_selection_to_vocabulary
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            - children:
+              - text: noun
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.add_selection_to_vocabulary
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            - children:
+              - text: noun
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.add_selection_to_vocabulary
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            - children:
+              - text: noun
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.add_selection_to_vocabulary
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              - text: or
+                type: operator
+              - children: []
+                type: string
+              left:
+                children:
+                - text: phrase
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: phrase
+                  type: identifier
+              operator:
+                text: or
+                type: operator
+              right:
+                children: []
+                type: string
+              type: binary_operator
+            - children:
+              - text: noun
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: copy
           type: word
         - text: to
@@ -1192,81 +1113,160 @@ output:
           type: word
         - text: as
           type: word
-        - type: capture
+        - capture_name:
+            text: phrase
+            type: identifier
           children:
           - text: phrase
             type: identifier
-          capture_name:
-            text: phrase
-            type: identifier
+          type: capture
+        type: seq
       - text: $
         type: end_anchor
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.add_selection_to_words_to_replace
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: phrase
-                type: identifier
-              variable_name:
-                text: phrase
-                type: identifier
-          action_name:
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: user.add_selection_to_words_to_replace
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: phrase
                 type: identifier
+              type: variable
               variable_name:
                 text: phrase
                 type: identifier
-        expression:
+            type: argument_list
+          children:
+          - text: user.add_selection_to_words_to_replace
+            type: identifier
+          - children:
+            - children:
+              - text: phrase
+                type: identifier
+              type: variable
+              variable_name:
+                text: phrase
+                type: identifier
+            type: argument_list
           type: action
-          children:
-          - text: user.add_selection_to_words_to_replace
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: phrase
-                type: identifier
-              variable_name:
-                text: phrase
-                type: identifier
+        expression:
           action_name:
             text: user.add_selection_to_words_to_replace
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: phrase
                 type: identifier
+              type: variable
               variable_name:
                 text: phrase
                 type: identifier
-  - text: "# Automatically adds possessive form by appending \"'s\"."
+            type: argument_list
+          children:
+          - text: user.add_selection_to_words_to_replace
+            type: identifier
+          - children:
+            - children:
+              - text: phrase
+                type: identifier
+              type: variable
+              variable_name:
+                text: phrase
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: copy
+          type: word
+        - text: to
+          type: word
+        - text: replacements
+          type: word
+        - text: as
+          type: word
+        - capture_name:
+            text: phrase
+            type: identifier
+          children:
+          - text: phrase
+            type: identifier
+          type: capture
+        type: seq
+      - text: $
+        type: end_anchor
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: user.add_selection_to_words_to_replace
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: phrase
+                type: identifier
+              type: variable
+              variable_name:
+                text: phrase
+                type: identifier
+            type: argument_list
+          children:
+          - text: user.add_selection_to_words_to_replace
+            type: identifier
+          - children:
+            - children:
+              - text: phrase
+                type: identifier
+              type: variable
+              variable_name:
+                text: phrase
+                type: identifier
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.add_selection_to_words_to_replace
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: phrase
+                type: identifier
+              type: variable
+              variable_name:
+                text: phrase
+                type: identifier
+            type: argument_list
+          children:
+          - text: user.add_selection_to_words_to_replace
+            type: identifier
+          - children:
+            - children:
+              - text: phrase
+                type: identifier
+              type: variable
+              variable_name:
+                text: phrase
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - text: '# Automatically adds possessive form by appending "''s".'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: copy
           type: word
         - text: name
@@ -1277,93 +1277,93 @@ output:
           type: word
         - text: as
           type: word
-        - type: capture
+        - capture_name:
+            text: phrase
+            type: identifier
           children:
           - text: phrase
             type: identifier
-          capture_name:
-            text: phrase
-            type: identifier
+          type: capture
+        type: seq
       - text: $
         type: end_anchor
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.add_selection_to_words_to_replace
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: phrase
-                type: identifier
-              variable_name:
-                text: phrase
-                type: identifier
-            - type: string
-              children:
-              - text: name
-                type: string_content
-          action_name:
-            text: user.add_selection_to_words_to_replace
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: phrase
-                type: identifier
-              variable_name:
-                text: phrase
-                type: identifier
-            - type: string
-              children:
-              - text: name
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.add_selection_to_words_to_replace
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: phrase
-                type: identifier
-              variable_name:
-                text: phrase
-                type: identifier
-            - type: string
-              children:
-              - text: name
-                type: string_content
-          action_name:
-            text: user.add_selection_to_words_to_replace
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: phrase
-                type: identifier
-              variable_name:
-                text: phrase
-                type: identifier
-            - type: string
-              children:
-              - text: name
-                type: string_content
-    rule:
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.add_selection_to_words_to_replace
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: phrase
+                type: identifier
+              type: variable
+              variable_name:
+                text: phrase
+                type: identifier
+            - children:
+              - text: name
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.add_selection_to_words_to_replace
+            type: identifier
+          - children:
+            - children:
+              - text: phrase
+                type: identifier
+              type: variable
+              variable_name:
+                text: phrase
+                type: identifier
+            - children:
+              - text: name
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.add_selection_to_words_to_replace
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: phrase
+                type: identifier
+              type: variable
+              variable_name:
+                text: phrase
+                type: identifier
+            - children:
+              - text: name
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.add_selection_to_words_to_replace
+            type: identifier
+          - children:
+            - children:
+              - text: phrase
+                type: identifier
+              type: variable
+              variable_name:
+                text: phrase
+                type: identifier
+            - children:
+              - text: name
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: copy
           type: word
         - text: name
@@ -1374,97 +1374,97 @@ output:
           type: word
         - text: as
           type: word
-        - type: capture
+        - capture_name:
+            text: phrase
+            type: identifier
           children:
           - text: phrase
             type: identifier
-          capture_name:
-            text: phrase
-            type: identifier
+          type: capture
+        type: seq
       - text: $
         type: end_anchor
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.add_selection_to_words_to_replace
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: phrase
-                type: identifier
-              variable_name:
-                text: phrase
-                type: identifier
-            - type: string
-              children:
-              - text: name
-                type: string_content
-          action_name:
+      - children:
+        - action_name:
             text: user.add_selection_to_words_to_replace
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: phrase
                 type: identifier
+              type: variable
               variable_name:
                 text: phrase
                 type: identifier
-            - type: string
-              children:
+            - children:
               - text: name
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: user.add_selection_to_words_to_replace
+            type: identifier
+          - children:
+            - children:
+              - text: phrase
+                type: identifier
+              type: variable
+              variable_name:
+                text: phrase
+                type: identifier
+            - children:
+              - text: name
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: user.add_selection_to_words_to_replace
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: phrase
-                type: identifier
-              variable_name:
-                text: phrase
-                type: identifier
-            - type: string
-              children:
-              - text: name
-                type: string_content
+        expression:
           action_name:
             text: user.add_selection_to_words_to_replace
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: phrase
                 type: identifier
+              type: variable
               variable_name:
                 text: phrase
                 type: identifier
-            - type: string
-              children:
+            - children:
               - text: name
                 type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.add_selection_to_words_to_replace
+            type: identifier
+          - children:
+            - children:
+              - text: phrase
+                type: identifier
+              type: variable
+              variable_name:
+                text: phrase
+                type: identifier
+            - children:
+              - text: name
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
   - text: '# Automatically adds plural form by simply appending "s".'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: copy
           type: word
         - text: noun
@@ -1475,93 +1475,93 @@ output:
           type: word
         - text: as
           type: word
-        - type: capture
+        - capture_name:
+            text: phrase
+            type: identifier
           children:
           - text: phrase
             type: identifier
-          capture_name:
-            text: phrase
-            type: identifier
+          type: capture
+        type: seq
       - text: $
         type: end_anchor
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.add_selection_to_words_to_replace
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: phrase
-                type: identifier
-              variable_name:
-                text: phrase
-                type: identifier
-            - type: string
-              children:
-              - text: noun
-                type: string_content
-          action_name:
-            text: user.add_selection_to_words_to_replace
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: phrase
-                type: identifier
-              variable_name:
-                text: phrase
-                type: identifier
-            - type: string
-              children:
-              - text: noun
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.add_selection_to_words_to_replace
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: phrase
-                type: identifier
-              variable_name:
-                text: phrase
-                type: identifier
-            - type: string
-              children:
-              - text: noun
-                type: string_content
-          action_name:
-            text: user.add_selection_to_words_to_replace
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: phrase
-                type: identifier
-              variable_name:
-                text: phrase
-                type: identifier
-            - type: string
-              children:
-              - text: noun
-                type: string_content
-    rule:
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.add_selection_to_words_to_replace
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: phrase
+                type: identifier
+              type: variable
+              variable_name:
+                text: phrase
+                type: identifier
+            - children:
+              - text: noun
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.add_selection_to_words_to_replace
+            type: identifier
+          - children:
+            - children:
+              - text: phrase
+                type: identifier
+              type: variable
+              variable_name:
+                text: phrase
+                type: identifier
+            - children:
+              - text: noun
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.add_selection_to_words_to_replace
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: phrase
+                type: identifier
+              type: variable
+              variable_name:
+                text: phrase
+                type: identifier
+            - children:
+              - text: noun
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.add_selection_to_words_to_replace
+            type: identifier
+          - children:
+            - children:
+              - text: phrase
+                type: identifier
+              type: variable
+              variable_name:
+                text: phrase
+                type: identifier
+            - children:
+              - text: noun
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: copy
           type: word
         - text: noun
@@ -1572,86 +1572,90 @@ output:
           type: word
         - text: as
           type: word
-        - type: capture
+        - capture_name:
+            text: phrase
+            type: identifier
           children:
           - text: phrase
             type: identifier
-          capture_name:
-            text: phrase
-            type: identifier
+          type: capture
+        type: seq
       - text: $
         type: end_anchor
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.add_selection_to_words_to_replace
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: phrase
-                type: identifier
-              variable_name:
-                text: phrase
-                type: identifier
-            - type: string
-              children:
-              - text: noun
-                type: string_content
-          action_name:
+      - children:
+        - action_name:
             text: user.add_selection_to_words_to_replace
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: phrase
                 type: identifier
+              type: variable
               variable_name:
                 text: phrase
                 type: identifier
-            - type: string
-              children:
+            - children:
               - text: noun
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: user.add_selection_to_words_to_replace
+            type: identifier
+          - children:
+            - children:
+              - text: phrase
+                type: identifier
+              type: variable
+              variable_name:
+                text: phrase
+                type: identifier
+            - children:
+              - text: noun
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: user.add_selection_to_words_to_replace
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: phrase
-                type: identifier
-              variable_name:
-                text: phrase
-                type: identifier
-            - type: string
-              children:
-              - text: noun
-                type: string_content
+        expression:
           action_name:
             text: user.add_selection_to_words_to_replace
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: phrase
                 type: identifier
+              type: variable
               variable_name:
                 text: phrase
                 type: identifier
-            - type: string
-              children:
+            - children:
               - text: noun
                 type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.add_selection_to_words_to_replace
+            type: identifier
+          - children:
+            - children:
+              - text: phrase
+                type: identifier
+              type: variable
+              variable_name:
+                text: phrase
+                type: identifier
+            - children:
+              - text: noun
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  type: source_file

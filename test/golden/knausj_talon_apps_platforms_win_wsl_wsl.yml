@@ -1,21 +1,45 @@
-input: "# NOTE: to use these commands you will need to activate the tag below in whatever\
-  \ contexts you\n# choose.\n#\n# do this in a separate .talon file or via python.\
-  \ for example, if you use windows terminal for\n# wsl then you might do this:\n\
-  #\n#    os: windows\n#    app: windows_terminal\n#    -\n#    tag(): user.wsl\n\
-  #\n# however, if you also use windows terminal for other things (powershell), you\
-  \ will want something\n# more specific...like this:\n#\n#    os: windows\n#    app:\
-  \ windows_terminal\n#    title: /^WSL:/\n#    -\n#    tag(): user.wsl\n#\n# then,\
-  \ you will need to find a way to set the window title accordingly. for example,\
-  \ to match\n# the title pattern above, you can set the prompt in your .bashrc file\
-  \ like this:\n#\n#    PS1=\"\\[\\e]0;${debian_chroot:+($debian_chroot)}WSL:${WSL_DISTRO_NAME}\
-  \ \\u@\\h: \\w\\a\\]$PS1\"\n#\n# ALSO: if you do populate your window title with\
-  \ your distro name, make sure the 'wsl_title_regex'\n# value in wsl.py is set accordingly.\n\
-  tag: user.wsl\n-\n\ntag(): terminal\ntag(): user.file_manager\ntag(): user.generic_unix_shell\n\
-  tag(): user.git\ntag(): user.kubectl\n\n^go <user.letter>$: user.file_manager_open_volume(\"\
-  /mnt/{letter}\")\n\n(wsl|weasel) reset path detection: user.wsl_reset_path_detection()\n\
-  (wsl|weasel) speak: user.wsl_speak()\n"
+input: |
+  # NOTE: to use these commands you will need to activate the tag below in whatever contexts you
+  # choose.
+  #
+  # do this in a separate .talon file or via python. for example, if you use windows terminal for
+  # wsl then you might do this:
+  #
+  #    os: windows
+  #    app: windows_terminal
+  #    -
+  #    tag(): user.wsl
+  #
+  # however, if you also use windows terminal for other things (powershell), you will want something
+  # more specific...like this:
+  #
+  #    os: windows
+  #    app: windows_terminal
+  #    title: /^WSL:/
+  #    -
+  #    tag(): user.wsl
+  #
+  # then, you will need to find a way to set the window title accordingly. for example, to match
+  # the title pattern above, you can set the prompt in your .bashrc file like this:
+  #
+  #    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}WSL:${WSL_DISTRO_NAME} \u@\h: \w\a\]$PS1"
+  #
+  # ALSO: if you do populate your window title with your distro name, make sure the 'wsl_title_regex'
+  # value in wsl.py is set accordingly.
+  tag: user.wsl
+  -
+
+  tag(): terminal
+  tag(): user.file_manager
+  tag(): user.generic_unix_shell
+  tag(): user.git
+  tag(): user.kubectl
+
+  ^go <user.letter>$: user.file_manager_open_volume("/mnt/{letter}")
+
+  (wsl|weasel) reset path detection: user.wsl_reset_path_detection()
+  (wsl|weasel) speak: user.wsl_speak()
 output:
-  type: source_file
   children:
   - text: '# NOTE: to use these commands you will need to activate the tag below in
       whatever contexts you'
@@ -73,15 +97,13 @@ output:
     type: comment
   - text: '#'
     type: comment
-  - text: "# ALSO: if you do populate your window title with your distro name, make\
-      \ sure the 'wsl_title_regex'"
+  - text: '# ALSO: if you do populate your window title with your distro name, make
+      sure the ''wsl_title_regex'''
     type: comment
   - text: '# value in wsl.py is set accordingly.'
     type: comment
-  - type: context
-    children:
-    - type: match
-      children:
+  - children:
+    - children:
       - text: tag
         type: identifier
       - text: ' user.wsl'
@@ -92,176 +114,157 @@ output:
       pattern:
         text: ' user.wsl'
         type: implicit_string
-  - type: include_tag
-    children:
+      type: match
+    type: context
+  - children:
     - text: terminal
       type: identifier
     tag:
       text: terminal
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.file_manager
       type: identifier
     tag:
       text: user.file_manager
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.generic_unix_shell
       type: identifier
     tag:
       text: user.generic_unix_shell
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.git
       type: identifier
     tag:
       text: user.git
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.kubectl
       type: identifier
     tag:
       text: user.kubectl
       type: identifier
-  - type: command
-    children:
-    - type: rule
-      children:
+    type: include_tag
+  - children:
+    - children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
+      - children:
         - text: go
           type: word
-        - type: capture
+        - capture_name:
+            text: user.letter
+            type: identifier
           children:
           - text: user.letter
             type: identifier
-          capture_name:
-            text: user.letter
-            type: identifier
+          type: capture
+        type: seq
       - text: $
         type: end_anchor
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_open_volume
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: /mnt/
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: letter
-                type: string_content
-              - text: '}'
-                type: string_content
-          action_name:
-            text: user.file_manager_open_volume
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: /mnt/
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: letter
-                type: string_content
-              - text: '}'
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.file_manager_open_volume
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: /mnt/
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: letter
-                type: string_content
-              - text: '}'
-                type: string_content
-          action_name:
-            text: user.file_manager_open_volume
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: /mnt/
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: letter
-                type: string_content
-              - text: '}'
-                type: string_content
-    rule:
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.file_manager_open_volume
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: /mnt/
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: letter
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.file_manager_open_volume
+            type: identifier
+          - children:
+            - children:
+              - text: /mnt/
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: letter
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.file_manager_open_volume
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: /mnt/
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: letter
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.file_manager_open_volume
+            type: identifier
+          - children:
+            - children:
+              - text: /mnt/
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: letter
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
       - text: ^
         type: start_anchor
-      - type: seq
-        children:
+      - children:
         - text: go
           type: word
-        - type: capture
+        - capture_name:
+            text: user.letter
+            type: identifier
           children:
           - text: user.letter
             type: identifier
-          capture_name:
-            text: user.letter
-            type: identifier
+          type: capture
+        type: seq
       - text: $
         type: end_anchor
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.file_manager_open_volume
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: /mnt/
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: letter
-                type: string_content
-              - text: '}'
-                type: string_content
-          action_name:
+      - children:
+        - action_name:
             text: user.file_manager_open_volume
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: /mnt/
                 type: string_content
               - text: '{'
@@ -270,31 +273,31 @@ output:
                 type: string_content
               - text: '}'
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: user.file_manager_open_volume
+            type: identifier
+          - children:
+            - children:
+              - text: /mnt/
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: letter
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: user.file_manager_open_volume
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: /mnt/
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: letter
-                type: string_content
-              - text: '}'
-                type: string_content
+        expression:
           action_name:
             text: user.file_manager_open_volume
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: /mnt/
                 type: string_content
               - text: '{'
@@ -303,191 +306,213 @@ output:
                 type: string_content
               - text: '}'
                 type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+              type: string
+            type: argument_list
           children:
-          - type: choice
-            children:
+          - text: user.file_manager_open_volume
+            type: identifier
+          - children:
+            - children:
+              - text: /mnt/
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: letter
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: wsl
               type: word
             - text: weasel
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: reset
           type: word
         - text: path
           type: word
         - text: detection
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.wsl_reset_path_detection
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.wsl_reset_path_detection
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.wsl_reset_path_detection
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.wsl_reset_path_detection
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - action_name:
+            text: user.wsl_reset_path_detection
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
-          - type: choice
-            children:
+          - text: user.wsl_reset_path_detection
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.wsl_reset_path_detection
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.wsl_reset_path_detection
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: wsl
               type: word
             - text: weasel
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: reset
           type: word
         - text: path
           type: word
         - text: detection
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.wsl_reset_path_detection
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.wsl_reset_path_detection
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.wsl_reset_path_detection
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.wsl_reset_path_detection
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: wsl
-              type: word
-            - text: weasel
-              type: word
-        - text: speak
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.wsl_speak
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.wsl_speak
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.wsl_speak
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.wsl_speak
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+      - children:
+        - action_name:
+            text: user.wsl_reset_path_detection
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
-          - type: choice
-            children:
+          - text: user.wsl_reset_path_detection
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.wsl_reset_path_detection
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.wsl_reset_path_detection
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: wsl
               type: word
             - text: weasel
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: speak
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.wsl_speak
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: user.wsl_speak
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: user.wsl_speak
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: user.wsl_speak
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: user.wsl_speak
             type: identifier
           arguments:
-            type: argument_list
             children: []
+            type: argument_list
+          children:
+          - text: user.wsl_speak
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
+            - text: wsl
+              type: word
+            - text: weasel
+              type: word
+            type: choice
+          type: parenthesized_rule
+        - text: speak
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: user.wsl_speak
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.wsl_speak
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.wsl_speak
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.wsl_speak
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  type: source_file

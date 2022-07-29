@@ -1,11 +1,12 @@
-input: "app: kindle\n-\n# Set tags\ntag(): user.pages\n"
+input: |
+  app: kindle
+  -
+  # Set tags
+  tag(): user.pages
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: match
-      children:
+  - children:
+    - children:
       - text: app
         type: identifier
       - text: ' kindle'
@@ -16,12 +17,15 @@ output:
       pattern:
         text: ' kindle'
         type: implicit_string
+      type: match
+    type: context
   - text: '# Set tags'
     type: comment
-  - type: include_tag
-    children:
+  - children:
     - text: user.pages
       type: identifier
     tag:
       text: user.pages
       type: identifier
+    type: include_tag
+  type: source_file

@@ -1,18 +1,27 @@
-input: "os: linux\nand app.name: konsole\n-\n# makes the commands in generic_terminal\
-  \ available\ntag(): terminal\n\n# activates the implementation of the commands/functions\
-  \ in generic_terminal\ntag(): user.generic_unix_shell\n\n# makes commands for certain\
-  \ applications available\n# you can deactivate them if you do not use the application\n\
-  tag(): user.git\ntag(): user.anaconda\n# tag(): user.kubectl\n\n\ntag(): user.tabs\n\
-  # TODO: add file_manager support\n"
+input: |
+  os: linux
+  and app.name: konsole
+  -
+  # makes the commands in generic_terminal available
+  tag(): terminal
+
+  # activates the implementation of the commands/functions in generic_terminal
+  tag(): user.generic_unix_shell
+
+  # makes commands for certain applications available
+  # you can deactivate them if you do not use the application
+  tag(): user.git
+  tag(): user.anaconda
+  # tag(): user.kubectl
+
+
+  tag(): user.tabs
+  # TODO: add file_manager support
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: and
-      children:
-      - type: match
-        children:
+  - children:
+    - children:
+      - children:
         - text: os
           type: identifier
         - text: ' linux'
@@ -23,8 +32,8 @@ output:
         pattern:
           text: ' linux'
           type: implicit_string
-      - type: match
-        children:
+        type: match
+      - children:
         - text: app.name
           type: identifier
         - text: ' konsole'
@@ -35,50 +44,54 @@ output:
         pattern:
           text: ' konsole'
           type: implicit_string
+        type: match
+      type: and
+    type: context
   - text: '# makes the commands in generic_terminal available'
     type: comment
-  - type: include_tag
-    children:
+  - children:
     - text: terminal
       type: identifier
     tag:
       text: terminal
       type: identifier
+    type: include_tag
   - text: '# activates the implementation of the commands/functions in generic_terminal'
     type: comment
-  - type: include_tag
-    children:
+  - children:
     - text: user.generic_unix_shell
       type: identifier
     tag:
       text: user.generic_unix_shell
       type: identifier
+    type: include_tag
   - text: '# makes commands for certain applications available'
     type: comment
   - text: '# you can deactivate them if you do not use the application'
     type: comment
-  - type: include_tag
-    children:
+  - children:
     - text: user.git
       type: identifier
     tag:
       text: user.git
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.anaconda
       type: identifier
     tag:
       text: user.anaconda
       type: identifier
+    type: include_tag
   - text: '# tag(): user.kubectl'
     type: comment
-  - type: include_tag
-    children:
+  - children:
     - text: user.tabs
       type: identifier
     tag:
       text: user.tabs
       type: identifier
+    type: include_tag
   - text: '# TODO: add file_manager support'
     type: comment
+  type: source_file

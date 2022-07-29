@@ -1,11 +1,13 @@
-input: "app: calibre_viewer\n-\n# Set tags\ntag(): user.pages\ntag(): user.chapters\n"
+input: |
+  app: calibre_viewer
+  -
+  # Set tags
+  tag(): user.pages
+  tag(): user.chapters
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: match
-      children:
+  - children:
+    - children:
       - text: app
         type: identifier
       - text: ' calibre_viewer'
@@ -16,19 +18,22 @@ output:
       pattern:
         text: ' calibre_viewer'
         type: implicit_string
+      type: match
+    type: context
   - text: '# Set tags'
     type: comment
-  - type: include_tag
-    children:
+  - children:
     - text: user.pages
       type: identifier
     tag:
       text: user.pages
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.chapters
       type: identifier
     tag:
       text: user.chapters
       type: identifier
+    type: include_tag
+  type: source_file

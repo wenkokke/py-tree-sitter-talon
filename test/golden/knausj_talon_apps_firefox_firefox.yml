@@ -1,13 +1,19 @@
-input: "app: firefox\n-\ntag(): browser\ntag(): user.tabs\ntab search:\n    browser.focus_address()\n\
-  \    insert(\"% \")\ntab search <user.text>$:\n    browser.focus_address()\n   \
-  \ insert(\"% {text}\")\n    key(down)\n"
+input: |
+  app: firefox
+  -
+  tag(): browser
+  tag(): user.tabs
+  tab search:
+      browser.focus_address()
+      insert("% ")
+  tab search <user.text>$:
+      browser.focus_address()
+      insert("% {text}")
+      key(down)
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: match
-      children:
+  - children:
+    - children:
       - text: app
         type: identifier
       - text: ' firefox'
@@ -18,407 +24,371 @@ output:
       pattern:
         text: ' firefox'
         type: implicit_string
-  - type: include_tag
-    children:
+      type: match
+    type: context
+  - children:
     - text: browser
       type: identifier
     tag:
       text: browser
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.tabs
       type: identifier
     tag:
       text: user.tabs
       type: identifier
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+    type: include_tag
+  - children:
+    - children:
+      - children:
         - text: tab
           type: word
         - text: search
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: browser.focus_address
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: browser.focus_address
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: browser.focus_address
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: browser.focus_address
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '% '
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '% '
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '% '
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '% '
-                type: string_content
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - text: tab
-          type: word
-        - text: search
-          type: word
-    script:
+    - children:
+      - children:
+        - action_name:
+            text: browser.focus_address
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: browser.focus_address
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: browser.focus_address
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: browser.focus_address
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: '% '
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: '% '
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: '% '
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: '% '
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
       type: block
+    rule:
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: browser.focus_address
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: browser.focus_address
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: browser.focus_address
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: browser.focus_address
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '% '
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '% '
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '% '
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '% '
-                type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+      - children:
         - text: tab
           type: word
         - text: search
           type: word
-        - type: capture
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: browser.focus_address
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: browser.focus_address
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: browser.focus_address
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: browser.focus_address
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: '% '
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: '% '
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: '% '
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: '% '
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - text: tab
+          type: word
+        - text: search
+          type: word
+        - capture_name:
+            text: user.text
+            type: identifier
           children:
           - text: user.text
             type: identifier
-          capture_name:
-            text: user.text
-            type: identifier
+          type: capture
+        type: seq
       - text: $
         type: end_anchor
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: browser.focus_address
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: browser.focus_address
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: browser.focus_address
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: browser.focus_address
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '% '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: text
-                type: string_content
-              - text: '}'
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '% '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: text
-                type: string_content
-              - text: '}'
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '% '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: text
-                type: string_content
-              - text: '}'
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '% '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: text
-                type: string_content
-              - text: '}'
-                type: string_content
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: down
-            type: implicit_string
-          arguments:
-            text: down
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: down
-            type: implicit_string
-          arguments:
-            text: down
-            type: implicit_string
-    rule:
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: browser.focus_address
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: browser.focus_address
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: browser.focus_address
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: browser.focus_address
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: '% '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: text
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: '% '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: text
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: '% '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: text
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: '% '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: text
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - arguments:
+            text: down
+            type: implicit_string
+          children:
+          - text: down
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: down
+            type: implicit_string
+          children:
+          - text: down
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: tab
           type: word
         - text: search
           type: word
-        - type: capture
+        - capture_name:
+            text: user.text
+            type: identifier
           children:
           - text: user.text
             type: identifier
-          capture_name:
-            text: user.text
-            type: identifier
+          type: capture
+        type: seq
       - text: $
         type: end_anchor
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: browser.focus_address
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: browser.focus_address
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: browser.focus_address
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: browser.focus_address
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: browser.focus_address
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '% '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: text
-                type: string_content
-              - text: '}'
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '% '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: text
-                type: string_content
-              - text: '}'
-                type: string_content
-        expression:
           type: action
-          children:
-          - text: insert
+        type: expression
+      - children:
+        - action_name:
+            text: insert
             type: identifier
-          - type: argument_list
+          arguments:
             children:
-            - type: string
-              children:
+            - children:
               - text: '% '
                 type: string_content
               - text: '{'
@@ -427,14 +397,31 @@ output:
                 type: string_content
               - text: '}'
                 type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: '% '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: text
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: '% '
                 type: string_content
               - text: '{'
@@ -443,20 +430,42 @@ output:
                 type: string_content
               - text: '}'
                 type: string_content
-      - type: expression
-        children:
-        - type: key_action
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: '% '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: text
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - arguments:
+            text: down
+            type: implicit_string
           children:
           - text: down
             type: implicit_string
-          arguments:
-            text: down
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: down
-            type: implicit_string
+        expression:
           arguments:
             text: down
             type: implicit_string
+          children:
+          - text: down
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  type: source_file

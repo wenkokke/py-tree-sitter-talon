@@ -1,35 +1,66 @@
-input: "tag: user.talon\n-\ntag(): user.code_operators_math\ntag(): user.code_operators_assignment\n\
-  tag(): user.code_comment_line\ntag(): user.code_functions_common\n# uncomment user.talon_populate_lists\
-  \ tag to activate talon-specific lists of actions, scopes, modes etcetera.\n# Do\
-  \ not enable this tag with dragon, as it will be unusable.\n# with conformer, the\
-  \ latency increase may also be unacceptable depending on your cpu\n# see https://github.com/knausj85/knausj_talon/issues/600\n\
-  # tag(): user.talon_populate_lists\n\ndot talon: insert(\".talon\")\n#defintion\
-  \ blocks for the context\naction block:\n    user.insert_between(\"action(\", \"\
-  ):\")\nsetting block:\n    insert(\"settings():\\n\\t\")\nsetting {user.talon_settings}:\n\
-  \    user.paste(\"{talon_settings} = \")\n#context requirements\nwin require:\n\
-  \    insert(\"os: windows\\n\")\nmac require:\n    insert(\"os: mac\\n\")\nlinux\
-  \ require:\n    insert(\"os: linux\\n\")\ntitle require:\n    insert(\"win.title:\
-  \ \")\napplication [require] [{user.talon_apps}]:\n    app = talon_apps or \"\"\n\
-  \    user.paste(\"app: {app}\")\nmode require [{user.talon_modes}]:\n    mode =\
-  \ talon_modes or \"\"\n    user.paste(\"mode: {mode}\")\ntag require [{user.talon_tags}]:\n\
-  \    tag = talon_tags or \"\"\n    user.paste(\"tag: {tag}\")\ntag set [{user.talon_tags}]:\n\
-  \    tag = talon_tags or \"\"\n    user.paste(\"tag(): {tag}\")\n# requires user.talon_populate_lists\
-  \ tag. do not use with dragon\nlist {user.talon_lists}: \"{{{talon_lists}}}\"\n\
-  # requires user.talon_populate_lists tag. do not use with dragon\ncapture {user.talon_captures}:\
-  \ \"<{talon_captures}>\"\n\n#commands for dictating key combos\nkey <user.keys>\
-  \ over: \"{keys}\"\nkey <user.modifiers> over: \"{modifiers}\"\n\n# all actions\
-  \ (requires uncommenting user.talon_populate_lists tag above)\nfunk {user.talon_actions}:\
-  \ user.code_insert_function(talon_actions, edit.selected_text())\nfunk cell <number>:\n\
-  \    user.code_select_function(number - 1, \"\")\nfunk wrap <user.code_common_function>:\n\
-  \    user.code_insert_function(code_common_function, edit.selected_text())\nfunk\
-  \ wrap <number>:\n    user.code_select_function(number - 1, edit.selected_text())\n"
+input: |
+  tag: user.talon
+  -
+  tag(): user.code_operators_math
+  tag(): user.code_operators_assignment
+  tag(): user.code_comment_line
+  tag(): user.code_functions_common
+  # uncomment user.talon_populate_lists tag to activate talon-specific lists of actions, scopes, modes etcetera.
+  # Do not enable this tag with dragon, as it will be unusable.
+  # with conformer, the latency increase may also be unacceptable depending on your cpu
+  # see https://github.com/knausj85/knausj_talon/issues/600
+  # tag(): user.talon_populate_lists
+
+  dot talon: insert(".talon")
+  #defintion blocks for the context
+  action block:
+      user.insert_between("action(", "):")
+  setting block:
+      insert("settings():\n\t")
+  setting {user.talon_settings}:
+      user.paste("{talon_settings} = ")
+  #context requirements
+  win require:
+      insert("os: windows\n")
+  mac require:
+      insert("os: mac\n")
+  linux require:
+      insert("os: linux\n")
+  title require:
+      insert("win.title: ")
+  application [require] [{user.talon_apps}]:
+      app = talon_apps or ""
+      user.paste("app: {app}")
+  mode require [{user.talon_modes}]:
+      mode = talon_modes or ""
+      user.paste("mode: {mode}")
+  tag require [{user.talon_tags}]:
+      tag = talon_tags or ""
+      user.paste("tag: {tag}")
+  tag set [{user.talon_tags}]:
+      tag = talon_tags or ""
+      user.paste("tag(): {tag}")
+  # requires user.talon_populate_lists tag. do not use with dragon
+  list {user.talon_lists}: "{{{talon_lists}}}"
+  # requires user.talon_populate_lists tag. do not use with dragon
+  capture {user.talon_captures}: "<{talon_captures}>"
+
+  #commands for dictating key combos
+  key <user.keys> over: "{keys}"
+  key <user.modifiers> over: "{modifiers}"
+
+  # all actions (requires uncommenting user.talon_populate_lists tag above)
+  funk {user.talon_actions}: user.code_insert_function(talon_actions, edit.selected_text())
+  funk cell <number>:
+      user.code_select_function(number - 1, "")
+  funk wrap <user.code_common_function>:
+      user.code_insert_function(code_common_function, edit.selected_text())
+  funk wrap <number>:
+      user.code_select_function(number - 1, edit.selected_text())
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: match
-      children:
+  - children:
+    - children:
       - text: tag
         type: identifier
       - text: ' user.talon'
@@ -40,34 +71,36 @@ output:
       pattern:
         text: ' user.talon'
         type: implicit_string
-  - type: include_tag
-    children:
+      type: match
+    type: context
+  - children:
     - text: user.code_operators_math
       type: identifier
     tag:
       text: user.code_operators_math
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_operators_assignment
       type: identifier
     tag:
       text: user.code_operators_assignment
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_comment_line
       type: identifier
     tag:
       text: user.code_comment_line
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_functions_common
       type: identifier
     tag:
       text: user.code_functions_common
       type: identifier
+    type: include_tag
   - text: '# uncomment user.talon_populate_lists tag to activate talon-specific lists
       of actions, scopes, modes etcetera.'
     type: comment
@@ -80,529 +113,508 @@ output:
     type: comment
   - text: '# tag(): user.talon_populate_lists'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: dot
           type: word
         - text: talon
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: .talon
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: .talon
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: .talon
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: .talon
-                type: string_content
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: .talon
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: .talon
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: .talon
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: .talon
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: dot
           type: word
         - text: talon
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: .talon
-                type: string_content
-          action_name:
+      - children:
+        - action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: .talon
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: .talon
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: .talon
-                type: string_content
+        expression:
           action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: .talon
                 type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: .talon
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
   - text: '#defintion blocks for the context'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: action
           type: word
         - text: block
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: action(
-                type: string_content
-            - type: string
-              children:
-              - text: '):'
-                type: string_content
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: action(
-                type: string_content
-            - type: string
-              children:
-              - text: '):'
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: action(
-                type: string_content
-            - type: string
-              children:
-              - text: '):'
-                type: string_content
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: action(
-                type: string_content
-            - type: string
-              children:
-              - text: '):'
-                type: string_content
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: action(
+                type: string_content
+              type: string
+            - children:
+              - text: '):'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: action(
+                type: string_content
+              type: string
+            - children:
+              - text: '):'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: action(
+                type: string_content
+              type: string
+            - children:
+              - text: '):'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: action(
+                type: string_content
+              type: string
+            - children:
+              - text: '):'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: action
           type: word
         - text: block
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: action(
-                type: string_content
-            - type: string
-              children:
-              - text: '):'
-                type: string_content
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: action(
-                type: string_content
-            - type: string
-              children:
-              - text: '):'
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: action(
-                type: string_content
-            - type: string
-              children:
-              - text: '):'
-                type: string_content
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: action(
-                type: string_content
-            - type: string
-              children:
-              - text: '):'
-                type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: setting
-          type: word
-        - text: block
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'settings():'
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-              - text: \t
-                type: string_escape_sequence
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'settings():'
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-              - text: \t
-                type: string_escape_sequence
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'settings():'
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-              - text: \t
-                type: string_escape_sequence
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'settings():'
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-              - text: \t
-                type: string_escape_sequence
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: action(
+                type: string_content
+              type: string
+            - children:
+              - text: '):'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: action(
+                type: string_content
+              type: string
+            - children:
+              - text: '):'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: action(
+                type: string_content
+              type: string
+            - children:
+              - text: '):'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: action(
+                type: string_content
+              type: string
+            - children:
+              - text: '):'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: setting
           type: word
         - text: block
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'settings():'
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-              - text: \t
-                type: string_escape_sequence
-          action_name:
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'settings():'
                 type: string_content
               - text: \n
                 type: string_escape_sequence
               - text: \t
                 type: string_escape_sequence
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'settings():'
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              - text: \t
+                type: string_escape_sequence
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'settings():'
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-              - text: \t
-                type: string_escape_sequence
+        expression:
           action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'settings():'
                 type: string_content
               - text: \n
                 type: string_escape_sequence
               - text: \t
                 type: string_escape_sequence
-  - type: command
-    children:
-    - type: rule
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'settings():'
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              - text: \t
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: setting
           type: word
-        - type: list
+        - text: block
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'settings():'
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              - text: \t
+                type: string_escape_sequence
+              type: string
+            type: argument_list
           children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'settings():'
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              - text: \t
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'settings():'
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              - text: \t
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'settings():'
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              - text: \t
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - text: setting
+          type: word
+        - children:
           - text: user.talon_settings
             type: identifier
           list_name:
             text: user.talon_settings
             type: identifier
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.paste
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '{'
-                type: string_content
-              - text: talon_settings
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: ' = '
-                type: string_content
-          action_name:
-            text: user.paste
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '{'
-                type: string_content
-              - text: talon_settings
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: ' = '
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.paste
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '{'
-                type: string_content
-              - text: talon_settings
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: ' = '
-                type: string_content
-          action_name:
-            text: user.paste
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '{'
-                type: string_content
-              - text: talon_settings
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: ' = '
-                type: string_content
-    rule:
+          type: list
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.paste
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: '{'
+                type: string_content
+              - text: talon_settings
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ' = '
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.paste
+            type: identifier
+          - children:
+            - children:
+              - text: '{'
+                type: string_content
+              - text: talon_settings
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ' = '
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.paste
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: '{'
+                type: string_content
+              - text: talon_settings
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ' = '
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.paste
+            type: identifier
+          - children:
+            - children:
+              - text: '{'
+                type: string_content
+              - text: talon_settings
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ' = '
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: setting
           type: word
-        - type: list
-          children:
+        - children:
           - text: user.talon_settings
             type: identifier
           list_name:
             text: user.talon_settings
             type: identifier
+          type: list
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.paste
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '{'
-                type: string_content
-              - text: talon_settings
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: ' = '
-                type: string_content
-          action_name:
+      - children:
+        - action_name:
             text: user.paste
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: '{'
                 type: string_content
               - text: talon_settings
@@ -611,31 +623,31 @@ output:
                 type: string_content
               - text: ' = '
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: user.paste
+            type: identifier
+          - children:
+            - children:
+              - text: '{'
+                type: string_content
+              - text: talon_settings
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ' = '
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: user.paste
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '{'
-                type: string_content
-              - text: talon_settings
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: ' = '
-                type: string_content
+        expression:
           action_name:
             text: user.paste
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: '{'
                 type: string_content
               - text: talon_settings
@@ -644,541 +656,558 @@ output:
                 type: string_content
               - text: ' = '
                 type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.paste
+            type: identifier
+          - children:
+            - children:
+              - text: '{'
+                type: string_content
+              - text: talon_settings
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ' = '
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
   - text: '#context requirements'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: win
           type: word
         - text: require
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'os: windows'
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'os: windows'
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'os: windows'
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'os: windows'
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'os: windows'
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'os: windows'
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'os: windows'
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'os: windows'
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: win
           type: word
         - text: require
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'os: windows'
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-          action_name:
+      - children:
+        - action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'os: windows'
                 type: string_content
               - text: \n
                 type: string_escape_sequence
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'os: windows'
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'os: windows'
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
+        expression:
           action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'os: windows'
                 type: string_content
               - text: \n
                 type: string_escape_sequence
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'os: windows'
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: mac
           type: word
         - text: require
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'os: mac'
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'os: mac'
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'os: mac'
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'os: mac'
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'os: mac'
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'os: mac'
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'os: mac'
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'os: mac'
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: mac
           type: word
         - text: require
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'os: mac'
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-          action_name:
+      - children:
+        - action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'os: mac'
                 type: string_content
               - text: \n
                 type: string_escape_sequence
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'os: mac'
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'os: mac'
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
+        expression:
           action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'os: mac'
                 type: string_content
               - text: \n
                 type: string_escape_sequence
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'os: mac'
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: linux
           type: word
         - text: require
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'os: linux'
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'os: linux'
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'os: linux'
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'os: linux'
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'os: linux'
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'os: linux'
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'os: linux'
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'os: linux'
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: linux
           type: word
         - text: require
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'os: linux'
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'os: linux'
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'os: linux'
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'os: linux'
-                type: string_content
-              - text: \n
-                type: string_escape_sequence
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: title
-          type: word
-        - text: require
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'win.title: '
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'win.title: '
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'win.title: '
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'win.title: '
-                type: string_content
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'os: linux'
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'os: linux'
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'os: linux'
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'os: linux'
+                type: string_content
+              - text: \n
+                type: string_escape_sequence
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: title
           type: word
         - text: require
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'win.title: '
-                type: string_content
-          action_name:
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'win.title: '
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'win.title: '
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'win.title: '
-                type: string_content
+        expression:
           action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'win.title: '
                 type: string_content
-  - type: command
-    children:
-    - type: rule
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'win.title: '
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
+        - text: title
+          type: word
+        - text: require
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'win.title: '
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'win.title: '
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'win.title: '
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'win.title: '
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: application
           type: word
-        - type: optional
-          children:
+        - children:
           - text: require
             type: word
-        - type: optional
-          children:
-          - type: list
-            children:
+          type: optional
+        - children:
+          - children:
             - text: user.talon_apps
               type: identifier
             list_name:
               text: user.talon_apps
               type: identifier
-    - type: block
-      children:
-      - type: assignment
-        children:
+            type: list
+          type: optional
+        type: seq
+      type: rule
+    - children:
+      - children:
         - text: app
           type: identifier
-        - type: binary_operator
-          children:
-          - type: variable
-            children:
+        - children:
+          - children:
             - text: talon_apps
               type: identifier
+            type: variable
             variable_name:
               text: talon_apps
               type: identifier
           - text: or
             type: operator
-          - type: string
-            children: []
+          - children: []
+            type: string
           left:
-            type: variable
             children:
             - text: talon_apps
               type: identifier
+            type: variable
             variable_name:
               text: talon_apps
               type: identifier
@@ -1186,30 +1215,30 @@ output:
             text: or
             type: operator
           right:
-            type: string
             children: []
+            type: string
+          type: binary_operator
         left:
           text: app
           type: identifier
         right:
-          type: binary_operator
           children:
-          - type: variable
-            children:
+          - children:
             - text: talon_apps
               type: identifier
+            type: variable
             variable_name:
               text: talon_apps
               type: identifier
           - text: or
             type: operator
-          - type: string
-            children: []
+          - children: []
+            type: string
           left:
-            type: variable
             children:
             - text: talon_apps
               type: identifier
+            type: variable
             variable_name:
               text: talon_apps
               type: identifier
@@ -1217,34 +1246,17 @@ output:
             text: or
             type: operator
           right:
-            type: string
             children: []
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.paste
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'app: '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: app
-                type: string_content
-              - text: '}'
-                type: string_content
-          action_name:
+            type: string
+          type: binary_operator
+        type: assignment
+      - children:
+        - action_name:
             text: user.paste
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'app: '
                 type: string_content
               - text: '{'
@@ -1253,31 +1265,31 @@ output:
                 type: string_content
               - text: '}'
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: user.paste
+            type: identifier
+          - children:
+            - children:
+              - text: 'app: '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: app
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: user.paste
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'app: '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: app
-                type: string_content
-              - text: '}'
-                type: string_content
+        expression:
           action_name:
             text: user.paste
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'app: '
                 type: string_content
               - text: '{'
@@ -1286,51 +1298,68 @@ output:
                 type: string_content
               - text: '}'
                 type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.paste
+            type: identifier
+          - children:
+            - children:
+              - text: 'app: '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: app
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
     rule:
-      type: rule
       children:
-      - type: seq
-        children:
+      - children:
         - text: application
           type: word
-        - type: optional
-          children:
+        - children:
           - text: require
             type: word
-        - type: optional
-          children:
-          - type: list
-            children:
+          type: optional
+        - children:
+          - children:
             - text: user.talon_apps
               type: identifier
             list_name:
               text: user.talon_apps
               type: identifier
+            type: list
+          type: optional
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: assignment
-        children:
+      - children:
         - text: app
           type: identifier
-        - type: binary_operator
-          children:
-          - type: variable
-            children:
+        - children:
+          - children:
             - text: talon_apps
               type: identifier
+            type: variable
             variable_name:
               text: talon_apps
               type: identifier
           - text: or
             type: operator
-          - type: string
-            children: []
+          - children: []
+            type: string
           left:
-            type: variable
             children:
             - text: talon_apps
               type: identifier
+            type: variable
             variable_name:
               text: talon_apps
               type: identifier
@@ -1338,30 +1367,30 @@ output:
             text: or
             type: operator
           right:
-            type: string
             children: []
+            type: string
+          type: binary_operator
         left:
           text: app
           type: identifier
         right:
-          type: binary_operator
           children:
-          - type: variable
-            children:
+          - children:
             - text: talon_apps
               type: identifier
+            type: variable
             variable_name:
               text: talon_apps
               type: identifier
           - text: or
             type: operator
-          - type: string
-            children: []
+          - children: []
+            type: string
           left:
-            type: variable
             children:
             - text: talon_apps
               type: identifier
+            type: variable
             variable_name:
               text: talon_apps
               type: identifier
@@ -1369,34 +1398,17 @@ output:
             text: or
             type: operator
           right:
-            type: string
             children: []
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.paste
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'app: '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: app
-                type: string_content
-              - text: '}'
-                type: string_content
-          action_name:
+            type: string
+          type: binary_operator
+        type: assignment
+      - children:
+        - action_name:
             text: user.paste
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'app: '
                 type: string_content
               - text: '{'
@@ -1405,31 +1417,31 @@ output:
                 type: string_content
               - text: '}'
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: user.paste
+            type: identifier
+          - children:
+            - children:
+              - text: 'app: '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: app
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: user.paste
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'app: '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: app
-                type: string_content
-              - text: '}'
-                type: string_content
+        expression:
           action_name:
             text: user.paste
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'app: '
                 type: string_content
               - text: '{'
@@ -1438,49 +1450,66 @@ output:
                 type: string_content
               - text: '}'
                 type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+              type: string
+            type: argument_list
+          children:
+          - text: user.paste
+            type: identifier
+          - children:
+            - children:
+              - text: 'app: '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: app
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: mode
           type: word
         - text: require
           type: word
-        - type: optional
-          children:
-          - type: list
-            children:
+        - children:
+          - children:
             - text: user.talon_modes
               type: identifier
             list_name:
               text: user.talon_modes
               type: identifier
-    - type: block
-      children:
-      - type: assignment
-        children:
+            type: list
+          type: optional
+        type: seq
+      type: rule
+    - children:
+      - children:
         - text: mode
           type: identifier
-        - type: binary_operator
-          children:
-          - type: variable
-            children:
+        - children:
+          - children:
             - text: talon_modes
               type: identifier
+            type: variable
             variable_name:
               text: talon_modes
               type: identifier
           - text: or
             type: operator
-          - type: string
-            children: []
+          - children: []
+            type: string
           left:
-            type: variable
             children:
             - text: talon_modes
               type: identifier
+            type: variable
             variable_name:
               text: talon_modes
               type: identifier
@@ -1488,30 +1517,30 @@ output:
             text: or
             type: operator
           right:
-            type: string
             children: []
+            type: string
+          type: binary_operator
         left:
           text: mode
           type: identifier
         right:
-          type: binary_operator
           children:
-          - type: variable
-            children:
+          - children:
             - text: talon_modes
               type: identifier
+            type: variable
             variable_name:
               text: talon_modes
               type: identifier
           - text: or
             type: operator
-          - type: string
-            children: []
+          - children: []
+            type: string
           left:
-            type: variable
             children:
             - text: talon_modes
               type: identifier
+            type: variable
             variable_name:
               text: talon_modes
               type: identifier
@@ -1519,34 +1548,17 @@ output:
             text: or
             type: operator
           right:
-            type: string
             children: []
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.paste
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'mode: '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: mode
-                type: string_content
-              - text: '}'
-                type: string_content
-          action_name:
+            type: string
+          type: binary_operator
+        type: assignment
+      - children:
+        - action_name:
             text: user.paste
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'mode: '
                 type: string_content
               - text: '{'
@@ -1555,31 +1567,31 @@ output:
                 type: string_content
               - text: '}'
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: user.paste
+            type: identifier
+          - children:
+            - children:
+              - text: 'mode: '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: mode
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: user.paste
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'mode: '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: mode
-                type: string_content
-              - text: '}'
-                type: string_content
+        expression:
           action_name:
             text: user.paste
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'mode: '
                 type: string_content
               - text: '{'
@@ -1588,49 +1600,66 @@ output:
                 type: string_content
               - text: '}'
                 type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.paste
+            type: identifier
+          - children:
+            - children:
+              - text: 'mode: '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: mode
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
     rule:
-      type: rule
       children:
-      - type: seq
-        children:
+      - children:
         - text: mode
           type: word
         - text: require
           type: word
-        - type: optional
-          children:
-          - type: list
-            children:
+        - children:
+          - children:
             - text: user.talon_modes
               type: identifier
             list_name:
               text: user.talon_modes
               type: identifier
+            type: list
+          type: optional
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: assignment
-        children:
+      - children:
         - text: mode
           type: identifier
-        - type: binary_operator
-          children:
-          - type: variable
-            children:
+        - children:
+          - children:
             - text: talon_modes
               type: identifier
+            type: variable
             variable_name:
               text: talon_modes
               type: identifier
           - text: or
             type: operator
-          - type: string
-            children: []
+          - children: []
+            type: string
           left:
-            type: variable
             children:
             - text: talon_modes
               type: identifier
+            type: variable
             variable_name:
               text: talon_modes
               type: identifier
@@ -1638,30 +1667,30 @@ output:
             text: or
             type: operator
           right:
-            type: string
             children: []
+            type: string
+          type: binary_operator
         left:
           text: mode
           type: identifier
         right:
-          type: binary_operator
           children:
-          - type: variable
-            children:
+          - children:
             - text: talon_modes
               type: identifier
+            type: variable
             variable_name:
               text: talon_modes
               type: identifier
           - text: or
             type: operator
-          - type: string
-            children: []
+          - children: []
+            type: string
           left:
-            type: variable
             children:
             - text: talon_modes
               type: identifier
+            type: variable
             variable_name:
               text: talon_modes
               type: identifier
@@ -1669,34 +1698,17 @@ output:
             text: or
             type: operator
           right:
-            type: string
             children: []
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.paste
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'mode: '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: mode
-                type: string_content
-              - text: '}'
-                type: string_content
-          action_name:
+            type: string
+          type: binary_operator
+        type: assignment
+      - children:
+        - action_name:
             text: user.paste
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'mode: '
                 type: string_content
               - text: '{'
@@ -1705,31 +1717,31 @@ output:
                 type: string_content
               - text: '}'
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: user.paste
+            type: identifier
+          - children:
+            - children:
+              - text: 'mode: '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: mode
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: user.paste
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'mode: '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: mode
-                type: string_content
-              - text: '}'
-                type: string_content
+        expression:
           action_name:
             text: user.paste
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'mode: '
                 type: string_content
               - text: '{'
@@ -1738,49 +1750,66 @@ output:
                 type: string_content
               - text: '}'
                 type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+              type: string
+            type: argument_list
+          children:
+          - text: user.paste
+            type: identifier
+          - children:
+            - children:
+              - text: 'mode: '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: mode
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: tag
           type: word
         - text: require
           type: word
-        - type: optional
-          children:
-          - type: list
-            children:
+        - children:
+          - children:
             - text: user.talon_tags
               type: identifier
             list_name:
               text: user.talon_tags
               type: identifier
-    - type: block
-      children:
-      - type: assignment
-        children:
+            type: list
+          type: optional
+        type: seq
+      type: rule
+    - children:
+      - children:
         - text: tag
           type: identifier
-        - type: binary_operator
-          children:
-          - type: variable
-            children:
+        - children:
+          - children:
             - text: talon_tags
               type: identifier
+            type: variable
             variable_name:
               text: talon_tags
               type: identifier
           - text: or
             type: operator
-          - type: string
-            children: []
+          - children: []
+            type: string
           left:
-            type: variable
             children:
             - text: talon_tags
               type: identifier
+            type: variable
             variable_name:
               text: talon_tags
               type: identifier
@@ -1788,30 +1817,30 @@ output:
             text: or
             type: operator
           right:
-            type: string
             children: []
+            type: string
+          type: binary_operator
         left:
           text: tag
           type: identifier
         right:
-          type: binary_operator
           children:
-          - type: variable
-            children:
+          - children:
             - text: talon_tags
               type: identifier
+            type: variable
             variable_name:
               text: talon_tags
               type: identifier
           - text: or
             type: operator
-          - type: string
-            children: []
+          - children: []
+            type: string
           left:
-            type: variable
             children:
             - text: talon_tags
               type: identifier
+            type: variable
             variable_name:
               text: talon_tags
               type: identifier
@@ -1819,34 +1848,17 @@ output:
             text: or
             type: operator
           right:
-            type: string
             children: []
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.paste
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'tag: '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: tag
-                type: string_content
-              - text: '}'
-                type: string_content
-          action_name:
+            type: string
+          type: binary_operator
+        type: assignment
+      - children:
+        - action_name:
             text: user.paste
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'tag: '
                 type: string_content
               - text: '{'
@@ -1855,31 +1867,31 @@ output:
                 type: string_content
               - text: '}'
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: user.paste
+            type: identifier
+          - children:
+            - children:
+              - text: 'tag: '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: tag
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: user.paste
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'tag: '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: tag
-                type: string_content
-              - text: '}'
-                type: string_content
+        expression:
           action_name:
             text: user.paste
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'tag: '
                 type: string_content
               - text: '{'
@@ -1888,349 +1900,216 @@ output:
                 type: string_content
               - text: '}'
                 type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.paste
+            type: identifier
+          - children:
+            - children:
+              - text: 'tag: '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: tag
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
     rule:
-      type: rule
       children:
-      - type: seq
-        children:
+      - children:
         - text: tag
           type: word
         - text: require
           type: word
-        - type: optional
-          children:
-          - type: list
-            children:
+        - children:
+          - children:
             - text: user.talon_tags
               type: identifier
             list_name:
               text: user.talon_tags
               type: identifier
-    script:
-      type: block
-      children:
-      - type: assignment
-        children:
-        - text: tag
-          type: identifier
-        - type: binary_operator
-          children:
-          - type: variable
-            children:
-            - text: talon_tags
-              type: identifier
-            variable_name:
-              text: talon_tags
-              type: identifier
-          - text: or
-            type: operator
-          - type: string
-            children: []
-          left:
-            type: variable
-            children:
-            - text: talon_tags
-              type: identifier
-            variable_name:
-              text: talon_tags
-              type: identifier
-          operator:
-            text: or
-            type: operator
-          right:
-            type: string
-            children: []
-        left:
-          text: tag
-          type: identifier
-        right:
-          type: binary_operator
-          children:
-          - type: variable
-            children:
-            - text: talon_tags
-              type: identifier
-            variable_name:
-              text: talon_tags
-              type: identifier
-          - text: or
-            type: operator
-          - type: string
-            children: []
-          left:
-            type: variable
-            children:
-            - text: talon_tags
-              type: identifier
-            variable_name:
-              text: talon_tags
-              type: identifier
-          operator:
-            text: or
-            type: operator
-          right:
-            type: string
-            children: []
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.paste
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'tag: '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: tag
-                type: string_content
-              - text: '}'
-                type: string_content
-          action_name:
-            text: user.paste
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'tag: '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: tag
-                type: string_content
-              - text: '}'
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.paste
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'tag: '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: tag
-                type: string_content
-              - text: '}'
-                type: string_content
-          action_name:
-            text: user.paste
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'tag: '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: tag
-                type: string_content
-              - text: '}'
-                type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: tag
-          type: word
-        - text: set
-          type: word
-        - type: optional
-          children:
-          - type: list
-            children:
-            - text: user.talon_tags
-              type: identifier
-            list_name:
-              text: user.talon_tags
-              type: identifier
-    - type: block
-      children:
-      - type: assignment
-        children:
-        - text: tag
-          type: identifier
-        - type: binary_operator
-          children:
-          - type: variable
-            children:
-            - text: talon_tags
-              type: identifier
-            variable_name:
-              text: talon_tags
-              type: identifier
-          - text: or
-            type: operator
-          - type: string
-            children: []
-          left:
-            type: variable
-            children:
-            - text: talon_tags
-              type: identifier
-            variable_name:
-              text: talon_tags
-              type: identifier
-          operator:
-            text: or
-            type: operator
-          right:
-            type: string
-            children: []
-        left:
-          text: tag
-          type: identifier
-        right:
-          type: binary_operator
-          children:
-          - type: variable
-            children:
-            - text: talon_tags
-              type: identifier
-            variable_name:
-              text: talon_tags
-              type: identifier
-          - text: or
-            type: operator
-          - type: string
-            children: []
-          left:
-            type: variable
-            children:
-            - text: talon_tags
-              type: identifier
-            variable_name:
-              text: talon_tags
-              type: identifier
-          operator:
-            text: or
-            type: operator
-          right:
-            type: string
-            children: []
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.paste
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'tag(): '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: tag
-                type: string_content
-              - text: '}'
-                type: string_content
-          action_name:
-            text: user.paste
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'tag(): '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: tag
-                type: string_content
-              - text: '}'
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.paste
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'tag(): '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: tag
-                type: string_content
-              - text: '}'
-                type: string_content
-          action_name:
-            text: user.paste
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'tag(): '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: tag
-                type: string_content
-              - text: '}'
-                type: string_content
-    rule:
+            type: list
+          type: optional
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - text: tag
+          type: identifier
+        - children:
+          - children:
+            - text: talon_tags
+              type: identifier
+            type: variable
+            variable_name:
+              text: talon_tags
+              type: identifier
+          - text: or
+            type: operator
+          - children: []
+            type: string
+          left:
+            children:
+            - text: talon_tags
+              type: identifier
+            type: variable
+            variable_name:
+              text: talon_tags
+              type: identifier
+          operator:
+            text: or
+            type: operator
+          right:
+            children: []
+            type: string
+          type: binary_operator
+        left:
+          text: tag
+          type: identifier
+        right:
+          children:
+          - children:
+            - text: talon_tags
+              type: identifier
+            type: variable
+            variable_name:
+              text: talon_tags
+              type: identifier
+          - text: or
+            type: operator
+          - children: []
+            type: string
+          left:
+            children:
+            - text: talon_tags
+              type: identifier
+            type: variable
+            variable_name:
+              text: talon_tags
+              type: identifier
+          operator:
+            text: or
+            type: operator
+          right:
+            children: []
+            type: string
+          type: binary_operator
+        type: assignment
+      - children:
+        - action_name:
+            text: user.paste
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'tag: '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: tag
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.paste
+            type: identifier
+          - children:
+            - children:
+              - text: 'tag: '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: tag
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.paste
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'tag: '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: tag
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.paste
+            type: identifier
+          - children:
+            - children:
+              - text: 'tag: '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: tag
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: tag
           type: word
         - text: set
           type: word
-        - type: optional
-          children:
-          - type: list
-            children:
+        - children:
+          - children:
             - text: user.talon_tags
               type: identifier
             list_name:
               text: user.talon_tags
               type: identifier
-    script:
-      type: block
-      children:
-      - type: assignment
-        children:
+            type: list
+          type: optional
+        type: seq
+      type: rule
+    - children:
+      - children:
         - text: tag
           type: identifier
-        - type: binary_operator
-          children:
-          - type: variable
-            children:
+        - children:
+          - children:
             - text: talon_tags
               type: identifier
+            type: variable
             variable_name:
               text: talon_tags
               type: identifier
           - text: or
             type: operator
-          - type: string
-            children: []
+          - children: []
+            type: string
           left:
-            type: variable
             children:
             - text: talon_tags
               type: identifier
+            type: variable
             variable_name:
               text: talon_tags
               type: identifier
@@ -2238,30 +2117,30 @@ output:
             text: or
             type: operator
           right:
-            type: string
             children: []
+            type: string
+          type: binary_operator
         left:
           text: tag
           type: identifier
         right:
-          type: binary_operator
           children:
-          - type: variable
-            children:
+          - children:
             - text: talon_tags
               type: identifier
+            type: variable
             variable_name:
               text: talon_tags
               type: identifier
           - text: or
             type: operator
-          - type: string
-            children: []
+          - children: []
+            type: string
           left:
-            type: variable
             children:
             - text: talon_tags
               type: identifier
+            type: variable
             variable_name:
               text: talon_tags
               type: identifier
@@ -2269,34 +2148,17 @@ output:
             text: or
             type: operator
           right:
-            type: string
             children: []
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.paste
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'tag(): '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: tag
-                type: string_content
-              - text: '}'
-                type: string_content
-          action_name:
+            type: string
+          type: binary_operator
+        type: assignment
+      - children:
+        - action_name:
             text: user.paste
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'tag(): '
                 type: string_content
               - text: '{'
@@ -2305,31 +2167,31 @@ output:
                 type: string_content
               - text: '}'
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: user.paste
+            type: identifier
+          - children:
+            - children:
+              - text: 'tag(): '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: tag
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: user.paste
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'tag(): '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: tag
-                type: string_content
-              - text: '}'
-                type: string_content
+        expression:
           action_name:
             text: user.paste
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'tag(): '
                 type: string_content
               - text: '{'
@@ -2338,73 +2200,240 @@ output:
                 type: string_content
               - text: '}'
                 type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.paste
+            type: identifier
+          - children:
+            - children:
+              - text: 'tag(): '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: tag
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: tag
+          type: word
+        - text: set
+          type: word
+        - children:
+          - children:
+            - text: user.talon_tags
+              type: identifier
+            list_name:
+              text: user.talon_tags
+              type: identifier
+            type: list
+          type: optional
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - text: tag
+          type: identifier
+        - children:
+          - children:
+            - text: talon_tags
+              type: identifier
+            type: variable
+            variable_name:
+              text: talon_tags
+              type: identifier
+          - text: or
+            type: operator
+          - children: []
+            type: string
+          left:
+            children:
+            - text: talon_tags
+              type: identifier
+            type: variable
+            variable_name:
+              text: talon_tags
+              type: identifier
+          operator:
+            text: or
+            type: operator
+          right:
+            children: []
+            type: string
+          type: binary_operator
+        left:
+          text: tag
+          type: identifier
+        right:
+          children:
+          - children:
+            - text: talon_tags
+              type: identifier
+            type: variable
+            variable_name:
+              text: talon_tags
+              type: identifier
+          - text: or
+            type: operator
+          - children: []
+            type: string
+          left:
+            children:
+            - text: talon_tags
+              type: identifier
+            type: variable
+            variable_name:
+              text: talon_tags
+              type: identifier
+          operator:
+            text: or
+            type: operator
+          right:
+            children: []
+            type: string
+          type: binary_operator
+        type: assignment
+      - children:
+        - action_name:
+            text: user.paste
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'tag(): '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: tag
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.paste
+            type: identifier
+          - children:
+            - children:
+              - text: 'tag(): '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: tag
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.paste
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'tag(): '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: tag
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.paste
+            type: identifier
+          - children:
+            - children:
+              - text: 'tag(): '
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: tag
+                type: string_content
+              - text: '}'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
   - text: '# requires user.talon_populate_lists tag. do not use with dragon'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: list
           type: word
-        - type: list
-          children:
+        - children:
           - text: user.talon_lists
             type: identifier
           list_name:
             text: user.talon_lists
             type: identifier
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: '{{'
-            type: string_content
-          - text: '{'
-            type: string_content
-          - text: talon_lists
-            type: string_content
-          - text: '}}'
-            type: string_content
-          - text: '}'
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: '{{'
-            type: string_content
-          - text: '{'
-            type: string_content
-          - text: talon_lists
-            type: string_content
-          - text: '}}'
-            type: string_content
-          - text: '}'
-            type: string_content
-    rule:
+          type: list
+        type: seq
       type: rule
+    - children:
+      - children:
+        - children:
+          - text: '{{'
+            type: string_content
+          - text: '{'
+            type: string_content
+          - text: talon_lists
+            type: string_content
+          - text: '}}'
+            type: string_content
+          - text: '}'
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: '{{'
+            type: string_content
+          - text: '{'
+            type: string_content
+          - text: talon_lists
+            type: string_content
+          - text: '}}'
+            type: string_content
+          - text: '}'
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: list
           type: word
-        - type: list
-          children:
+        - children:
           - text: user.talon_lists
             type: identifier
           list_name:
             text: user.talon_lists
             type: identifier
+          type: list
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: string
-          children:
+      - children:
+        - children:
           - text: '{{'
             type: string_content
           - text: '{'
@@ -2415,8 +2444,8 @@ output:
             type: string_content
           - text: '}'
             type: string_content
-        expression:
           type: string
+        expression:
           children:
           - text: '{{'
             type: string_content
@@ -2428,73 +2457,73 @@ output:
             type: string_content
           - text: '}'
             type: string_content
+          type: string
+        type: expression
+      type: block
+    type: command
   - text: '# requires user.talon_populate_lists tag. do not use with dragon'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: capture
           type: word
-        - type: list
-          children:
+        - children:
           - text: user.talon_captures
             type: identifier
           list_name:
             text: user.talon_captures
             type: identifier
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: <
-            type: string_content
-          - text: '{'
-            type: string_content
-          - text: talon_captures
-            type: string_content
-          - text: '}'
-            type: string_content
-          - text: '>'
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: <
-            type: string_content
-          - text: '{'
-            type: string_content
-          - text: talon_captures
-            type: string_content
-          - text: '}'
-            type: string_content
-          - text: '>'
-            type: string_content
-    rule:
+          type: list
+        type: seq
       type: rule
+    - children:
+      - children:
+        - children:
+          - text: <
+            type: string_content
+          - text: '{'
+            type: string_content
+          - text: talon_captures
+            type: string_content
+          - text: '}'
+            type: string_content
+          - text: '>'
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: <
+            type: string_content
+          - text: '{'
+            type: string_content
+          - text: talon_captures
+            type: string_content
+          - text: '}'
+            type: string_content
+          - text: '>'
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: capture
           type: word
-        - type: list
-          children:
+        - children:
           - text: user.talon_captures
             type: identifier
           list_name:
             text: user.talon_captures
             type: identifier
+          type: list
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: string
-          children:
+      - children:
+        - children:
           - text: <
             type: string_content
           - text: '{'
@@ -2505,8 +2534,8 @@ output:
             type: string_content
           - text: '>'
             type: string_content
-        expression:
           type: string
+        expression:
           children:
           - text: <
             type: string_content
@@ -2518,153 +2547,115 @@ output:
             type: string_content
           - text: '>'
             type: string_content
+          type: string
+        type: expression
+      type: block
+    type: command
   - text: '#commands for dictating key combos'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: key
           type: word
-        - type: capture
+        - capture_name:
+            text: user.keys
+            type: identifier
           children:
           - text: user.keys
             type: identifier
-          capture_name:
-            text: user.keys
-            type: identifier
+          type: capture
         - text: over
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: '{'
-            type: string_content
-          - text: keys
-            type: string_content
-          - text: '}'
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: '{'
-            type: string_content
-          - text: keys
-            type: string_content
-          - text: '}'
-            type: string_content
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - children:
+          - text: '{'
+            type: string_content
+          - text: keys
+            type: string_content
+          - text: '}'
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: '{'
+            type: string_content
+          - text: keys
+            type: string_content
+          - text: '}'
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: key
           type: word
-        - type: capture
+        - capture_name:
+            text: user.keys
+            type: identifier
           children:
           - text: user.keys
             type: identifier
-          capture_name:
-            text: user.keys
-            type: identifier
+          type: capture
         - text: over
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: '{'
-            type: string_content
-          - text: keys
-            type: string_content
-          - text: '}'
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: '{'
-            type: string_content
-          - text: keys
-            type: string_content
-          - text: '}'
-            type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: key
-          type: word
-        - type: capture
-          children:
-          - text: user.modifiers
-            type: identifier
-          capture_name:
-            text: user.modifiers
-            type: identifier
-        - text: over
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: '{'
-            type: string_content
-          - text: modifiers
-            type: string_content
-          - text: '}'
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: '{'
-            type: string_content
-          - text: modifiers
-            type: string_content
-          - text: '}'
-            type: string_content
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - children:
+          - text: '{'
+            type: string_content
+          - text: keys
+            type: string_content
+          - text: '}'
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: '{'
+            type: string_content
+          - text: keys
+            type: string_content
+          - text: '}'
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: key
           type: word
-        - type: capture
+        - capture_name:
+            text: user.modifiers
+            type: identifier
           children:
           - text: user.modifiers
             type: identifier
-          capture_name:
-            text: user.modifiers
-            type: identifier
+          type: capture
         - text: over
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - children:
           - text: '{'
             type: string_content
           - text: modifiers
             type: string_content
           - text: '}'
             type: string_content
-        expression:
           type: string
+        expression:
           children:
           - text: '{'
             type: string_content
@@ -2672,478 +2663,480 @@ output:
             type: string_content
           - text: '}'
             type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: key
+          type: word
+        - capture_name:
+            text: user.modifiers
+            type: identifier
+          children:
+          - text: user.modifiers
+            type: identifier
+          type: capture
+        - text: over
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - children:
+          - text: '{'
+            type: string_content
+          - text: modifiers
+            type: string_content
+          - text: '}'
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: '{'
+            type: string_content
+          - text: modifiers
+            type: string_content
+          - text: '}'
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    type: command
   - text: '# all actions (requires uncommenting user.talon_populate_lists tag above)'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: funk
           type: word
-        - type: list
-          children:
+        - children:
           - text: user.talon_actions
             type: identifier
           list_name:
             text: user.talon_actions
             type: identifier
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_insert_function
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: talon_actions
-                type: identifier
-              variable_name:
-                text: talon_actions
-                type: identifier
-            - type: action
-              children:
-              - text: edit.selected_text
-                type: identifier
-              - type: argument_list
-                children: []
-              action_name:
-                text: edit.selected_text
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-          action_name:
-            text: user.code_insert_function
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: talon_actions
-                type: identifier
-              variable_name:
-                text: talon_actions
-                type: identifier
-            - type: action
-              children:
-              - text: edit.selected_text
-                type: identifier
-              - type: argument_list
-                children: []
-              action_name:
-                text: edit.selected_text
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-        expression:
-          type: action
-          children:
-          - text: user.code_insert_function
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: talon_actions
-                type: identifier
-              variable_name:
-                text: talon_actions
-                type: identifier
-            - type: action
-              children:
-              - text: edit.selected_text
-                type: identifier
-              - type: argument_list
-                children: []
-              action_name:
-                text: edit.selected_text
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-          action_name:
-            text: user.code_insert_function
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: talon_actions
-                type: identifier
-              variable_name:
-                text: talon_actions
-                type: identifier
-            - type: action
-              children:
-              - text: edit.selected_text
-                type: identifier
-              - type: argument_list
-                children: []
-              action_name:
-                text: edit.selected_text
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-    rule:
+          type: list
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.code_insert_function
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: talon_actions
+                type: identifier
+              type: variable
+              variable_name:
+                text: talon_actions
+                type: identifier
+            - action_name:
+                text: edit.selected_text
+                type: identifier
+              arguments:
+                children: []
+                type: argument_list
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - children: []
+                type: argument_list
+              type: action
+            type: argument_list
+          children:
+          - text: user.code_insert_function
+            type: identifier
+          - children:
+            - children:
+              - text: talon_actions
+                type: identifier
+              type: variable
+              variable_name:
+                text: talon_actions
+                type: identifier
+            - action_name:
+                text: edit.selected_text
+                type: identifier
+              arguments:
+                children: []
+                type: argument_list
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - children: []
+                type: argument_list
+              type: action
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.code_insert_function
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: talon_actions
+                type: identifier
+              type: variable
+              variable_name:
+                text: talon_actions
+                type: identifier
+            - action_name:
+                text: edit.selected_text
+                type: identifier
+              arguments:
+                children: []
+                type: argument_list
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - children: []
+                type: argument_list
+              type: action
+            type: argument_list
+          children:
+          - text: user.code_insert_function
+            type: identifier
+          - children:
+            - children:
+              - text: talon_actions
+                type: identifier
+              type: variable
+              variable_name:
+                text: talon_actions
+                type: identifier
+            - action_name:
+                text: edit.selected_text
+                type: identifier
+              arguments:
+                children: []
+                type: argument_list
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - children: []
+                type: argument_list
+              type: action
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: funk
           type: word
-        - type: list
-          children:
+        - children:
           - text: user.talon_actions
             type: identifier
           list_name:
             text: user.talon_actions
             type: identifier
+          type: list
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_insert_function
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: talon_actions
-                type: identifier
-              variable_name:
-                text: talon_actions
-                type: identifier
-            - type: action
-              children:
-              - text: edit.selected_text
-                type: identifier
-              - type: argument_list
-                children: []
-              action_name:
-                text: edit.selected_text
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-          action_name:
+      - children:
+        - action_name:
             text: user.code_insert_function
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: talon_actions
                 type: identifier
+              type: variable
               variable_name:
                 text: talon_actions
                 type: identifier
-            - type: action
-              children:
-              - text: edit.selected_text
-                type: identifier
-              - type: argument_list
-                children: []
-              action_name:
+            - action_name:
                 text: edit.selected_text
                 type: identifier
               arguments:
-                type: argument_list
                 children: []
-        expression:
+                type: argument_list
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - children: []
+                type: argument_list
+              type: action
+            type: argument_list
+          children:
+          - text: user.code_insert_function
+            type: identifier
+          - children:
+            - children:
+              - text: talon_actions
+                type: identifier
+              type: variable
+              variable_name:
+                text: talon_actions
+                type: identifier
+            - action_name:
+                text: edit.selected_text
+                type: identifier
+              arguments:
+                children: []
+                type: argument_list
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - children: []
+                type: argument_list
+              type: action
+            type: argument_list
           type: action
-          children:
-          - text: user.code_insert_function
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: talon_actions
-                type: identifier
-              variable_name:
-                text: talon_actions
-                type: identifier
-            - type: action
-              children:
-              - text: edit.selected_text
-                type: identifier
-              - type: argument_list
-                children: []
-              action_name:
-                text: edit.selected_text
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
+        expression:
           action_name:
             text: user.code_insert_function
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: talon_actions
                 type: identifier
+              type: variable
               variable_name:
                 text: talon_actions
                 type: identifier
-            - type: action
-              children:
-              - text: edit.selected_text
-                type: identifier
-              - type: argument_list
-                children: []
-              action_name:
+            - action_name:
                 text: edit.selected_text
                 type: identifier
               arguments:
-                type: argument_list
                 children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+                type: argument_list
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - children: []
+                type: argument_list
+              type: action
+            type: argument_list
+          children:
+          - text: user.code_insert_function
+            type: identifier
+          - children:
+            - children:
+              - text: talon_actions
+                type: identifier
+              type: variable
+              variable_name:
+                text: talon_actions
+                type: identifier
+            - action_name:
+                text: edit.selected_text
+                type: identifier
+              arguments:
+                children: []
+                type: argument_list
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - children: []
+                type: argument_list
+              type: action
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: funk
           type: word
         - text: cell
           type: word
-        - type: capture
+        - capture_name:
+            text: number
+            type: identifier
           children:
           - text: number
             type: identifier
-          capture_name:
-            text: number
-            type: identifier
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_select_function
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: number
-                  type: identifier
-                variable_name:
-                  text: number
-                  type: identifier
-              - text: '-'
-                type: operator
-              - text: '1'
-                type: integer
-              left:
-                type: variable
-                children:
-                - text: number
-                  type: identifier
-                variable_name:
-                  text: number
-                  type: identifier
-              operator:
-                text: '-'
-                type: operator
-              right:
-                text: '1'
-                type: integer
-            - type: string
-              children: []
-          action_name:
-            text: user.code_select_function
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: number
-                  type: identifier
-                variable_name:
-                  text: number
-                  type: identifier
-              - text: '-'
-                type: operator
-              - text: '1'
-                type: integer
-              left:
-                type: variable
-                children:
-                - text: number
-                  type: identifier
-                variable_name:
-                  text: number
-                  type: identifier
-              operator:
-                text: '-'
-                type: operator
-              right:
-                text: '1'
-                type: integer
-            - type: string
-              children: []
-        expression:
-          type: action
-          children:
-          - text: user.code_select_function
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: number
-                  type: identifier
-                variable_name:
-                  text: number
-                  type: identifier
-              - text: '-'
-                type: operator
-              - text: '1'
-                type: integer
-              left:
-                type: variable
-                children:
-                - text: number
-                  type: identifier
-                variable_name:
-                  text: number
-                  type: identifier
-              operator:
-                text: '-'
-                type: operator
-              right:
-                text: '1'
-                type: integer
-            - type: string
-              children: []
-          action_name:
-            text: user.code_select_function
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: number
-                  type: identifier
-                variable_name:
-                  text: number
-                  type: identifier
-              - text: '-'
-                type: operator
-              - text: '1'
-                type: integer
-              left:
-                type: variable
-                children:
-                - text: number
-                  type: identifier
-                variable_name:
-                  text: number
-                  type: identifier
-              operator:
-                text: '-'
-                type: operator
-              right:
-                text: '1'
-                type: integer
-            - type: string
-              children: []
-    rule:
+          type: capture
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.code_select_function
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - children:
+                - text: number
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                children:
+                - text: number
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+              type: binary_operator
+            - children: []
+              type: string
+            type: argument_list
+          children:
+          - text: user.code_select_function
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: number
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                children:
+                - text: number
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+              type: binary_operator
+            - children: []
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.code_select_function
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - children:
+                - text: number
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                children:
+                - text: number
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+              type: binary_operator
+            - children: []
+              type: string
+            type: argument_list
+          children:
+          - text: user.code_select_function
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: number
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                children:
+                - text: number
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+              type: binary_operator
+            - children: []
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: funk
           type: word
         - text: cell
           type: word
-        - type: capture
+        - capture_name:
+            text: number
+            type: identifier
           children:
           - text: number
             type: identifier
-          capture_name:
-            text: number
-            type: identifier
+          type: capture
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_select_function
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: number
-                  type: identifier
-                variable_name:
-                  text: number
-                  type: identifier
-              - text: '-'
-                type: operator
-              - text: '1'
-                type: integer
-              left:
-                type: variable
-                children:
-                - text: number
-                  type: identifier
-                variable_name:
-                  text: number
-                  type: identifier
-              operator:
-                text: '-'
-                type: operator
-              right:
-                text: '1'
-                type: integer
-            - type: string
-              children: []
-          action_name:
+      - children:
+        - action_name:
             text: user.code_select_function
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: number
                   type: identifier
+                type: variable
                 variable_name:
                   text: number
                   type: identifier
@@ -3152,10 +3145,10 @@ output:
               - text: '1'
                 type: integer
               left:
-                type: variable
                 children:
                 - text: number
                   type: identifier
+                type: variable
                 variable_name:
                   text: number
                   type: identifier
@@ -3165,56 +3158,56 @@ output:
               right:
                 text: '1'
                 type: integer
-            - type: string
-              children: []
-        expression:
+              type: binary_operator
+            - children: []
+              type: string
+            type: argument_list
+          children:
+          - text: user.code_select_function
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: number
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                children:
+                - text: number
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+              type: binary_operator
+            - children: []
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: user.code_select_function
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: number
-                  type: identifier
-                variable_name:
-                  text: number
-                  type: identifier
-              - text: '-'
-                type: operator
-              - text: '1'
-                type: integer
-              left:
-                type: variable
-                children:
-                - text: number
-                  type: identifier
-                variable_name:
-                  text: number
-                  type: identifier
-              operator:
-                text: '-'
-                type: operator
-              right:
-                text: '1'
-                type: integer
-            - type: string
-              children: []
+        expression:
           action_name:
             text: user.code_select_function
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: number
                   type: identifier
+                type: variable
                 variable_name:
                   text: number
                   type: identifier
@@ -3223,10 +3216,10 @@ output:
               - text: '1'
                 type: integer
               left:
-                type: variable
                 children:
                 - text: number
                   type: identifier
+                type: variable
                 variable_name:
                   text: number
                   type: identifier
@@ -3236,532 +3229,522 @@ output:
               right:
                 text: '1'
                 type: integer
-            - type: string
-              children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+              type: binary_operator
+            - children: []
+              type: string
+            type: argument_list
+          children:
+          - text: user.code_select_function
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: number
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                children:
+                - text: number
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+              type: binary_operator
+            - children: []
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: funk
           type: word
         - text: wrap
           type: word
-        - type: capture
+        - capture_name:
+            text: user.code_common_function
+            type: identifier
           children:
           - text: user.code_common_function
             type: identifier
-          capture_name:
-            text: user.code_common_function
-            type: identifier
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_insert_function
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: code_common_function
-                type: identifier
-              variable_name:
-                text: code_common_function
-                type: identifier
-            - type: action
-              children:
-              - text: edit.selected_text
-                type: identifier
-              - type: argument_list
-                children: []
-              action_name:
-                text: edit.selected_text
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-          action_name:
-            text: user.code_insert_function
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: code_common_function
-                type: identifier
-              variable_name:
-                text: code_common_function
-                type: identifier
-            - type: action
-              children:
-              - text: edit.selected_text
-                type: identifier
-              - type: argument_list
-                children: []
-              action_name:
-                text: edit.selected_text
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-        expression:
-          type: action
-          children:
-          - text: user.code_insert_function
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: code_common_function
-                type: identifier
-              variable_name:
-                text: code_common_function
-                type: identifier
-            - type: action
-              children:
-              - text: edit.selected_text
-                type: identifier
-              - type: argument_list
-                children: []
-              action_name:
-                text: edit.selected_text
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-          action_name:
-            text: user.code_insert_function
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: code_common_function
-                type: identifier
-              variable_name:
-                text: code_common_function
-                type: identifier
-            - type: action
-              children:
-              - text: edit.selected_text
-                type: identifier
-              - type: argument_list
-                children: []
-              action_name:
-                text: edit.selected_text
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-    rule:
+          type: capture
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.code_insert_function
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: code_common_function
+                type: identifier
+              type: variable
+              variable_name:
+                text: code_common_function
+                type: identifier
+            - action_name:
+                text: edit.selected_text
+                type: identifier
+              arguments:
+                children: []
+                type: argument_list
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - children: []
+                type: argument_list
+              type: action
+            type: argument_list
+          children:
+          - text: user.code_insert_function
+            type: identifier
+          - children:
+            - children:
+              - text: code_common_function
+                type: identifier
+              type: variable
+              variable_name:
+                text: code_common_function
+                type: identifier
+            - action_name:
+                text: edit.selected_text
+                type: identifier
+              arguments:
+                children: []
+                type: argument_list
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - children: []
+                type: argument_list
+              type: action
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.code_insert_function
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: code_common_function
+                type: identifier
+              type: variable
+              variable_name:
+                text: code_common_function
+                type: identifier
+            - action_name:
+                text: edit.selected_text
+                type: identifier
+              arguments:
+                children: []
+                type: argument_list
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - children: []
+                type: argument_list
+              type: action
+            type: argument_list
+          children:
+          - text: user.code_insert_function
+            type: identifier
+          - children:
+            - children:
+              - text: code_common_function
+                type: identifier
+              type: variable
+              variable_name:
+                text: code_common_function
+                type: identifier
+            - action_name:
+                text: edit.selected_text
+                type: identifier
+              arguments:
+                children: []
+                type: argument_list
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - children: []
+                type: argument_list
+              type: action
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: funk
           type: word
         - text: wrap
           type: word
-        - type: capture
+        - capture_name:
+            text: user.code_common_function
+            type: identifier
           children:
           - text: user.code_common_function
             type: identifier
-          capture_name:
-            text: user.code_common_function
-            type: identifier
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_insert_function
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: code_common_function
-                type: identifier
-              variable_name:
-                text: code_common_function
-                type: identifier
-            - type: action
-              children:
-              - text: edit.selected_text
-                type: identifier
-              - type: argument_list
-                children: []
-              action_name:
-                text: edit.selected_text
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-          action_name:
-            text: user.code_insert_function
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: code_common_function
-                type: identifier
-              variable_name:
-                text: code_common_function
-                type: identifier
-            - type: action
-              children:
-              - text: edit.selected_text
-                type: identifier
-              - type: argument_list
-                children: []
-              action_name:
-                text: edit.selected_text
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-        expression:
-          type: action
-          children:
-          - text: user.code_insert_function
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: code_common_function
-                type: identifier
-              variable_name:
-                text: code_common_function
-                type: identifier
-            - type: action
-              children:
-              - text: edit.selected_text
-                type: identifier
-              - type: argument_list
-                children: []
-              action_name:
-                text: edit.selected_text
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-          action_name:
-            text: user.code_insert_function
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: code_common_function
-                type: identifier
-              variable_name:
-                text: code_common_function
-                type: identifier
-            - type: action
-              children:
-              - text: edit.selected_text
-                type: identifier
-              - type: argument_list
-                children: []
-              action_name:
-                text: edit.selected_text
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: funk
-          type: word
-        - text: wrap
-          type: word
-        - type: capture
-          children:
-          - text: number
-            type: identifier
-          capture_name:
-            text: number
-            type: identifier
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_select_function
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: number
-                  type: identifier
-                variable_name:
-                  text: number
-                  type: identifier
-              - text: '-'
-                type: operator
-              - text: '1'
-                type: integer
-              left:
-                type: variable
-                children:
-                - text: number
-                  type: identifier
-                variable_name:
-                  text: number
-                  type: identifier
-              operator:
-                text: '-'
-                type: operator
-              right:
-                text: '1'
-                type: integer
-            - type: action
-              children:
-              - text: edit.selected_text
-                type: identifier
-              - type: argument_list
-                children: []
-              action_name:
-                text: edit.selected_text
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-          action_name:
-            text: user.code_select_function
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: number
-                  type: identifier
-                variable_name:
-                  text: number
-                  type: identifier
-              - text: '-'
-                type: operator
-              - text: '1'
-                type: integer
-              left:
-                type: variable
-                children:
-                - text: number
-                  type: identifier
-                variable_name:
-                  text: number
-                  type: identifier
-              operator:
-                text: '-'
-                type: operator
-              right:
-                text: '1'
-                type: integer
-            - type: action
-              children:
-              - text: edit.selected_text
-                type: identifier
-              - type: argument_list
-                children: []
-              action_name:
-                text: edit.selected_text
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-        expression:
-          type: action
-          children:
-          - text: user.code_select_function
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: number
-                  type: identifier
-                variable_name:
-                  text: number
-                  type: identifier
-              - text: '-'
-                type: operator
-              - text: '1'
-                type: integer
-              left:
-                type: variable
-                children:
-                - text: number
-                  type: identifier
-                variable_name:
-                  text: number
-                  type: identifier
-              operator:
-                text: '-'
-                type: operator
-              right:
-                text: '1'
-                type: integer
-            - type: action
-              children:
-              - text: edit.selected_text
-                type: identifier
-              - type: argument_list
-                children: []
-              action_name:
-                text: edit.selected_text
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-          action_name:
-            text: user.code_select_function
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: number
-                  type: identifier
-                variable_name:
-                  text: number
-                  type: identifier
-              - text: '-'
-                type: operator
-              - text: '1'
-                type: integer
-              left:
-                type: variable
-                children:
-                - text: number
-                  type: identifier
-                variable_name:
-                  text: number
-                  type: identifier
-              operator:
-                text: '-'
-                type: operator
-              right:
-                text: '1'
-                type: integer
-            - type: action
-              children:
-              - text: edit.selected_text
-                type: identifier
-              - type: argument_list
-                children: []
-              action_name:
-                text: edit.selected_text
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-    rule:
+          type: capture
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - action_name:
+            text: user.code_insert_function
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: code_common_function
+                type: identifier
+              type: variable
+              variable_name:
+                text: code_common_function
+                type: identifier
+            - action_name:
+                text: edit.selected_text
+                type: identifier
+              arguments:
+                children: []
+                type: argument_list
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - children: []
+                type: argument_list
+              type: action
+            type: argument_list
+          children:
+          - text: user.code_insert_function
+            type: identifier
+          - children:
+            - children:
+              - text: code_common_function
+                type: identifier
+              type: variable
+              variable_name:
+                text: code_common_function
+                type: identifier
+            - action_name:
+                text: edit.selected_text
+                type: identifier
+              arguments:
+                children: []
+                type: argument_list
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - children: []
+                type: argument_list
+              type: action
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.code_insert_function
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: code_common_function
+                type: identifier
+              type: variable
+              variable_name:
+                text: code_common_function
+                type: identifier
+            - action_name:
+                text: edit.selected_text
+                type: identifier
+              arguments:
+                children: []
+                type: argument_list
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - children: []
+                type: argument_list
+              type: action
+            type: argument_list
+          children:
+          - text: user.code_insert_function
+            type: identifier
+          - children:
+            - children:
+              - text: code_common_function
+                type: identifier
+              type: variable
+              variable_name:
+                text: code_common_function
+                type: identifier
+            - action_name:
+                text: edit.selected_text
+                type: identifier
+              arguments:
+                children: []
+                type: argument_list
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - children: []
+                type: argument_list
+              type: action
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: funk
           type: word
         - text: wrap
           type: word
-        - type: capture
+        - capture_name:
+            text: number
+            type: identifier
           children:
           - text: number
             type: identifier
-          capture_name:
+          type: capture
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.code_select_function
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - children:
+                - text: number
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                children:
+                - text: number
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+              type: binary_operator
+            - action_name:
+                text: edit.selected_text
+                type: identifier
+              arguments:
+                children: []
+                type: argument_list
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - children: []
+                type: argument_list
+              type: action
+            type: argument_list
+          children:
+          - text: user.code_select_function
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: number
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                children:
+                - text: number
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+              type: binary_operator
+            - action_name:
+                text: edit.selected_text
+                type: identifier
+              arguments:
+                children: []
+                type: argument_list
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - children: []
+                type: argument_list
+              type: action
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.code_select_function
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - children:
+                - text: number
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                children:
+                - text: number
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+              type: binary_operator
+            - action_name:
+                text: edit.selected_text
+                type: identifier
+              arguments:
+                children: []
+                type: argument_list
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - children: []
+                type: argument_list
+              type: action
+            type: argument_list
+          children:
+          - text: user.code_select_function
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: number
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                children:
+                - text: number
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+              type: binary_operator
+            - action_name:
+                text: edit.selected_text
+                type: identifier
+              arguments:
+                children: []
+                type: argument_list
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - children: []
+                type: argument_list
+              type: action
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: funk
+          type: word
+        - text: wrap
+          type: word
+        - capture_name:
             text: number
             type: identifier
+          children:
+          - text: number
+            type: identifier
+          type: capture
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_select_function
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: number
-                  type: identifier
-                variable_name:
-                  text: number
-                  type: identifier
-              - text: '-'
-                type: operator
-              - text: '1'
-                type: integer
-              left:
-                type: variable
-                children:
-                - text: number
-                  type: identifier
-                variable_name:
-                  text: number
-                  type: identifier
-              operator:
-                text: '-'
-                type: operator
-              right:
-                text: '1'
-                type: integer
-            - type: action
-              children:
-              - text: edit.selected_text
-                type: identifier
-              - type: argument_list
-                children: []
-              action_name:
-                text: edit.selected_text
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-          action_name:
+      - children:
+        - action_name:
             text: user.code_select_function
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: number
                   type: identifier
+                type: variable
                 variable_name:
                   text: number
                   type: identifier
@@ -3770,10 +3753,10 @@ output:
               - text: '1'
                 type: integer
               left:
-                type: variable
                 children:
                 - text: number
                   type: identifier
+                type: variable
                 variable_name:
                   text: number
                   type: identifier
@@ -3783,76 +3766,76 @@ output:
               right:
                 text: '1'
                 type: integer
-            - type: action
-              children:
-              - text: edit.selected_text
-                type: identifier
-              - type: argument_list
-                children: []
-              action_name:
+              type: binary_operator
+            - action_name:
                 text: edit.selected_text
                 type: identifier
               arguments:
-                type: argument_list
                 children: []
-        expression:
+                type: argument_list
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - children: []
+                type: argument_list
+              type: action
+            type: argument_list
+          children:
+          - text: user.code_select_function
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: number
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                children:
+                - text: number
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+              type: binary_operator
+            - action_name:
+                text: edit.selected_text
+                type: identifier
+              arguments:
+                children: []
+                type: argument_list
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - children: []
+                type: argument_list
+              type: action
+            type: argument_list
           type: action
-          children:
-          - text: user.code_select_function
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: number
-                  type: identifier
-                variable_name:
-                  text: number
-                  type: identifier
-              - text: '-'
-                type: operator
-              - text: '1'
-                type: integer
-              left:
-                type: variable
-                children:
-                - text: number
-                  type: identifier
-                variable_name:
-                  text: number
-                  type: identifier
-              operator:
-                text: '-'
-                type: operator
-              right:
-                text: '1'
-                type: integer
-            - type: action
-              children:
-              - text: edit.selected_text
-                type: identifier
-              - type: argument_list
-                children: []
-              action_name:
-                text: edit.selected_text
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
+        expression:
           action_name:
             text: user.code_select_function
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: number
                   type: identifier
+                type: variable
                 variable_name:
                   text: number
                   type: identifier
@@ -3861,10 +3844,10 @@ output:
               - text: '1'
                 type: integer
               left:
-                type: variable
                 children:
                 - text: number
                   type: identifier
+                type: variable
                 variable_name:
                   text: number
                   type: identifier
@@ -3874,15 +3857,66 @@ output:
               right:
                 text: '1'
                 type: integer
-            - type: action
-              children:
-              - text: edit.selected_text
-                type: identifier
-              - type: argument_list
-                children: []
-              action_name:
+              type: binary_operator
+            - action_name:
                 text: edit.selected_text
                 type: identifier
               arguments:
-                type: argument_list
                 children: []
+                type: argument_list
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - children: []
+                type: argument_list
+              type: action
+            type: argument_list
+          children:
+          - text: user.code_select_function
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: number
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number
+                  type: identifier
+              - text: '-'
+                type: operator
+              - text: '1'
+                type: integer
+              left:
+                children:
+                - text: number
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: number
+                  type: identifier
+              operator:
+                text: '-'
+                type: operator
+              right:
+                text: '1'
+                type: integer
+              type: binary_operator
+            - action_name:
+                text: edit.selected_text
+                type: identifier
+              arguments:
+                children: []
+                type: argument_list
+              children:
+              - text: edit.selected_text
+                type: identifier
+              - children: []
+                type: argument_list
+              type: action
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  type: source_file

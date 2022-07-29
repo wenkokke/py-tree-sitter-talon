@@ -1,25 +1,53 @@
-input: "tag: user.java\n-\ntag(): user.code_imperative\ntag(): user.code_object_oriented\n\
-  \ntag(): user.code_comment_line\ntag(): user.code_comment_block_c_like\ntag(): user.code_data_bool\n\
-  tag(): user.code_data_null\ntag(): user.code_functions\ntag(): user.code_libraries\n\
-  tag(): user.code_operators_array\ntag(): user.code_operators_assignment\ntag():\
-  \ user.code_operators_bitwise\ntag(): user.code_operators_lambda\ntag(): user.code_operators_math\n\
-  \nsettings():\n    user.code_private_function_formatter = \"PRIVATE_CAMEL_CASE\"\
-  \n    user.code_protected_function_formatter = \"PRIVATE_CAMEL_CASE\"\n    user.code_public_function_formatter\
-  \ = \"PRIVATE_CAMEL_CASE\"\n    user.code_private_variable_formatter = \"PRIVATE_CAMEL_CASE\"\
-  \n    user.code_protected_variable_formatter = \"PRIVATE_CAMEL_CASE\"\n    user.code_public_variable_formatter\
-  \ = \"PRIVATE_CAMEL_CASE\"\n\n# Types Commands\nboxed [type] {user.java_boxed_type}:\n\
-  \    insert(user.java_boxed_type + \" \")\n\ngeneric [type] {user.java_generic_data_structure}:\n\
-  \    user.insert_between(java_generic_data_structure + \"<\", \">\")\n\n# Arrays\n\
-  type {user.code_type} array:\n    insert(user.code_type)\n    user.code_operator_subscript()\n\
-  \n[state] {user.java_modifier}:\n    insert(user.java_modifier + \" \")\n\nop array:\n\
-  \    user.code_operator_subscript()\n\nop new:\n    insert(\"new \")\n"
+input: |
+  tag: user.java
+  -
+  tag(): user.code_imperative
+  tag(): user.code_object_oriented
+
+  tag(): user.code_comment_line
+  tag(): user.code_comment_block_c_like
+  tag(): user.code_data_bool
+  tag(): user.code_data_null
+  tag(): user.code_functions
+  tag(): user.code_libraries
+  tag(): user.code_operators_array
+  tag(): user.code_operators_assignment
+  tag(): user.code_operators_bitwise
+  tag(): user.code_operators_lambda
+  tag(): user.code_operators_math
+
+  settings():
+      user.code_private_function_formatter = "PRIVATE_CAMEL_CASE"
+      user.code_protected_function_formatter = "PRIVATE_CAMEL_CASE"
+      user.code_public_function_formatter = "PRIVATE_CAMEL_CASE"
+      user.code_private_variable_formatter = "PRIVATE_CAMEL_CASE"
+      user.code_protected_variable_formatter = "PRIVATE_CAMEL_CASE"
+      user.code_public_variable_formatter = "PRIVATE_CAMEL_CASE"
+
+  # Types Commands
+  boxed [type] {user.java_boxed_type}:
+      insert(user.java_boxed_type + " ")
+
+  generic [type] {user.java_generic_data_structure}:
+      user.insert_between(java_generic_data_structure + "<", ">")
+
+  # Arrays
+  type {user.code_type} array:
+      insert(user.code_type)
+      user.code_operator_subscript()
+
+  [state] {user.java_modifier}:
+      insert(user.java_modifier + " ")
+
+  op array:
+      user.code_operator_subscript()
+
+  op new:
+      insert("new ")
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: match
-      children:
+  - children:
+    - children:
       - text: tag
         type: identifier
       - text: ' user.java'
@@ -30,821 +58,589 @@ output:
       pattern:
         text: ' user.java'
         type: implicit_string
-  - type: include_tag
-    children:
+      type: match
+    type: context
+  - children:
     - text: user.code_imperative
       type: identifier
     tag:
       text: user.code_imperative
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_object_oriented
       type: identifier
     tag:
       text: user.code_object_oriented
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_comment_line
       type: identifier
     tag:
       text: user.code_comment_line
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_comment_block_c_like
       type: identifier
     tag:
       text: user.code_comment_block_c_like
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_data_bool
       type: identifier
     tag:
       text: user.code_data_bool
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_data_null
       type: identifier
     tag:
       text: user.code_data_null
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_functions
       type: identifier
     tag:
       text: user.code_functions
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_libraries
       type: identifier
     tag:
       text: user.code_libraries
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_operators_array
       type: identifier
     tag:
       text: user.code_operators_array
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_operators_assignment
       type: identifier
     tag:
       text: user.code_operators_assignment
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_operators_bitwise
       type: identifier
     tag:
       text: user.code_operators_bitwise
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_operators_lambda
       type: identifier
     tag:
       text: user.code_operators_lambda
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_operators_math
       type: identifier
     tag:
       text: user.code_operators_math
       type: identifier
-  - type: settings
-    children:
-    - type: block
-      children:
-      - type: assignment
-        children:
+    type: include_tag
+  - children:
+    - children:
+      - children:
         - text: user.code_private_function_formatter
           type: identifier
-        - type: string
-          children:
+        - children:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
+          type: string
         left:
           text: user.code_private_function_formatter
           type: identifier
         right:
-          type: string
           children:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
-      - type: assignment
-        children:
+          type: string
+        type: assignment
+      - children:
         - text: user.code_protected_function_formatter
           type: identifier
-        - type: string
-          children:
+        - children:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
+          type: string
         left:
           text: user.code_protected_function_formatter
           type: identifier
         right:
-          type: string
           children:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
-      - type: assignment
-        children:
+          type: string
+        type: assignment
+      - children:
         - text: user.code_public_function_formatter
           type: identifier
-        - type: string
-          children:
+        - children:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
+          type: string
         left:
           text: user.code_public_function_formatter
           type: identifier
         right:
-          type: string
           children:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
-      - type: assignment
-        children:
+          type: string
+        type: assignment
+      - children:
         - text: user.code_private_variable_formatter
           type: identifier
-        - type: string
-          children:
+        - children:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
+          type: string
         left:
           text: user.code_private_variable_formatter
           type: identifier
         right:
-          type: string
           children:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
-      - type: assignment
-        children:
+          type: string
+        type: assignment
+      - children:
         - text: user.code_protected_variable_formatter
           type: identifier
-        - type: string
-          children:
+        - children:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
+          type: string
         left:
           text: user.code_protected_variable_formatter
           type: identifier
         right:
-          type: string
           children:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
-      - type: assignment
-        children:
+          type: string
+        type: assignment
+      - children:
         - text: user.code_public_variable_formatter
           type: identifier
-        - type: string
-          children:
+        - children:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
+          type: string
         left:
           text: user.code_public_variable_formatter
           type: identifier
         right:
-          type: string
           children:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
+          type: string
+        type: assignment
+      type: block
+    type: settings
   - text: '# Types Commands'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: boxed
           type: word
-        - type: optional
-          children:
+        - children:
           - text: type
             type: word
-        - type: list
-          children:
+          type: optional
+        - children:
           - text: user.java_boxed_type
             type: identifier
           list_name:
             text: user.java_boxed_type
             type: identifier
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: user.java_boxed_type
-                  type: identifier
-                variable_name:
-                  text: user.java_boxed_type
-                  type: identifier
-              - text: +
-                type: operator
-              - type: string
-                children:
-                - text: ' '
-                  type: string_content
-              left:
-                type: variable
-                children:
-                - text: user.java_boxed_type
-                  type: identifier
-                variable_name:
-                  text: user.java_boxed_type
-                  type: identifier
-              operator:
-                text: +
-                type: operator
-              right:
-                type: string
-                children:
-                - text: ' '
-                  type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: user.java_boxed_type
-                  type: identifier
-                variable_name:
-                  text: user.java_boxed_type
-                  type: identifier
-              - text: +
-                type: operator
-              - type: string
-                children:
-                - text: ' '
-                  type: string_content
-              left:
-                type: variable
-                children:
-                - text: user.java_boxed_type
-                  type: identifier
-                variable_name:
-                  text: user.java_boxed_type
-                  type: identifier
-              operator:
-                text: +
-                type: operator
-              right:
-                type: string
-                children:
-                - text: ' '
-                  type: string_content
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: user.java_boxed_type
-                  type: identifier
-                variable_name:
-                  text: user.java_boxed_type
-                  type: identifier
-              - text: +
-                type: operator
-              - type: string
-                children:
-                - text: ' '
-                  type: string_content
-              left:
-                type: variable
-                children:
-                - text: user.java_boxed_type
-                  type: identifier
-                variable_name:
-                  text: user.java_boxed_type
-                  type: identifier
-              operator:
-                text: +
-                type: operator
-              right:
-                type: string
-                children:
-                - text: ' '
-                  type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: user.java_boxed_type
-                  type: identifier
-                variable_name:
-                  text: user.java_boxed_type
-                  type: identifier
-              - text: +
-                type: operator
-              - type: string
-                children:
-                - text: ' '
-                  type: string_content
-              left:
-                type: variable
-                children:
-                - text: user.java_boxed_type
-                  type: identifier
-                variable_name:
-                  text: user.java_boxed_type
-                  type: identifier
-              operator:
-                text: +
-                type: operator
-              right:
-                type: string
-                children:
-                - text: ' '
-                  type: string_content
-    rule:
+          type: list
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - children:
+                - text: user.java_boxed_type
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: user.java_boxed_type
+                  type: identifier
+              - text: +
+                type: operator
+              - children:
+                - text: ' '
+                  type: string_content
+                type: string
+              left:
+                children:
+                - text: user.java_boxed_type
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: user.java_boxed_type
+                  type: identifier
+              operator:
+                text: +
+                type: operator
+              right:
+                children:
+                - text: ' '
+                  type: string_content
+                type: string
+              type: binary_operator
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: user.java_boxed_type
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: user.java_boxed_type
+                  type: identifier
+              - text: +
+                type: operator
+              - children:
+                - text: ' '
+                  type: string_content
+                type: string
+              left:
+                children:
+                - text: user.java_boxed_type
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: user.java_boxed_type
+                  type: identifier
+              operator:
+                text: +
+                type: operator
+              right:
+                children:
+                - text: ' '
+                  type: string_content
+                type: string
+              type: binary_operator
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - children:
+                - text: user.java_boxed_type
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: user.java_boxed_type
+                  type: identifier
+              - text: +
+                type: operator
+              - children:
+                - text: ' '
+                  type: string_content
+                type: string
+              left:
+                children:
+                - text: user.java_boxed_type
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: user.java_boxed_type
+                  type: identifier
+              operator:
+                text: +
+                type: operator
+              right:
+                children:
+                - text: ' '
+                  type: string_content
+                type: string
+              type: binary_operator
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: user.java_boxed_type
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: user.java_boxed_type
+                  type: identifier
+              - text: +
+                type: operator
+              - children:
+                - text: ' '
+                  type: string_content
+                type: string
+              left:
+                children:
+                - text: user.java_boxed_type
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: user.java_boxed_type
+                  type: identifier
+              operator:
+                text: +
+                type: operator
+              right:
+                children:
+                - text: ' '
+                  type: string_content
+                type: string
+              type: binary_operator
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: boxed
           type: word
-        - type: optional
-          children:
+        - children:
           - text: type
             type: word
-        - type: list
-          children:
+          type: optional
+        - children:
           - text: user.java_boxed_type
             type: identifier
           list_name:
             text: user.java_boxed_type
             type: identifier
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: user.java_boxed_type
-                  type: identifier
-                variable_name:
-                  text: user.java_boxed_type
-                  type: identifier
-              - text: +
-                type: operator
-              - type: string
-                children:
-                - text: ' '
-                  type: string_content
-              left:
-                type: variable
-                children:
-                - text: user.java_boxed_type
-                  type: identifier
-                variable_name:
-                  text: user.java_boxed_type
-                  type: identifier
-              operator:
-                text: +
-                type: operator
-              right:
-                type: string
-                children:
-                - text: ' '
-                  type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: user.java_boxed_type
-                  type: identifier
-                variable_name:
-                  text: user.java_boxed_type
-                  type: identifier
-              - text: +
-                type: operator
-              - type: string
-                children:
-                - text: ' '
-                  type: string_content
-              left:
-                type: variable
-                children:
-                - text: user.java_boxed_type
-                  type: identifier
-                variable_name:
-                  text: user.java_boxed_type
-                  type: identifier
-              operator:
-                text: +
-                type: operator
-              right:
-                type: string
-                children:
-                - text: ' '
-                  type: string_content
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: user.java_boxed_type
-                  type: identifier
-                variable_name:
-                  text: user.java_boxed_type
-                  type: identifier
-              - text: +
-                type: operator
-              - type: string
-                children:
-                - text: ' '
-                  type: string_content
-              left:
-                type: variable
-                children:
-                - text: user.java_boxed_type
-                  type: identifier
-                variable_name:
-                  text: user.java_boxed_type
-                  type: identifier
-              operator:
-                text: +
-                type: operator
-              right:
-                type: string
-                children:
-                - text: ' '
-                  type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: user.java_boxed_type
-                  type: identifier
-                variable_name:
-                  text: user.java_boxed_type
-                  type: identifier
-              - text: +
-                type: operator
-              - type: string
-                children:
-                - text: ' '
-                  type: string_content
-              left:
-                type: variable
-                children:
-                - text: user.java_boxed_type
-                  type: identifier
-                variable_name:
-                  text: user.java_boxed_type
-                  type: identifier
-              operator:
-                text: +
-                type: operator
-              right:
-                type: string
-                children:
-                - text: ' '
-                  type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: generic
-          type: word
-        - type: optional
-          children:
-          - text: type
-            type: word
-        - type: list
-          children:
-          - text: user.java_generic_data_structure
-            type: identifier
-          list_name:
-            text: user.java_generic_data_structure
-            type: identifier
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: java_generic_data_structure
-                  type: identifier
-                variable_name:
-                  text: java_generic_data_structure
-                  type: identifier
-              - text: +
-                type: operator
-              - type: string
-                children:
-                - text: <
-                  type: string_content
-              left:
-                type: variable
-                children:
-                - text: java_generic_data_structure
-                  type: identifier
-                variable_name:
-                  text: java_generic_data_structure
-                  type: identifier
-              operator:
-                text: +
-                type: operator
-              right:
-                type: string
-                children:
-                - text: <
-                  type: string_content
-            - type: string
-              children:
-              - text: '>'
-                type: string_content
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: java_generic_data_structure
-                  type: identifier
-                variable_name:
-                  text: java_generic_data_structure
-                  type: identifier
-              - text: +
-                type: operator
-              - type: string
-                children:
-                - text: <
-                  type: string_content
-              left:
-                type: variable
-                children:
-                - text: java_generic_data_structure
-                  type: identifier
-                variable_name:
-                  text: java_generic_data_structure
-                  type: identifier
-              operator:
-                text: +
-                type: operator
-              right:
-                type: string
-                children:
-                - text: <
-                  type: string_content
-            - type: string
-              children:
-              - text: '>'
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: java_generic_data_structure
-                  type: identifier
-                variable_name:
-                  text: java_generic_data_structure
-                  type: identifier
-              - text: +
-                type: operator
-              - type: string
-                children:
-                - text: <
-                  type: string_content
-              left:
-                type: variable
-                children:
-                - text: java_generic_data_structure
-                  type: identifier
-                variable_name:
-                  text: java_generic_data_structure
-                  type: identifier
-              operator:
-                text: +
-                type: operator
-              right:
-                type: string
-                children:
-                - text: <
-                  type: string_content
-            - type: string
-              children:
-              - text: '>'
-                type: string_content
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: java_generic_data_structure
-                  type: identifier
-                variable_name:
-                  text: java_generic_data_structure
-                  type: identifier
-              - text: +
-                type: operator
-              - type: string
-                children:
-                - text: <
-                  type: string_content
-              left:
-                type: variable
-                children:
-                - text: java_generic_data_structure
-                  type: identifier
-                variable_name:
-                  text: java_generic_data_structure
-                  type: identifier
-              operator:
-                text: +
-                type: operator
-              right:
-                type: string
-                children:
-                - text: <
-                  type: string_content
-            - type: string
-              children:
-              - text: '>'
-                type: string_content
-    rule:
+          type: list
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - children:
+                - text: user.java_boxed_type
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: user.java_boxed_type
+                  type: identifier
+              - text: +
+                type: operator
+              - children:
+                - text: ' '
+                  type: string_content
+                type: string
+              left:
+                children:
+                - text: user.java_boxed_type
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: user.java_boxed_type
+                  type: identifier
+              operator:
+                text: +
+                type: operator
+              right:
+                children:
+                - text: ' '
+                  type: string_content
+                type: string
+              type: binary_operator
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: user.java_boxed_type
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: user.java_boxed_type
+                  type: identifier
+              - text: +
+                type: operator
+              - children:
+                - text: ' '
+                  type: string_content
+                type: string
+              left:
+                children:
+                - text: user.java_boxed_type
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: user.java_boxed_type
+                  type: identifier
+              operator:
+                text: +
+                type: operator
+              right:
+                children:
+                - text: ' '
+                  type: string_content
+                type: string
+              type: binary_operator
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - children:
+                - text: user.java_boxed_type
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: user.java_boxed_type
+                  type: identifier
+              - text: +
+                type: operator
+              - children:
+                - text: ' '
+                  type: string_content
+                type: string
+              left:
+                children:
+                - text: user.java_boxed_type
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: user.java_boxed_type
+                  type: identifier
+              operator:
+                text: +
+                type: operator
+              right:
+                children:
+                - text: ' '
+                  type: string_content
+                type: string
+              type: binary_operator
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: user.java_boxed_type
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: user.java_boxed_type
+                  type: identifier
+              - text: +
+                type: operator
+              - children:
+                - text: ' '
+                  type: string_content
+                type: string
+              left:
+                children:
+                - text: user.java_boxed_type
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: user.java_boxed_type
+                  type: identifier
+              operator:
+                text: +
+                type: operator
+              right:
+                children:
+                - text: ' '
+                  type: string_content
+                type: string
+              type: binary_operator
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: generic
           type: word
-        - type: optional
-          children:
+        - children:
           - text: type
             type: word
-        - type: list
-          children:
+          type: optional
+        - children:
           - text: user.java_generic_data_structure
             type: identifier
           list_name:
             text: user.java_generic_data_structure
             type: identifier
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: java_generic_data_structure
-                  type: identifier
-                variable_name:
-                  text: java_generic_data_structure
-                  type: identifier
-              - text: +
-                type: operator
-              - type: string
-                children:
-                - text: <
-                  type: string_content
-              left:
-                type: variable
-                children:
-                - text: java_generic_data_structure
-                  type: identifier
-                variable_name:
-                  text: java_generic_data_structure
-                  type: identifier
-              operator:
-                text: +
-                type: operator
-              right:
-                type: string
-                children:
-                - text: <
-                  type: string_content
-            - type: string
-              children:
-              - text: '>'
-                type: string_content
-          action_name:
+          type: list
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: user.insert_between
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: java_generic_data_structure
                   type: identifier
+                type: variable
                 variable_name:
                   text: java_generic_data_structure
                   type: identifier
               - text: +
                 type: operator
-              - type: string
-                children:
+              - children:
                 - text: <
                   type: string_content
+                type: string
               left:
-                type: variable
                 children:
                 - text: java_generic_data_structure
                   type: identifier
+                type: variable
                 variable_name:
                   text: java_generic_data_structure
                   type: identifier
@@ -852,82 +648,82 @@ output:
                 text: +
                 type: operator
               right:
-                type: string
                 children:
                 - text: <
                   type: string_content
-            - type: string
-              children:
+                type: string
+              type: binary_operator
+            - children:
               - text: '>'
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: java_generic_data_structure
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: java_generic_data_structure
+                  type: identifier
+              - text: +
+                type: operator
+              - children:
+                - text: <
+                  type: string_content
+                type: string
+              left:
+                children:
+                - text: java_generic_data_structure
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: java_generic_data_structure
+                  type: identifier
+              operator:
+                text: +
+                type: operator
+              right:
+                children:
+                - text: <
+                  type: string_content
+                type: string
+              type: binary_operator
+            - children:
+              - text: '>'
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: java_generic_data_structure
-                  type: identifier
-                variable_name:
-                  text: java_generic_data_structure
-                  type: identifier
-              - text: +
-                type: operator
-              - type: string
-                children:
-                - text: <
-                  type: string_content
-              left:
-                type: variable
-                children:
-                - text: java_generic_data_structure
-                  type: identifier
-                variable_name:
-                  text: java_generic_data_structure
-                  type: identifier
-              operator:
-                text: +
-                type: operator
-              right:
-                type: string
-                children:
-                - text: <
-                  type: string_content
-            - type: string
-              children:
-              - text: '>'
-                type: string_content
+        expression:
           action_name:
             text: user.insert_between
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: java_generic_data_structure
                   type: identifier
+                type: variable
                 variable_name:
                   text: java_generic_data_structure
                   type: identifier
               - text: +
                 type: operator
-              - type: string
-                children:
+              - children:
                 - text: <
                   type: string_content
+                type: string
               left:
-                type: variable
                 children:
                 - text: java_generic_data_structure
                   type: identifier
+                type: variable
                 variable_name:
                   text: java_generic_data_structure
                   type: identifier
@@ -935,472 +731,664 @@ output:
                 text: +
                 type: operator
               right:
-                type: string
                 children:
                 - text: <
                   type: string_content
-            - type: string
-              children:
+                type: string
+              type: binary_operator
+            - children:
               - text: '>'
                 type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: java_generic_data_structure
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: java_generic_data_structure
+                  type: identifier
+              - text: +
+                type: operator
+              - children:
+                - text: <
+                  type: string_content
+                type: string
+              left:
+                children:
+                - text: java_generic_data_structure
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: java_generic_data_structure
+                  type: identifier
+              operator:
+                text: +
+                type: operator
+              right:
+                children:
+                - text: <
+                  type: string_content
+                type: string
+              type: binary_operator
+            - children:
+              - text: '>'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: generic
+          type: word
+        - children:
+          - text: type
+            type: word
+          type: optional
+        - children:
+          - text: user.java_generic_data_structure
+            type: identifier
+          list_name:
+            text: user.java_generic_data_structure
+            type: identifier
+          type: list
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - children:
+                - text: java_generic_data_structure
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: java_generic_data_structure
+                  type: identifier
+              - text: +
+                type: operator
+              - children:
+                - text: <
+                  type: string_content
+                type: string
+              left:
+                children:
+                - text: java_generic_data_structure
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: java_generic_data_structure
+                  type: identifier
+              operator:
+                text: +
+                type: operator
+              right:
+                children:
+                - text: <
+                  type: string_content
+                type: string
+              type: binary_operator
+            - children:
+              - text: '>'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: java_generic_data_structure
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: java_generic_data_structure
+                  type: identifier
+              - text: +
+                type: operator
+              - children:
+                - text: <
+                  type: string_content
+                type: string
+              left:
+                children:
+                - text: java_generic_data_structure
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: java_generic_data_structure
+                  type: identifier
+              operator:
+                text: +
+                type: operator
+              right:
+                children:
+                - text: <
+                  type: string_content
+                type: string
+              type: binary_operator
+            - children:
+              - text: '>'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - children:
+                - text: java_generic_data_structure
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: java_generic_data_structure
+                  type: identifier
+              - text: +
+                type: operator
+              - children:
+                - text: <
+                  type: string_content
+                type: string
+              left:
+                children:
+                - text: java_generic_data_structure
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: java_generic_data_structure
+                  type: identifier
+              operator:
+                text: +
+                type: operator
+              right:
+                children:
+                - text: <
+                  type: string_content
+                type: string
+              type: binary_operator
+            - children:
+              - text: '>'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: java_generic_data_structure
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: java_generic_data_structure
+                  type: identifier
+              - text: +
+                type: operator
+              - children:
+                - text: <
+                  type: string_content
+                type: string
+              left:
+                children:
+                - text: java_generic_data_structure
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: java_generic_data_structure
+                  type: identifier
+              operator:
+                text: +
+                type: operator
+              right:
+                children:
+                - text: <
+                  type: string_content
+                type: string
+              type: binary_operator
+            - children:
+              - text: '>'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
   - text: '# Arrays'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: type
           type: word
-        - type: list
-          children:
+        - children:
           - text: user.code_type
             type: identifier
           list_name:
             text: user.code_type
             type: identifier
+          type: list
         - text: array
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: user.code_type
-                type: identifier
-              variable_name:
-                text: user.code_type
-                type: identifier
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: user.code_type
-                type: identifier
-              variable_name:
-                text: user.code_type
-                type: identifier
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: user.code_type
-                type: identifier
-              variable_name:
-                text: user.code_type
-                type: identifier
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: user.code_type
-                type: identifier
-              variable_name:
-                text: user.code_type
-                type: identifier
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_operator_subscript
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_subscript
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.code_operator_subscript
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_subscript
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: user.code_type
+                type: identifier
+              type: variable
+              variable_name:
+                text: user.code_type
+                type: identifier
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: user.code_type
+                type: identifier
+              type: variable
+              variable_name:
+                text: user.code_type
+                type: identifier
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: user.code_type
+                type: identifier
+              type: variable
+              variable_name:
+                text: user.code_type
+                type: identifier
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: user.code_type
+                type: identifier
+              type: variable
+              variable_name:
+                text: user.code_type
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - action_name:
+            text: user.code_operator_subscript
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_subscript
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.code_operator_subscript
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_subscript
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: type
           type: word
-        - type: list
-          children:
+        - children:
           - text: user.code_type
             type: identifier
           list_name:
             text: user.code_type
             type: identifier
+          type: list
         - text: array
           type: word
+        type: seq
+      type: rule
     script:
+      children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: user.code_type
+                type: identifier
+              type: variable
+              variable_name:
+                text: user.code_type
+                type: identifier
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: user.code_type
+                type: identifier
+              type: variable
+              variable_name:
+                text: user.code_type
+                type: identifier
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: user.code_type
+                type: identifier
+              type: variable
+              variable_name:
+                text: user.code_type
+                type: identifier
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: user.code_type
+                type: identifier
+              type: variable
+              variable_name:
+                text: user.code_type
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - action_name:
+            text: user.code_operator_subscript
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_subscript
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.code_operator_subscript
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_subscript
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
       type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: user.code_type
-                type: identifier
-              variable_name:
-                text: user.code_type
-                type: identifier
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: user.code_type
-                type: identifier
-              variable_name:
-                text: user.code_type
-                type: identifier
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: user.code_type
-                type: identifier
-              variable_name:
-                text: user.code_type
-                type: identifier
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: user.code_type
-                type: identifier
-              variable_name:
-                text: user.code_type
-                type: identifier
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_operator_subscript
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_subscript
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.code_operator_subscript
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_subscript
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: optional
-          children:
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
           - text: state
             type: word
-        - type: list
-          children:
+          type: optional
+        - children:
           - text: user.java_modifier
             type: identifier
           list_name:
             text: user.java_modifier
             type: identifier
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: user.java_modifier
-                  type: identifier
-                variable_name:
-                  text: user.java_modifier
-                  type: identifier
-              - text: +
-                type: operator
-              - type: string
-                children:
-                - text: ' '
-                  type: string_content
-              left:
-                type: variable
-                children:
-                - text: user.java_modifier
-                  type: identifier
-                variable_name:
-                  text: user.java_modifier
-                  type: identifier
-              operator:
-                text: +
-                type: operator
-              right:
-                type: string
-                children:
-                - text: ' '
-                  type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: user.java_modifier
-                  type: identifier
-                variable_name:
-                  text: user.java_modifier
-                  type: identifier
-              - text: +
-                type: operator
-              - type: string
-                children:
-                - text: ' '
-                  type: string_content
-              left:
-                type: variable
-                children:
-                - text: user.java_modifier
-                  type: identifier
-                variable_name:
-                  text: user.java_modifier
-                  type: identifier
-              operator:
-                text: +
-                type: operator
-              right:
-                type: string
-                children:
-                - text: ' '
-                  type: string_content
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: user.java_modifier
-                  type: identifier
-                variable_name:
-                  text: user.java_modifier
-                  type: identifier
-              - text: +
-                type: operator
-              - type: string
-                children:
-                - text: ' '
-                  type: string_content
-              left:
-                type: variable
-                children:
-                - text: user.java_modifier
-                  type: identifier
-                variable_name:
-                  text: user.java_modifier
-                  type: identifier
-              operator:
-                text: +
-                type: operator
-              right:
-                type: string
-                children:
-                - text: ' '
-                  type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: user.java_modifier
-                  type: identifier
-                variable_name:
-                  text: user.java_modifier
-                  type: identifier
-              - text: +
-                type: operator
-              - type: string
-                children:
-                - text: ' '
-                  type: string_content
-              left:
-                type: variable
-                children:
-                - text: user.java_modifier
-                  type: identifier
-                variable_name:
-                  text: user.java_modifier
-                  type: identifier
-              operator:
-                text: +
-                type: operator
-              right:
-                type: string
-                children:
-                - text: ' '
-                  type: string_content
-    rule:
+          type: list
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: optional
+    - children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - children:
+                - text: user.java_modifier
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: user.java_modifier
+                  type: identifier
+              - text: +
+                type: operator
+              - children:
+                - text: ' '
+                  type: string_content
+                type: string
+              left:
+                children:
+                - text: user.java_modifier
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: user.java_modifier
+                  type: identifier
+              operator:
+                text: +
+                type: operator
+              right:
+                children:
+                - text: ' '
+                  type: string_content
+                type: string
+              type: binary_operator
+            type: argument_list
           children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: user.java_modifier
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: user.java_modifier
+                  type: identifier
+              - text: +
+                type: operator
+              - children:
+                - text: ' '
+                  type: string_content
+                type: string
+              left:
+                children:
+                - text: user.java_modifier
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: user.java_modifier
+                  type: identifier
+              operator:
+                text: +
+                type: operator
+              right:
+                children:
+                - text: ' '
+                  type: string_content
+                type: string
+              type: binary_operator
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - children:
+                - text: user.java_modifier
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: user.java_modifier
+                  type: identifier
+              - text: +
+                type: operator
+              - children:
+                - text: ' '
+                  type: string_content
+                type: string
+              left:
+                children:
+                - text: user.java_modifier
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: user.java_modifier
+                  type: identifier
+              operator:
+                text: +
+                type: operator
+              right:
+                children:
+                - text: ' '
+                  type: string_content
+                type: string
+              type: binary_operator
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: user.java_modifier
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: user.java_modifier
+                  type: identifier
+              - text: +
+                type: operator
+              - children:
+                - text: ' '
+                  type: string_content
+                type: string
+              left:
+                children:
+                - text: user.java_modifier
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: user.java_modifier
+                  type: identifier
+              operator:
+                text: +
+                type: operator
+              right:
+                children:
+                - text: ' '
+                  type: string_content
+                type: string
+              type: binary_operator
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
           - text: state
             type: word
-        - type: list
-          children:
+          type: optional
+        - children:
           - text: user.java_modifier
             type: identifier
           list_name:
             text: user.java_modifier
             type: identifier
+          type: list
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: user.java_modifier
-                  type: identifier
-                variable_name:
-                  text: user.java_modifier
-                  type: identifier
-              - text: +
-                type: operator
-              - type: string
-                children:
-                - text: ' '
-                  type: string_content
-              left:
-                type: variable
-                children:
-                - text: user.java_modifier
-                  type: identifier
-                variable_name:
-                  text: user.java_modifier
-                  type: identifier
-              operator:
-                text: +
-                type: operator
-              right:
-                type: string
-                children:
-                - text: ' '
-                  type: string_content
-          action_name:
+      - children:
+        - action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: user.java_modifier
                   type: identifier
+                type: variable
                 variable_name:
                   text: user.java_modifier
                   type: identifier
               - text: +
                 type: operator
-              - type: string
-                children:
+              - children:
                 - text: ' '
                   type: string_content
+                type: string
               left:
-                type: variable
                 children:
                 - text: user.java_modifier
                   type: identifier
+                type: variable
                 variable_name:
                   text: user.java_modifier
                   type: identifier
@@ -1408,74 +1396,74 @@ output:
                 text: +
                 type: operator
               right:
-                type: string
                 children:
                 - text: ' '
                   type: string_content
-        expression:
+                type: string
+              type: binary_operator
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: user.java_modifier
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: user.java_modifier
+                  type: identifier
+              - text: +
+                type: operator
+              - children:
+                - text: ' '
+                  type: string_content
+                type: string
+              left:
+                children:
+                - text: user.java_modifier
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: user.java_modifier
+                  type: identifier
+              operator:
+                text: +
+                type: operator
+              right:
+                children:
+                - text: ' '
+                  type: string_content
+                type: string
+              type: binary_operator
+            type: argument_list
           type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
-                - text: user.java_modifier
-                  type: identifier
-                variable_name:
-                  text: user.java_modifier
-                  type: identifier
-              - text: +
-                type: operator
-              - type: string
-                children:
-                - text: ' '
-                  type: string_content
-              left:
-                type: variable
-                children:
-                - text: user.java_modifier
-                  type: identifier
-                variable_name:
-                  text: user.java_modifier
-                  type: identifier
-              operator:
-                text: +
-                type: operator
-              right:
-                type: string
-                children:
-                - text: ' '
-                  type: string_content
+        expression:
           action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: binary_operator
-              children:
-              - type: variable
-                children:
+            - children:
+              - children:
                 - text: user.java_modifier
                   type: identifier
+                type: variable
                 variable_name:
                   text: user.java_modifier
                   type: identifier
               - text: +
                 type: operator
-              - type: string
-                children:
+              - children:
                 - text: ' '
                   type: string_content
+                type: string
               left:
-                type: variable
                 children:
                 - text: user.java_modifier
                   type: identifier
+                type: variable
                 variable_name:
                   text: user.java_modifier
                   type: identifier
@@ -1483,195 +1471,238 @@ output:
                 text: +
                 type: operator
               right:
-                type: string
                 children:
                 - text: ' '
                   type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+                type: string
+              type: binary_operator
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - children:
+                - text: user.java_modifier
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: user.java_modifier
+                  type: identifier
+              - text: +
+                type: operator
+              - children:
+                - text: ' '
+                  type: string_content
+                type: string
+              left:
+                children:
+                - text: user.java_modifier
+                  type: identifier
+                type: variable
+                variable_name:
+                  text: user.java_modifier
+                  type: identifier
+              operator:
+                text: +
+                type: operator
+              right:
+                children:
+                - text: ' '
+                  type: string_content
+                type: string
+              type: binary_operator
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: op
           type: word
         - text: array
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_operator_subscript
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_subscript
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.code_operator_subscript
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_subscript
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.code_operator_subscript
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_subscript
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.code_operator_subscript
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_subscript
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: op
           type: word
         - text: array
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_operator_subscript
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_subscript
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.code_operator_subscript
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_subscript
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: op
-          type: word
-        - text: new
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'new '
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'new '
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'new '
-                type: string_content
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'new '
-                type: string_content
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - action_name:
+            text: user.code_operator_subscript
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_subscript
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.code_operator_subscript
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_subscript
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: op
           type: word
         - text: new
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'new '
-                type: string_content
-          action_name:
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'new '
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'new '
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: insert
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'new '
-                type: string_content
+        expression:
           action_name:
             text: insert
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'new '
                 type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'new '
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: op
+          type: word
+        - text: new
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'new '
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'new '
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'new '
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: insert
+            type: identifier
+          - children:
+            - children:
+              - text: 'new '
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  type: source_file

@@ -1,23 +1,50 @@
-input: "tag: user.sql\n-\ntag(): user.code_operators_math\ntag(): user.code_comment_line\n\
-  tag(): user.code_comment_block_c_like\ntag(): user.code_data_null\ntag(): user.code_functions_common\n\
-  \nselect: \"SELECT \"\ndistinct: \"DISTINCT \"\nfrom: \"FROM \"\nselect star from:\
-  \ \"SELECT *\\nFROM \"\nwhere: \"WHERE \"\norder by: \"ORDER BY \"\ngroup by: \"\
-  GROUP BY \"\nhaving: \"HAVING \"\ndescending: \" DESC\"\nascending: \" ASC\"\ndot\
-  \ i d: \".id\"\ninner join: user.insert_between(\"INNER JOIN \", \" ON \")\ninner\
-  \ join using: user.insert_between(\"INNER JOIN \", \" USING \")\nleft outer join:\
-  \ user.insert_between(\"LEFT OUTER JOIN \", \" ON \")\nright outer join: user.insert_between(\"\
-  RIGHT OUTER JOIN \", \" ON \")\n\nwith:\n    key(enter up)\n    \"WITH  AS (\"\n\
-  \    key(enter tab)\n    \"SELECT \"\n    key(enter shift-tab)\n    edit.extend_line_end()\n\
-  \    edit.delete()\n    \") \"\n    key(delete up:2 right:3)\n\ncolumn:\n    key(return)\n\
-  \    \", \"\n\ncount: user.code_insert_function(\"Count\", \"\")\n\ndate: user.insert_between(\"\
-  DATE '\", \"'\")\n"
+input: |
+  tag: user.sql
+  -
+  tag(): user.code_operators_math
+  tag(): user.code_comment_line
+  tag(): user.code_comment_block_c_like
+  tag(): user.code_data_null
+  tag(): user.code_functions_common
+
+  select: "SELECT "
+  distinct: "DISTINCT "
+  from: "FROM "
+  select star from: "SELECT *\nFROM "
+  where: "WHERE "
+  order by: "ORDER BY "
+  group by: "GROUP BY "
+  having: "HAVING "
+  descending: " DESC"
+  ascending: " ASC"
+  dot i d: ".id"
+  inner join: user.insert_between("INNER JOIN ", " ON ")
+  inner join using: user.insert_between("INNER JOIN ", " USING ")
+  left outer join: user.insert_between("LEFT OUTER JOIN ", " ON ")
+  right outer join: user.insert_between("RIGHT OUTER JOIN ", " ON ")
+
+  with:
+      key(enter up)
+      "WITH  AS ("
+      key(enter tab)
+      "SELECT "
+      key(enter shift-tab)
+      edit.extend_line_end()
+      edit.delete()
+      ") "
+      key(delete up:2 right:3)
+
+  column:
+      key(return)
+      ", "
+
+  count: user.code_insert_function("Count", "")
+
+  date: user.insert_between("DATE '", "'")
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: match
-      children:
+  - children:
+    - children:
       - text: tag
         type: identifier
       - text: ' user.sql'
@@ -28,205 +55,212 @@ output:
       pattern:
         text: ' user.sql'
         type: implicit_string
-  - type: include_tag
-    children:
+      type: match
+    type: context
+  - children:
     - text: user.code_operators_math
       type: identifier
     tag:
       text: user.code_operators_math
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_comment_line
       type: identifier
     tag:
       text: user.code_comment_line
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_comment_block_c_like
       type: identifier
     tag:
       text: user.code_comment_block_c_like
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_data_null
       type: identifier
     tag:
       text: user.code_data_null
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_functions_common
       type: identifier
     tag:
       text: user.code_functions_common
       type: identifier
-  - type: command
-    children:
-    - type: rule
+    type: include_tag
+  - children:
+    - children:
+      - text: select
+        type: word
+      type: rule
+    - children:
+      - children:
+        - children:
+          - text: 'SELECT '
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: 'SELECT '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
       - text: select
         type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: 'SELECT '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: 'SELECT '
-            type: string_content
-    rule:
       type: rule
-      children:
-      - text: select
-        type: word
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: string
-          children:
+      - children:
+        - children:
           - text: 'SELECT '
             type: string_content
-        expression:
           type: string
+        expression:
           children:
           - text: 'SELECT '
             type: string_content
-  - type: command
-    children:
-    - type: rule
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - text: distinct
+        type: word
+      type: rule
+    - children:
+      - children:
+        - children:
+          - text: 'DISTINCT '
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: 'DISTINCT '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
       - text: distinct
         type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: 'DISTINCT '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: 'DISTINCT '
-            type: string_content
-    rule:
       type: rule
-      children:
-      - text: distinct
-        type: word
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: string
-          children:
+      - children:
+        - children:
           - text: 'DISTINCT '
             type: string_content
-        expression:
           type: string
+        expression:
           children:
           - text: 'DISTINCT '
             type: string_content
-  - type: command
-    children:
-    - type: rule
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - text: from
+        type: word
+      type: rule
+    - children:
+      - children:
+        - children:
+          - text: 'FROM '
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: 'FROM '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
       - text: from
         type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: 'FROM '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: 'FROM '
-            type: string_content
-    rule:
       type: rule
-      children:
-      - text: from
-        type: word
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: string
-          children:
+      - children:
+        - children:
           - text: 'FROM '
             type: string_content
-        expression:
           type: string
+        expression:
           children:
           - text: 'FROM '
             type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: select
           type: word
         - text: star
           type: word
         - text: from
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: SELECT *
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-          - text: 'FROM '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: SELECT *
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-          - text: 'FROM '
-            type: string_content
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - children:
+          - text: SELECT *
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          - text: 'FROM '
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: SELECT *
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          - text: 'FROM '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: select
           type: word
         - text: star
           type: word
         - text: from
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: string
+      - children:
+        - children:
+          - text: SELECT *
+            type: string_content
+          - text: \n
+            type: string_escape_sequence
+          - text: 'FROM '
+            type: string_content
+          type: string
+        expression:
           children:
           - text: SELECT *
             type: string_content
@@ -234,1536 +268,1532 @@ output:
             type: string_escape_sequence
           - text: 'FROM '
             type: string_content
-        expression:
           type: string
-          children:
-          - text: SELECT *
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-          - text: 'FROM '
-            type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - text: where
-        type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: 'WHERE '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: 'WHERE '
-            type: string_content
-    rule:
-      type: rule
-      children:
-      - text: where
-        type: word
-    script:
+        type: expression
       type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
+    type: command
+  - children:
+    - children:
+      - text: where
+        type: word
+      type: rule
+    - children:
+      - children:
+        - children:
           - text: 'WHERE '
             type: string_content
-        expression:
           type: string
+        expression:
           children:
           - text: 'WHERE '
             type: string_content
-  - type: command
-    children:
-    - type: rule
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - text: where
+        type: word
+      type: rule
+    script:
+      children:
+      - children:
+        - children:
+          - text: 'WHERE '
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: 'WHERE '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: order
           type: word
         - text: by
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: 'ORDER BY '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: 'ORDER BY '
-            type: string_content
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - children:
+          - text: 'ORDER BY '
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: 'ORDER BY '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: order
           type: word
         - text: by
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: string
-          children:
+      - children:
+        - children:
           - text: 'ORDER BY '
             type: string_content
-        expression:
           type: string
+        expression:
           children:
           - text: 'ORDER BY '
             type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: group
           type: word
         - text: by
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: 'GROUP BY '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: 'GROUP BY '
-            type: string_content
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - children:
+          - text: 'GROUP BY '
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: 'GROUP BY '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: group
           type: word
         - text: by
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: string
+      - children:
+        - children:
+          - text: 'GROUP BY '
+            type: string_content
+          type: string
+        expression:
           children:
           - text: 'GROUP BY '
             type: string_content
-        expression:
           type: string
-          children:
-          - text: 'GROUP BY '
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - text: having
+        type: word
+      type: rule
+    - children:
+      - children:
+        - children:
+          - text: 'HAVING '
             type: string_content
-  - type: command
-    children:
-    - type: rule
+          type: string
+        expression:
+          children:
+          - text: 'HAVING '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
       - text: having
         type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: 'HAVING '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: 'HAVING '
-            type: string_content
-    rule:
       type: rule
-      children:
-      - text: having
-        type: word
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: string
-          children:
+      - children:
+        - children:
           - text: 'HAVING '
             type: string_content
-        expression:
           type: string
+        expression:
           children:
           - text: 'HAVING '
             type: string_content
-  - type: command
-    children:
-    - type: rule
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - text: descending
+        type: word
+      type: rule
+    - children:
+      - children:
+        - children:
+          - text: ' DESC'
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: ' DESC'
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
       - text: descending
         type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: ' DESC'
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: ' DESC'
-            type: string_content
-    rule:
       type: rule
-      children:
-      - text: descending
-        type: word
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: string
-          children:
+      - children:
+        - children:
           - text: ' DESC'
             type: string_content
-        expression:
           type: string
+        expression:
           children:
           - text: ' DESC'
             type: string_content
-  - type: command
-    children:
-    - type: rule
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - text: ascending
+        type: word
+      type: rule
+    - children:
+      - children:
+        - children:
+          - text: ' ASC'
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: ' ASC'
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
       - text: ascending
         type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: ' ASC'
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: ' ASC'
-            type: string_content
-    rule:
       type: rule
-      children:
-      - text: ascending
-        type: word
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: string
-          children:
+      - children:
+        - children:
           - text: ' ASC'
             type: string_content
-        expression:
           type: string
+        expression:
           children:
           - text: ' ASC'
             type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: dot
           type: word
         - text: i
           type: word
         - text: d
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: .id
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: .id
-            type: string_content
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - children:
+          - text: .id
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: .id
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: dot
           type: word
         - text: i
           type: word
         - text: d
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: .id
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: .id
-            type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: inner
-          type: word
-        - text: join
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'INNER JOIN '
-                type: string_content
-            - type: string
-              children:
-              - text: ' ON '
-                type: string_content
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'INNER JOIN '
-                type: string_content
-            - type: string
-              children:
-              - text: ' ON '
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'INNER JOIN '
-                type: string_content
-            - type: string
-              children:
-              - text: ' ON '
-                type: string_content
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'INNER JOIN '
-                type: string_content
-            - type: string
-              children:
-              - text: ' ON '
-                type: string_content
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - children:
+          - text: .id
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: .id
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: inner
           type: word
         - text: join
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'INNER JOIN '
-                type: string_content
-            - type: string
-              children:
-              - text: ' ON '
-                type: string_content
-          action_name:
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: user.insert_between
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'INNER JOIN '
                 type: string_content
-            - type: string
-              children:
+              type: string
+            - children:
               - text: ' ON '
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: 'INNER JOIN '
+                type: string_content
+              type: string
+            - children:
+              - text: ' ON '
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'INNER JOIN '
-                type: string_content
-            - type: string
-              children:
-              - text: ' ON '
-                type: string_content
+        expression:
           action_name:
             text: user.insert_between
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'INNER JOIN '
                 type: string_content
-            - type: string
-              children:
+              type: string
+            - children:
               - text: ' ON '
                 type: string_content
-  - type: command
-    children:
-    - type: rule
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: 'INNER JOIN '
+                type: string_content
+              type: string
+            - children:
+              - text: ' ON '
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
+        - text: inner
+          type: word
+        - text: join
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'INNER JOIN '
+                type: string_content
+              type: string
+            - children:
+              - text: ' ON '
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: 'INNER JOIN '
+                type: string_content
+              type: string
+            - children:
+              - text: ' ON '
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'INNER JOIN '
+                type: string_content
+              type: string
+            - children:
+              - text: ' ON '
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: 'INNER JOIN '
+                type: string_content
+              type: string
+            - children:
+              - text: ' ON '
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: inner
           type: word
         - text: join
           type: word
         - text: using
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'INNER JOIN '
-                type: string_content
-            - type: string
-              children:
-              - text: ' USING '
-                type: string_content
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'INNER JOIN '
-                type: string_content
-            - type: string
-              children:
-              - text: ' USING '
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'INNER JOIN '
-                type: string_content
-            - type: string
-              children:
-              - text: ' USING '
-                type: string_content
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'INNER JOIN '
-                type: string_content
-            - type: string
-              children:
-              - text: ' USING '
-                type: string_content
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'INNER JOIN '
+                type: string_content
+              type: string
+            - children:
+              - text: ' USING '
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: 'INNER JOIN '
+                type: string_content
+              type: string
+            - children:
+              - text: ' USING '
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'INNER JOIN '
+                type: string_content
+              type: string
+            - children:
+              - text: ' USING '
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: 'INNER JOIN '
+                type: string_content
+              type: string
+            - children:
+              - text: ' USING '
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: inner
           type: word
         - text: join
           type: word
         - text: using
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'INNER JOIN '
-                type: string_content
-            - type: string
-              children:
-              - text: ' USING '
-                type: string_content
-          action_name:
+      - children:
+        - action_name:
             text: user.insert_between
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'INNER JOIN '
                 type: string_content
-            - type: string
-              children:
+              type: string
+            - children:
               - text: ' USING '
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: 'INNER JOIN '
+                type: string_content
+              type: string
+            - children:
+              - text: ' USING '
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'INNER JOIN '
-                type: string_content
-            - type: string
-              children:
-              - text: ' USING '
-                type: string_content
+        expression:
           action_name:
             text: user.insert_between
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'INNER JOIN '
                 type: string_content
-            - type: string
-              children:
+              type: string
+            - children:
               - text: ' USING '
                 type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: 'INNER JOIN '
+                type: string_content
+              type: string
+            - children:
+              - text: ' USING '
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: left
           type: word
         - text: outer
           type: word
         - text: join
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'LEFT OUTER JOIN '
-                type: string_content
-            - type: string
-              children:
-              - text: ' ON '
-                type: string_content
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'LEFT OUTER JOIN '
-                type: string_content
-            - type: string
-              children:
-              - text: ' ON '
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'LEFT OUTER JOIN '
-                type: string_content
-            - type: string
-              children:
-              - text: ' ON '
-                type: string_content
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'LEFT OUTER JOIN '
-                type: string_content
-            - type: string
-              children:
-              - text: ' ON '
-                type: string_content
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'LEFT OUTER JOIN '
+                type: string_content
+              type: string
+            - children:
+              - text: ' ON '
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: 'LEFT OUTER JOIN '
+                type: string_content
+              type: string
+            - children:
+              - text: ' ON '
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'LEFT OUTER JOIN '
+                type: string_content
+              type: string
+            - children:
+              - text: ' ON '
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: 'LEFT OUTER JOIN '
+                type: string_content
+              type: string
+            - children:
+              - text: ' ON '
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: left
           type: word
         - text: outer
           type: word
         - text: join
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'LEFT OUTER JOIN '
-                type: string_content
-            - type: string
-              children:
-              - text: ' ON '
-                type: string_content
-          action_name:
+      - children:
+        - action_name:
             text: user.insert_between
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'LEFT OUTER JOIN '
                 type: string_content
-            - type: string
-              children:
+              type: string
+            - children:
               - text: ' ON '
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: 'LEFT OUTER JOIN '
+                type: string_content
+              type: string
+            - children:
+              - text: ' ON '
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'LEFT OUTER JOIN '
-                type: string_content
-            - type: string
-              children:
-              - text: ' ON '
-                type: string_content
+        expression:
           action_name:
             text: user.insert_between
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'LEFT OUTER JOIN '
                 type: string_content
-            - type: string
-              children:
+              type: string
+            - children:
               - text: ' ON '
                 type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: 'LEFT OUTER JOIN '
+                type: string_content
+              type: string
+            - children:
+              - text: ' ON '
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: right
           type: word
         - text: outer
           type: word
         - text: join
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'RIGHT OUTER JOIN '
-                type: string_content
-            - type: string
-              children:
-              - text: ' ON '
-                type: string_content
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'RIGHT OUTER JOIN '
-                type: string_content
-            - type: string
-              children:
-              - text: ' ON '
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'RIGHT OUTER JOIN '
-                type: string_content
-            - type: string
-              children:
-              - text: ' ON '
-                type: string_content
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'RIGHT OUTER JOIN '
-                type: string_content
-            - type: string
-              children:
-              - text: ' ON '
-                type: string_content
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'RIGHT OUTER JOIN '
+                type: string_content
+              type: string
+            - children:
+              - text: ' ON '
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: 'RIGHT OUTER JOIN '
+                type: string_content
+              type: string
+            - children:
+              - text: ' ON '
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'RIGHT OUTER JOIN '
+                type: string_content
+              type: string
+            - children:
+              - text: ' ON '
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: 'RIGHT OUTER JOIN '
+                type: string_content
+              type: string
+            - children:
+              - text: ' ON '
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: right
           type: word
         - text: outer
           type: word
         - text: join
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'RIGHT OUTER JOIN '
-                type: string_content
-            - type: string
-              children:
-              - text: ' ON '
-                type: string_content
-          action_name:
+      - children:
+        - action_name:
             text: user.insert_between
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'RIGHT OUTER JOIN '
                 type: string_content
-            - type: string
-              children:
+              type: string
+            - children:
               - text: ' ON '
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: 'RIGHT OUTER JOIN '
+                type: string_content
+              type: string
+            - children:
+              - text: ' ON '
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'RIGHT OUTER JOIN '
-                type: string_content
-            - type: string
-              children:
-              - text: ' ON '
-                type: string_content
+        expression:
           action_name:
             text: user.insert_between
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'RIGHT OUTER JOIN '
                 type: string_content
-            - type: string
-              children:
+              type: string
+            - children:
               - text: ' ON '
                 type: string_content
-  - type: command
-    children:
-    - type: rule
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: 'RIGHT OUTER JOIN '
+                type: string_content
+              type: string
+            - children:
+              - text: ' ON '
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - text: with
+        type: word
+      type: rule
+    - children:
+      - children:
+        - arguments:
+            text: enter up
+            type: implicit_string
+          children:
+          - text: enter up
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: enter up
+            type: implicit_string
+          children:
+          - text: enter up
+            type: implicit_string
+          type: key_action
+        type: expression
+      - children:
+        - children:
+          - text: WITH  AS (
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: WITH  AS (
+            type: string_content
+          type: string
+        type: expression
+      - children:
+        - arguments:
+            text: enter tab
+            type: implicit_string
+          children:
+          - text: enter tab
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: enter tab
+            type: implicit_string
+          children:
+          - text: enter tab
+            type: implicit_string
+          type: key_action
+        type: expression
+      - children:
+        - children:
+          - text: 'SELECT '
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: 'SELECT '
+            type: string_content
+          type: string
+        type: expression
+      - children:
+        - arguments:
+            text: enter shift-tab
+            type: implicit_string
+          children:
+          - text: enter shift-tab
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: enter shift-tab
+            type: implicit_string
+          children:
+          - text: enter shift-tab
+            type: implicit_string
+          type: key_action
+        type: expression
+      - children:
+        - action_name:
+            text: edit.extend_line_end
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: edit.extend_line_end
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: edit.extend_line_end
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: edit.extend_line_end
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - action_name:
+            text: edit.delete
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: edit.delete
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: edit.delete
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: edit.delete
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - children:
+          - text: ') '
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: ') '
+            type: string_content
+          type: string
+        type: expression
+      - children:
+        - arguments:
+            text: delete up:2 right:3
+            type: implicit_string
+          children:
+          - text: delete up:2 right:3
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: delete up:2 right:3
+            type: implicit_string
+          children:
+          - text: delete up:2 right:3
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
       - text: with
         type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: enter up
-            type: implicit_string
-          arguments:
-            text: enter up
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: enter up
-            type: implicit_string
-          arguments:
-            text: enter up
-            type: implicit_string
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: WITH  AS (
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: WITH  AS (
-            type: string_content
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: enter tab
-            type: implicit_string
-          arguments:
-            text: enter tab
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: enter tab
-            type: implicit_string
-          arguments:
-            text: enter tab
-            type: implicit_string
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: 'SELECT '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: 'SELECT '
-            type: string_content
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: enter shift-tab
-            type: implicit_string
-          arguments:
-            text: enter shift-tab
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: enter shift-tab
-            type: implicit_string
-          arguments:
-            text: enter shift-tab
-            type: implicit_string
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: edit.extend_line_end
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: edit.extend_line_end
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: edit.extend_line_end
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: edit.extend_line_end
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: edit.delete
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: edit.delete
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: edit.delete
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: edit.delete
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: ') '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: ') '
-            type: string_content
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: delete up:2 right:3
-            type: implicit_string
-          arguments:
-            text: delete up:2 right:3
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: delete up:2 right:3
-            type: implicit_string
-          arguments:
-            text: delete up:2 right:3
-            type: implicit_string
-    rule:
       type: rule
-      children:
-      - text: with
-        type: word
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: enter up
+            type: implicit_string
           children:
           - text: enter up
             type: implicit_string
+          type: key_action
+        expression:
           arguments:
             text: enter up
             type: implicit_string
-        expression:
-          type: key_action
           children:
           - text: enter up
             type: implicit_string
-          arguments:
-            text: enter up
-            type: implicit_string
-      - type: expression
-        children:
-        - type: string
+          type: key_action
+        type: expression
+      - children:
+        - children:
+          - text: WITH  AS (
+            type: string_content
+          type: string
+        expression:
           children:
           - text: WITH  AS (
             type: string_content
-        expression:
           type: string
-          children:
-          - text: WITH  AS (
-            type: string_content
-      - type: expression
-        children:
-        - type: key_action
+        type: expression
+      - children:
+        - arguments:
+            text: enter tab
+            type: implicit_string
           children:
           - text: enter tab
             type: implicit_string
+          type: key_action
+        expression:
           arguments:
             text: enter tab
             type: implicit_string
-        expression:
-          type: key_action
           children:
           - text: enter tab
             type: implicit_string
-          arguments:
-            text: enter tab
-            type: implicit_string
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: 'SELECT '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: 'SELECT '
-            type: string_content
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: enter shift-tab
-            type: implicit_string
-          arguments:
-            text: enter shift-tab
-            type: implicit_string
-        expression:
           type: key_action
+        type: expression
+      - children:
+        - children:
+          - text: 'SELECT '
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: 'SELECT '
+            type: string_content
+          type: string
+        type: expression
+      - children:
+        - arguments:
+            text: enter shift-tab
+            type: implicit_string
           children:
           - text: enter shift-tab
             type: implicit_string
+          type: key_action
+        expression:
           arguments:
             text: enter shift-tab
             type: implicit_string
-      - type: expression
-        children:
-        - type: action
+          children:
+          - text: enter shift-tab
+            type: implicit_string
+          type: key_action
+        type: expression
+      - children:
+        - action_name:
+            text: edit.extend_line_end
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: edit.extend_line_end
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: edit.extend_line_end
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: edit.extend_line_end
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: edit.extend_line_end
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: edit.delete
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: edit.delete
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
           type: action
+        type: expression
+      - children:
+        - action_name:
+            text: edit.delete
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: edit.delete
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: edit.delete
             type: identifier
           arguments:
-            type: argument_list
             children: []
-      - type: expression
-        children:
-        - type: string
+            type: argument_list
           children:
+          - text: edit.delete
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      - children:
+        - children:
           - text: ') '
             type: string_content
-        expression:
           type: string
+        expression:
           children:
           - text: ') '
             type: string_content
-      - type: expression
-        children:
-        - type: key_action
+          type: string
+        type: expression
+      - children:
+        - arguments:
+            text: delete up:2 right:3
+            type: implicit_string
           children:
           - text: delete up:2 right:3
             type: implicit_string
-          arguments:
-            text: delete up:2 right:3
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: delete up:2 right:3
-            type: implicit_string
+        expression:
           arguments:
             text: delete up:2 right:3
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
+          children:
+          - text: delete up:2 right:3
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - text: column
+        type: word
+      type: rule
+    - children:
+      - children:
+        - arguments:
+            text: return
+            type: implicit_string
+          children:
+          - text: return
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: return
+            type: implicit_string
+          children:
+          - text: return
+            type: implicit_string
+          type: key_action
+        type: expression
+      - children:
+        - children:
+          - text: ', '
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: ', '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
       - text: column
         type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: return
-            type: implicit_string
-          arguments:
-            text: return
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: return
-            type: implicit_string
-          arguments:
-            text: return
-            type: implicit_string
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: ', '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: ', '
-            type: string_content
-    rule:
       type: rule
-      children:
-      - text: column
-        type: word
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: return
+            type: implicit_string
           children:
           - text: return
             type: implicit_string
-          arguments:
-            text: return
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: return
-            type: implicit_string
+        expression:
           arguments:
             text: return
             type: implicit_string
-      - type: expression
-        children:
-        - type: string
           children:
+          - text: return
+            type: implicit_string
+          type: key_action
+        type: expression
+      - children:
+        - children:
           - text: ', '
             type: string_content
-        expression:
           type: string
+        expression:
           children:
           - text: ', '
             type: string_content
-  - type: command
-    children:
-    - type: rule
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - text: count
+        type: word
+      type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.code_insert_function
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: Count
+                type: string_content
+              type: string
+            - children: []
+              type: string
+            type: argument_list
+          children:
+          - text: user.code_insert_function
+            type: identifier
+          - children:
+            - children:
+              - text: Count
+                type: string_content
+              type: string
+            - children: []
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.code_insert_function
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: Count
+                type: string_content
+              type: string
+            - children: []
+              type: string
+            type: argument_list
+          children:
+          - text: user.code_insert_function
+            type: identifier
+          - children:
+            - children:
+              - text: Count
+                type: string_content
+              type: string
+            - children: []
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
       - text: count
         type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_insert_function
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: Count
-                type: string_content
-            - type: string
-              children: []
-          action_name:
-            text: user.code_insert_function
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: Count
-                type: string_content
-            - type: string
-              children: []
-        expression:
-          type: action
-          children:
-          - text: user.code_insert_function
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: Count
-                type: string_content
-            - type: string
-              children: []
-          action_name:
-            text: user.code_insert_function
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: Count
-                type: string_content
-            - type: string
-              children: []
-    rule:
       type: rule
-      children:
-      - text: count
-        type: word
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_insert_function
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: Count
-                type: string_content
-            - type: string
-              children: []
-          action_name:
+      - children:
+        - action_name:
             text: user.code_insert_function
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: Count
                 type: string_content
-            - type: string
-              children: []
-        expression:
+              type: string
+            - children: []
+              type: string
+            type: argument_list
+          children:
+          - text: user.code_insert_function
+            type: identifier
+          - children:
+            - children:
+              - text: Count
+                type: string_content
+              type: string
+            - children: []
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: user.code_insert_function
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: Count
-                type: string_content
-            - type: string
-              children: []
+        expression:
           action_name:
             text: user.code_insert_function
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: Count
                 type: string_content
-            - type: string
-              children: []
-  - type: command
-    children:
-    - type: rule
+              type: string
+            - children: []
+              type: string
+            type: argument_list
+          children:
+          - text: user.code_insert_function
+            type: identifier
+          - children:
+            - children:
+              - text: Count
+                type: string_content
+              type: string
+            - children: []
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - text: date
+        type: word
+      type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: DATE '
+                type: string_content
+              type: string
+            - children:
+              - text: ''''
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: DATE '
+                type: string_content
+              type: string
+            - children:
+              - text: ''''
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: DATE '
+                type: string_content
+              type: string
+            - children:
+              - text: ''''
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: DATE '
+                type: string_content
+              type: string
+            - children:
+              - text: ''''
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
       - text: date
         type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: DATE '
-                type: string_content
-            - type: string
-              children:
-              - text: "'"
-                type: string_content
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: DATE '
-                type: string_content
-            - type: string
-              children:
-              - text: "'"
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: DATE '
-                type: string_content
-            - type: string
-              children:
-              - text: "'"
-                type: string_content
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: DATE '
-                type: string_content
-            - type: string
-              children:
-              - text: "'"
-                type: string_content
-    rule:
       type: rule
-      children:
-      - text: date
-        type: word
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: DATE '
-                type: string_content
-            - type: string
-              children:
-              - text: "'"
-                type: string_content
-          action_name:
+      - children:
+        - action_name:
             text: user.insert_between
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: DATE '
                 type: string_content
-            - type: string
-              children:
-              - text: "'"
+              type: string
+            - children:
+              - text: ''''
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: DATE '
+                type: string_content
+              type: string
+            - children:
+              - text: ''''
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: DATE '
-                type: string_content
-            - type: string
-              children:
-              - text: "'"
-                type: string_content
+        expression:
           action_name:
             text: user.insert_between
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: DATE '
                 type: string_content
-            - type: string
-              children:
-              - text: "'"
+              type: string
+            - children:
+              - text: ''''
                 type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: DATE '
+                type: string_content
+              type: string
+            - children:
+              - text: ''''
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  type: source_file

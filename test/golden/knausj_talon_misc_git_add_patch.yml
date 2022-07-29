@@ -1,17 +1,29 @@
-input: "tag: terminal\nand tag: user.git\ntitle: /git add .*\\-p/\n-\nyank:\n  key(y)\n\
-  \  key(enter)\nnear:\n  key(n)\n  key(enter)\nquench:\n  key(q)\n  key(enter)\n\
-  drum:\n  key(d)\n  key(enter)\nair:\n  key(a)\n  key(enter)\n"
+input: |
+  tag: terminal
+  and tag: user.git
+  title: /git add .*\-p/
+  -
+  yank:
+    key(y)
+    key(enter)
+  near:
+    key(n)
+    key(enter)
+  quench:
+    key(q)
+    key(enter)
+  drum:
+    key(d)
+    key(enter)
+  air:
+    key(a)
+    key(enter)
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: or
-      children:
-      - type: and
-        children:
-        - type: match
-          children:
+  - children:
+    - children:
+      - children:
+        - children:
           - text: tag
             type: identifier
           - text: ' terminal'
@@ -22,8 +34,8 @@ output:
           pattern:
             text: ' terminal'
             type: implicit_string
-        - type: match
-          children:
+          type: match
+        - children:
           - text: tag
             type: identifier
           - text: ' user.git'
@@ -34,8 +46,9 @@ output:
           pattern:
             text: ' user.git'
             type: implicit_string
-      - type: match
-        children:
+          type: match
+        type: and
+      - children:
         - text: title
           type: identifier
         - text: ' /git add .*\-p/'
@@ -46,423 +59,427 @@ output:
         pattern:
           text: ' /git add .*\-p/'
           type: implicit_string
-  - type: command
-    children:
-    - type: rule
+        type: match
+      type: or
+    type: context
+  - children:
+    - children:
+      - text: yank
+        type: word
+      type: rule
+    - children:
+      - children:
+        - arguments:
+            text: y
+            type: implicit_string
+          children:
+          - text: y
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: y
+            type: implicit_string
+          children:
+          - text: y
+            type: implicit_string
+          type: key_action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
       - text: yank
         type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: y
-            type: implicit_string
-          arguments:
-            text: y
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: y
-            type: implicit_string
-          arguments:
-            text: y
-            type: implicit_string
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-    rule:
       type: rule
-      children:
-      - text: yank
-        type: word
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: y
+            type: implicit_string
           children:
           - text: y
             type: implicit_string
+          type: key_action
+        expression:
           arguments:
             text: y
             type: implicit_string
-        expression:
-          type: key_action
           children:
           - text: y
             type: implicit_string
-          arguments:
-            text: y
-            type: implicit_string
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
           type: key_action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
           children:
           - text: enter
             type: implicit_string
+          type: key_action
+        expression:
           arguments:
             text: enter
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - text: near
+        type: word
+      type: rule
+    - children:
+      - children:
+        - arguments:
+            text: n
+            type: implicit_string
+          children:
+          - text: n
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: n
+            type: implicit_string
+          children:
+          - text: n
+            type: implicit_string
+          type: key_action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
       - text: near
         type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: n
-            type: implicit_string
-          arguments:
-            text: n
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: n
-            type: implicit_string
-          arguments:
-            text: n
-            type: implicit_string
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-    rule:
       type: rule
-      children:
-      - text: near
-        type: word
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: n
+            type: implicit_string
           children:
           - text: n
             type: implicit_string
+          type: key_action
+        expression:
           arguments:
             text: n
             type: implicit_string
-        expression:
-          type: key_action
           children:
           - text: n
             type: implicit_string
-          arguments:
-            text: n
-            type: implicit_string
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
           type: key_action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
           children:
           - text: enter
             type: implicit_string
+          type: key_action
+        expression:
           arguments:
             text: enter
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - text: quench
+        type: word
+      type: rule
+    - children:
+      - children:
+        - arguments:
+            text: q
+            type: implicit_string
+          children:
+          - text: q
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: q
+            type: implicit_string
+          children:
+          - text: q
+            type: implicit_string
+          type: key_action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
       - text: quench
         type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: q
-            type: implicit_string
-          arguments:
-            text: q
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: q
-            type: implicit_string
-          arguments:
-            text: q
-            type: implicit_string
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-    rule:
       type: rule
-      children:
-      - text: quench
-        type: word
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: q
+            type: implicit_string
           children:
           - text: q
             type: implicit_string
+          type: key_action
+        expression:
           arguments:
             text: q
             type: implicit_string
-        expression:
-          type: key_action
           children:
           - text: q
             type: implicit_string
-          arguments:
-            text: q
-            type: implicit_string
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
           type: key_action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
           children:
           - text: enter
             type: implicit_string
+          type: key_action
+        expression:
           arguments:
             text: enter
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - text: drum
+        type: word
+      type: rule
+    - children:
+      - children:
+        - arguments:
+            text: d
+            type: implicit_string
+          children:
+          - text: d
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: d
+            type: implicit_string
+          children:
+          - text: d
+            type: implicit_string
+          type: key_action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
       - text: drum
         type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: d
-            type: implicit_string
-          arguments:
-            text: d
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: d
-            type: implicit_string
-          arguments:
-            text: d
-            type: implicit_string
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-    rule:
       type: rule
-      children:
-      - text: drum
-        type: word
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: d
+            type: implicit_string
           children:
           - text: d
             type: implicit_string
+          type: key_action
+        expression:
           arguments:
             text: d
             type: implicit_string
-        expression:
-          type: key_action
           children:
           - text: d
             type: implicit_string
-          arguments:
-            text: d
-            type: implicit_string
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
           type: key_action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
           children:
           - text: enter
             type: implicit_string
+          type: key_action
+        expression:
           arguments:
             text: enter
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - text: air
+        type: word
+      type: rule
+    - children:
+      - children:
+        - arguments:
+            text: a
+            type: implicit_string
+          children:
+          - text: a
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: a
+            type: implicit_string
+          children:
+          - text: a
+            type: implicit_string
+          type: key_action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
       - text: air
         type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: a
-            type: implicit_string
-          arguments:
-            text: a
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: a
-            type: implicit_string
-          arguments:
-            text: a
-            type: implicit_string
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-    rule:
       type: rule
-      children:
-      - text: air
-        type: word
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: a
+            type: implicit_string
           children:
           - text: a
             type: implicit_string
+          type: key_action
+        expression:
           arguments:
             text: a
             type: implicit_string
-        expression:
-          type: key_action
           children:
           - text: a
             type: implicit_string
-          arguments:
-            text: a
-            type: implicit_string
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
           type: key_action
+        type: expression
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
           children:
           - text: enter
             type: implicit_string
+          type: key_action
+        expression:
           arguments:
             text: enter
             type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  type: source_file

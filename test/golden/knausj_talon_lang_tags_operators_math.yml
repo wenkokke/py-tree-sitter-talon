@@ -1,23 +1,37 @@
-input: "tag: user.code_operators_math\n-\n\n# math operators\nop (minus | subtract):\
-  \ user.code_operator_subtraction()\nop (plus | add): user.code_operator_addition()\n\
-  op (times | multiply): user.code_operator_multiplication()\nop divide: user.code_operator_division()\n\
-  op mod: user.code_operator_modulo()\n(op (power | exponent) | to the power [of]):\
-  \ user.code_operator_exponent()\n\n# comparison operators\n(op | is) equal: user.code_operator_equal()\n\
-  (op | is) not equal: user.code_operator_not_equal()\n(op | is) (greater | more):\
-  \ user.code_operator_greater_than()\n(op | is) (less | below) [than]: user.code_operator_less_than()\n\
-  (op | is) greater [than] or equal: user.code_operator_greater_than_or_equal_to()\n\
-  (op | is) less [than] or equal: user.code_operator_less_than_or_equal_to()\n\n#\
-  \ logical operators\n(op | logical) and: user.code_operator_and()\n(op | logical)\
-  \ or: user.code_operator_or()\n\n# set operators\n(op | is) in: user.code_operator_in()\n\
-  (op | is) not in: user.code_operator_not_in()\n\n# TODO: This operator should either\
-  \ be abstracted into a function or removed.\n(op | pad) colon: \" : \"\n"
+input: |
+  tag: user.code_operators_math
+  -
+
+  # math operators
+  op (minus | subtract): user.code_operator_subtraction()
+  op (plus | add): user.code_operator_addition()
+  op (times | multiply): user.code_operator_multiplication()
+  op divide: user.code_operator_division()
+  op mod: user.code_operator_modulo()
+  (op (power | exponent) | to the power [of]): user.code_operator_exponent()
+
+  # comparison operators
+  (op | is) equal: user.code_operator_equal()
+  (op | is) not equal: user.code_operator_not_equal()
+  (op | is) (greater | more): user.code_operator_greater_than()
+  (op | is) (less | below) [than]: user.code_operator_less_than()
+  (op | is) greater [than] or equal: user.code_operator_greater_than_or_equal_to()
+  (op | is) less [than] or equal: user.code_operator_less_than_or_equal_to()
+
+  # logical operators
+  (op | logical) and: user.code_operator_and()
+  (op | logical) or: user.code_operator_or()
+
+  # set operators
+  (op | is) in: user.code_operator_in()
+  (op | is) not in: user.code_operator_not_in()
+
+  # TODO: This operator should either be abstracted into a function or removed.
+  (op | pad) colon: " : "
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: match
-      children:
+  - children:
+    - children:
       - text: tag
         type: identifier
       - text: ' user.code_operators_math'
@@ -28,1591 +42,1594 @@ output:
       pattern:
         text: ' user.code_operators_math'
         type: implicit_string
+      type: match
+    type: context
   - text: '# math operators'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: op
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: minus
               type: word
             - text: subtract
               type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_operator_subtraction
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_subtraction
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.code_operator_subtraction
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_subtraction
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+            type: choice
+          type: parenthesized_rule
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.code_operator_subtraction
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_subtraction
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.code_operator_subtraction
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_subtraction
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: op
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: minus
               type: word
             - text: subtract
               type: word
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.code_operator_subtraction
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.code_operator_subtraction
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.code_operator_subtraction
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.code_operator_subtraction
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_subtraction
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: op
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: plus
               type: word
             - text: add
               type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_operator_addition
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_addition
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.code_operator_addition
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_addition
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+            type: choice
+          type: parenthesized_rule
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.code_operator_addition
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_addition
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.code_operator_addition
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_addition
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: op
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: plus
               type: word
             - text: add
               type: word
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.code_operator_addition
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.code_operator_addition
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.code_operator_addition
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.code_operator_addition
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_addition
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: op
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: times
               type: word
             - text: multiply
               type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_operator_multiplication
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_multiplication
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.code_operator_multiplication
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_multiplication
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+            type: choice
+          type: parenthesized_rule
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.code_operator_multiplication
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_multiplication
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.code_operator_multiplication
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_multiplication
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: op
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: times
               type: word
             - text: multiply
               type: word
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.code_operator_multiplication
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.code_operator_multiplication
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.code_operator_multiplication
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.code_operator_multiplication
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_multiplication
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: op
           type: word
         - text: divide
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_operator_division
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_division
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.code_operator_division
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_division
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.code_operator_division
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_division
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.code_operator_division
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_division
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: op
           type: word
         - text: divide
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_operator_division
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_division
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.code_operator_division
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_division
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: op
-          type: word
-        - text: mod
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_operator_modulo
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_modulo
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.code_operator_modulo
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_modulo
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - action_name:
+            text: user.code_operator_division
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_division
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.code_operator_division
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_division
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: op
           type: word
         - text: mod
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_operator_modulo
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: user.code_operator_modulo
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: user.code_operator_modulo
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: user.code_operator_modulo
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: user.code_operator_modulo
             type: identifier
           arguments:
-            type: argument_list
             children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: parenthesized_rule
-        children:
-        - type: choice
+            type: argument_list
           children:
-          - type: seq
-            children:
+          - text: user.code_operator_modulo
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: op
+          type: word
+        - text: mod
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: user.code_operator_modulo
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_modulo
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.code_operator_modulo
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_modulo
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: op
               type: word
-            - type: parenthesized_rule
-              children:
-              - type: choice
-                children:
+            - children:
+              - children:
                 - text: power
                   type: word
                 - text: exponent
                   type: word
-          - type: seq
-            children:
+                type: choice
+              type: parenthesized_rule
+            type: seq
+          - children:
             - text: to
               type: word
             - text: the
               type: word
             - text: power
               type: word
-            - type: optional
-              children:
+            - children:
               - text: of
                 type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_operator_exponent
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_exponent
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.code_operator_exponent
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_exponent
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+              type: optional
+            type: seq
+          type: choice
+        type: parenthesized_rule
       type: rule
-      children:
-      - type: parenthesized_rule
-        children:
-        - type: choice
+    - children:
+      - children:
+        - action_name:
+            text: user.code_operator_exponent
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
-          - type: seq
-            children:
+          - text: user.code_operator_exponent
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.code_operator_exponent
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_exponent
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: op
               type: word
-            - type: parenthesized_rule
-              children:
-              - type: choice
-                children:
+            - children:
+              - children:
                 - text: power
                   type: word
                 - text: exponent
                   type: word
-          - type: seq
-            children:
+                type: choice
+              type: parenthesized_rule
+            type: seq
+          - children:
             - text: to
               type: word
             - text: the
               type: word
             - text: power
               type: word
-            - type: optional
-              children:
+            - children:
               - text: of
                 type: word
+              type: optional
+            type: seq
+          type: choice
+        type: parenthesized_rule
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_operator_exponent
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+      - children:
+        - action_name:
             text: user.code_operator_exponent
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: user.code_operator_exponent
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: user.code_operator_exponent
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: user.code_operator_exponent
             type: identifier
           arguments:
-            type: argument_list
             children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_exponent
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
   - text: '# comparison operators'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: op
               type: word
             - text: is
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: equal
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_operator_equal
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_equal
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.code_operator_equal
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_equal
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - action_name:
+            text: user.code_operator_equal
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
-          - type: choice
-            children:
+          - text: user.code_operator_equal
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.code_operator_equal
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_equal
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: op
               type: word
             - text: is
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: equal
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_operator_equal
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+      - children:
+        - action_name:
             text: user.code_operator_equal
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: user.code_operator_equal
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: user.code_operator_equal
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: user.code_operator_equal
             type: identifier
           arguments:
-            type: argument_list
             children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+            type: argument_list
           children:
-          - type: choice
-            children:
+          - text: user.code_operator_equal
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: op
               type: word
             - text: is
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: not
           type: word
         - text: equal
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_operator_not_equal
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_not_equal
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.code_operator_not_equal
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_not_equal
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - action_name:
+            text: user.code_operator_not_equal
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
-          - type: choice
-            children:
+          - text: user.code_operator_not_equal
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.code_operator_not_equal
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_not_equal
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: op
               type: word
             - text: is
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: not
           type: word
         - text: equal
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.code_operator_not_equal
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.code_operator_not_equal
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.code_operator_not_equal
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.code_operator_not_equal
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_not_equal
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: op
               type: word
             - text: is
               type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+            type: choice
+          type: parenthesized_rule
+        - children:
+          - children:
             - text: greater
               type: word
             - text: more
               type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_operator_greater_than
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_greater_than
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.code_operator_greater_than
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_greater_than
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+            type: choice
+          type: parenthesized_rule
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - action_name:
+            text: user.code_operator_greater_than
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
-          - type: choice
-            children:
+          - text: user.code_operator_greater_than
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.code_operator_greater_than
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_greater_than
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: op
               type: word
             - text: is
               type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+            type: choice
+          type: parenthesized_rule
+        - children:
+          - children:
             - text: greater
               type: word
             - text: more
               type: word
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.code_operator_greater_than
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.code_operator_greater_than
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.code_operator_greater_than
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.code_operator_greater_than
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_greater_than
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: op
               type: word
             - text: is
               type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+            type: choice
+          type: parenthesized_rule
+        - children:
+          - children:
             - text: less
               type: word
             - text: below
               type: word
-        - type: optional
-          children:
+            type: choice
+          type: parenthesized_rule
+        - children:
           - text: than
             type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_operator_less_than
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_less_than
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.code_operator_less_than
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_less_than
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+          type: optional
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - action_name:
+            text: user.code_operator_less_than
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
-          - type: choice
-            children:
+          - text: user.code_operator_less_than
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.code_operator_less_than
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_less_than
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: op
               type: word
             - text: is
               type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+            type: choice
+          type: parenthesized_rule
+        - children:
+          - children:
             - text: less
               type: word
             - text: below
               type: word
-        - type: optional
-          children:
+            type: choice
+          type: parenthesized_rule
+        - children:
           - text: than
             type: word
+          type: optional
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.code_operator_less_than
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.code_operator_less_than
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.code_operator_less_than
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.code_operator_less_than
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_less_than
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: op
               type: word
             - text: is
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: greater
           type: word
-        - type: optional
-          children:
+        - children:
           - text: than
             type: word
+          type: optional
         - text: or
           type: word
         - text: equal
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_operator_greater_than_or_equal_to
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_greater_than_or_equal_to
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.code_operator_greater_than_or_equal_to
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_greater_than_or_equal_to
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - action_name:
+            text: user.code_operator_greater_than_or_equal_to
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
-          - type: choice
-            children:
+          - text: user.code_operator_greater_than_or_equal_to
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.code_operator_greater_than_or_equal_to
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_greater_than_or_equal_to
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: op
               type: word
             - text: is
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: greater
           type: word
-        - type: optional
-          children:
+        - children:
           - text: than
             type: word
+          type: optional
         - text: or
           type: word
         - text: equal
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_operator_greater_than_or_equal_to
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_greater_than_or_equal_to
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.code_operator_greater_than_or_equal_to
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_greater_than_or_equal_to
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: op
-              type: word
-            - text: is
-              type: word
-        - text: less
-          type: word
-        - type: optional
-          children:
-          - text: than
-            type: word
-        - text: or
-          type: word
-        - text: equal
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_operator_less_than_or_equal_to
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_less_than_or_equal_to
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.code_operator_less_than_or_equal_to
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_less_than_or_equal_to
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+      - children:
+        - action_name:
+            text: user.code_operator_greater_than_or_equal_to
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
-          - type: choice
-            children:
+          - text: user.code_operator_greater_than_or_equal_to
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.code_operator_greater_than_or_equal_to
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_greater_than_or_equal_to
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: op
               type: word
             - text: is
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: less
           type: word
-        - type: optional
-          children:
+        - children:
           - text: than
             type: word
+          type: optional
         - text: or
           type: word
         - text: equal
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_operator_less_than_or_equal_to
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: user.code_operator_less_than_or_equal_to
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: user.code_operator_less_than_or_equal_to
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: user.code_operator_less_than_or_equal_to
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: user.code_operator_less_than_or_equal_to
             type: identifier
           arguments:
-            type: argument_list
             children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_less_than_or_equal_to
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
+            - text: op
+              type: word
+            - text: is
+              type: word
+            type: choice
+          type: parenthesized_rule
+        - text: less
+          type: word
+        - children:
+          - text: than
+            type: word
+          type: optional
+        - text: or
+          type: word
+        - text: equal
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: user.code_operator_less_than_or_equal_to
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_less_than_or_equal_to
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.code_operator_less_than_or_equal_to
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_less_than_or_equal_to
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
   - text: '# logical operators'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: op
               type: word
             - text: logical
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: and
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_operator_and
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_and
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.code_operator_and
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_and
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - action_name:
+            text: user.code_operator_and
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
-          - type: choice
-            children:
+          - text: user.code_operator_and
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.code_operator_and
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_and
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: op
               type: word
             - text: logical
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: and
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_operator_and
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_and
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.code_operator_and
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_and
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: op
-              type: word
-            - text: logical
-              type: word
-        - text: or
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_operator_or
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_or
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.code_operator_or
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_or
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+      - children:
+        - action_name:
+            text: user.code_operator_and
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
-          - type: choice
-            children:
+          - text: user.code_operator_and
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.code_operator_and
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_and
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: op
               type: word
             - text: logical
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: or
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_operator_or
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: user.code_operator_or
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: user.code_operator_or
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: user.code_operator_or
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: user.code_operator_or
             type: identifier
           arguments:
-            type: argument_list
             children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_or
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
+            - text: op
+              type: word
+            - text: logical
+              type: word
+            type: choice
+          type: parenthesized_rule
+        - text: or
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: user.code_operator_or
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_or
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.code_operator_or
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_or
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
   - text: '# set operators'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: op
               type: word
             - text: is
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: in
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_operator_in
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_in
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.code_operator_in
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_in
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - action_name:
+            text: user.code_operator_in
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
-          - type: choice
-            children:
+          - text: user.code_operator_in
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.code_operator_in
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_in
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: op
               type: word
             - text: is
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: in
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_operator_in
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+      - children:
+        - action_name:
             text: user.code_operator_in
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: user.code_operator_in
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: user.code_operator_in
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: user.code_operator_in
             type: identifier
           arguments:
-            type: argument_list
             children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+            type: argument_list
           children:
-          - type: choice
-            children:
+          - text: user.code_operator_in
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: op
               type: word
             - text: is
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: not
           type: word
         - text: in
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_operator_not_in
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_not_in
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.code_operator_not_in
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_operator_not_in
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - action_name:
+            text: user.code_operator_not_in
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
-          - type: choice
-            children:
+          - text: user.code_operator_not_in
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.code_operator_not_in
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_not_in
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: op
               type: word
             - text: is
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: not
           type: word
         - text: in
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_operator_not_in
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+      - children:
+        - action_name:
             text: user.code_operator_not_in
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: user.code_operator_not_in
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: user.code_operator_not_in
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: user.code_operator_not_in
             type: identifier
           arguments:
-            type: argument_list
             children: []
+            type: argument_list
+          children:
+          - text: user.code_operator_not_in
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
   - text: '# TODO: This operator should either be abstracted into a function or removed.'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: op
               type: word
             - text: pad
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: colon
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: ' : '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: ' : '
-            type: string_content
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - children:
+          - text: ' : '
+            type: string_content
+          type: string
+        expression:
           children:
-          - type: choice
-            children:
+          - text: ' : '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: op
               type: word
             - text: pad
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: colon
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: string
-          children:
+      - children:
+        - children:
           - text: ' : '
             type: string_content
-        expression:
           type: string
+        expression:
           children:
           - text: ' : '
             type: string_content
+          type: string
+        type: expression
+      type: block
+    type: command
+  type: source_file

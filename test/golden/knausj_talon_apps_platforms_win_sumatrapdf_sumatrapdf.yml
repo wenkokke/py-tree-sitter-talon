@@ -1,11 +1,13 @@
-input: "app: sumatrapdf\n-\n# Set tags\ntag(): user.pages\ntag(): user.tabs\n"
+input: |
+  app: sumatrapdf
+  -
+  # Set tags
+  tag(): user.pages
+  tag(): user.tabs
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: match
-      children:
+  - children:
+    - children:
       - text: app
         type: identifier
       - text: ' sumatrapdf'
@@ -16,19 +18,22 @@ output:
       pattern:
         text: ' sumatrapdf'
         type: implicit_string
+      type: match
+    type: context
   - text: '# Set tags'
     type: comment
-  - type: include_tag
-    children:
+  - children:
     - text: user.pages
       type: identifier
     tag:
       text: user.pages
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.tabs
       type: identifier
     tag:
       text: user.tabs
       type: identifier
+    type: include_tag
+  type: source_file

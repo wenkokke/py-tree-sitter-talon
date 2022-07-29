@@ -1,11 +1,13 @@
-input: "app: nautilus\n-\n# Set tags\ntag(): user.tabs\ntag(): user.file_manager\n"
+input: |
+  app: nautilus
+  -
+  # Set tags
+  tag(): user.tabs
+  tag(): user.file_manager
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: match
-      children:
+  - children:
+    - children:
       - text: app
         type: identifier
       - text: ' nautilus'
@@ -16,19 +18,22 @@ output:
       pattern:
         text: ' nautilus'
         type: implicit_string
+      type: match
+    type: context
   - text: '# Set tags'
     type: comment
-  - type: include_tag
-    children:
+  - children:
     - text: user.tabs
       type: identifier
     tag:
       text: user.tabs
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.file_manager
       type: identifier
     tag:
       text: user.file_manager
       type: identifier
+    type: include_tag
+  type: source_file

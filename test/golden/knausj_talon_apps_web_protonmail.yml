@@ -1,32 +1,90 @@
-input: "tag: browser\nwin.title: /ProtonMail/\n-\n# General\n## Application\nopen\
-  \ help: key(?)\n[focus] search: key(/)\nconfirm active: key(enter)\nclose active:\
-  \ key(escape)\nopen command [palette]: key(shift-space)\n\n## Composer\nnew message:\
-  \ key(c)\nsend message: key(ctrl-enter)\nsave message: key(ctrl-s)\n\n# Mail\n##\
-  \ Jumping\n(go|jump) [to] inbox:\n    key(g)\n    key(i)\n(go|jump) [to] draft:\n\
-  \    key(g)\n    key(d)\n(go|jump) [to] sent:\n    key(g)\n    key(s)\n(go|jump)\
-  \ [to] starred:\n    key(g)\n    key(.)\n(go|jump) [to] archive:\n    key(g)\n \
-  \   key(a)\n(go|jump) [to] spam:\n    key(g)\n    key(x)\n(go|jump) [to] trash:\n\
-  \    key(g)\n    key(t)\n\n## Navigation\n(prev|previous) message: key(up)\nnext\
-  \ message: key(down)\nexit message: key(left)\nenter message: key(right)\n(show|display)\
-  \ newer [message]: key(k)\n(show|display) older [message]: key(j)\nopen message:\
-  \ key(enter)\ngo back: key(escape)\n\n## Threadlist\nselect all:\n    key(*)\n \
-  \   key(a)\n(deselect|unselect) all:\n    key(*)\n    key(n)\nselect [the] (message|conversation):\
-  \ key(x)\nmark [as] read: key(r)\nmark [as] unread: key(u)\nstar (message|conversation):\
-  \ key(.)\nmove to inbox: key(i)\nmove to trash: key(t)\nmove to archive: key(a)\n\
-  move to spam: key(s)\n\n## Actions\nreply to (message|conversation): key(shift-r)\n\
-  reply all [to] (message|conversation): key(shift-a)\nforward (message|conversation):\
-  \ key(shift-f)\n\n# Contacts\n## Contact List\n(prev|previous) contact: key(up)\n\
-  next contact: key(down)\nenter contact: key(right)\ndelete contact: key(t)\n\n##\
-  \ Contact Details\nexit contact: key(left)\nsave contact: key(ctrl-s)\n"
+input: |
+  tag: browser
+  win.title: /ProtonMail/
+  -
+  # General
+  ## Application
+  open help: key(?)
+  [focus] search: key(/)
+  confirm active: key(enter)
+  close active: key(escape)
+  open command [palette]: key(shift-space)
+
+  ## Composer
+  new message: key(c)
+  send message: key(ctrl-enter)
+  save message: key(ctrl-s)
+
+  # Mail
+  ## Jumping
+  (go|jump) [to] inbox:
+      key(g)
+      key(i)
+  (go|jump) [to] draft:
+      key(g)
+      key(d)
+  (go|jump) [to] sent:
+      key(g)
+      key(s)
+  (go|jump) [to] starred:
+      key(g)
+      key(.)
+  (go|jump) [to] archive:
+      key(g)
+      key(a)
+  (go|jump) [to] spam:
+      key(g)
+      key(x)
+  (go|jump) [to] trash:
+      key(g)
+      key(t)
+
+  ## Navigation
+  (prev|previous) message: key(up)
+  next message: key(down)
+  exit message: key(left)
+  enter message: key(right)
+  (show|display) newer [message]: key(k)
+  (show|display) older [message]: key(j)
+  open message: key(enter)
+  go back: key(escape)
+
+  ## Threadlist
+  select all:
+      key(*)
+      key(a)
+  (deselect|unselect) all:
+      key(*)
+      key(n)
+  select [the] (message|conversation): key(x)
+  mark [as] read: key(r)
+  mark [as] unread: key(u)
+  star (message|conversation): key(.)
+  move to inbox: key(i)
+  move to trash: key(t)
+  move to archive: key(a)
+  move to spam: key(s)
+
+  ## Actions
+  reply to (message|conversation): key(shift-r)
+  reply all [to] (message|conversation): key(shift-a)
+  forward (message|conversation): key(shift-f)
+
+  # Contacts
+  ## Contact List
+  (prev|previous) contact: key(up)
+  next contact: key(down)
+  enter contact: key(right)
+  delete contact: key(t)
+
+  ## Contact Details
+  exit contact: key(left)
+  save contact: key(ctrl-s)
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: or
-      children:
-      - type: match
-        children:
+  - children:
+    - children:
+      - children:
         - text: tag
           type: identifier
         - text: ' browser'
@@ -37,8 +95,8 @@ output:
         pattern:
           text: ' browser'
           type: implicit_string
-      - type: match
-        children:
+        type: match
+      - children:
         - text: win.title
           type: identifier
         - text: ' /ProtonMail/'
@@ -49,3111 +107,3115 @@ output:
         pattern:
           text: ' /ProtonMail/'
           type: implicit_string
+        type: match
+      type: or
+    type: context
   - text: '# General'
     type: comment
   - text: '## Application'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: open
           type: word
         - text: help
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: '?'
-            type: implicit_string
-          arguments:
-            text: '?'
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: '?'
-            type: implicit_string
-          arguments:
-            text: '?'
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: '?'
+            type: implicit_string
+          children:
+          - text: '?'
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: '?'
+            type: implicit_string
+          children:
+          - text: '?'
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: open
           type: word
         - text: help
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: '?'
-            type: implicit_string
-          arguments:
-            text: '?'
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: '?'
-            type: implicit_string
-          arguments:
-            text: '?'
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: optional
-          children:
-          - text: focus
-            type: word
-        - text: search
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: /
-            type: implicit_string
-          arguments:
-            text: /
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: /
-            type: implicit_string
-          arguments:
-            text: /
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
-        - type: optional
+      - children:
+        - arguments:
+            text: '?'
+            type: implicit_string
           children:
+          - text: '?'
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: '?'
+            type: implicit_string
+          children:
+          - text: '?'
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
           - text: focus
             type: word
+          type: optional
         - text: search
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - arguments:
+            text: /
+            type: implicit_string
           children:
           - text: /
             type: implicit_string
-          arguments:
-            text: /
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: /
-            type: implicit_string
+        expression:
           arguments:
             text: /
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
+          children:
+          - text: /
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
+        - children:
+          - text: focus
+            type: word
+          type: optional
+        - text: search
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - arguments:
+            text: /
+            type: implicit_string
+          children:
+          - text: /
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: /
+            type: implicit_string
+          children:
+          - text: /
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: confirm
           type: word
         - text: active
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: confirm
           type: word
         - text: active
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
           children:
           - text: enter
             type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: enter
-            type: implicit_string
+        expression:
           arguments:
             text: enter
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: close
           type: word
         - text: active
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: escape
-            type: implicit_string
-          arguments:
-            text: escape
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: escape
-            type: implicit_string
-          arguments:
-            text: escape
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: escape
+            type: implicit_string
+          children:
+          - text: escape
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: escape
+            type: implicit_string
+          children:
+          - text: escape
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: close
           type: word
         - text: active
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: escape
-            type: implicit_string
-          arguments:
-            text: escape
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: escape
-            type: implicit_string
-          arguments:
-            text: escape
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: open
-          type: word
-        - text: command
-          type: word
-        - type: optional
-          children:
-          - text: palette
-            type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: shift-space
-            type: implicit_string
-          arguments:
-            text: shift-space
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: shift-space
-            type: implicit_string
-          arguments:
-            text: shift-space
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - arguments:
+            text: escape
+            type: implicit_string
+          children:
+          - text: escape
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: escape
+            type: implicit_string
+          children:
+          - text: escape
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: open
           type: word
         - text: command
           type: word
-        - type: optional
-          children:
+        - children:
           - text: palette
             type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
+          type: optional
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - arguments:
+            text: shift-space
+            type: implicit_string
           children:
           - text: shift-space
             type: implicit_string
-          arguments:
-            text: shift-space
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: shift-space
-            type: implicit_string
+        expression:
           arguments:
             text: shift-space
             type: implicit_string
+          children:
+          - text: shift-space
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: open
+          type: word
+        - text: command
+          type: word
+        - children:
+          - text: palette
+            type: word
+          type: optional
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - arguments:
+            text: shift-space
+            type: implicit_string
+          children:
+          - text: shift-space
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: shift-space
+            type: implicit_string
+          children:
+          - text: shift-space
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
   - text: '## Composer'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: new
           type: word
         - text: message
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: c
-            type: implicit_string
-          arguments:
-            text: c
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: c
-            type: implicit_string
-          arguments:
-            text: c
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: c
+            type: implicit_string
+          children:
+          - text: c
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: c
+            type: implicit_string
+          children:
+          - text: c
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: new
           type: word
         - text: message
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: c
+            type: implicit_string
           children:
           - text: c
             type: implicit_string
-          arguments:
-            text: c
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: c
-            type: implicit_string
+        expression:
           arguments:
             text: c
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          children:
+          - text: c
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: send
           type: word
         - text: message
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: ctrl-enter
-            type: implicit_string
-          arguments:
-            text: ctrl-enter
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: ctrl-enter
-            type: implicit_string
-          arguments:
-            text: ctrl-enter
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: ctrl-enter
+            type: implicit_string
+          children:
+          - text: ctrl-enter
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: ctrl-enter
+            type: implicit_string
+          children:
+          - text: ctrl-enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: send
           type: word
         - text: message
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: ctrl-enter
-            type: implicit_string
-          arguments:
-            text: ctrl-enter
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: ctrl-enter
-            type: implicit_string
-          arguments:
-            text: ctrl-enter
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: save
-          type: word
-        - text: message
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: ctrl-s
-            type: implicit_string
-          arguments:
-            text: ctrl-s
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: ctrl-s
-            type: implicit_string
-          arguments:
-            text: ctrl-s
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - arguments:
+            text: ctrl-enter
+            type: implicit_string
+          children:
+          - text: ctrl-enter
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: ctrl-enter
+            type: implicit_string
+          children:
+          - text: ctrl-enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: save
           type: word
         - text: message
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - arguments:
+            text: ctrl-s
+            type: implicit_string
           children:
           - text: ctrl-s
             type: implicit_string
-          arguments:
-            text: ctrl-s
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: ctrl-s
-            type: implicit_string
+        expression:
           arguments:
             text: ctrl-s
             type: implicit_string
+          children:
+          - text: ctrl-s
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: save
+          type: word
+        - text: message
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - arguments:
+            text: ctrl-s
+            type: implicit_string
+          children:
+          - text: ctrl-s
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: ctrl-s
+            type: implicit_string
+          children:
+          - text: ctrl-s
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
   - text: '# Mail'
     type: comment
   - text: '## Jumping'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: go
               type: word
             - text: jump
               type: word
-        - type: optional
-          children:
+            type: choice
+          type: parenthesized_rule
+        - children:
           - text: to
             type: word
+          type: optional
         - text: inbox
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: g
-            type: implicit_string
-          arguments:
-            text: g
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: g
-            type: implicit_string
-          arguments:
-            text: g
-            type: implicit_string
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: i
-            type: implicit_string
-          arguments:
-            text: i
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: i
-            type: implicit_string
-          arguments:
-            text: i
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - arguments:
+            text: g
+            type: implicit_string
           children:
-          - type: choice
-            children:
+          - text: g
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: g
+            type: implicit_string
+          children:
+          - text: g
+            type: implicit_string
+          type: key_action
+        type: expression
+      - children:
+        - arguments:
+            text: i
+            type: implicit_string
+          children:
+          - text: i
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: i
+            type: implicit_string
+          children:
+          - text: i
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: go
               type: word
             - text: jump
               type: word
-        - type: optional
-          children:
+            type: choice
+          type: parenthesized_rule
+        - children:
           - text: to
             type: word
+          type: optional
         - text: inbox
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: g
+            type: implicit_string
           children:
           - text: g
             type: implicit_string
-          arguments:
-            text: g
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: g
-            type: implicit_string
+        expression:
           arguments:
             text: g
             type: implicit_string
-      - type: expression
-        children:
-        - type: key_action
+          children:
+          - text: g
+            type: implicit_string
+          type: key_action
+        type: expression
+      - children:
+        - arguments:
+            text: i
+            type: implicit_string
           children:
           - text: i
             type: implicit_string
+          type: key_action
+        expression:
           arguments:
             text: i
             type: implicit_string
-        expression:
-          type: key_action
           children:
           - text: i
             type: implicit_string
-          arguments:
-            text: i
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: go
               type: word
             - text: jump
               type: word
-        - type: optional
-          children:
+            type: choice
+          type: parenthesized_rule
+        - children:
           - text: to
             type: word
+          type: optional
         - text: draft
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: g
-            type: implicit_string
-          arguments:
-            text: g
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: g
-            type: implicit_string
-          arguments:
-            text: g
-            type: implicit_string
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: d
-            type: implicit_string
-          arguments:
-            text: d
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: d
-            type: implicit_string
-          arguments:
-            text: d
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - arguments:
+            text: g
+            type: implicit_string
           children:
-          - type: choice
-            children:
+          - text: g
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: g
+            type: implicit_string
+          children:
+          - text: g
+            type: implicit_string
+          type: key_action
+        type: expression
+      - children:
+        - arguments:
+            text: d
+            type: implicit_string
+          children:
+          - text: d
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: d
+            type: implicit_string
+          children:
+          - text: d
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: go
               type: word
             - text: jump
               type: word
-        - type: optional
-          children:
+            type: choice
+          type: parenthesized_rule
+        - children:
           - text: to
             type: word
+          type: optional
         - text: draft
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: g
+            type: implicit_string
           children:
           - text: g
             type: implicit_string
-          arguments:
-            text: g
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: g
-            type: implicit_string
+        expression:
           arguments:
             text: g
             type: implicit_string
-      - type: expression
-        children:
-        - type: key_action
+          children:
+          - text: g
+            type: implicit_string
+          type: key_action
+        type: expression
+      - children:
+        - arguments:
+            text: d
+            type: implicit_string
           children:
           - text: d
             type: implicit_string
+          type: key_action
+        expression:
           arguments:
             text: d
             type: implicit_string
-        expression:
-          type: key_action
           children:
           - text: d
             type: implicit_string
-          arguments:
-            text: d
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: go
               type: word
             - text: jump
               type: word
-        - type: optional
-          children:
+            type: choice
+          type: parenthesized_rule
+        - children:
           - text: to
             type: word
+          type: optional
         - text: sent
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: g
-            type: implicit_string
-          arguments:
-            text: g
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: g
-            type: implicit_string
-          arguments:
-            text: g
-            type: implicit_string
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: s
-            type: implicit_string
-          arguments:
-            text: s
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: s
-            type: implicit_string
-          arguments:
-            text: s
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - arguments:
+            text: g
+            type: implicit_string
           children:
-          - type: choice
-            children:
+          - text: g
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: g
+            type: implicit_string
+          children:
+          - text: g
+            type: implicit_string
+          type: key_action
+        type: expression
+      - children:
+        - arguments:
+            text: s
+            type: implicit_string
+          children:
+          - text: s
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: s
+            type: implicit_string
+          children:
+          - text: s
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: go
               type: word
             - text: jump
               type: word
-        - type: optional
-          children:
+            type: choice
+          type: parenthesized_rule
+        - children:
           - text: to
             type: word
+          type: optional
         - text: sent
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: g
+            type: implicit_string
           children:
           - text: g
             type: implicit_string
-          arguments:
-            text: g
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: g
-            type: implicit_string
+        expression:
           arguments:
             text: g
             type: implicit_string
-      - type: expression
-        children:
-        - type: key_action
+          children:
+          - text: g
+            type: implicit_string
+          type: key_action
+        type: expression
+      - children:
+        - arguments:
+            text: s
+            type: implicit_string
           children:
           - text: s
             type: implicit_string
+          type: key_action
+        expression:
           arguments:
             text: s
             type: implicit_string
-        expression:
-          type: key_action
           children:
           - text: s
             type: implicit_string
-          arguments:
-            text: s
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: go
               type: word
             - text: jump
               type: word
-        - type: optional
-          children:
+            type: choice
+          type: parenthesized_rule
+        - children:
           - text: to
             type: word
+          type: optional
         - text: starred
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: g
-            type: implicit_string
-          arguments:
-            text: g
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: g
-            type: implicit_string
-          arguments:
-            text: g
-            type: implicit_string
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: .
-            type: implicit_string
-          arguments:
-            text: .
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: .
-            type: implicit_string
-          arguments:
-            text: .
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - arguments:
+            text: g
+            type: implicit_string
           children:
-          - type: choice
-            children:
+          - text: g
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: g
+            type: implicit_string
+          children:
+          - text: g
+            type: implicit_string
+          type: key_action
+        type: expression
+      - children:
+        - arguments:
+            text: .
+            type: implicit_string
+          children:
+          - text: .
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: .
+            type: implicit_string
+          children:
+          - text: .
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: go
               type: word
             - text: jump
               type: word
-        - type: optional
-          children:
+            type: choice
+          type: parenthesized_rule
+        - children:
           - text: to
             type: word
+          type: optional
         - text: starred
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: g
+            type: implicit_string
           children:
           - text: g
             type: implicit_string
-          arguments:
-            text: g
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: g
-            type: implicit_string
+        expression:
           arguments:
             text: g
             type: implicit_string
-      - type: expression
-        children:
-        - type: key_action
+          children:
+          - text: g
+            type: implicit_string
+          type: key_action
+        type: expression
+      - children:
+        - arguments:
+            text: .
+            type: implicit_string
           children:
           - text: .
             type: implicit_string
+          type: key_action
+        expression:
           arguments:
             text: .
             type: implicit_string
-        expression:
-          type: key_action
           children:
           - text: .
             type: implicit_string
-          arguments:
-            text: .
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: go
               type: word
             - text: jump
               type: word
-        - type: optional
-          children:
+            type: choice
+          type: parenthesized_rule
+        - children:
           - text: to
             type: word
+          type: optional
         - text: archive
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: g
-            type: implicit_string
-          arguments:
-            text: g
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: g
-            type: implicit_string
-          arguments:
-            text: g
-            type: implicit_string
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: a
-            type: implicit_string
-          arguments:
-            text: a
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: a
-            type: implicit_string
-          arguments:
-            text: a
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - arguments:
+            text: g
+            type: implicit_string
           children:
-          - type: choice
-            children:
+          - text: g
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: g
+            type: implicit_string
+          children:
+          - text: g
+            type: implicit_string
+          type: key_action
+        type: expression
+      - children:
+        - arguments:
+            text: a
+            type: implicit_string
+          children:
+          - text: a
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: a
+            type: implicit_string
+          children:
+          - text: a
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: go
               type: word
             - text: jump
               type: word
-        - type: optional
-          children:
+            type: choice
+          type: parenthesized_rule
+        - children:
           - text: to
             type: word
+          type: optional
         - text: archive
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: g
+            type: implicit_string
           children:
           - text: g
             type: implicit_string
-          arguments:
-            text: g
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: g
-            type: implicit_string
+        expression:
           arguments:
             text: g
             type: implicit_string
-      - type: expression
-        children:
-        - type: key_action
+          children:
+          - text: g
+            type: implicit_string
+          type: key_action
+        type: expression
+      - children:
+        - arguments:
+            text: a
+            type: implicit_string
           children:
           - text: a
             type: implicit_string
+          type: key_action
+        expression:
           arguments:
             text: a
             type: implicit_string
-        expression:
-          type: key_action
           children:
           - text: a
             type: implicit_string
-          arguments:
-            text: a
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: go
               type: word
             - text: jump
               type: word
-        - type: optional
-          children:
+            type: choice
+          type: parenthesized_rule
+        - children:
           - text: to
             type: word
+          type: optional
         - text: spam
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: g
-            type: implicit_string
-          arguments:
-            text: g
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: g
-            type: implicit_string
-          arguments:
-            text: g
-            type: implicit_string
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: x
-            type: implicit_string
-          arguments:
-            text: x
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: x
-            type: implicit_string
-          arguments:
-            text: x
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - arguments:
+            text: g
+            type: implicit_string
           children:
-          - type: choice
-            children:
+          - text: g
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: g
+            type: implicit_string
+          children:
+          - text: g
+            type: implicit_string
+          type: key_action
+        type: expression
+      - children:
+        - arguments:
+            text: x
+            type: implicit_string
+          children:
+          - text: x
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: x
+            type: implicit_string
+          children:
+          - text: x
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: go
               type: word
             - text: jump
               type: word
-        - type: optional
-          children:
+            type: choice
+          type: parenthesized_rule
+        - children:
           - text: to
             type: word
+          type: optional
         - text: spam
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: g
-            type: implicit_string
-          arguments:
-            text: g
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: g
-            type: implicit_string
-          arguments:
-            text: g
-            type: implicit_string
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: x
-            type: implicit_string
-          arguments:
-            text: x
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: x
-            type: implicit_string
-          arguments:
-            text: x
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: go
-              type: word
-            - text: jump
-              type: word
-        - type: optional
-          children:
-          - text: to
-            type: word
-        - text: trash
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: g
-            type: implicit_string
-          arguments:
-            text: g
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: g
-            type: implicit_string
-          arguments:
-            text: g
-            type: implicit_string
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: t
-            type: implicit_string
-          arguments:
-            text: t
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: t
-            type: implicit_string
-          arguments:
-            text: t
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+      - children:
+        - arguments:
+            text: g
+            type: implicit_string
           children:
-          - type: choice
-            children:
+          - text: g
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: g
+            type: implicit_string
+          children:
+          - text: g
+            type: implicit_string
+          type: key_action
+        type: expression
+      - children:
+        - arguments:
+            text: x
+            type: implicit_string
+          children:
+          - text: x
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: x
+            type: implicit_string
+          children:
+          - text: x
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: go
               type: word
             - text: jump
               type: word
-        - type: optional
-          children:
+            type: choice
+          type: parenthesized_rule
+        - children:
           - text: to
             type: word
+          type: optional
         - text: trash
           type: word
-    script:
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - arguments:
+            text: g
+            type: implicit_string
+          children:
+          - text: g
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: g
+            type: implicit_string
+          children:
+          - text: g
+            type: implicit_string
+          type: key_action
+        type: expression
+      - children:
+        - arguments:
+            text: t
+            type: implicit_string
+          children:
+          - text: t
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: t
+            type: implicit_string
+          children:
+          - text: t
+            type: implicit_string
+          type: key_action
+        type: expression
       type: block
+    rule:
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - children:
+          - children:
+            - text: go
+              type: word
+            - text: jump
+              type: word
+            type: choice
+          type: parenthesized_rule
+        - children:
+          - text: to
+            type: word
+          type: optional
+        - text: trash
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - arguments:
+            text: g
+            type: implicit_string
           children:
           - text: g
             type: implicit_string
+          type: key_action
+        expression:
           arguments:
             text: g
             type: implicit_string
-        expression:
-          type: key_action
           children:
           - text: g
             type: implicit_string
-          arguments:
-            text: g
-            type: implicit_string
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: t
-            type: implicit_string
-          arguments:
-            text: t
-            type: implicit_string
-        expression:
           type: key_action
+        type: expression
+      - children:
+        - arguments:
+            text: t
+            type: implicit_string
           children:
           - text: t
             type: implicit_string
+          type: key_action
+        expression:
           arguments:
             text: t
             type: implicit_string
+          children:
+          - text: t
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
   - text: '## Navigation'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: prev
               type: word
             - text: previous
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: message
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: up
-            type: implicit_string
-          arguments:
-            text: up
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: up
-            type: implicit_string
-          arguments:
-            text: up
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - arguments:
+            text: up
+            type: implicit_string
           children:
-          - type: choice
-            children:
+          - text: up
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: up
+            type: implicit_string
+          children:
+          - text: up
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: prev
               type: word
             - text: previous
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: message
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: up
+            type: implicit_string
           children:
           - text: up
             type: implicit_string
-          arguments:
-            text: up
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: up
-            type: implicit_string
+        expression:
           arguments:
             text: up
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          children:
+          - text: up
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: next
           type: word
         - text: message
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: down
-            type: implicit_string
-          arguments:
-            text: down
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: down
-            type: implicit_string
-          arguments:
-            text: down
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: down
+            type: implicit_string
+          children:
+          - text: down
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: down
+            type: implicit_string
+          children:
+          - text: down
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: next
           type: word
         - text: message
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: down
+            type: implicit_string
           children:
           - text: down
             type: implicit_string
-          arguments:
-            text: down
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: down
-            type: implicit_string
+        expression:
           arguments:
             text: down
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          children:
+          - text: down
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: exit
           type: word
         - text: message
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: left
-            type: implicit_string
-          arguments:
-            text: left
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: left
-            type: implicit_string
-          arguments:
-            text: left
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: left
+            type: implicit_string
+          children:
+          - text: left
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: left
+            type: implicit_string
+          children:
+          - text: left
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: exit
           type: word
         - text: message
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: left
+            type: implicit_string
           children:
           - text: left
             type: implicit_string
-          arguments:
-            text: left
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: left
-            type: implicit_string
+        expression:
           arguments:
             text: left
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          children:
+          - text: left
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: enter
           type: word
         - text: message
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: right
-            type: implicit_string
-          arguments:
-            text: right
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: right
-            type: implicit_string
-          arguments:
-            text: right
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: right
+            type: implicit_string
+          children:
+          - text: right
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: right
+            type: implicit_string
+          children:
+          - text: right
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: enter
           type: word
         - text: message
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: right
+            type: implicit_string
           children:
           - text: right
             type: implicit_string
+          type: key_action
+        expression:
           arguments:
             text: right
             type: implicit_string
-        expression:
-          type: key_action
           children:
           - text: right
             type: implicit_string
-          arguments:
-            text: right
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: show
               type: word
             - text: display
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: newer
           type: word
-        - type: optional
-          children:
+        - children:
           - text: message
             type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: k
-            type: implicit_string
-          arguments:
-            text: k
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: k
-            type: implicit_string
-          arguments:
-            text: k
-            type: implicit_string
-    rule:
+          type: optional
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - arguments:
+            text: k
+            type: implicit_string
           children:
-          - type: choice
-            children:
+          - text: k
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: k
+            type: implicit_string
+          children:
+          - text: k
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: show
               type: word
             - text: display
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: newer
           type: word
-        - type: optional
-          children:
+        - children:
           - text: message
             type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: k
-            type: implicit_string
-          arguments:
-            text: k
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: k
-            type: implicit_string
-          arguments:
-            text: k
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: show
-              type: word
-            - text: display
-              type: word
-        - text: older
-          type: word
-        - type: optional
-          children:
-          - text: message
-            type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: j
-            type: implicit_string
-          arguments:
-            text: j
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: j
-            type: implicit_string
-          arguments:
-            text: j
-            type: implicit_string
-    rule:
+          type: optional
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+      - children:
+        - arguments:
+            text: k
+            type: implicit_string
           children:
-          - type: choice
-            children:
+          - text: k
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: k
+            type: implicit_string
+          children:
+          - text: k
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: show
               type: word
             - text: display
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: older
           type: word
-        - type: optional
-          children:
+        - children:
           - text: message
             type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
+          type: optional
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - arguments:
+            text: j
+            type: implicit_string
           children:
           - text: j
             type: implicit_string
-          arguments:
-            text: j
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: j
-            type: implicit_string
+        expression:
           arguments:
             text: j
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
+          children:
+          - text: j
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
+        - children:
+          - children:
+            - text: show
+              type: word
+            - text: display
+              type: word
+            type: choice
+          type: parenthesized_rule
+        - text: older
+          type: word
+        - children:
+          - text: message
+            type: word
+          type: optional
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - arguments:
+            text: j
+            type: implicit_string
+          children:
+          - text: j
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: j
+            type: implicit_string
+          children:
+          - text: j
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: open
           type: word
         - text: message
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: open
           type: word
         - text: message
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: enter
-            type: implicit_string
-          arguments:
-            text: enter
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: go
-          type: word
-        - text: back
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: escape
-            type: implicit_string
-          arguments:
-            text: escape
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: escape
-            type: implicit_string
-          arguments:
-            text: escape
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: enter
+            type: implicit_string
+          children:
+          - text: enter
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: go
           type: word
         - text: back
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - arguments:
+            text: escape
+            type: implicit_string
           children:
           - text: escape
             type: implicit_string
-          arguments:
-            text: escape
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: escape
-            type: implicit_string
+        expression:
           arguments:
             text: escape
             type: implicit_string
+          children:
+          - text: escape
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: go
+          type: word
+        - text: back
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - arguments:
+            text: escape
+            type: implicit_string
+          children:
+          - text: escape
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: escape
+            type: implicit_string
+          children:
+          - text: escape
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
   - text: '## Threadlist'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: select
           type: word
         - text: all
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: '*'
-            type: implicit_string
-          arguments:
-            text: '*'
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: '*'
-            type: implicit_string
-          arguments:
-            text: '*'
-            type: implicit_string
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: a
-            type: implicit_string
-          arguments:
-            text: a
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: a
-            type: implicit_string
-          arguments:
-            text: a
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: '*'
+            type: implicit_string
+          children:
+          - text: '*'
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: '*'
+            type: implicit_string
+          children:
+          - text: '*'
+            type: implicit_string
+          type: key_action
+        type: expression
+      - children:
+        - arguments:
+            text: a
+            type: implicit_string
+          children:
+          - text: a
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: a
+            type: implicit_string
+          children:
+          - text: a
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: select
           type: word
         - text: all
           type: word
+        type: seq
+      type: rule
     script:
+      children:
+      - children:
+        - arguments:
+            text: '*'
+            type: implicit_string
+          children:
+          - text: '*'
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: '*'
+            type: implicit_string
+          children:
+          - text: '*'
+            type: implicit_string
+          type: key_action
+        type: expression
+      - children:
+        - arguments:
+            text: a
+            type: implicit_string
+          children:
+          - text: a
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: a
+            type: implicit_string
+          children:
+          - text: a
+            type: implicit_string
+          type: key_action
+        type: expression
       type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: '*'
-            type: implicit_string
-          arguments:
-            text: '*'
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: '*'
-            type: implicit_string
-          arguments:
-            text: '*'
-            type: implicit_string
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: a
-            type: implicit_string
-          arguments:
-            text: a
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: a
-            type: implicit_string
-          arguments:
-            text: a
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: deselect
               type: word
             - text: unselect
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: all
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: '*'
-            type: implicit_string
-          arguments:
-            text: '*'
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: '*'
-            type: implicit_string
-          arguments:
-            text: '*'
-            type: implicit_string
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: n
-            type: implicit_string
-          arguments:
-            text: n
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: n
-            type: implicit_string
-          arguments:
-            text: n
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - arguments:
+            text: '*'
+            type: implicit_string
           children:
-          - type: choice
-            children:
+          - text: '*'
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: '*'
+            type: implicit_string
+          children:
+          - text: '*'
+            type: implicit_string
+          type: key_action
+        type: expression
+      - children:
+        - arguments:
+            text: n
+            type: implicit_string
+          children:
+          - text: n
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: n
+            type: implicit_string
+          children:
+          - text: n
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: deselect
               type: word
             - text: unselect
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: all
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: '*'
+            type: implicit_string
           children:
           - text: '*'
             type: implicit_string
+          type: key_action
+        expression:
           arguments:
             text: '*'
             type: implicit_string
-        expression:
-          type: key_action
           children:
           - text: '*'
             type: implicit_string
-          arguments:
-            text: '*'
+          type: key_action
+        type: expression
+      - children:
+        - arguments:
+            text: n
             type: implicit_string
-      - type: expression
-        children:
-        - type: key_action
           children:
           - text: n
             type: implicit_string
+          type: key_action
+        expression:
           arguments:
             text: n
             type: implicit_string
-        expression:
-          type: key_action
           children:
           - text: n
             type: implicit_string
-          arguments:
-            text: n
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: select
           type: word
-        - type: optional
-          children:
+        - children:
           - text: the
             type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+          type: optional
+        - children:
+          - children:
             - text: message
               type: word
             - text: conversation
               type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: x
-            type: implicit_string
-          arguments:
-            text: x
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: x
-            type: implicit_string
-          arguments:
-            text: x
-            type: implicit_string
-    rule:
+            type: choice
+          type: parenthesized_rule
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: x
+            type: implicit_string
+          children:
+          - text: x
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: x
+            type: implicit_string
+          children:
+          - text: x
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: select
           type: word
-        - type: optional
-          children:
+        - children:
           - text: the
             type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+          type: optional
+        - children:
+          - children:
             - text: message
               type: word
             - text: conversation
               type: word
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: x
+            type: implicit_string
           children:
           - text: x
             type: implicit_string
+          type: key_action
+        expression:
           arguments:
             text: x
             type: implicit_string
-        expression:
-          type: key_action
           children:
           - text: x
             type: implicit_string
-          arguments:
-            text: x
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: mark
           type: word
-        - type: optional
-          children:
+        - children:
           - text: as
             type: word
+          type: optional
         - text: read
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: r
-            type: implicit_string
-          arguments:
-            text: r
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: r
-            type: implicit_string
-          arguments:
-            text: r
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: r
+            type: implicit_string
+          children:
+          - text: r
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: r
+            type: implicit_string
+          children:
+          - text: r
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: mark
           type: word
-        - type: optional
-          children:
+        - children:
           - text: as
             type: word
+          type: optional
         - text: read
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: r
-            type: implicit_string
-          arguments:
-            text: r
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: r
-            type: implicit_string
-          arguments:
-            text: r
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: mark
-          type: word
-        - type: optional
-          children:
-          - text: as
-            type: word
-        - text: unread
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: u
-            type: implicit_string
-          arguments:
-            text: u
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: u
-            type: implicit_string
-          arguments:
-            text: u
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - arguments:
+            text: r
+            type: implicit_string
+          children:
+          - text: r
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: r
+            type: implicit_string
+          children:
+          - text: r
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: mark
           type: word
-        - type: optional
-          children:
+        - children:
           - text: as
             type: word
+          type: optional
         - text: unread
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - arguments:
+            text: u
+            type: implicit_string
           children:
           - text: u
             type: implicit_string
-          arguments:
-            text: u
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: u
-            type: implicit_string
+        expression:
           arguments:
             text: u
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
+          children:
+          - text: u
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
+        - text: mark
+          type: word
+        - children:
+          - text: as
+            type: word
+          type: optional
+        - text: unread
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - arguments:
+            text: u
+            type: implicit_string
+          children:
+          - text: u
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: u
+            type: implicit_string
+          children:
+          - text: u
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: star
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: message
               type: word
             - text: conversation
               type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: .
-            type: implicit_string
-          arguments:
-            text: .
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: .
-            type: implicit_string
-          arguments:
-            text: .
-            type: implicit_string
-    rule:
+            type: choice
+          type: parenthesized_rule
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: .
+            type: implicit_string
+          children:
+          - text: .
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: .
+            type: implicit_string
+          children:
+          - text: .
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: star
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: message
               type: word
             - text: conversation
               type: word
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: .
+            type: implicit_string
           children:
           - text: .
             type: implicit_string
-          arguments:
-            text: .
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: .
-            type: implicit_string
+        expression:
           arguments:
             text: .
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          children:
+          - text: .
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: move
           type: word
         - text: to
           type: word
         - text: inbox
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: i
-            type: implicit_string
-          arguments:
-            text: i
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: i
-            type: implicit_string
-          arguments:
-            text: i
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: i
+            type: implicit_string
+          children:
+          - text: i
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: i
+            type: implicit_string
+          children:
+          - text: i
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: move
           type: word
         - text: to
           type: word
         - text: inbox
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: i
+            type: implicit_string
           children:
           - text: i
             type: implicit_string
-          arguments:
-            text: i
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: i
-            type: implicit_string
+        expression:
           arguments:
             text: i
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          children:
+          - text: i
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: move
           type: word
         - text: to
           type: word
         - text: trash
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: t
-            type: implicit_string
-          arguments:
-            text: t
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: t
-            type: implicit_string
-          arguments:
-            text: t
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: t
+            type: implicit_string
+          children:
+          - text: t
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: t
+            type: implicit_string
+          children:
+          - text: t
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: move
           type: word
         - text: to
           type: word
         - text: trash
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: t
+            type: implicit_string
           children:
           - text: t
             type: implicit_string
-          arguments:
-            text: t
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: t
-            type: implicit_string
+        expression:
           arguments:
             text: t
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          children:
+          - text: t
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: move
           type: word
         - text: to
           type: word
         - text: archive
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: a
-            type: implicit_string
-          arguments:
-            text: a
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: a
-            type: implicit_string
-          arguments:
-            text: a
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: a
+            type: implicit_string
+          children:
+          - text: a
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: a
+            type: implicit_string
+          children:
+          - text: a
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: move
           type: word
         - text: to
           type: word
         - text: archive
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: a
-            type: implicit_string
-          arguments:
-            text: a
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: a
-            type: implicit_string
-          arguments:
-            text: a
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: move
-          type: word
-        - text: to
-          type: word
-        - text: spam
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: s
-            type: implicit_string
-          arguments:
-            text: s
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: s
-            type: implicit_string
-          arguments:
-            text: s
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - arguments:
+            text: a
+            type: implicit_string
+          children:
+          - text: a
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: a
+            type: implicit_string
+          children:
+          - text: a
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: move
           type: word
         - text: to
           type: word
         - text: spam
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - arguments:
+            text: s
+            type: implicit_string
           children:
           - text: s
             type: implicit_string
-          arguments:
-            text: s
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: s
-            type: implicit_string
+        expression:
           arguments:
             text: s
             type: implicit_string
+          children:
+          - text: s
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: move
+          type: word
+        - text: to
+          type: word
+        - text: spam
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - arguments:
+            text: s
+            type: implicit_string
+          children:
+          - text: s
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: s
+            type: implicit_string
+          children:
+          - text: s
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
   - text: '## Actions'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: reply
           type: word
         - text: to
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: message
               type: word
             - text: conversation
               type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: shift-r
-            type: implicit_string
-          arguments:
-            text: shift-r
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: shift-r
-            type: implicit_string
-          arguments:
-            text: shift-r
-            type: implicit_string
-    rule:
+            type: choice
+          type: parenthesized_rule
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: shift-r
+            type: implicit_string
+          children:
+          - text: shift-r
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: shift-r
+            type: implicit_string
+          children:
+          - text: shift-r
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: reply
           type: word
         - text: to
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: message
               type: word
             - text: conversation
               type: word
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: shift-r
+            type: implicit_string
           children:
           - text: shift-r
             type: implicit_string
-          arguments:
-            text: shift-r
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: shift-r
-            type: implicit_string
+        expression:
           arguments:
             text: shift-r
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          children:
+          - text: shift-r
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: reply
           type: word
         - text: all
           type: word
-        - type: optional
-          children:
+        - children:
           - text: to
             type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+          type: optional
+        - children:
+          - children:
             - text: message
               type: word
             - text: conversation
               type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: shift-a
-            type: implicit_string
-          arguments:
-            text: shift-a
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: shift-a
-            type: implicit_string
-          arguments:
-            text: shift-a
-            type: implicit_string
-    rule:
+            type: choice
+          type: parenthesized_rule
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: shift-a
+            type: implicit_string
+          children:
+          - text: shift-a
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: shift-a
+            type: implicit_string
+          children:
+          - text: shift-a
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: reply
           type: word
         - text: all
           type: word
-        - type: optional
-          children:
+        - children:
           - text: to
             type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+          type: optional
+        - children:
+          - children:
             - text: message
               type: word
             - text: conversation
               type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: shift-a
-            type: implicit_string
-          arguments:
-            text: shift-a
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: shift-a
-            type: implicit_string
-          arguments:
-            text: shift-a
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: forward
-          type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: message
-              type: word
-            - text: conversation
-              type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: shift-f
-            type: implicit_string
-          arguments:
-            text: shift-f
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: shift-f
-            type: implicit_string
-          arguments:
-            text: shift-f
-            type: implicit_string
-    rule:
+            type: choice
+          type: parenthesized_rule
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - arguments:
+            text: shift-a
+            type: implicit_string
+          children:
+          - text: shift-a
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: shift-a
+            type: implicit_string
+          children:
+          - text: shift-a
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: forward
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: message
               type: word
             - text: conversation
               type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - arguments:
+            text: shift-f
+            type: implicit_string
           children:
           - text: shift-f
             type: implicit_string
-          arguments:
-            text: shift-f
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: shift-f
-            type: implicit_string
+        expression:
           arguments:
             text: shift-f
             type: implicit_string
+          children:
+          - text: shift-f
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: forward
+          type: word
+        - children:
+          - children:
+            - text: message
+              type: word
+            - text: conversation
+              type: word
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - arguments:
+            text: shift-f
+            type: implicit_string
+          children:
+          - text: shift-f
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: shift-f
+            type: implicit_string
+          children:
+          - text: shift-f
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
   - text: '# Contacts'
     type: comment
   - text: '## Contact List'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: prev
               type: word
             - text: previous
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: contact
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: up
-            type: implicit_string
-          arguments:
-            text: up
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: up
-            type: implicit_string
-          arguments:
-            text: up
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - arguments:
+            text: up
+            type: implicit_string
           children:
-          - type: choice
-            children:
+          - text: up
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: up
+            type: implicit_string
+          children:
+          - text: up
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: prev
               type: word
             - text: previous
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: contact
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: up
+            type: implicit_string
           children:
           - text: up
             type: implicit_string
-          arguments:
-            text: up
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: up
-            type: implicit_string
+        expression:
           arguments:
             text: up
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          children:
+          - text: up
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: next
           type: word
         - text: contact
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: down
-            type: implicit_string
-          arguments:
-            text: down
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: down
-            type: implicit_string
-          arguments:
-            text: down
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: down
+            type: implicit_string
+          children:
+          - text: down
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: down
+            type: implicit_string
+          children:
+          - text: down
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: next
           type: word
         - text: contact
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: down
+            type: implicit_string
           children:
           - text: down
             type: implicit_string
-          arguments:
-            text: down
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: down
-            type: implicit_string
+        expression:
           arguments:
             text: down
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          children:
+          - text: down
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: enter
           type: word
         - text: contact
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: right
-            type: implicit_string
-          arguments:
-            text: right
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: right
-            type: implicit_string
-          arguments:
-            text: right
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: right
+            type: implicit_string
+          children:
+          - text: right
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: right
+            type: implicit_string
+          children:
+          - text: right
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: enter
           type: word
         - text: contact
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: right
-            type: implicit_string
-          arguments:
-            text: right
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: right
-            type: implicit_string
-          arguments:
-            text: right
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: delete
-          type: word
-        - text: contact
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: t
-            type: implicit_string
-          arguments:
-            text: t
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: t
-            type: implicit_string
-          arguments:
-            text: t
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - arguments:
+            text: right
+            type: implicit_string
+          children:
+          - text: right
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: right
+            type: implicit_string
+          children:
+          - text: right
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: delete
           type: word
         - text: contact
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - arguments:
+            text: t
+            type: implicit_string
           children:
           - text: t
             type: implicit_string
-          arguments:
-            text: t
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: t
-            type: implicit_string
+        expression:
           arguments:
             text: t
             type: implicit_string
+          children:
+          - text: t
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: delete
+          type: word
+        - text: contact
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - arguments:
+            text: t
+            type: implicit_string
+          children:
+          - text: t
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: t
+            type: implicit_string
+          children:
+          - text: t
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
   - text: '## Contact Details'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: exit
           type: word
         - text: contact
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: left
-            type: implicit_string
-          arguments:
-            text: left
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: left
-            type: implicit_string
-          arguments:
-            text: left
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: left
+            type: implicit_string
+          children:
+          - text: left
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: left
+            type: implicit_string
+          children:
+          - text: left
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: exit
           type: word
         - text: contact
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: left
-            type: implicit_string
-          arguments:
-            text: left
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: left
-            type: implicit_string
-          arguments:
-            text: left
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: save
-          type: word
-        - text: contact
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: ctrl-s
-            type: implicit_string
-          arguments:
-            text: ctrl-s
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: ctrl-s
-            type: implicit_string
-          arguments:
-            text: ctrl-s
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - arguments:
+            text: left
+            type: implicit_string
+          children:
+          - text: left
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: left
+            type: implicit_string
+          children:
+          - text: left
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: save
           type: word
         - text: contact
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - arguments:
+            text: ctrl-s
+            type: implicit_string
           children:
           - text: ctrl-s
             type: implicit_string
-          arguments:
-            text: ctrl-s
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: ctrl-s
-            type: implicit_string
+        expression:
           arguments:
             text: ctrl-s
             type: implicit_string
+          children:
+          - text: ctrl-s
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: save
+          type: word
+        - text: contact
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - arguments:
+            text: ctrl-s
+            type: implicit_string
+          children:
+          - text: ctrl-s
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: ctrl-s
+            type: implicit_string
+          children:
+          - text: ctrl-s
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  type: source_file

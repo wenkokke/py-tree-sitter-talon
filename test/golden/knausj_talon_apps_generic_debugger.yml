@@ -1,38 +1,81 @@
-input: "tag: debugger\n-\n\n# Code execution\n\n## instruction level\nstep into: user.debugger_step_into()\n\
-  step over: user.debugger_step_over()\n\n## line level\nstep line: user.debugger_step_line()\n\
-  step over line: user.debugger_step_over_line()\nstep out: user.debugger_step_out()\n\
-  continue: user.debugger_continue()\n\n## these are multi word to avoid accidental\
-  \ utterance\ndebug start: user.debugger_start()\ndebug stop: user.debugger_stop()\n\
-  debug exit: user.debugger_exit()\ndebug detach: user.debugger_detach()\ndebug restart:\
-  \ user.debugger_restart()\n\n# Register\nshow registers: user.debugger_show_registers()\n\
-  # XXX -\nget register: user.debugger_get_register()\nset register: user.debugger_set_register()\n\
-  \n# Breakpoints\nbreak now: user.debugger_break_now()\nbreak here: user.debugger_break_here()\n\
-  (list|show) (breaks|break points): user.debugger_show_breakpoints()\n(set|add) (break|break\
-  \ point): user.debugger_add_sw_breakpoint()\n(set|add) hardware (break|break point):\
-  \ user.debugger_add_hw_breakpoint()\nclear all (breaks|break points): user.debugger_clear_all_breakpoints()\n\
-  clear (break|break point): user.debugger_clear_breakpoint()\nclear (break|break\
-  \ point) <number_small>:\n    user.debugger_clear_breakpoint_id(number_small)\n\
-  disable all (breaks|break points): user.debugger_disable_all_breakpoints()\ndisable\
-  \ (break|break point): user.debugger_disable_breakpoint()\ndisable (break|break\
-  \ point) <number_small>:\n    user.debugger_disable_breakpoint_id(number_small)\n\
-  enable all (breaks|break points): user.debugger_enable_all_breakpoints()\nenable\
-  \ (break|break point): user.debugger_enable_breakpoint()\nenable (break|break point)\
-  \ <number_small>:\n    user.debugger_enable_breakpoint_id(number_small)\n\n# Navigation\n\
-  \n\n# Memory Inspection\n(stack|back) trace: user.debugger_backtrace()\ndisassemble:\
-  \ user.debugger_disassemble()\ndisassemble here: user.debugger_disassemble_here()\n\
-  disassemble clipboard: user.debugger_disassemble_clipboard()\njump to address: user.debugger_goto_address()\n\
-  jump to clipboard: user.debugger_goto_clipboard()\njump to highlighted: user.debugger_goto_highlighted()\n\
-  \ndump string: user.debugger_dump_ascii_string()\ndump unicode [string]: user.debugger_dump_unicode_string()\n\
-  dump pointers: user.debugger_dump_pointers()\n\nlist modules: user.debugger_list_modules()\n\
-  \n# Type inspection\ninspect type: user.debugger_inspect_type()\n\n# Hex Dumping\
-  \ Memory\n#hex dump register:\n\n# Convenience\nclear line: user.debugger_clear_line()\n"
+input: |
+  tag: debugger
+  -
+
+  # Code execution
+
+  ## instruction level
+  step into: user.debugger_step_into()
+  step over: user.debugger_step_over()
+
+  ## line level
+  step line: user.debugger_step_line()
+  step over line: user.debugger_step_over_line()
+  step out: user.debugger_step_out()
+  continue: user.debugger_continue()
+
+  ## these are multi word to avoid accidental utterance
+  debug start: user.debugger_start()
+  debug stop: user.debugger_stop()
+  debug exit: user.debugger_exit()
+  debug detach: user.debugger_detach()
+  debug restart: user.debugger_restart()
+
+  # Register
+  show registers: user.debugger_show_registers()
+  # XXX -
+  get register: user.debugger_get_register()
+  set register: user.debugger_set_register()
+
+  # Breakpoints
+  break now: user.debugger_break_now()
+  break here: user.debugger_break_here()
+  (list|show) (breaks|break points): user.debugger_show_breakpoints()
+  (set|add) (break|break point): user.debugger_add_sw_breakpoint()
+  (set|add) hardware (break|break point): user.debugger_add_hw_breakpoint()
+  clear all (breaks|break points): user.debugger_clear_all_breakpoints()
+  clear (break|break point): user.debugger_clear_breakpoint()
+  clear (break|break point) <number_small>:
+      user.debugger_clear_breakpoint_id(number_small)
+  disable all (breaks|break points): user.debugger_disable_all_breakpoints()
+  disable (break|break point): user.debugger_disable_breakpoint()
+  disable (break|break point) <number_small>:
+      user.debugger_disable_breakpoint_id(number_small)
+  enable all (breaks|break points): user.debugger_enable_all_breakpoints()
+  enable (break|break point): user.debugger_enable_breakpoint()
+  enable (break|break point) <number_small>:
+      user.debugger_enable_breakpoint_id(number_small)
+
+  # Navigation
+
+
+  # Memory Inspection
+  (stack|back) trace: user.debugger_backtrace()
+  disassemble: user.debugger_disassemble()
+  disassemble here: user.debugger_disassemble_here()
+  disassemble clipboard: user.debugger_disassemble_clipboard()
+  jump to address: user.debugger_goto_address()
+  jump to clipboard: user.debugger_goto_clipboard()
+  jump to highlighted: user.debugger_goto_highlighted()
+
+  dump string: user.debugger_dump_ascii_string()
+  dump unicode [string]: user.debugger_dump_unicode_string()
+  dump pointers: user.debugger_dump_pointers()
+
+  list modules: user.debugger_list_modules()
+
+  # Type inspection
+  inspect type: user.debugger_inspect_type()
+
+  # Hex Dumping Memory
+  #hex dump register:
+
+  # Convenience
+  clear line: user.debugger_clear_line()
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: match
-      children:
+  - children:
+    - children:
       - text: tag
         type: identifier
       - text: ' debugger'
@@ -43,3749 +86,3752 @@ output:
       pattern:
         text: ' debugger'
         type: implicit_string
+      type: match
+    type: context
   - text: '# Code execution'
     type: comment
   - text: '## instruction level'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: step
           type: word
         - text: into
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_step_into
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_step_into
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_step_into
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_step_into
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_step_into
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_step_into
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_step_into
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_step_into
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: step
           type: word
         - text: into
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_step_into
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_step_into
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_step_into
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_step_into
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: step
-          type: word
-        - text: over
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_step_over
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_step_over
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_step_over
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_step_over
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - action_name:
+            text: user.debugger_step_into
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_step_into
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_step_into
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_step_into
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: step
           type: word
         - text: over
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_step_over
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: user.debugger_step_over
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: user.debugger_step_over
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: user.debugger_step_over
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: user.debugger_step_over
             type: identifier
           arguments:
-            type: argument_list
             children: []
+            type: argument_list
+          children:
+          - text: user.debugger_step_over
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: step
+          type: word
+        - text: over
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: user.debugger_step_over
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_step_over
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_step_over
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_step_over
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
   - text: '## line level'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: step
           type: word
         - text: line
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_step_line
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_step_line
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_step_line
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_step_line
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_step_line
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_step_line
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_step_line
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_step_line
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: step
           type: word
         - text: line
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_step_line
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+      - children:
+        - action_name:
             text: user.debugger_step_line
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: user.debugger_step_line
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: user.debugger_step_line
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: user.debugger_step_line
             type: identifier
           arguments:
-            type: argument_list
             children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+            type: argument_list
+          children:
+          - text: user.debugger_step_line
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: step
           type: word
         - text: over
           type: word
         - text: line
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_step_over_line
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_step_over_line
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_step_over_line
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_step_over_line
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_step_over_line
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_step_over_line
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_step_over_line
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_step_over_line
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: step
           type: word
         - text: over
           type: word
         - text: line
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.debugger_step_over_line
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.debugger_step_over_line
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.debugger_step_over_line
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.debugger_step_over_line
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_step_over_line
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: step
           type: word
         - text: out
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_step_out
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_step_out
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_step_out
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_step_out
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_step_out
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_step_out
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_step_out
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_step_out
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: step
           type: word
         - text: out
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_step_out
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_step_out
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_step_out
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_step_out
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - text: continue
-        type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_continue
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_continue
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_continue
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_continue
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: user.debugger_step_out
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_step_out
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_step_out
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_step_out
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - text: continue
+        type: word
+      type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_continue
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_continue
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_continue
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_continue
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
       - text: continue
         type: word
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_continue
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+      - children:
+        - action_name:
             text: user.debugger_continue
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: user.debugger_continue
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: user.debugger_continue
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: user.debugger_continue
             type: identifier
           arguments:
-            type: argument_list
             children: []
+            type: argument_list
+          children:
+          - text: user.debugger_continue
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
   - text: '## these are multi word to avoid accidental utterance'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: debug
           type: word
         - text: start
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_start
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_start
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_start
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_start
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_start
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_start
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_start
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_start
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: debug
           type: word
         - text: start
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.debugger_start
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.debugger_start
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.debugger_start
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.debugger_start
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_start
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: debug
           type: word
         - text: stop
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_stop
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_stop
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_stop
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_stop
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_stop
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_stop
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_stop
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_stop
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: debug
           type: word
         - text: stop
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.debugger_stop
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.debugger_stop
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.debugger_stop
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.debugger_stop
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_stop
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: debug
           type: word
         - text: exit
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_exit
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_exit
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_exit
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_exit
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_exit
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_exit
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_exit
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_exit
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: debug
           type: word
         - text: exit
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.debugger_exit
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.debugger_exit
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.debugger_exit
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.debugger_exit
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_exit
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: debug
           type: word
         - text: detach
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_detach
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_detach
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_detach
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_detach
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_detach
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_detach
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_detach
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_detach
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: debug
           type: word
         - text: detach
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_detach
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_detach
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_detach
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_detach
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: debug
-          type: word
-        - text: restart
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_restart
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_restart
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_restart
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_restart
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - action_name:
+            text: user.debugger_detach
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_detach
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_detach
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_detach
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: debug
           type: word
         - text: restart
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_restart
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: user.debugger_restart
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: user.debugger_restart
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: user.debugger_restart
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: user.debugger_restart
             type: identifier
           arguments:
-            type: argument_list
             children: []
+            type: argument_list
+          children:
+          - text: user.debugger_restart
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: debug
+          type: word
+        - text: restart
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: user.debugger_restart
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_restart
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_restart
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_restart
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
   - text: '# Register'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: show
           type: word
         - text: registers
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_show_registers
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_show_registers
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_show_registers
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_show_registers
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_show_registers
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_show_registers
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_show_registers
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_show_registers
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: show
           type: word
         - text: registers
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_show_registers
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+      - children:
+        - action_name:
             text: user.debugger_show_registers
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: user.debugger_show_registers
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: user.debugger_show_registers
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: user.debugger_show_registers
             type: identifier
           arguments:
-            type: argument_list
             children: []
+            type: argument_list
+          children:
+          - text: user.debugger_show_registers
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
   - text: '# XXX -'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: get
           type: word
         - text: register
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_get_register
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_get_register
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_get_register
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_get_register
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_get_register
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_get_register
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_get_register
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_get_register
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: get
           type: word
         - text: register
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_get_register
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_get_register
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_get_register
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_get_register
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: set
-          type: word
-        - text: register
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_set_register
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_set_register
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_set_register
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_set_register
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - action_name:
+            text: user.debugger_get_register
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_get_register
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_get_register
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_get_register
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: set
           type: word
         - text: register
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_set_register
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: user.debugger_set_register
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: user.debugger_set_register
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: user.debugger_set_register
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: user.debugger_set_register
             type: identifier
           arguments:
-            type: argument_list
             children: []
+            type: argument_list
+          children:
+          - text: user.debugger_set_register
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: set
+          type: word
+        - text: register
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: user.debugger_set_register
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_set_register
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_set_register
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_set_register
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
   - text: '# Breakpoints'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: break
           type: word
         - text: now
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_break_now
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_break_now
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_break_now
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_break_now
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_break_now
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_break_now
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_break_now
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_break_now
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: break
           type: word
         - text: now
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.debugger_break_now
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.debugger_break_now
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.debugger_break_now
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.debugger_break_now
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_break_now
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: break
           type: word
         - text: here
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_break_here
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_break_here
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_break_here
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_break_here
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_break_here
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_break_here
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_break_here
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_break_here
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: break
           type: word
         - text: here
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.debugger_break_here
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.debugger_break_here
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.debugger_break_here
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.debugger_break_here
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_break_here
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: list
               type: word
             - text: show
               type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+            type: choice
+          type: parenthesized_rule
+        - children:
+          - children:
             - text: breaks
               type: word
-            - type: seq
-              children:
+            - children:
               - text: break
                 type: word
               - text: points
                 type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_show_breakpoints
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_show_breakpoints
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_show_breakpoints
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_show_breakpoints
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+              type: seq
+            type: choice
+          type: parenthesized_rule
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_show_breakpoints
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
-          - type: choice
-            children:
+          - text: user.debugger_show_breakpoints
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_show_breakpoints
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_show_breakpoints
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: list
               type: word
             - text: show
               type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+            type: choice
+          type: parenthesized_rule
+        - children:
+          - children:
             - text: breaks
               type: word
-            - type: seq
-              children:
+            - children:
               - text: break
                 type: word
               - text: points
                 type: word
+              type: seq
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.debugger_show_breakpoints
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.debugger_show_breakpoints
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.debugger_show_breakpoints
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.debugger_show_breakpoints
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_show_breakpoints
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: set
-              type: word
-            - text: add
-              type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: break
-              type: word
-            - type: seq
-              children:
-              - text: break
-                type: word
-              - text: point
-                type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_add_sw_breakpoint
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_add_sw_breakpoint
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
           type: action
-          children:
-          - text: user.debugger_add_sw_breakpoint
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_add_sw_breakpoint
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: set
-              type: word
-            - text: add
-              type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: break
-              type: word
-            - type: seq
-              children:
-              - text: break
-                type: word
-              - text: point
-                type: word
-    script:
+        type: expression
       type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_add_sw_breakpoint
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_add_sw_breakpoint
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_add_sw_breakpoint
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_add_sw_breakpoint
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: set
               type: word
             - text: add
               type: word
+            type: choice
+          type: parenthesized_rule
+        - children:
+          - children:
+            - text: break
+              type: word
+            - children:
+              - text: break
+                type: word
+              - text: point
+                type: word
+              type: seq
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_add_sw_breakpoint
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_add_sw_breakpoint
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_add_sw_breakpoint
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_add_sw_breakpoint
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
+            - text: set
+              type: word
+            - text: add
+              type: word
+            type: choice
+          type: parenthesized_rule
+        - children:
+          - children:
+            - text: break
+              type: word
+            - children:
+              - text: break
+                type: word
+              - text: point
+                type: word
+              type: seq
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: user.debugger_add_sw_breakpoint
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_add_sw_breakpoint
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_add_sw_breakpoint
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_add_sw_breakpoint
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
+            - text: set
+              type: word
+            - text: add
+              type: word
+            type: choice
+          type: parenthesized_rule
         - text: hardware
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: break
               type: word
-            - type: seq
-              children:
+            - children:
               - text: break
                 type: word
               - text: point
                 type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_add_hw_breakpoint
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_add_hw_breakpoint
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_add_hw_breakpoint
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_add_hw_breakpoint
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+              type: seq
+            type: choice
+          type: parenthesized_rule
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_add_hw_breakpoint
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
-          - type: choice
-            children:
+          - text: user.debugger_add_hw_breakpoint
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_add_hw_breakpoint
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_add_hw_breakpoint
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: set
               type: word
             - text: add
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: hardware
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: break
               type: word
-            - type: seq
-              children:
+            - children:
               - text: break
                 type: word
               - text: point
                 type: word
+              type: seq
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.debugger_add_hw_breakpoint
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.debugger_add_hw_breakpoint
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.debugger_add_hw_breakpoint
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.debugger_add_hw_breakpoint
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_add_hw_breakpoint
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: clear
           type: word
         - text: all
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: breaks
               type: word
-            - type: seq
-              children:
+            - children:
               - text: break
                 type: word
               - text: points
                 type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
+              type: seq
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_clear_all_breakpoints
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.debugger_clear_all_breakpoints
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.debugger_clear_all_breakpoints
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.debugger_clear_all_breakpoints
             type: identifier
-          - type: argument_list
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: clear
+          type: word
+        - text: all
+          type: word
+        - children:
+          - children:
+            - text: breaks
+              type: word
+            - children:
+              - text: break
+                type: word
+              - text: points
+                type: word
+              type: seq
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: user.debugger_clear_all_breakpoints
+            type: identifier
+          arguments:
             children: []
+            type: argument_list
+          children:
+          - text: user.debugger_clear_all_breakpoints
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.debugger_clear_all_breakpoints
             type: identifier
           arguments:
-            type: argument_list
             children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: clear
-          type: word
-        - text: all
-          type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: breaks
-              type: word
-            - type: seq
-              children:
-              - text: break
-                type: word
-              - text: points
-                type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
+            type: argument_list
           children:
           - text: user.debugger_clear_all_breakpoints
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_clear_all_breakpoints
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-        expression:
           type: action
-          children:
-          - text: user.debugger_clear_all_breakpoints
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_clear_all_breakpoints
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: clear
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: break
               type: word
-            - type: seq
-              children:
+            - children:
               - text: break
                 type: word
               - text: point
                 type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
+              type: seq
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_clear_breakpoint
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.debugger_clear_breakpoint
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.debugger_clear_breakpoint
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.debugger_clear_breakpoint
             type: identifier
-          - type: argument_list
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: clear
+          type: word
+        - children:
+          - children:
+            - text: break
+              type: word
+            - children:
+              - text: break
+                type: word
+              - text: point
+                type: word
+              type: seq
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: user.debugger_clear_breakpoint
+            type: identifier
+          arguments:
             children: []
+            type: argument_list
+          children:
+          - text: user.debugger_clear_breakpoint
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.debugger_clear_breakpoint
             type: identifier
           arguments:
-            type: argument_list
             children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: clear
-          type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: break
-              type: word
-            - type: seq
-              children:
-              - text: break
-                type: word
-              - text: point
-                type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
+            type: argument_list
           children:
           - text: user.debugger_clear_breakpoint
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_clear_breakpoint
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-        expression:
           type: action
-          children:
-          - text: user.debugger_clear_breakpoint
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_clear_breakpoint
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: clear
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: break
               type: word
-            - type: seq
-              children:
+            - children:
               - text: break
                 type: word
               - text: point
                 type: word
-        - type: capture
+              type: seq
+            type: choice
+          type: parenthesized_rule
+        - capture_name:
+            text: number_small
+            type: identifier
           children:
           - text: number_small
             type: identifier
-          capture_name:
-            text: number_small
-            type: identifier
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_clear_breakpoint_id
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number_small
-                type: identifier
-              variable_name:
-                text: number_small
-                type: identifier
-          action_name:
-            text: user.debugger_clear_breakpoint_id
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number_small
-                type: identifier
-              variable_name:
-                text: number_small
-                type: identifier
-        expression:
-          type: action
-          children:
-          - text: user.debugger_clear_breakpoint_id
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number_small
-                type: identifier
-              variable_name:
-                text: number_small
-                type: identifier
-          action_name:
-            text: user.debugger_clear_breakpoint_id
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number_small
-                type: identifier
-              variable_name:
-                text: number_small
-                type: identifier
-    rule:
+          type: capture
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_clear_breakpoint_id
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: number_small
+                type: identifier
+              type: variable
+              variable_name:
+                text: number_small
+                type: identifier
+            type: argument_list
+          children:
+          - text: user.debugger_clear_breakpoint_id
+            type: identifier
+          - children:
+            - children:
+              - text: number_small
+                type: identifier
+              type: variable
+              variable_name:
+                text: number_small
+                type: identifier
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_clear_breakpoint_id
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: number_small
+                type: identifier
+              type: variable
+              variable_name:
+                text: number_small
+                type: identifier
+            type: argument_list
+          children:
+          - text: user.debugger_clear_breakpoint_id
+            type: identifier
+          - children:
+            - children:
+              - text: number_small
+                type: identifier
+              type: variable
+              variable_name:
+                text: number_small
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: clear
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: break
               type: word
-            - type: seq
-              children:
+            - children:
               - text: break
                 type: word
               - text: point
                 type: word
-        - type: capture
+              type: seq
+            type: choice
+          type: parenthesized_rule
+        - capture_name:
+            text: number_small
+            type: identifier
           children:
           - text: number_small
             type: identifier
-          capture_name:
-            text: number_small
-            type: identifier
+          type: capture
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_clear_breakpoint_id
+      - children:
+        - action_name:
+            text: user.debugger_clear_breakpoint_id
             type: identifier
-          - type: argument_list
+          arguments:
             children:
-            - type: variable
-              children:
+            - children:
               - text: number_small
                 type: identifier
+              type: variable
               variable_name:
                 text: number_small
                 type: identifier
+            type: argument_list
+          children:
+          - text: user.debugger_clear_breakpoint_id
+            type: identifier
+          - children:
+            - children:
+              - text: number_small
+                type: identifier
+              type: variable
+              variable_name:
+                text: number_small
+                type: identifier
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.debugger_clear_breakpoint_id
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: number_small
                 type: identifier
+              type: variable
               variable_name:
                 text: number_small
                 type: identifier
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.debugger_clear_breakpoint_id
             type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
+          - children:
+            - children:
               - text: number_small
                 type: identifier
+              type: variable
               variable_name:
                 text: number_small
                 type: identifier
-          action_name:
-            text: user.debugger_clear_breakpoint_id
-            type: identifier
-          arguments:
             type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number_small
-                type: identifier
-              variable_name:
-                text: number_small
-                type: identifier
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: disable
           type: word
         - text: all
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: breaks
               type: word
-            - type: seq
-              children:
+            - children:
               - text: break
                 type: word
               - text: points
                 type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_disable_all_breakpoints
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_disable_all_breakpoints
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_disable_all_breakpoints
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_disable_all_breakpoints
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+              type: seq
+            type: choice
+          type: parenthesized_rule
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_disable_all_breakpoints
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_disable_all_breakpoints
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_disable_all_breakpoints
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_disable_all_breakpoints
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: disable
           type: word
         - text: all
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: breaks
               type: word
-            - type: seq
-              children:
+            - children:
               - text: break
                 type: word
               - text: points
                 type: word
+              type: seq
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.debugger_disable_all_breakpoints
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.debugger_disable_all_breakpoints
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.debugger_disable_all_breakpoints
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.debugger_disable_all_breakpoints
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_disable_all_breakpoints
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: disable
-          type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: break
-              type: word
-            - type: seq
-              children:
-              - text: break
-                type: word
-              - text: point
-                type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_disable_breakpoint
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_disable_breakpoint
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
           type: action
-          children:
-          - text: user.debugger_disable_breakpoint
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_disable_breakpoint
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: disable
-          type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: break
-              type: word
-            - type: seq
-              children:
-              - text: break
-                type: word
-              - text: point
-                type: word
-    script:
+        type: expression
       type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_disable_breakpoint
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_disable_breakpoint
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_disable_breakpoint
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_disable_breakpoint
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+    type: command
+  - children:
+    - children:
+      - children:
         - text: disable
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: break
               type: word
-            - type: seq
-              children:
+            - children:
               - text: break
                 type: word
               - text: point
                 type: word
-        - type: capture
+              type: seq
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_disable_breakpoint
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_disable_breakpoint
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_disable_breakpoint
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_disable_breakpoint
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: disable
+          type: word
+        - children:
+          - children:
+            - text: break
+              type: word
+            - children:
+              - text: break
+                type: word
+              - text: point
+                type: word
+              type: seq
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: user.debugger_disable_breakpoint
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_disable_breakpoint
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_disable_breakpoint
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_disable_breakpoint
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - text: disable
+          type: word
+        - children:
+          - children:
+            - text: break
+              type: word
+            - children:
+              - text: break
+                type: word
+              - text: point
+                type: word
+              type: seq
+            type: choice
+          type: parenthesized_rule
+        - capture_name:
+            text: number_small
+            type: identifier
           children:
           - text: number_small
             type: identifier
-          capture_name:
-            text: number_small
-            type: identifier
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_disable_breakpoint_id
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number_small
-                type: identifier
-              variable_name:
-                text: number_small
-                type: identifier
-          action_name:
-            text: user.debugger_disable_breakpoint_id
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number_small
-                type: identifier
-              variable_name:
-                text: number_small
-                type: identifier
-        expression:
-          type: action
-          children:
-          - text: user.debugger_disable_breakpoint_id
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number_small
-                type: identifier
-              variable_name:
-                text: number_small
-                type: identifier
-          action_name:
-            text: user.debugger_disable_breakpoint_id
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number_small
-                type: identifier
-              variable_name:
-                text: number_small
-                type: identifier
-    rule:
+          type: capture
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_disable_breakpoint_id
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: number_small
+                type: identifier
+              type: variable
+              variable_name:
+                text: number_small
+                type: identifier
+            type: argument_list
+          children:
+          - text: user.debugger_disable_breakpoint_id
+            type: identifier
+          - children:
+            - children:
+              - text: number_small
+                type: identifier
+              type: variable
+              variable_name:
+                text: number_small
+                type: identifier
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_disable_breakpoint_id
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: number_small
+                type: identifier
+              type: variable
+              variable_name:
+                text: number_small
+                type: identifier
+            type: argument_list
+          children:
+          - text: user.debugger_disable_breakpoint_id
+            type: identifier
+          - children:
+            - children:
+              - text: number_small
+                type: identifier
+              type: variable
+              variable_name:
+                text: number_small
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: disable
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: break
               type: word
-            - type: seq
-              children:
+            - children:
               - text: break
                 type: word
               - text: point
                 type: word
-        - type: capture
+              type: seq
+            type: choice
+          type: parenthesized_rule
+        - capture_name:
+            text: number_small
+            type: identifier
           children:
           - text: number_small
             type: identifier
-          capture_name:
-            text: number_small
-            type: identifier
+          type: capture
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_disable_breakpoint_id
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number_small
-                type: identifier
-              variable_name:
-                text: number_small
-                type: identifier
-          action_name:
+      - children:
+        - action_name:
             text: user.debugger_disable_breakpoint_id
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: number_small
                 type: identifier
+              type: variable
               variable_name:
                 text: number_small
                 type: identifier
-        expression:
+            type: argument_list
+          children:
+          - text: user.debugger_disable_breakpoint_id
+            type: identifier
+          - children:
+            - children:
+              - text: number_small
+                type: identifier
+              type: variable
+              variable_name:
+                text: number_small
+                type: identifier
+            type: argument_list
           type: action
-          children:
-          - text: user.debugger_disable_breakpoint_id
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number_small
-                type: identifier
-              variable_name:
-                text: number_small
-                type: identifier
+        expression:
           action_name:
             text: user.debugger_disable_breakpoint_id
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: number_small
                 type: identifier
+              type: variable
               variable_name:
                 text: number_small
                 type: identifier
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+            type: argument_list
+          children:
+          - text: user.debugger_disable_breakpoint_id
+            type: identifier
+          - children:
+            - children:
+              - text: number_small
+                type: identifier
+              type: variable
+              variable_name:
+                text: number_small
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: enable
           type: word
         - text: all
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: breaks
               type: word
-            - type: seq
-              children:
+            - children:
               - text: break
                 type: word
               - text: points
                 type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_enable_all_breakpoints
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_enable_all_breakpoints
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_enable_all_breakpoints
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_enable_all_breakpoints
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+              type: seq
+            type: choice
+          type: parenthesized_rule
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_enable_all_breakpoints
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_enable_all_breakpoints
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_enable_all_breakpoints
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_enable_all_breakpoints
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: enable
           type: word
         - text: all
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: breaks
               type: word
-            - type: seq
-              children:
+            - children:
               - text: break
                 type: word
               - text: points
                 type: word
+              type: seq
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.debugger_enable_all_breakpoints
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.debugger_enable_all_breakpoints
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.debugger_enable_all_breakpoints
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.debugger_enable_all_breakpoints
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_enable_all_breakpoints
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: enable
-          type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: break
-              type: word
-            - type: seq
-              children:
-              - text: break
-                type: word
-              - text: point
-                type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_enable_breakpoint
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_enable_breakpoint
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
           type: action
-          children:
-          - text: user.debugger_enable_breakpoint
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_enable_breakpoint
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: enable
-          type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: break
-              type: word
-            - type: seq
-              children:
-              - text: break
-                type: word
-              - text: point
-                type: word
-    script:
+        type: expression
       type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_enable_breakpoint
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_enable_breakpoint
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_enable_breakpoint
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_enable_breakpoint
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+    type: command
+  - children:
+    - children:
+      - children:
         - text: enable
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: break
               type: word
-            - type: seq
-              children:
+            - children:
               - text: break
                 type: word
               - text: point
                 type: word
-        - type: capture
+              type: seq
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_enable_breakpoint
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_enable_breakpoint
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_enable_breakpoint
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_enable_breakpoint
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: enable
+          type: word
+        - children:
+          - children:
+            - text: break
+              type: word
+            - children:
+              - text: break
+                type: word
+              - text: point
+                type: word
+              type: seq
+            type: choice
+          type: parenthesized_rule
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: user.debugger_enable_breakpoint
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_enable_breakpoint
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_enable_breakpoint
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_enable_breakpoint
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - text: enable
+          type: word
+        - children:
+          - children:
+            - text: break
+              type: word
+            - children:
+              - text: break
+                type: word
+              - text: point
+                type: word
+              type: seq
+            type: choice
+          type: parenthesized_rule
+        - capture_name:
+            text: number_small
+            type: identifier
           children:
           - text: number_small
             type: identifier
-          capture_name:
-            text: number_small
-            type: identifier
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_enable_breakpoint_id
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number_small
-                type: identifier
-              variable_name:
-                text: number_small
-                type: identifier
-          action_name:
-            text: user.debugger_enable_breakpoint_id
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number_small
-                type: identifier
-              variable_name:
-                text: number_small
-                type: identifier
-        expression:
-          type: action
-          children:
-          - text: user.debugger_enable_breakpoint_id
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number_small
-                type: identifier
-              variable_name:
-                text: number_small
-                type: identifier
-          action_name:
-            text: user.debugger_enable_breakpoint_id
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number_small
-                type: identifier
-              variable_name:
-                text: number_small
-                type: identifier
-    rule:
+          type: capture
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_enable_breakpoint_id
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: number_small
+                type: identifier
+              type: variable
+              variable_name:
+                text: number_small
+                type: identifier
+            type: argument_list
+          children:
+          - text: user.debugger_enable_breakpoint_id
+            type: identifier
+          - children:
+            - children:
+              - text: number_small
+                type: identifier
+              type: variable
+              variable_name:
+                text: number_small
+                type: identifier
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_enable_breakpoint_id
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: number_small
+                type: identifier
+              type: variable
+              variable_name:
+                text: number_small
+                type: identifier
+            type: argument_list
+          children:
+          - text: user.debugger_enable_breakpoint_id
+            type: identifier
+          - children:
+            - children:
+              - text: number_small
+                type: identifier
+              type: variable
+              variable_name:
+                text: number_small
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: enable
           type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+        - children:
+          - children:
             - text: break
               type: word
-            - type: seq
-              children:
+            - children:
               - text: break
                 type: word
               - text: point
                 type: word
-        - type: capture
+              type: seq
+            type: choice
+          type: parenthesized_rule
+        - capture_name:
+            text: number_small
+            type: identifier
           children:
           - text: number_small
             type: identifier
-          capture_name:
-            text: number_small
-            type: identifier
+          type: capture
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_enable_breakpoint_id
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number_small
-                type: identifier
-              variable_name:
-                text: number_small
-                type: identifier
-          action_name:
+      - children:
+        - action_name:
             text: user.debugger_enable_breakpoint_id
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: number_small
                 type: identifier
+              type: variable
               variable_name:
                 text: number_small
                 type: identifier
-        expression:
+            type: argument_list
+          children:
+          - text: user.debugger_enable_breakpoint_id
+            type: identifier
+          - children:
+            - children:
+              - text: number_small
+                type: identifier
+              type: variable
+              variable_name:
+                text: number_small
+                type: identifier
+            type: argument_list
           type: action
-          children:
-          - text: user.debugger_enable_breakpoint_id
-            type: identifier
-          - type: argument_list
-            children:
-            - type: variable
-              children:
-              - text: number_small
-                type: identifier
-              variable_name:
-                text: number_small
-                type: identifier
+        expression:
           action_name:
             text: user.debugger_enable_breakpoint_id
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: variable
-              children:
+            - children:
               - text: number_small
                 type: identifier
+              type: variable
               variable_name:
                 text: number_small
                 type: identifier
+            type: argument_list
+          children:
+          - text: user.debugger_enable_breakpoint_id
+            type: identifier
+          - children:
+            - children:
+              - text: number_small
+                type: identifier
+              type: variable
+              variable_name:
+                text: number_small
+                type: identifier
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
   - text: '# Navigation'
     type: comment
   - text: '# Memory Inspection'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: stack
               type: word
             - text: back
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: trace
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_backtrace
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_backtrace
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_backtrace
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_backtrace
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_backtrace
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
-          - type: choice
-            children:
+          - text: user.debugger_backtrace
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_backtrace
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_backtrace
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: stack
               type: word
             - text: back
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: trace
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.debugger_backtrace
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.debugger_backtrace
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.debugger_backtrace
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.debugger_backtrace
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_backtrace
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - text: disassemble
-        type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_disassemble
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_disassemble
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
           type: action
-          children:
-          - text: user.debugger_disassemble
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_disassemble
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
-      type: rule
-      children:
-      - text: disassemble
-        type: word
-    script:
+        type: expression
       type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_disassemble
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+    type: command
+  - children:
+    - children:
+      - text: disassemble
+        type: word
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: user.debugger_disassemble
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: user.debugger_disassemble
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: user.debugger_disassemble
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: user.debugger_disassemble
             type: identifier
           arguments:
-            type: argument_list
             children: []
-  - type: command
-    children:
-    - type: rule
+            type: argument_list
+          children:
+          - text: user.debugger_disassemble
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - text: disassemble
+        type: word
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: user.debugger_disassemble
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_disassemble
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_disassemble
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_disassemble
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: disassemble
           type: word
         - text: here
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_disassemble_here
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_disassemble_here
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_disassemble_here
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_disassemble_here
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_disassemble_here
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_disassemble_here
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_disassemble_here
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_disassemble_here
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: disassemble
           type: word
         - text: here
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_disassemble_here
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_disassemble_here
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_disassemble_here
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_disassemble_here
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: disassemble
-          type: word
-        - text: clipboard
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_disassemble_clipboard
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_disassemble_clipboard
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_disassemble_clipboard
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_disassemble_clipboard
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - action_name:
+            text: user.debugger_disassemble_here
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_disassemble_here
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_disassemble_here
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_disassemble_here
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: disassemble
           type: word
         - text: clipboard
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_disassemble_clipboard
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: user.debugger_disassemble_clipboard
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: user.debugger_disassemble_clipboard
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: user.debugger_disassemble_clipboard
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: user.debugger_disassemble_clipboard
             type: identifier
           arguments:
-            type: argument_list
             children: []
-  - type: command
-    children:
-    - type: rule
+            type: argument_list
+          children:
+          - text: user.debugger_disassemble_clipboard
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
+        - text: disassemble
+          type: word
+        - text: clipboard
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: user.debugger_disassemble_clipboard
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_disassemble_clipboard
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_disassemble_clipboard
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_disassemble_clipboard
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: jump
           type: word
         - text: to
           type: word
         - text: address
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_goto_address
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_goto_address
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_goto_address
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_goto_address
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_goto_address
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_goto_address
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_goto_address
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_goto_address
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: jump
           type: word
         - text: to
           type: word
         - text: address
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_goto_address
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+      - children:
+        - action_name:
             text: user.debugger_goto_address
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: user.debugger_goto_address
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: user.debugger_goto_address
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: user.debugger_goto_address
             type: identifier
           arguments:
-            type: argument_list
             children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+            type: argument_list
+          children:
+          - text: user.debugger_goto_address
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: jump
           type: word
         - text: to
           type: word
         - text: clipboard
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_goto_clipboard
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_goto_clipboard
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_goto_clipboard
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_goto_clipboard
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_goto_clipboard
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_goto_clipboard
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_goto_clipboard
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_goto_clipboard
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: jump
           type: word
         - text: to
           type: word
         - text: clipboard
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_goto_clipboard
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+      - children:
+        - action_name:
             text: user.debugger_goto_clipboard
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: user.debugger_goto_clipboard
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: user.debugger_goto_clipboard
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: user.debugger_goto_clipboard
             type: identifier
           arguments:
-            type: argument_list
             children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+            type: argument_list
+          children:
+          - text: user.debugger_goto_clipboard
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: jump
           type: word
         - text: to
           type: word
         - text: highlighted
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_goto_highlighted
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_goto_highlighted
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_goto_highlighted
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_goto_highlighted
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_goto_highlighted
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_goto_highlighted
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_goto_highlighted
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_goto_highlighted
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: jump
           type: word
         - text: to
           type: word
         - text: highlighted
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.debugger_goto_highlighted
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.debugger_goto_highlighted
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.debugger_goto_highlighted
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.debugger_goto_highlighted
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_goto_highlighted
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: dump
           type: word
         - text: string
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_dump_ascii_string
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_dump_ascii_string
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_dump_ascii_string
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_dump_ascii_string
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_dump_ascii_string
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_dump_ascii_string
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_dump_ascii_string
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_dump_ascii_string
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: dump
           type: word
         - text: string
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.debugger_dump_ascii_string
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.debugger_dump_ascii_string
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.debugger_dump_ascii_string
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.debugger_dump_ascii_string
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_dump_ascii_string
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: dump
           type: word
         - text: unicode
           type: word
-        - type: optional
-          children:
+        - children:
           - text: string
             type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_dump_unicode_string
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_dump_unicode_string
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_dump_unicode_string
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_dump_unicode_string
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+          type: optional
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_dump_unicode_string
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_dump_unicode_string
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_dump_unicode_string
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_dump_unicode_string
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: dump
           type: word
         - text: unicode
           type: word
-        - type: optional
-          children:
+        - children:
           - text: string
             type: word
+          type: optional
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: user.debugger_dump_unicode_string
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
           children:
           - text: user.debugger_dump_unicode_string
             type: identifier
-          - type: argument_list
-            children: []
+          - children: []
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: user.debugger_dump_unicode_string
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
-          type: action
+            type: argument_list
           children:
           - text: user.debugger_dump_unicode_string
             type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_dump_unicode_string
-            type: identifier
-          arguments:
+          - children: []
             type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: dump
           type: word
         - text: pointers
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_dump_pointers
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_dump_pointers
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_dump_pointers
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_dump_pointers
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_dump_pointers
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_dump_pointers
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_dump_pointers
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_dump_pointers
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: dump
           type: word
         - text: pointers
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_dump_pointers
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_dump_pointers
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_dump_pointers
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_dump_pointers
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: list
-          type: word
-        - text: modules
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_list_modules
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_list_modules
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_list_modules
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_list_modules
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - action_name:
+            text: user.debugger_dump_pointers
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_dump_pointers
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_dump_pointers
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_dump_pointers
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: list
           type: word
         - text: modules
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_list_modules
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: user.debugger_list_modules
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: user.debugger_list_modules
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: user.debugger_list_modules
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: user.debugger_list_modules
             type: identifier
           arguments:
-            type: argument_list
             children: []
+            type: argument_list
+          children:
+          - text: user.debugger_list_modules
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: list
+          type: word
+        - text: modules
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: user.debugger_list_modules
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_list_modules
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_list_modules
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_list_modules
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
   - text: '# Type inspection'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: inspect
           type: word
         - text: type
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_inspect_type
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_inspect_type
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_inspect_type
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_inspect_type
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_inspect_type
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_inspect_type
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_inspect_type
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_inspect_type
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: inspect
           type: word
         - text: type
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_inspect_type
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+      - children:
+        - action_name:
             text: user.debugger_inspect_type
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: user.debugger_inspect_type
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: user.debugger_inspect_type
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: user.debugger_inspect_type
             type: identifier
           arguments:
-            type: argument_list
             children: []
+            type: argument_list
+          children:
+          - text: user.debugger_inspect_type
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
   - text: '# Hex Dumping Memory'
     type: comment
   - text: '#hex dump register:'
     type: comment
   - text: '# Convenience'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: clear
           type: word
         - text: line
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_clear_line
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_clear_line
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.debugger_clear_line
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.debugger_clear_line
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.debugger_clear_line
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_clear_line
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.debugger_clear_line
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.debugger_clear_line
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: clear
           type: word
         - text: line
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.debugger_clear_line
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+      - children:
+        - action_name:
             text: user.debugger_clear_line
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: user.debugger_clear_line
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: user.debugger_clear_line
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: user.debugger_clear_line
             type: identifier
           arguments:
-            type: argument_list
             children: []
+            type: argument_list
+          children:
+          - text: user.debugger_clear_line
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  type: source_file

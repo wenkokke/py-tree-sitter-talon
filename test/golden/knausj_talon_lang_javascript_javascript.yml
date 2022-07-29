@@ -1,29 +1,62 @@
-input: "tag: user.javascript\n-\ntag(): user.code_imperative\ntag(): user.code_object_oriented\n\
-  \ntag(): user.code_comment_line\ntag(): user.code_comment_block_c_like\ntag(): user.code_data_bool\n\
-  tag(): user.code_data_null\ntag(): user.code_functions\ntag(): user.code_functions_common\n\
-  tag(): user.code_keywords\ntag(): user.code_libraries\ntag(): user.code_operators_array\n\
-  tag(): user.code_operators_assignment\ntag(): user.code_operators_bitwise\ntag():\
-  \ user.code_operators_lambda\ntag(): user.code_operators_math\n\nsettings():\n \
-  \   user.code_private_function_formatter = \"PRIVATE_CAMEL_CASE\"\n    user.code_protected_function_formatter\
-  \ = \"PRIVATE_CAMEL_CASE\"\n    user.code_public_function_formatter = \"PRIVATE_CAMEL_CASE\"\
-  \n    user.code_private_variable_formatter = \"PRIVATE_CAMEL_CASE\"\n    user.code_protected_variable_formatter\
-  \ = \"PRIVATE_CAMEL_CASE\"\n    user.code_public_variable_formatter = \"PRIVATE_CAMEL_CASE\"\
-  \n\n(op | is) strict equal: \" === \"\n(op | is) strict not equal: \" !== \"\nop\
-  \ null else: \" ?? \"\n\nstate const: \"const \"\n\nstate let: \"let \"\n\nstate\
-  \ var: \"var \"\n\nstate export: \"export \"\n\nstate async: \"async \"\n\nstate\
-  \ await: \"await \"\n\ndot {user.code_common_member_function}:\n    user.insert_between(\"\
-  .{code_common_member_function}(\", \")\")\n\nstate map: app.notify('ERROR: Command\
-  \ deprecated; please use \"dot map\"')\nstate filter: app.notify('ERROR: Command\
-  \ deprecated; please use \"dot filter\"')\nstate reduce: app.notify('ERROR: Command\
-  \ deprecated; please use \"dot reduce\"')\n\nstate spread: \"...\"\n\nfrom import:\n\
-  \    user.insert_between(' from  \"', '\"')\n"
+input: |
+  tag: user.javascript
+  -
+  tag(): user.code_imperative
+  tag(): user.code_object_oriented
+
+  tag(): user.code_comment_line
+  tag(): user.code_comment_block_c_like
+  tag(): user.code_data_bool
+  tag(): user.code_data_null
+  tag(): user.code_functions
+  tag(): user.code_functions_common
+  tag(): user.code_keywords
+  tag(): user.code_libraries
+  tag(): user.code_operators_array
+  tag(): user.code_operators_assignment
+  tag(): user.code_operators_bitwise
+  tag(): user.code_operators_lambda
+  tag(): user.code_operators_math
+
+  settings():
+      user.code_private_function_formatter = "PRIVATE_CAMEL_CASE"
+      user.code_protected_function_formatter = "PRIVATE_CAMEL_CASE"
+      user.code_public_function_formatter = "PRIVATE_CAMEL_CASE"
+      user.code_private_variable_formatter = "PRIVATE_CAMEL_CASE"
+      user.code_protected_variable_formatter = "PRIVATE_CAMEL_CASE"
+      user.code_public_variable_formatter = "PRIVATE_CAMEL_CASE"
+
+  (op | is) strict equal: " === "
+  (op | is) strict not equal: " !== "
+  op null else: " ?? "
+
+  state const: "const "
+
+  state let: "let "
+
+  state var: "var "
+
+  state export: "export "
+
+  state async: "async "
+
+  state await: "await "
+
+  dot {user.code_common_member_function}:
+      user.insert_between(".{code_common_member_function}(", ")")
+
+  state map: app.notify('ERROR: Command deprecated; please use "dot map"')
+  state filter: app.notify('ERROR: Command deprecated; please use "dot filter"')
+  state reduce: app.notify('ERROR: Command deprecated; please use "dot reduce"')
+
+  state spread: "..."
+
+  from import:
+      user.insert_between(' from  "', '"')
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: match
-      children:
+  - children:
+    - children:
       - text: tag
         type: identifier
       - text: ' user.javascript'
@@ -34,822 +67,797 @@ output:
       pattern:
         text: ' user.javascript'
         type: implicit_string
-  - type: include_tag
-    children:
+      type: match
+    type: context
+  - children:
     - text: user.code_imperative
       type: identifier
     tag:
       text: user.code_imperative
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_object_oriented
       type: identifier
     tag:
       text: user.code_object_oriented
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_comment_line
       type: identifier
     tag:
       text: user.code_comment_line
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_comment_block_c_like
       type: identifier
     tag:
       text: user.code_comment_block_c_like
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_data_bool
       type: identifier
     tag:
       text: user.code_data_bool
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_data_null
       type: identifier
     tag:
       text: user.code_data_null
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_functions
       type: identifier
     tag:
       text: user.code_functions
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_functions_common
       type: identifier
     tag:
       text: user.code_functions_common
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_keywords
       type: identifier
     tag:
       text: user.code_keywords
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_libraries
       type: identifier
     tag:
       text: user.code_libraries
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_operators_array
       type: identifier
     tag:
       text: user.code_operators_array
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_operators_assignment
       type: identifier
     tag:
       text: user.code_operators_assignment
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_operators_bitwise
       type: identifier
     tag:
       text: user.code_operators_bitwise
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_operators_lambda
       type: identifier
     tag:
       text: user.code_operators_lambda
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.code_operators_math
       type: identifier
     tag:
       text: user.code_operators_math
       type: identifier
-  - type: settings
-    children:
-    - type: block
-      children:
-      - type: assignment
-        children:
+    type: include_tag
+  - children:
+    - children:
+      - children:
         - text: user.code_private_function_formatter
           type: identifier
-        - type: string
-          children:
+        - children:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
+          type: string
         left:
           text: user.code_private_function_formatter
           type: identifier
         right:
-          type: string
           children:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
-      - type: assignment
-        children:
+          type: string
+        type: assignment
+      - children:
         - text: user.code_protected_function_formatter
           type: identifier
-        - type: string
-          children:
+        - children:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
+          type: string
         left:
           text: user.code_protected_function_formatter
           type: identifier
         right:
-          type: string
           children:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
-      - type: assignment
-        children:
+          type: string
+        type: assignment
+      - children:
         - text: user.code_public_function_formatter
           type: identifier
-        - type: string
-          children:
+        - children:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
+          type: string
         left:
           text: user.code_public_function_formatter
           type: identifier
         right:
-          type: string
           children:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
-      - type: assignment
-        children:
+          type: string
+        type: assignment
+      - children:
         - text: user.code_private_variable_formatter
           type: identifier
-        - type: string
-          children:
+        - children:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
+          type: string
         left:
           text: user.code_private_variable_formatter
           type: identifier
         right:
-          type: string
           children:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
-      - type: assignment
-        children:
+          type: string
+        type: assignment
+      - children:
         - text: user.code_protected_variable_formatter
           type: identifier
-        - type: string
-          children:
+        - children:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
+          type: string
         left:
           text: user.code_protected_variable_formatter
           type: identifier
         right:
-          type: string
           children:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
-      - type: assignment
-        children:
+          type: string
+        type: assignment
+      - children:
         - text: user.code_public_variable_formatter
           type: identifier
-        - type: string
-          children:
+        - children:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
+          type: string
         left:
           text: user.code_public_variable_formatter
           type: identifier
         right:
-          type: string
           children:
           - text: PRIVATE_CAMEL_CASE
             type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: op
-              type: word
-            - text: is
-              type: word
-        - text: strict
-          type: word
-        - text: equal
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: ' === '
-            type: string_content
-        expression:
           type: string
-          children:
-          - text: ' === '
-            type: string_content
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: op
-              type: word
-            - text: is
-              type: word
-        - text: strict
-          type: word
-        - text: equal
-          type: word
-    script:
+        type: assignment
       type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: ' === '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: ' === '
-            type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+    type: settings
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: op
               type: word
             - text: is
               type: word
+            type: choice
+          type: parenthesized_rule
         - text: strict
-          type: word
-        - text: not
           type: word
         - text: equal
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: ' !== '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: ' !== '
-            type: string_content
-    rule:
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - children:
+          - text: ' === '
+            type: string_content
+          type: string
+        expression:
           children:
-          - type: choice
-            children:
+          - text: ' === '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: op
               type: word
             - text: is
               type: word
+            type: choice
+          type: parenthesized_rule
+        - text: strict
+          type: word
+        - text: equal
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - children:
+          - text: ' === '
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: ' === '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
+            - text: op
+              type: word
+            - text: is
+              type: word
+            type: choice
+          type: parenthesized_rule
         - text: strict
           type: word
         - text: not
           type: word
         - text: equal
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - children:
           - text: ' !== '
             type: string_content
-        expression:
           type: string
+        expression:
           children:
           - text: ' !== '
             type: string_content
-  - type: command
-    children:
-    - type: rule
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
+        - children:
+          - children:
+            - text: op
+              type: word
+            - text: is
+              type: word
+            type: choice
+          type: parenthesized_rule
+        - text: strict
+          type: word
+        - text: not
+          type: word
+        - text: equal
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - children:
+          - text: ' !== '
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: ' !== '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: op
           type: word
         - text: 'null'
           type: word
         - text: else
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: ' ?? '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: ' ?? '
-            type: string_content
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - children:
+          - text: ' ?? '
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: ' ?? '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: op
           type: word
         - text: 'null'
           type: word
         - text: else
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: string
-          children:
+      - children:
+        - children:
           - text: ' ?? '
             type: string_content
-        expression:
           type: string
+        expression:
           children:
           - text: ' ?? '
             type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: state
           type: word
         - text: const
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: 'const '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: 'const '
-            type: string_content
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - children:
+          - text: 'const '
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: 'const '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: state
           type: word
         - text: const
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: string
-          children:
+      - children:
+        - children:
           - text: 'const '
             type: string_content
-        expression:
           type: string
+        expression:
           children:
           - text: 'const '
             type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: state
           type: word
         - text: let
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: 'let '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: 'let '
-            type: string_content
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - children:
+          - text: 'let '
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: 'let '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: state
           type: word
         - text: let
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: string
-          children:
+      - children:
+        - children:
           - text: 'let '
             type: string_content
-        expression:
           type: string
+        expression:
           children:
           - text: 'let '
             type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: state
           type: word
         - text: var
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: 'var '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: 'var '
-            type: string_content
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - children:
+          - text: 'var '
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: 'var '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: state
           type: word
         - text: var
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: string
-          children:
+      - children:
+        - children:
           - text: 'var '
             type: string_content
-        expression:
           type: string
+        expression:
           children:
           - text: 'var '
             type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: state
           type: word
         - text: export
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: 'export '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: 'export '
-            type: string_content
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - children:
+          - text: 'export '
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: 'export '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: state
           type: word
         - text: export
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: string
-          children:
+      - children:
+        - children:
           - text: 'export '
             type: string_content
-        expression:
           type: string
+        expression:
           children:
           - text: 'export '
             type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: state
           type: word
         - text: async
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: 'async '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: 'async '
-            type: string_content
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - children:
+          - text: 'async '
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: 'async '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: state
           type: word
         - text: async
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: 'async '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: 'async '
-            type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: state
-          type: word
-        - text: await
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: 'await '
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: 'await '
-            type: string_content
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - children:
+          - text: 'async '
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: 'async '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: state
           type: word
         - text: await
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - children:
           - text: 'await '
             type: string_content
-        expression:
           type: string
+        expression:
           children:
           - text: 'await '
             type: string_content
-  - type: command
-    children:
-    - type: rule
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
+        - text: state
+          type: word
+        - text: await
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - children:
+          - text: 'await '
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: 'await '
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: dot
           type: word
-        - type: list
-          children:
+        - children:
           - text: user.code_common_member_function
             type: identifier
           list_name:
             text: user.code_common_member_function
             type: identifier
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: .
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: code_common_member_function
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: (
-                type: string_content
-            - type: string
-              children:
-              - text: )
-                type: string_content
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: .
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: code_common_member_function
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: (
-                type: string_content
-            - type: string
-              children:
-              - text: )
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: .
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: code_common_member_function
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: (
-                type: string_content
-            - type: string
-              children:
-              - text: )
-                type: string_content
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: .
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: code_common_member_function
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: (
-                type: string_content
-            - type: string
-              children:
-              - text: )
-                type: string_content
-    rule:
+          type: list
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: .
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: code_common_member_function
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: (
+                type: string_content
+              type: string
+            - children:
+              - text: )
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: .
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: code_common_member_function
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: (
+                type: string_content
+              type: string
+            - children:
+              - text: )
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: .
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: code_common_member_function
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: (
+                type: string_content
+              type: string
+            - children:
+              - text: )
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: .
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: code_common_member_function
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: (
+                type: string_content
+              type: string
+            - children:
+              - text: )
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: dot
           type: word
-        - type: list
-          children:
+        - children:
           - text: user.code_common_member_function
             type: identifier
           list_name:
             text: user.code_common_member_function
             type: identifier
+          type: list
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: .
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: code_common_member_function
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: (
-                type: string_content
-            - type: string
-              children:
-              - text: )
-                type: string_content
-          action_name:
+      - children:
+        - action_name:
             text: user.insert_between
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: .
                 type: string_content
               - text: '{'
@@ -860,41 +868,41 @@ output:
                 type: string_content
               - text: (
                 type: string_content
-            - type: string
-              children:
+              type: string
+            - children:
               - text: )
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: .
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: code_common_member_function
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: (
+                type: string_content
+              type: string
+            - children:
+              - text: )
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: .
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: code_common_member_function
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: (
-                type: string_content
-            - type: string
-              children:
-              - text: )
-                type: string_content
+        expression:
           action_name:
             text: user.insert_between
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: .
                 type: string_content
               - text: '{'
@@ -905,525 +913,553 @@ output:
                 type: string_content
               - text: (
                 type: string_content
-            - type: string
-              children:
+              type: string
+            - children:
               - text: )
                 type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: .
+                type: string_content
+              - text: '{'
+                type: string_content
+              - text: code_common_member_function
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: (
+                type: string_content
+              type: string
+            - children:
+              - text: )
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: state
           type: word
         - text: map
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: app.notify
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'ERROR: Command deprecated; please use "dot map"'
-                type: string_content
-          action_name:
-            text: app.notify
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'ERROR: Command deprecated; please use "dot map"'
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: app.notify
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'ERROR: Command deprecated; please use "dot map"'
-                type: string_content
-          action_name:
-            text: app.notify
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'ERROR: Command deprecated; please use "dot map"'
-                type: string_content
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: app.notify
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'ERROR: Command deprecated; please use "dot map"'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: app.notify
+            type: identifier
+          - children:
+            - children:
+              - text: 'ERROR: Command deprecated; please use "dot map"'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: app.notify
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'ERROR: Command deprecated; please use "dot map"'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: app.notify
+            type: identifier
+          - children:
+            - children:
+              - text: 'ERROR: Command deprecated; please use "dot map"'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: state
           type: word
         - text: map
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: app.notify
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'ERROR: Command deprecated; please use "dot map"'
-                type: string_content
-          action_name:
+      - children:
+        - action_name:
             text: app.notify
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'ERROR: Command deprecated; please use "dot map"'
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: app.notify
+            type: identifier
+          - children:
+            - children:
+              - text: 'ERROR: Command deprecated; please use "dot map"'
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: app.notify
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'ERROR: Command deprecated; please use "dot map"'
-                type: string_content
+        expression:
           action_name:
             text: app.notify
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'ERROR: Command deprecated; please use "dot map"'
                 type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+              type: string
+            type: argument_list
+          children:
+          - text: app.notify
+            type: identifier
+          - children:
+            - children:
+              - text: 'ERROR: Command deprecated; please use "dot map"'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: state
           type: word
         - text: filter
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: app.notify
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'ERROR: Command deprecated; please use "dot filter"'
-                type: string_content
-          action_name:
-            text: app.notify
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'ERROR: Command deprecated; please use "dot filter"'
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: app.notify
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'ERROR: Command deprecated; please use "dot filter"'
-                type: string_content
-          action_name:
-            text: app.notify
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'ERROR: Command deprecated; please use "dot filter"'
-                type: string_content
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: app.notify
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'ERROR: Command deprecated; please use "dot filter"'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: app.notify
+            type: identifier
+          - children:
+            - children:
+              - text: 'ERROR: Command deprecated; please use "dot filter"'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: app.notify
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'ERROR: Command deprecated; please use "dot filter"'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: app.notify
+            type: identifier
+          - children:
+            - children:
+              - text: 'ERROR: Command deprecated; please use "dot filter"'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: state
           type: word
         - text: filter
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: app.notify
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'ERROR: Command deprecated; please use "dot filter"'
-                type: string_content
-          action_name:
+      - children:
+        - action_name:
             text: app.notify
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'ERROR: Command deprecated; please use "dot filter"'
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: app.notify
+            type: identifier
+          - children:
+            - children:
+              - text: 'ERROR: Command deprecated; please use "dot filter"'
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: app.notify
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'ERROR: Command deprecated; please use "dot filter"'
-                type: string_content
+        expression:
           action_name:
             text: app.notify
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'ERROR: Command deprecated; please use "dot filter"'
                 type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+              type: string
+            type: argument_list
+          children:
+          - text: app.notify
+            type: identifier
+          - children:
+            - children:
+              - text: 'ERROR: Command deprecated; please use "dot filter"'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: state
           type: word
         - text: reduce
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: app.notify
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'ERROR: Command deprecated; please use "dot reduce"'
-                type: string_content
-          action_name:
-            text: app.notify
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'ERROR: Command deprecated; please use "dot reduce"'
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: app.notify
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'ERROR: Command deprecated; please use "dot reduce"'
-                type: string_content
-          action_name:
-            text: app.notify
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'ERROR: Command deprecated; please use "dot reduce"'
-                type: string_content
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: app.notify
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'ERROR: Command deprecated; please use "dot reduce"'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: app.notify
+            type: identifier
+          - children:
+            - children:
+              - text: 'ERROR: Command deprecated; please use "dot reduce"'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: app.notify
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'ERROR: Command deprecated; please use "dot reduce"'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: app.notify
+            type: identifier
+          - children:
+            - children:
+              - text: 'ERROR: Command deprecated; please use "dot reduce"'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: state
           type: word
         - text: reduce
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
+      - children:
+        - action_name:
+            text: app.notify
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: 'ERROR: Command deprecated; please use "dot reduce"'
+                type: string_content
+              type: string
+            type: argument_list
           children:
           - text: app.notify
             type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
+          - children:
+            - children:
               - text: 'ERROR: Command deprecated; please use "dot reduce"'
                 type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
           action_name:
             text: app.notify
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: 'ERROR: Command deprecated; please use "dot reduce"'
                 type: string_content
-        expression:
-          type: action
+              type: string
+            type: argument_list
           children:
           - text: app.notify
             type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
+          - children:
+            - children:
               - text: 'ERROR: Command deprecated; please use "dot reduce"'
                 type: string_content
-          action_name:
-            text: app.notify
-            type: identifier
-          arguments:
+              type: string
             type: argument_list
-            children:
-            - type: string
-              children:
-              - text: 'ERROR: Command deprecated; please use "dot reduce"'
-                type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          type: action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: state
           type: word
         - text: spread
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: '...'
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: '...'
-            type: string_content
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - children:
+          - text: '...'
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: '...'
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: state
           type: word
         - text: spread
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: '...'
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: '...'
-            type: string_content
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: from
-          type: word
-        - text: import
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: ' from  "'
-                type: string_content
-            - type: string
-              children:
-              - text: '"'
-                type: string_content
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: ' from  "'
-                type: string_content
-            - type: string
-              children:
-              - text: '"'
-                type: string_content
-        expression:
-          type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: ' from  "'
-                type: string_content
-            - type: string
-              children:
-              - text: '"'
-                type: string_content
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: ' from  "'
-                type: string_content
-            - type: string
-              children:
-              - text: '"'
-                type: string_content
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - children:
+          - text: '...'
+            type: string_content
+          type: string
+        expression:
+          children:
+          - text: '...'
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: from
           type: word
         - text: import
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: ' from  "'
-                type: string_content
-            - type: string
-              children:
-              - text: '"'
-                type: string_content
-          action_name:
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - action_name:
             text: user.insert_between
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: ' from  "'
                 type: string_content
-            - type: string
-              children:
+              type: string
+            - children:
               - text: '"'
                 type: string_content
-        expression:
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: ' from  "'
+                type: string_content
+              type: string
+            - children:
+              - text: '"'
+                type: string_content
+              type: string
+            type: argument_list
           type: action
-          children:
-          - text: user.insert_between
-            type: identifier
-          - type: argument_list
-            children:
-            - type: string
-              children:
-              - text: ' from  "'
-                type: string_content
-            - type: string
-              children:
-              - text: '"'
-                type: string_content
+        expression:
           action_name:
             text: user.insert_between
             type: identifier
           arguments:
-            type: argument_list
             children:
-            - type: string
-              children:
+            - children:
               - text: ' from  "'
                 type: string_content
-            - type: string
-              children:
+              type: string
+            - children:
               - text: '"'
                 type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: ' from  "'
+                type: string_content
+              type: string
+            - children:
+              - text: '"'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - text: from
+          type: word
+        - text: import
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: ' from  "'
+                type: string_content
+              type: string
+            - children:
+              - text: '"'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: ' from  "'
+                type: string_content
+              type: string
+            - children:
+              - text: '"'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.insert_between
+            type: identifier
+          arguments:
+            children:
+            - children:
+              - text: ' from  "'
+                type: string_content
+              type: string
+            - children:
+              - text: '"'
+                type: string_content
+              type: string
+            type: argument_list
+          children:
+          - text: user.insert_between
+            type: identifier
+          - children:
+            - children:
+              - text: ' from  "'
+                type: string_content
+              type: string
+            - children:
+              - text: '"'
+                type: string_content
+              type: string
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  type: source_file

@@ -1,13 +1,15 @@
-input: "os: windows\napp.exe: ConEmu64.exe\n-\n\ntag(): terminal\ntag(): user.git\n"
+input: |
+  os: windows
+  app.exe: ConEmu64.exe
+  -
+
+  tag(): terminal
+  tag(): user.git
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: or
-      children:
-      - type: match
-        children:
+  - children:
+    - children:
+      - children:
         - text: os
           type: identifier
         - text: ' windows'
@@ -18,8 +20,8 @@ output:
         pattern:
           text: ' windows'
           type: implicit_string
-      - type: match
-        children:
+        type: match
+      - children:
         - text: app.exe
           type: identifier
         - text: ' ConEmu64.exe'
@@ -30,17 +32,21 @@ output:
         pattern:
           text: ' ConEmu64.exe'
           type: implicit_string
-  - type: include_tag
-    children:
+        type: match
+      type: or
+    type: context
+  - children:
     - text: terminal
       type: identifier
     tag:
       text: terminal
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.git
       type: identifier
     tag:
       text: user.git
       type: identifier
+    type: include_tag
+  type: source_file

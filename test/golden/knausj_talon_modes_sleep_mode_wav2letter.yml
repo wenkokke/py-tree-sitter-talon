@@ -1,15 +1,15 @@
-input: "mode: sleep\nspeech.engine: wav2letter\n-\n#this exists solely to prevent\
-  \ talon from waking up super easily in sleep mode at the moment with wav2letter\n\
-  #you probably shouldn't have any other commands here\n<phrase>: skip()\n"
+input: |
+  mode: sleep
+  speech.engine: wav2letter
+  -
+  #this exists solely to prevent talon from waking up super easily in sleep mode at the moment with wav2letter
+  #you probably shouldn't have any other commands here
+  <phrase>: skip()
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: or
-      children:
-      - type: match
-        children:
+  - children:
+    - children:
+      - children:
         - text: mode
           type: identifier
         - text: ' sleep'
@@ -20,8 +20,8 @@ output:
         pattern:
           text: ' sleep'
           type: implicit_string
-      - type: match
-        children:
+        type: match
+      - children:
         - text: speech.engine
           type: identifier
         - text: ' wav2letter'
@@ -32,88 +32,92 @@ output:
         pattern:
           text: ' wav2letter'
           type: implicit_string
+        type: match
+      type: or
+    type: context
   - text: '#this exists solely to prevent talon from waking up super easily in sleep
       mode at the moment with wav2letter'
     type: comment
-  - text: "#you probably shouldn't have any other commands here"
+  - text: '#you probably shouldn''t have any other commands here'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: capture
+  - children:
+    - children:
+      - capture_name:
+          text: phrase
+          type: identifier
         children:
         - text: phrase
           type: identifier
-        capture_name:
-          text: phrase
-          type: identifier
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: skip
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: skip
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: skip
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: skip
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: capture
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: skip
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: skip
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: skip
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: skip
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: capture
+      - capture_name:
+          text: phrase
+          type: identifier
         children:
         - text: phrase
           type: identifier
-        capture_name:
-          text: phrase
-          type: identifier
+        type: capture
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: skip
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+      - children:
+        - action_name:
             text: skip
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: skip
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: skip
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: skip
             type: identifier
           arguments:
-            type: argument_list
             children: []
+            type: argument_list
+          children:
+          - text: skip
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  type: source_file

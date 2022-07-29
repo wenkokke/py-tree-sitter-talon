@@ -1,90 +1,87 @@
-input: "-\n(abbreviate|abreviate|brief) {user.abbreviation}: \"{abbreviation}\"\n"
+input: |
+  -
+  (abbreviate|abreviate|brief) {user.abbreviation}: "{abbreviation}"
 output:
-  type: source_file
   children:
-  - type: context
-    children: []
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
+  - children: []
+    type: context
+  - children:
+    - children:
+      - children:
+        - children:
+          - children:
             - text: abbreviate
               type: word
             - text: abreviate
               type: word
             - text: brief
               type: word
-        - type: list
-          children:
+            type: choice
+          type: parenthesized_rule
+        - children:
           - text: user.abbreviation
             type: identifier
           list_name:
             text: user.abbreviation
             type: identifier
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: string
-          children:
-          - text: '{'
-            type: string_content
-          - text: abbreviation
-            type: string_content
-          - text: '}'
-            type: string_content
-        expression:
-          type: string
-          children:
-          - text: '{'
-            type: string_content
-          - text: abbreviation
-            type: string_content
-          - text: '}'
-            type: string_content
-    rule:
+          type: list
+        type: seq
       type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
+    - children:
+      - children:
+        - children:
+          - text: '{'
+            type: string_content
+          - text: abbreviation
+            type: string_content
+          - text: '}'
+            type: string_content
+          type: string
+        expression:
           children:
-          - type: choice
-            children:
+          - text: '{'
+            type: string_content
+          - text: abbreviation
+            type: string_content
+          - text: '}'
+            type: string_content
+          type: string
+        type: expression
+      type: block
+    rule:
+      children:
+      - children:
+        - children:
+          - children:
             - text: abbreviate
               type: word
             - text: abreviate
               type: word
             - text: brief
               type: word
-        - type: list
-          children:
+            type: choice
+          type: parenthesized_rule
+        - children:
           - text: user.abbreviation
             type: identifier
           list_name:
             text: user.abbreviation
             type: identifier
+          type: list
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: string
-          children:
+      - children:
+        - children:
           - text: '{'
             type: string_content
           - text: abbreviation
             type: string_content
           - text: '}'
             type: string_content
-        expression:
           type: string
+        expression:
           children:
           - text: '{'
             type: string_content
@@ -92,3 +89,8 @@ output:
             type: string_content
           - text: '}'
             type: string_content
+          type: string
+        type: expression
+      type: block
+    type: command
+  type: source_file

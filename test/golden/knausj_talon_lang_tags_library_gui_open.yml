@@ -1,14 +1,14 @@
-input: "tag: user.code_libraries_gui_showing\n-\n# The show functions for this have\
-  \ language specific names, e.g. toggle imports for Python\n# but let's use a generic\
-  \ name for the close one. Having it behind this tag allows it to be closed\n# even\
-  \ if your editor isn't visible.\ntoggle libraries close: user.code_toggle_libraries()\n"
+input: |
+  tag: user.code_libraries_gui_showing
+  -
+  # The show functions for this have language specific names, e.g. toggle imports for Python
+  # but let's use a generic name for the close one. Having it behind this tag allows it to be closed
+  # even if your editor isn't visible.
+  toggle libraries close: user.code_toggle_libraries()
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: match
-      children:
+  - children:
+    - children:
       - text: tag
         type: identifier
       - text: ' user.code_libraries_gui_showing'
@@ -19,93 +19,96 @@ output:
       pattern:
         text: ' user.code_libraries_gui_showing'
         type: implicit_string
+      type: match
+    type: context
   - text: '# The show functions for this have language specific names, e.g. toggle
       imports for Python'
     type: comment
-  - text: "# but let's use a generic name for the close one. Having it behind this\
-      \ tag allows it to be closed"
+  - text: '# but let''s use a generic name for the close one. Having it behind this
+      tag allows it to be closed'
     type: comment
-  - text: "# even if your editor isn't visible."
+  - text: '# even if your editor isn''t visible.'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: toggle
           type: word
         - text: libraries
           type: word
         - text: close
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_toggle_libraries
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_toggle_libraries
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-        expression:
-          type: action
-          children:
-          - text: user.code_toggle_libraries
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
-            text: user.code_toggle_libraries
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - action_name:
+            text: user.code_toggle_libraries
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_toggle_libraries
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        expression:
+          action_name:
+            text: user.code_toggle_libraries
+            type: identifier
+          arguments:
+            children: []
+            type: argument_list
+          children:
+          - text: user.code_toggle_libraries
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: toggle
           type: word
         - text: libraries
           type: word
         - text: close
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: action
-          children:
-          - text: user.code_toggle_libraries
-            type: identifier
-          - type: argument_list
-            children: []
-          action_name:
+      - children:
+        - action_name:
             text: user.code_toggle_libraries
             type: identifier
           arguments:
-            type: argument_list
             children: []
-        expression:
+            type: argument_list
+          children:
+          - text: user.code_toggle_libraries
+            type: identifier
+          - children: []
+            type: argument_list
           type: action
-          children:
-          - text: user.code_toggle_libraries
-            type: identifier
-          - type: argument_list
-            children: []
+        expression:
           action_name:
             text: user.code_toggle_libraries
             type: identifier
           arguments:
-            type: argument_list
             children: []
+            type: argument_list
+          children:
+          - text: user.code_toggle_libraries
+            type: identifier
+          - children: []
+            type: argument_list
+          type: action
+        type: expression
+      type: block
+    type: command
+  type: source_file

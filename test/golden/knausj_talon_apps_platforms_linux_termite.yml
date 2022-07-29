@@ -1,18 +1,26 @@
-input: "app: termite\nand not win.title: /VIM/\n-\n#comment or remove tags for command\
-  \ sets you don't want\n#termite doesn't support the file_manager stuff yet\n#tag():\
-  \ user.file_manager\ntag(): user.kubectl\ntag(): user.git\ntag(): user.taskwarrior\n\
-  tag(): terminal\n\n# Selection mode\nshell yank: key(\"y\")\nshell select: key(\"\
-  ctrl-shift-space\")\nshell insert: key(\"escape\")\nvisual line: key(\"v\")\nvisual\
-  \ line mode: key(\"V\")\n"
+input: |
+  app: termite
+  and not win.title: /VIM/
+  -
+  #comment or remove tags for command sets you don't want
+  #termite doesn't support the file_manager stuff yet
+  #tag(): user.file_manager
+  tag(): user.kubectl
+  tag(): user.git
+  tag(): user.taskwarrior
+  tag(): terminal
+
+  # Selection mode
+  shell yank: key("y")
+  shell select: key("ctrl-shift-space")
+  shell insert: key("escape")
+  visual line: key("v")
+  visual line mode: key("V")
 output:
-  type: source_file
   children:
-  - type: context
-    children:
-    - type: and
-      children:
-      - type: match
-        children:
+  - children:
+    - children:
+      - children:
         - text: app
           type: identifier
         - text: ' termite'
@@ -23,10 +31,9 @@ output:
         pattern:
           text: ' termite'
           type: implicit_string
-      - type: not
-        children:
-        - type: match
-          children:
+        type: match
+      - children:
+        - children:
           - text: win.title
             type: identifier
           - text: ' /VIM/'
@@ -37,333 +44,338 @@ output:
           pattern:
             text: ' /VIM/'
             type: implicit_string
-  - text: "#comment or remove tags for command sets you don't want"
+          type: match
+        type: not
+      type: and
+    type: context
+  - text: '#comment or remove tags for command sets you don''t want'
     type: comment
-  - text: "#termite doesn't support the file_manager stuff yet"
+  - text: '#termite doesn''t support the file_manager stuff yet'
     type: comment
   - text: '#tag(): user.file_manager'
     type: comment
-  - type: include_tag
-    children:
+  - children:
     - text: user.kubectl
       type: identifier
     tag:
       text: user.kubectl
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.git
       type: identifier
     tag:
       text: user.git
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: user.taskwarrior
       type: identifier
     tag:
       text: user.taskwarrior
       type: identifier
-  - type: include_tag
-    children:
+    type: include_tag
+  - children:
     - text: terminal
       type: identifier
     tag:
       text: terminal
       type: identifier
+    type: include_tag
   - text: '# Selection mode'
     type: comment
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+  - children:
+    - children:
+      - children:
         - text: shell
           type: word
         - text: yank
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: '"y"'
-            type: implicit_string
-          arguments:
-            text: '"y"'
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: '"y"'
-            type: implicit_string
-          arguments:
-            text: '"y"'
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: '"y"'
+            type: implicit_string
+          children:
+          - text: '"y"'
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: '"y"'
+            type: implicit_string
+          children:
+          - text: '"y"'
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: shell
           type: word
         - text: yank
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: '"y"'
+            type: implicit_string
           children:
           - text: '"y"'
             type: implicit_string
-          arguments:
-            text: '"y"'
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: '"y"'
-            type: implicit_string
+        expression:
           arguments:
             text: '"y"'
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          children:
+          - text: '"y"'
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: shell
           type: word
         - text: select
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: '"ctrl-shift-space"'
-            type: implicit_string
-          arguments:
-            text: '"ctrl-shift-space"'
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: '"ctrl-shift-space"'
-            type: implicit_string
-          arguments:
-            text: '"ctrl-shift-space"'
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: '"ctrl-shift-space"'
+            type: implicit_string
+          children:
+          - text: '"ctrl-shift-space"'
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: '"ctrl-shift-space"'
+            type: implicit_string
+          children:
+          - text: '"ctrl-shift-space"'
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: shell
           type: word
         - text: select
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: '"ctrl-shift-space"'
+            type: implicit_string
           children:
           - text: '"ctrl-shift-space"'
             type: implicit_string
-          arguments:
-            text: '"ctrl-shift-space"'
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: '"ctrl-shift-space"'
-            type: implicit_string
+        expression:
           arguments:
             text: '"ctrl-shift-space"'
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
+          children:
+          - text: '"ctrl-shift-space"'
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: shell
           type: word
         - text: insert
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: '"escape"'
-            type: implicit_string
-          arguments:
-            text: '"escape"'
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: '"escape"'
-            type: implicit_string
-          arguments:
-            text: '"escape"'
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: '"escape"'
+            type: implicit_string
+          children:
+          - text: '"escape"'
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: '"escape"'
+            type: implicit_string
+          children:
+          - text: '"escape"'
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: shell
           type: word
         - text: insert
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: '"escape"'
-            type: implicit_string
-          arguments:
-            text: '"escape"'
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: '"escape"'
-            type: implicit_string
-          arguments:
-            text: '"escape"'
-            type: implicit_string
-  - type: command
-    children:
-    - type: rule
-      children:
-      - type: seq
-        children:
-        - text: visual
-          type: word
-        - text: line
-          type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: '"v"'
-            type: implicit_string
-          arguments:
-            text: '"v"'
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: '"v"'
-            type: implicit_string
-          arguments:
-            text: '"v"'
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    script:
       children:
-      - type: seq
-        children:
+      - children:
+        - arguments:
+            text: '"escape"'
+            type: implicit_string
+          children:
+          - text: '"escape"'
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: '"escape"'
+            type: implicit_string
+          children:
+          - text: '"escape"'
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: visual
           type: word
         - text: line
           type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
+        type: seq
+      type: rule
+    - children:
+      - children:
+        - arguments:
+            text: '"v"'
+            type: implicit_string
           children:
           - text: '"v"'
             type: implicit_string
-          arguments:
-            text: '"v"'
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: '"v"'
-            type: implicit_string
+        expression:
           arguments:
             text: '"v"'
             type: implicit_string
-  - type: command
-    children:
-    - type: rule
+          children:
+          - text: '"v"'
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
+        - text: visual
+          type: word
+        - text: line
+          type: word
+        type: seq
+      type: rule
+    script:
+      children:
+      - children:
+        - arguments:
+            text: '"v"'
+            type: implicit_string
+          children:
+          - text: '"v"'
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: '"v"'
+            type: implicit_string
+          children:
+          - text: '"v"'
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  - children:
+    - children:
+      - children:
         - text: visual
           type: word
         - text: line
           type: word
         - text: mode
           type: word
-    - type: block
-      children:
-      - type: expression
-        children:
-        - type: key_action
-          children:
-          - text: '"V"'
-            type: implicit_string
-          arguments:
-            text: '"V"'
-            type: implicit_string
-        expression:
-          type: key_action
-          children:
-          - text: '"V"'
-            type: implicit_string
-          arguments:
-            text: '"V"'
-            type: implicit_string
-    rule:
+        type: seq
       type: rule
+    - children:
+      - children:
+        - arguments:
+            text: '"V"'
+            type: implicit_string
+          children:
+          - text: '"V"'
+            type: implicit_string
+          type: key_action
+        expression:
+          arguments:
+            text: '"V"'
+            type: implicit_string
+          children:
+          - text: '"V"'
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    rule:
       children:
-      - type: seq
-        children:
+      - children:
         - text: visual
           type: word
         - text: line
           type: word
         - text: mode
           type: word
+        type: seq
+      type: rule
     script:
-      type: block
       children:
-      - type: expression
-        children:
-        - type: key_action
+      - children:
+        - arguments:
+            text: '"V"'
+            type: implicit_string
           children:
           - text: '"V"'
             type: implicit_string
-          arguments:
-            text: '"V"'
-            type: implicit_string
-        expression:
           type: key_action
-          children:
-          - text: '"V"'
-            type: implicit_string
+        expression:
           arguments:
             text: '"V"'
             type: implicit_string
+          children:
+          - text: '"V"'
+            type: implicit_string
+          type: key_action
+        type: expression
+      type: block
+    type: command
+  type: source_file
