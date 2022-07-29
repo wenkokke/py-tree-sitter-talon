@@ -9,315 +9,110 @@ input: |
   #dunce resume: user.system_command('notify-send "DUNST_COMMAND_RESUME"')
   #test notification: user.system_command('notify-send "Hello from Talon"')
 output:
+  type: source_file
   children:
-  - children:
-    - children:
-      - text: os
-        type: identifier
-      - text: ' linux'
-        type: implicit_string
+  - type: context
+    children:
+    - type: match
+      children: []
       key:
         text: os
         type: identifier
       pattern:
         text: ' linux'
         type: implicit_string
-      type: match
-    type: context
-  - children:
-    - children:
-      - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: show
           type: word
         - text: notifications
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: ctrl-`
-            type: implicit_string
-          children:
-          - text: ctrl-`
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: ctrl-`
-            type: implicit_string
-          children:
-          - text: ctrl-`
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: show
-          type: word
-        - text: notifications
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: ctrl-`
-            type: implicit_string
-          children:
-          - text: ctrl-`
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: ctrl-`
             type: implicit_string
-          children:
-          - text: ctrl-`
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: dismiss
           type: word
-        - children:
+        - type: optional
+          children:
           - text: notifications
             type: word
-          type: optional
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: dunstctl close
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: dunstctl close
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: dunstctl close
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: dunstctl close
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
-      children:
-      - children:
-        - text: dismiss
-          type: word
-        - children:
-          - text: notifications
-            type: word
-          type: optional
-        type: seq
       type: rule
-    script:
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: dunstctl close
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: dunstctl close
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: dunstctl close
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: dunstctl close
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
+      - type: seq
+        children:
         - text: dismiss
           type: word
         - text: all
           type: word
-        - children:
+        - type: optional
+          children:
           - text: notifications
             type: word
-          type: optional
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: dunstctl close-all
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: dunstctl close-all
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: dunstctl close-all
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: dunstctl close-all
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: dismiss
-          type: word
-        - text: all
-          type: word
-        - children:
-          - text: notifications
-            type: word
-          type: optional
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: dunstctl close-all
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: dunstctl close-all
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: dunstctl close-all
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: dunstctl close-all
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - text: '#dunce pause: user.system_command(''notify-send "DUNST_COMMAND_PAUSE"'')'
+  - text: "#dunce pause: user.system_command('notify-send \"DUNST_COMMAND_PAUSE\"\
+      ')"
     type: comment
-  - text: '#dunce resume: user.system_command(''notify-send "DUNST_COMMAND_RESUME"'')'
+  - text: "#dunce resume: user.system_command('notify-send \"DUNST_COMMAND_RESUME\"\
+      ')"
     type: comment
-  - text: '#test notification: user.system_command(''notify-send "Hello from Talon"'')'
+  - text: "#test notification: user.system_command('notify-send \"Hello from Talon\"\
+      ')"
     type: comment
-  type: source_file

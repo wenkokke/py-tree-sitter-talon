@@ -38,1148 +38,382 @@ input: |
       key(backspace)
       user.draft_show(text)
 output:
+  type: source_file
   children:
   - text: '# These are available globally (in command mode)'
     type: comment
-  - children:
-    - children:
-      - text: mode
-        type: identifier
-      - text: ' command'
-        type: implicit_string
+  - type: context
+    children:
+    - type: match
+      children: []
       key:
         text: mode
         type: identifier
       pattern:
         text: ' command'
         type: implicit_string
-      type: match
-    type: context
-  - children:
-    - children:
-      - text: ^
-        type: start_anchor
-      - children:
-        - text: draft
-          type: word
-        - text: show
-          type: word
-        type: seq
-      type: rule
-    - text: '# Do this toggle so we can have focus when saying ''draft show'''
+  - type: command
+    children:
+    - text: "# Do this toggle so we can have focus when saying 'draft show'"
       type: comment
-    - children:
-      - children:
-        - action_name:
-            text: user.draft_hide
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.draft_hide
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.draft_hide
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.draft_hide
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.draft_show
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.draft_show
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.draft_show
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.draft_show
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      type: block
     rule:
+      type: rule
       children:
       - text: ^
         type: start_anchor
-      - children:
+      - type: seq
+        children:
         - text: draft
           type: word
         - text: show
           type: word
-        type: seq
-      type: rule
     script:
-      text: '# Do this toggle so we can have focus when saying ''draft show'''
+      type: block
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.draft_hide
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.draft_show
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+  - type: command
+    children:
+    - text: "# Do this toggle so we can have focus when saying 'draft show'"
       type: comment
-    type: command
-  - children:
-    - children:
+    rule:
+      type: rule
+      children:
       - text: ^
         type: start_anchor
-      - children:
+      - type: seq
+        children:
         - text: draft
           type: word
         - text: show
           type: word
-        - capture_name:
+        - type: capture
+          children: []
+          capture_name:
             text: user.draft_window_position
             type: identifier
-          children:
-          - text: user.draft_window_position
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
-    - text: '# Do this toggle so we can have focus when saying ''draft show'''
-      type: comment
-    - children:
-      - children:
-        - action_name:
-            text: user.draft_hide
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.draft_hide
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.draft_hide
             type: identifier
           arguments:
+            type: argument_list
             children: []
-            type: argument_list
-          children:
-          - text: user.draft_hide
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.draft_show
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.draft_show
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.draft_show
             type: identifier
           arguments:
+            type: argument_list
             children: []
-            type: argument_list
-          children:
-          - text: user.draft_show
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.draft_named_move
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: draft_window_position
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_window_position
-                type: identifier
-            type: argument_list
-          children:
-          - text: user.draft_named_move
-            type: identifier
-          - children:
-            - children:
-              - text: draft_window_position
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_window_position
-                type: identifier
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.draft_named_move
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
-              - text: draft_window_position
-                type: identifier
-              type: variable
+            - type: variable
+              children: []
               variable_name:
                 text: draft_window_position
                 type: identifier
-            type: argument_list
-          children:
-          - text: user.draft_named_move
-            type: identifier
-          - children:
-            - children:
-              - text: draft_window_position
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_window_position
-                type: identifier
-            type: argument_list
-          type: action
-        type: expression
-      type: block
+  - type: command
+    children:
+    - text: "# Do this toggle so we can have focus when saying 'draft show'"
+      type: comment
     rule:
+      type: rule
       children:
       - text: ^
         type: start_anchor
-      - children:
-        - text: draft
-          type: word
-        - text: show
-          type: word
-        - capture_name:
-            text: user.draft_window_position
-            type: identifier
-          children:
-          - text: user.draft_window_position
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
-    script:
-      text: '# Do this toggle so we can have focus when saying ''draft show'''
-      type: comment
-    type: command
-  - children:
-    - children:
-      - text: ^
-        type: start_anchor
-      - children:
+      - type: seq
+        children:
         - text: draft
           type: word
         - text: show
           type: word
         - text: small
           type: word
-        type: seq
-      type: rule
-    - text: '# Do this toggle so we can have focus when saying ''draft show'''
-      type: comment
-    - children:
-      - children:
-        - action_name:
-            text: user.draft_hide
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.draft_hide
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.draft_hide
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.draft_hide
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.draft_show
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.draft_show
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.draft_show
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.draft_show
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.draft_resize
-            type: identifier
-          arguments:
-            children:
-            - text: '600'
-              type: integer
-            - text: '200'
-              type: integer
-            type: argument_list
-          children:
-          - text: user.draft_resize
-            type: identifier
-          - children:
-            - text: '600'
-              type: integer
-            - text: '200'
-              type: integer
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.draft_resize
-            type: identifier
-          arguments:
-            children:
-            - text: '600'
-              type: integer
-            - text: '200'
-              type: integer
-            type: argument_list
-          children:
-          - text: user.draft_resize
-            type: identifier
-          - children:
-            - text: '600'
-              type: integer
-            - text: '200'
-              type: integer
-            type: argument_list
-          type: action
-        type: expression
+    script:
       type: block
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.draft_hide
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.draft_show
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.draft_resize
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - text: '600'
+              type: integer
+            - text: '200'
+              type: integer
+  - type: command
+    children:
+    - text: "# Do this toggle so we can have focus when saying 'draft show'"
+      type: comment
     rule:
+      type: rule
       children:
       - text: ^
         type: start_anchor
-      - children:
-        - text: draft
-          type: word
-        - text: show
-          type: word
-        - text: small
-          type: word
-        type: seq
-      type: rule
-    script:
-      text: '# Do this toggle so we can have focus when saying ''draft show'''
-      type: comment
-    type: command
-  - children:
-    - children:
-      - text: ^
-        type: start_anchor
-      - children:
+      - type: seq
+        children:
         - text: draft
           type: word
         - text: show
           type: word
         - text: large
           type: word
-        type: seq
-      type: rule
-    - text: '# Do this toggle so we can have focus when saying ''draft show'''
-      type: comment
-    - children:
-      - children:
-        - action_name:
-            text: user.draft_hide
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.draft_hide
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.draft_hide
             type: identifier
           arguments:
+            type: argument_list
             children: []
-            type: argument_list
-          children:
-          - text: user.draft_hide
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.draft_show
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.draft_show
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.draft_show
             type: identifier
           arguments:
+            type: argument_list
             children: []
-            type: argument_list
-          children:
-          - text: user.draft_show
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.draft_resize
-            type: identifier
-          arguments:
-            children:
-            - text: '800'
-              type: integer
-            - text: '500'
-              type: integer
-            type: argument_list
-          children:
-          - text: user.draft_resize
-            type: identifier
-          - children:
-            - text: '800'
-              type: integer
-            - text: '500'
-              type: integer
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.draft_resize
             type: identifier
           arguments:
+            type: argument_list
             children:
             - text: '800'
               type: integer
             - text: '500'
               type: integer
-            type: argument_list
-          children:
-          - text: user.draft_resize
-            type: identifier
-          - children:
-            - text: '800'
-              type: integer
-            - text: '500'
-              type: integer
-            type: argument_list
-          type: action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
+      type: rule
       children:
       - text: ^
         type: start_anchor
-      - children:
-        - text: draft
-          type: word
-        - text: show
-          type: word
-        - text: large
-          type: word
-        type: seq
-      type: rule
-    script:
-      text: '# Do this toggle so we can have focus when saying ''draft show'''
-      type: comment
-    type: command
-  - children:
-    - children:
-      - text: ^
-        type: start_anchor
-      - children:
+      - type: seq
+        children:
         - text: draft
           type: word
         - text: empty
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.draft_show
-            type: identifier
-          arguments:
-            children:
-            - children: []
-              type: string
-            type: argument_list
-          children:
-          - text: user.draft_show
-            type: identifier
-          - children:
-            - children: []
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.draft_show
-            type: identifier
-          arguments:
-            children:
-            - children: []
-              type: string
-            type: argument_list
-          children:
-          - text: user.draft_show
-            type: identifier
-          - children:
-            - children: []
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - text: ^
-        type: start_anchor
-      - children:
-        - text: draft
-          type: word
-        - text: empty
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.draft_show
-            type: identifier
-          arguments:
-            children:
-            - children: []
-              type: string
-            type: argument_list
-          children:
-          - text: user.draft_show
-            type: identifier
-          - children:
-            - children: []
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.draft_show
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children: []
-              type: string
-            type: argument_list
-          children:
-          - text: user.draft_show
-            type: identifier
-          - children:
-            - children: []
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
+            - type: string
+              children: []
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
       - text: ^
         type: start_anchor
-      - children:
+      - type: seq
+        children:
         - text: draft
           type: word
         - text: edit
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - text: text
-          type: identifier
-        - action_name:
-            text: edit.selected_text
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: edit.selected_text
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        left:
-          text: text
-          type: identifier
-        right:
-          action_name:
-            text: edit.selected_text
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: edit.selected_text
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: assignment
-      - children:
-        - arguments:
-            text: backspace
-            type: implicit_string
-          children:
-          - text: backspace
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: backspace
-            type: implicit_string
-          children:
-          - text: backspace
-            type: implicit_string
-          type: key_action
-        type: expression
-      - children:
-        - action_name:
-            text: user.draft_show
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: text
-                type: identifier
-              type: variable
-              variable_name:
-                text: text
-                type: identifier
-            type: argument_list
-          children:
-          - text: user.draft_show
-            type: identifier
-          - children:
-            - children:
-              - text: text
-                type: identifier
-              type: variable
-              variable_name:
-                text: text
-                type: identifier
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.draft_show
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: text
-                type: identifier
-              type: variable
-              variable_name:
-                text: text
-                type: identifier
-            type: argument_list
-          children:
-          - text: user.draft_show
-            type: identifier
-          - children:
-            - children:
-              - text: text
-                type: identifier
-              type: variable
-              variable_name:
-                text: text
-                type: identifier
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - text: ^
-        type: start_anchor
-      - children:
-        - text: draft
-          type: word
-        - text: edit
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - text: text
-          type: identifier
-        - action_name:
-            text: edit.selected_text
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: edit.selected_text
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
+      - type: assignment
+        children: []
         left:
           text: text
           type: identifier
         right:
+          type: action
+          children: []
           action_name:
             text: edit.selected_text
             type: identifier
           arguments:
+            type: argument_list
             children: []
-            type: argument_list
-          children:
-          - text: edit.selected_text
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: assignment
-      - children:
-        - arguments:
-            text: backspace
-            type: implicit_string
-          children:
-          - text: backspace
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: backspace
             type: implicit_string
-          children:
-          - text: backspace
-            type: implicit_string
-          type: key_action
-        type: expression
-      - children:
-        - action_name:
-            text: user.draft_show
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: text
-                type: identifier
-              type: variable
-              variable_name:
-                text: text
-                type: identifier
-            type: argument_list
-          children:
-          - text: user.draft_show
-            type: identifier
-          - children:
-            - children:
-              - text: text
-                type: identifier
-              type: variable
-              variable_name:
-                text: text
-                type: identifier
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.draft_show
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
-              - text: text
-                type: identifier
-              type: variable
+            - type: variable
+              children: []
               variable_name:
                 text: text
                 type: identifier
-            type: argument_list
-          children:
-          - text: user.draft_show
-            type: identifier
-          - children:
-            - children:
-              - text: text
-                type: identifier
-              type: variable
-              variable_name:
-                text: text
-                type: identifier
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
       - text: ^
         type: start_anchor
-      - children:
+      - type: seq
+        children:
         - text: draft
           type: word
         - text: edit
           type: word
         - text: all
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: edit.select_all
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: edit.select_all
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: edit.select_all
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: edit.select_all
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - text: text
-          type: identifier
-        - action_name:
-            text: edit.selected_text
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: edit.selected_text
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        left:
-          text: text
-          type: identifier
-        right:
-          action_name:
-            text: edit.selected_text
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: edit.selected_text
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: assignment
-      - children:
-        - arguments:
-            text: backspace
-            type: implicit_string
-          children:
-          - text: backspace
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: backspace
-            type: implicit_string
-          children:
-          - text: backspace
-            type: implicit_string
-          type: key_action
-        type: expression
-      - children:
-        - action_name:
-            text: user.draft_show
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: text
-                type: identifier
-              type: variable
-              variable_name:
-                text: text
-                type: identifier
-            type: argument_list
-          children:
-          - text: user.draft_show
-            type: identifier
-          - children:
-            - children:
-              - text: text
-                type: identifier
-              type: variable
-              variable_name:
-                text: text
-                type: identifier
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.draft_show
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: text
-                type: identifier
-              type: variable
-              variable_name:
-                text: text
-                type: identifier
-            type: argument_list
-          children:
-          - text: user.draft_show
-            type: identifier
-          - children:
-            - children:
-              - text: text
-                type: identifier
-              type: variable
-              variable_name:
-                text: text
-                type: identifier
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - text: ^
-        type: start_anchor
-      - children:
-        - text: draft
-          type: word
-        - text: edit
-          type: word
-        - text: all
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: edit.select_all
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: edit.select_all
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: edit.select_all
             type: identifier
           arguments:
+            type: argument_list
             children: []
-            type: argument_list
-          children:
-          - text: edit.select_all
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - text: text
-          type: identifier
-        - action_name:
-            text: edit.selected_text
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: edit.selected_text
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
+      - type: assignment
+        children: []
         left:
           text: text
           type: identifier
         right:
+          type: action
+          children: []
           action_name:
             text: edit.selected_text
             type: identifier
           arguments:
+            type: argument_list
             children: []
-            type: argument_list
-          children:
-          - text: edit.selected_text
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: assignment
-      - children:
-        - arguments:
-            text: backspace
-            type: implicit_string
-          children:
-          - text: backspace
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: backspace
             type: implicit_string
-          children:
-          - text: backspace
-            type: implicit_string
-          type: key_action
-        type: expression
-      - children:
-        - action_name:
-            text: user.draft_show
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: text
-                type: identifier
-              type: variable
-              variable_name:
-                text: text
-                type: identifier
-            type: argument_list
-          children:
-          - text: user.draft_show
-            type: identifier
-          - children:
-            - children:
-              - text: text
-                type: identifier
-              type: variable
-              variable_name:
-                text: text
-                type: identifier
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.draft_show
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
-              - text: text
-                type: identifier
-              type: variable
+            - type: variable
+              children: []
               variable_name:
                 text: text
                 type: identifier
-            type: argument_list
-          children:
-          - text: user.draft_show
-            type: identifier
-          - children:
-            - children:
-              - text: text
-                type: identifier
-              type: variable
-              variable_name:
-                text: text
-                type: identifier
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  type: source_file

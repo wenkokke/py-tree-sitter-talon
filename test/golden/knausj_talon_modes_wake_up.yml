@@ -17,833 +17,235 @@ input: |
   ^talon sleep [<phrase>]$: speech.disable()
   ^talon wake$: speech.enable()
 output:
+  type: source_file
   children:
   - text: '#defines the commands that sleep/wake Talon'
     type: comment
-  - children:
-    - children:
-      - text: mode
-        type: identifier
-      - text: ' all'
-        type: implicit_string
+  - type: context
+    children:
+    - type: match
+      children: []
       key:
         text: mode
         type: identifier
       pattern:
         text: ' all'
         type: implicit_string
-      type: match
-    type: context
-  - children:
-    - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
       - text: ^
         type: start_anchor
-      - children:
+      - type: seq
+        children:
         - text: welcome
           type: word
         - text: back
           type: word
-        type: seq
       - text: $
         type: end_anchor
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.mouse_wake
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.mouse_wake
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.mouse_wake
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.mouse_wake
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.history_enable
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.history_enable
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.history_enable
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.history_enable
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.talon_mode
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.talon_mode
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.talon_mode
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.talon_mode
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - text: ^
-        type: start_anchor
-      - children:
-        - text: welcome
-          type: word
-        - text: back
-          type: word
-        type: seq
-      - text: $
-        type: end_anchor
-      type: rule
     script:
-      children:
-      - children:
-        - action_name:
-            text: user.mouse_wake
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.mouse_wake
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.mouse_wake
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.mouse_wake
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.history_enable
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.history_enable
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.history_enable
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.history_enable
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.talon_mode
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.talon_mode
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.talon_mode
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.talon_mode
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
       type: block
-    type: command
-  - children:
-    - children:
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.mouse_wake
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.history_enable
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.talon_mode
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
       - text: ^
         type: start_anchor
-      - children:
+      - type: seq
+        children:
         - text: sleep
           type: word
         - text: all
           type: word
-        - children:
-          - capture_name:
+        - type: optional
+          children:
+          - type: capture
+            children: []
+            capture_name:
               text: phrase
               type: identifier
-            children:
-            - text: phrase
-              type: identifier
-            type: capture
-          type: optional
-        type: seq
       - text: $
         type: end_anchor
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.switcher_hide_running
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.switcher_hide_running
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.switcher_hide_running
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.switcher_hide_running
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.history_disable
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.history_disable
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.history_disable
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.history_disable
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.homophones_hide
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.homophones_hide
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.homophones_hide
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.homophones_hide
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.help_hide
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.help_hide
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.help_hide
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.help_hide
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.mouse_sleep
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.mouse_sleep
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.mouse_sleep
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.mouse_sleep
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: speech.disable
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: speech.disable
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: speech.disable
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: speech.disable
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.engine_sleep
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.engine_sleep
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.engine_sleep
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.engine_sleep
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - text: ^
-        type: start_anchor
-      - children:
-        - text: sleep
-          type: word
-        - text: all
-          type: word
-        - children:
-          - capture_name:
-              text: phrase
-              type: identifier
-            children:
-            - text: phrase
-              type: identifier
-            type: capture
-          type: optional
-        type: seq
-      - text: $
-        type: end_anchor
-      type: rule
     script:
-      children:
-      - children:
-        - action_name:
-            text: user.switcher_hide_running
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.switcher_hide_running
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.switcher_hide_running
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.switcher_hide_running
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.history_disable
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.history_disable
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.history_disable
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.history_disable
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.homophones_hide
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.homophones_hide
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.homophones_hide
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.homophones_hide
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.help_hide
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.help_hide
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.help_hide
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.help_hide
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.mouse_sleep
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.mouse_sleep
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.mouse_sleep
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.mouse_sleep
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: speech.disable
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: speech.disable
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: speech.disable
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: speech.disable
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.engine_sleep
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.engine_sleep
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.engine_sleep
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.engine_sleep
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
       type: block
-    type: command
-  - children:
-    - children:
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.switcher_hide_running
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.history_disable
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.homophones_hide
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.help_hide
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.mouse_sleep
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: speech.disable
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.engine_sleep
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
       - text: ^
         type: start_anchor
-      - children:
+      - type: seq
+        children:
         - text: talon
           type: word
         - text: sleep
           type: word
-        - children:
-          - capture_name:
+        - type: optional
+          children:
+          - type: capture
+            children: []
+            capture_name:
               text: phrase
               type: identifier
-            children:
-            - text: phrase
-              type: identifier
-            type: capture
-          type: optional
-        type: seq
       - text: $
         type: end_anchor
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: speech.disable
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: speech.disable
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: speech.disable
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: speech.disable
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - text: ^
-        type: start_anchor
-      - children:
-        - text: talon
-          type: word
-        - text: sleep
-          type: word
-        - children:
-          - capture_name:
-              text: phrase
-              type: identifier
-            children:
-            - text: phrase
-              type: identifier
-            type: capture
-          type: optional
-        type: seq
-      - text: $
-        type: end_anchor
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: speech.disable
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: speech.disable
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: speech.disable
             type: identifier
           arguments:
+            type: argument_list
             children: []
-            type: argument_list
-          children:
-          - text: speech.disable
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
       - text: ^
         type: start_anchor
-      - children:
+      - type: seq
+        children:
         - text: talon
           type: word
         - text: wake
           type: word
-        type: seq
       - text: $
         type: end_anchor
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: speech.enable
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: speech.enable
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: speech.enable
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: speech.enable
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - text: ^
-        type: start_anchor
-      - children:
-        - text: talon
-          type: word
-        - text: wake
-          type: word
-        type: seq
-      - text: $
-        type: end_anchor
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: speech.enable
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: speech.enable
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: speech.enable
             type: identifier
           arguments:
+            type: argument_list
             children: []
-            type: argument_list
-          children:
-          - text: speech.enable
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  type: source_file

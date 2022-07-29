@@ -14,666 +14,227 @@ input: |
   (open address [book] | address book | open contacts): user.thunderbird_mod("shift-b")
   dev tools: user.thunderbird_mod("shift-i")
 output:
+  type: source_file
   children:
-  - children:
-    - children:
-      - children:
-        - text: app
-          type: identifier
-        - text: ' thunderbird'
-          type: implicit_string
+  - type: context
+    children:
+    - type: and
+      children:
+      - type: match
+        children: []
         key:
           text: app
           type: identifier
         pattern:
           text: ' thunderbird'
           type: implicit_string
-        type: match
-      - children:
-        - children:
-          - children:
-            - text: app
-              type: identifier
-            - text: ' thunderbird_contacts'
-              type: implicit_string
+      - type: and
+        children:
+        - type: not
+          children:
+          - type: match
+            children: []
             key:
               text: app
               type: identifier
             pattern:
               text: ' thunderbird_contacts'
               type: implicit_string
-            type: match
-          type: not
-        - children:
-          - children:
-            - text: app
-              type: identifier
-            - text: ' thunderbird_composer'
-              type: implicit_string
+        - type: not
+          children:
+          - type: match
+            children: []
             key:
               text: app
               type: identifier
             pattern:
               text: ' thunderbird_composer'
               type: implicit_string
-            type: match
-          type: not
-        type: and
-      type: and
-    type: context
   - text: '# Set tags'
     type: comment
-  - children:
-    - text: user.tabs
-      type: identifier
+  - type: include_tag
+    children: []
     tag:
       text: user.tabs
       type: identifier
-    type: include_tag
   - text: '# navigate tabs'
     type: comment
-  - children:
-    - children:
-      - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: go
           type: word
-        - children:
-          - children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
             - text: mails
               type: word
             - text: messages
               type: word
             - text: inbox
               type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.tab_jump
-            type: identifier
-          arguments:
-            children:
-            - text: '1'
-              type: integer
-            type: argument_list
-          children:
-          - text: user.tab_jump
-            type: identifier
-          - children:
-            - text: '1'
-              type: integer
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.tab_jump
-            type: identifier
-          arguments:
-            children:
-            - text: '1'
-              type: integer
-            type: argument_list
-          children:
-          - text: user.tab_jump
-            type: identifier
-          - children:
-            - text: '1'
-              type: integer
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: go
-          type: word
-        - children:
-          - children:
-            - text: mails
-              type: word
-            - text: messages
-              type: word
-            - text: inbox
-              type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.tab_jump
-            type: identifier
-          arguments:
-            children:
-            - text: '1'
-              type: integer
-            type: argument_list
-          children:
-          - text: user.tab_jump
-            type: identifier
-          - children:
-            - text: '1'
-              type: integer
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.tab_jump
             type: identifier
           arguments:
+            type: argument_list
             children:
             - text: '1'
               type: integer
-            type: argument_list
-          children:
-          - text: user.tab_jump
-            type: identifier
-          - children:
-            - text: '1'
-              type: integer
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: go
           type: word
-        - children:
-          - children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
             - text: calendar
               type: word
             - text: lightning
               type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: shift-c
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - children:
-            - children:
-              - text: shift-c
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: shift-c
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - children:
-            - children:
-              - text: shift-c
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: go
-          type: word
-        - children:
-          - children:
-            - text: calendar
-              type: word
-            - text: lightning
-              type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: shift-c
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - children:
-            - children:
-              - text: shift-c
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.thunderbird_mod
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: shift-c
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - children:
-            - children:
-              - text: shift-c
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: go
           type: word
         - text: tasks
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: shift-d
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - children:
-            - children:
-              - text: shift-d
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: shift-d
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - children:
-            - children:
-              - text: shift-d
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: go
-          type: word
-        - text: tasks
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: shift-d
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - children:
-            - children:
-              - text: shift-d
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.thunderbird_mod
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: shift-d
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - children:
-            - children:
-              - text: shift-d
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
   - text: '# open windows'
     type: comment
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: parenthesized_rule
+        children:
+        - type: choice
+          children:
+          - type: seq
+            children:
             - text: open
               type: word
             - text: address
               type: word
-            - children:
+            - type: optional
+              children:
               - text: book
                 type: word
-              type: optional
-            type: seq
-          - children:
+          - type: seq
+            children:
             - text: address
               type: word
             - text: book
               type: word
-            type: seq
-          - children:
+          - type: seq
+            children:
             - text: open
               type: word
             - text: contacts
               type: word
-            type: seq
-          type: choice
-        type: parenthesized_rule
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: shift-b
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - children:
-            - children:
-              - text: shift-b
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: shift-b
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - children:
-            - children:
-              - text: shift-b
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: open
-              type: word
-            - text: address
-              type: word
-            - children:
-              - text: book
-                type: word
-              type: optional
-            type: seq
-          - children:
-            - text: address
-              type: word
-            - text: book
-              type: word
-            type: seq
-          - children:
-            - text: open
-              type: word
-            - text: contacts
-              type: word
-            type: seq
-          type: choice
-        type: parenthesized_rule
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: shift-b
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - children:
-            - children:
-              - text: shift-b
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.thunderbird_mod
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: shift-b
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - children:
-            - children:
-              - text: shift-b
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: dev
           type: word
         - text: tools
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: shift-i
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - children:
-            - children:
-              - text: shift-i
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: shift-i
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - children:
-            - children:
-              - text: shift-i
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: dev
-          type: word
-        - text: tools
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: shift-i
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - children:
-            - children:
-              - text: shift-i
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.thunderbird_mod
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: shift-i
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.thunderbird_mod
-            type: identifier
-          - children:
-            - children:
-              - text: shift-i
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  type: source_file

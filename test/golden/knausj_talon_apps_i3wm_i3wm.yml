@@ -95,177 +95,61 @@ input: |
       user.system_command("i3-msg move scratchpad")
       user.system_command("i3-msg scratchpad show")
 output:
+  type: source_file
   children:
   - text: '# NOTE: If you want to use i3wm you must enable the tag settings.talon.
       ex: `tag(): user.i3wm`'
     type: comment
-  - children:
-    - children:
-      - children:
-        - text: os
-          type: identifier
-        - text: ' linux'
-          type: implicit_string
+  - type: context
+    children:
+    - type: or
+      children:
+      - type: match
+        children: []
         key:
           text: os
           type: identifier
         pattern:
           text: ' linux'
           type: implicit_string
-        type: match
-      - children:
-        - text: tag
-          type: identifier
-        - text: ' user.i3wm'
-          type: implicit_string
+      - type: match
+        children: []
         key:
           text: tag
           type: identifier
         pattern:
           text: ' user.i3wm'
           type: implicit_string
-        type: match
-      type: or
-    type: context
-  - children:
-    - children:
-      - children:
-        - text: port
-          type: word
-        - capture_name:
-            text: number_small
-            type: identifier
-          children:
-          - text: number_small
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: 'i3-msg workspace number '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: number_small
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: 'i3-msg workspace number '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: number_small
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: 'i3-msg workspace number '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: number_small
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: 'i3-msg workspace number '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: number_small
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
+      type: rule
       children:
-      - children:
+      - type: seq
+        children:
         - text: port
           type: word
-        - capture_name:
+        - type: capture
+          children: []
+          capture_name:
             text: number_small
             type: identifier
-          children:
-          - text: number_small
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: 'i3-msg workspace number '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: number_small
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: 'i3-msg workspace number '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: number_small
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: 'i3-msg workspace number '
                 type: string_content
               - text: '{'
@@ -274,1470 +158,421 @@ output:
                 type: string_content
               - text: '}'
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: 'i3-msg workspace number '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: number_small
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: port
           type: word
         - text: ten
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg workspace number 10
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg workspace number 10
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg workspace number 10
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg workspace number 10
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: port
-          type: word
-        - text: ten
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg workspace number 10
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg workspace number 10
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg workspace number 10
                 type: string_content
-              type: string
-            type: argument_list
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: parenthesized_rule
+        children:
+        - type: choice
           children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg workspace number 10
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: seq
+            children:
             - text: port
               type: word
             - text: flip
               type: word
-            type: seq
           - text: flipper
             type: word
-          type: choice
-        type: parenthesized_rule
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg workspace back_and_forth
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg workspace back_and_forth
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg workspace back_and_forth
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg workspace back_and_forth
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: port
-              type: word
-            - text: flip
-              type: word
-            type: seq
-          - text: flipper
-            type: word
-          type: choice
-        type: parenthesized_rule
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg workspace back_and_forth
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg workspace back_and_forth
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg workspace back_and_forth
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg workspace back_and_forth
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: port
           type: word
         - text: right
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg workspace next
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg workspace next
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg workspace next
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg workspace next
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: port
-          type: word
-        - text: right
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg workspace next
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg workspace next
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg workspace next
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg workspace next
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: port
           type: word
         - text: left
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg workspace prev
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg workspace prev
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg workspace prev
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg workspace prev
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: port
-          type: word
-        - text: left
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg workspace prev
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg workspace prev
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg workspace prev
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg workspace prev
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
-            - text: win
-              type: word
-            - text: window
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - text: left
-          type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg focus left
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg focus left
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg focus left
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg focus left
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
+      type: rule
       children:
-      - children:
-        - children:
-          - children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
             - text: win
               type: word
             - text: window
               type: word
-            type: choice
-          type: parenthesized_rule
         - text: left
           type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg focus left
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg focus left
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg focus left
                 type: string_content
-              type: string
-            type: argument_list
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
           children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg focus left
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: choice
+            children:
             - text: win
               type: word
             - text: window
               type: word
-            type: choice
-          type: parenthesized_rule
         - text: right
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg focus right
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg focus right
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg focus right
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg focus right
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: win
-              type: word
-            - text: window
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - text: right
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg focus right
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg focus right
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg focus right
                 type: string_content
-              type: string
-            type: argument_list
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
           children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg focus right
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: choice
+            children:
             - text: win
               type: word
             - text: window
               type: word
-            type: choice
-          type: parenthesized_rule
         - text: up
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg focus up
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg focus up
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg focus up
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg focus up
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: win
-              type: word
-            - text: window
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - text: up
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg focus up
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg focus up
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg focus up
                 type: string_content
-              type: string
-            type: argument_list
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
           children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg focus up
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: choice
+            children:
             - text: win
               type: word
             - text: window
               type: word
-            type: choice
-          type: parenthesized_rule
         - text: down
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg focus down
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg focus down
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg focus down
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg focus down
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: win
-              type: word
-            - text: window
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - text: down
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg focus down
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg focus down
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg focus down
                 type: string_content
-              type: string
-            type: argument_list
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: parenthesized_rule
+        children:
+        - type: choice
           children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg focus down
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
-            - children:
-              - children:
+          - type: seq
+            children:
+            - type: parenthesized_rule
+              children:
+              - type: choice
+                children:
                 - text: win
                   type: word
                 - text: window
                   type: word
-                type: choice
-              type: parenthesized_rule
             - text: kill
               type: word
-            type: seq
           - text: murder
             type: word
-          type: choice
-        type: parenthesized_rule
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg kill
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg kill
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg kill
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg kill
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - children:
-              - children:
-                - text: win
-                  type: word
-                - text: window
-                  type: word
-                type: choice
-              type: parenthesized_rule
-            - text: kill
-              type: word
-            type: seq
-          - text: murder
-            type: word
-          type: choice
-        type: parenthesized_rule
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg kill
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg kill
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg kill
                 type: string_content
-              type: string
-            type: argument_list
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
           children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg kill
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: choice
+            children:
             - text: win
               type: word
             - text: window
               type: word
-            type: choice
-          type: parenthesized_rule
         - text: stacking
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg layout stacking
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg layout stacking
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg layout stacking
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg layout stacking
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: win
-              type: word
-            - text: window
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - text: stacking
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg layout stacking
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg layout stacking
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg layout stacking
                 type: string_content
-              type: string
-            type: argument_list
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
           children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg layout stacking
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: choice
+            children:
             - text: win
               type: word
             - text: window
               type: word
-            type: choice
-          type: parenthesized_rule
         - text: default
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg layout toggle split
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg layout toggle split
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg layout toggle split
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg layout toggle split
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: win
-              type: word
-            - text: window
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - text: default
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg layout toggle split
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg layout toggle split
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg layout toggle split
                 type: string_content
-              type: string
-            type: argument_list
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
           children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg layout toggle split
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: choice
+            children:
             - text: win
               type: word
             - text: window
               type: word
-            type: choice
-          type: parenthesized_rule
         - text: tabbed
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg layout tabbed
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg layout tabbed
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg layout tabbed
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg layout tabbed
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: win
-              type: word
-            - text: window
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - text: tabbed
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg layout tabbed
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg layout tabbed
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg layout tabbed
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg layout tabbed
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: reload
           type: word
         - text: i
@@ -1746,2232 +581,576 @@ output:
           type: word
         - text: config
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg reload
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg reload
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg reload
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg reload
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: reload
-          type: word
-        - text: i
-          type: word
-        - text: three
-          type: word
-        - text: config
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg reload
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg reload
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg reload
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg reload
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: restart
           type: word
         - text: i
           type: word
         - text: three
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg restart
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg restart
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg restart
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg restart
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: restart
-          type: word
-        - text: i
-          type: word
-        - text: three
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg restart
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg restart
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg restart
                 type: string_content
-              type: string
-            type: argument_list
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: parenthesized_rule
+        children:
+        - type: choice
           children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg restart
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: seq
+            children:
             - text: full
               type: word
             - text: screen
               type: word
-            type: seq
           - text: scuba
             type: word
-          type: choice
-        type: parenthesized_rule
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg fullscreen
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg fullscreen
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg fullscreen
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg fullscreen
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: full
-              type: word
-            - text: screen
-              type: word
-            type: seq
-          - text: scuba
-            type: word
-          type: choice
-        type: parenthesized_rule
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg fullscreen
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg fullscreen
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg fullscreen
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg fullscreen
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: toggle
           type: word
         - text: floating
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg floating toggle
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg floating toggle
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg floating toggle
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg floating toggle
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: toggle
-          type: word
-        - text: floating
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg floating toggle
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg floating toggle
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg floating toggle
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg floating toggle
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: focus
           type: word
         - text: floating
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg focus mode_toggle
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg focus mode_toggle
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg focus mode_toggle
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg focus mode_toggle
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: focus
-          type: word
-        - text: floating
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg focus mode_toggle
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg focus mode_toggle
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg focus mode_toggle
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg focus mode_toggle
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: center
           type: word
         - text: window
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move position center
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move position center
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move position center
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move position center
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: center
-          type: word
-        - text: window
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move position center
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move position center
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg move position center
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move position center
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: resize
           type: word
         - text: mode
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg mode "resize"
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg mode "resize"
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg mode "resize"
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg mode "resize"
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: resize
-          type: word
-        - text: mode
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg mode "resize"
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg mode "resize"
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg mode "resize"
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg mode "resize"
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: focus
           type: word
         - text: parent
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg focus parent
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg focus parent
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg focus parent
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg focus parent
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: focus
-          type: word
-        - text: parent
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg focus parent
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg focus parent
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg focus parent
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg focus parent
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: focus
           type: word
         - text: child
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg focus child
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg focus child
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg focus child
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg focus child
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: focus
-          type: word
-        - text: child
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg focus child
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg focus child
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg focus child
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg focus child
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
   - text: '# resize helpers'
     type: comment
-  - children:
-    - children:
-      - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: grow
           type: word
         - text: window
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg mode "resize"
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg mode "resize"
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg mode "resize"
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg mode "resize"
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - arguments:
-            text: right:10
-            type: implicit_string
-          children:
-          - text: right:10
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: right:10
-            type: implicit_string
-          children:
-          - text: right:10
-            type: implicit_string
-          type: key_action
-        type: expression
-      - children:
-        - arguments:
-            text: down:10
-            type: implicit_string
-          children:
-          - text: down:10
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: down:10
-            type: implicit_string
-          children:
-          - text: down:10
-            type: implicit_string
-          type: key_action
-        type: expression
-      - text: '# escape resize mode'
-        type: comment
-      - children:
-        - arguments:
-            text: escape
-            type: implicit_string
-          children:
-          - text: escape
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: escape
-            type: implicit_string
-          children:
-          - text: escape
-            type: implicit_string
-          type: key_action
-        type: expression
-      - text: '# center window'
-        type: comment
-      - children:
-        - arguments:
-            text: 200ms
-            type: implicit_string
-          children:
-          - text: 200ms
-            type: implicit_string
-          type: sleep_action
-        expression:
-          arguments:
-            text: 200ms
-            type: implicit_string
-          children:
-          - text: 200ms
-            type: implicit_string
-          type: sleep_action
-        type: expression
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move position center
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move position center
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move position center
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move position center
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: grow
-          type: word
-        - text: window
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg mode "resize"
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg mode "resize"
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg mode "resize"
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg mode "resize"
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - arguments:
-            text: right:10
-            type: implicit_string
-          children:
-          - text: right:10
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: right:10
             type: implicit_string
-          children:
-          - text: right:10
-            type: implicit_string
-          type: key_action
-        type: expression
-      - children:
-        - arguments:
-            text: down:10
-            type: implicit_string
-          children:
-          - text: down:10
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: down:10
             type: implicit_string
-          children:
-          - text: down:10
-            type: implicit_string
-          type: key_action
-        type: expression
       - text: '# escape resize mode'
         type: comment
-      - children:
-        - arguments:
-            text: escape
-            type: implicit_string
-          children:
-          - text: escape
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: escape
             type: implicit_string
-          children:
-          - text: escape
-            type: implicit_string
-          type: key_action
-        type: expression
       - text: '# center window'
         type: comment
-      - children:
-        - arguments:
-            text: 200ms
-            type: implicit_string
-          children:
-          - text: 200ms
-            type: implicit_string
-          type: sleep_action
+      - type: expression
+        children: []
         expression:
+          type: sleep_action
+          children: []
           arguments:
             text: 200ms
             type: implicit_string
-          children:
-          - text: 200ms
-            type: implicit_string
-          type: sleep_action
-        type: expression
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move position center
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move position center
-                type: string_content
-              type: string
-            type: argument_list
+      - type: expression
+        children: []
+        expression:
           type: action
-        expression:
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg move position center
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move position center
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
   - text: '# resize helpers'
     type: comment
-  - children:
-    - children:
-      - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: shrink
           type: word
         - text: window
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg mode "resize"
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg mode "resize"
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg mode "resize"
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg mode "resize"
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - arguments:
-            text: left:10
-            type: implicit_string
-          children:
-          - text: left:10
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: left:10
             type: implicit_string
-          children:
-          - text: left:10
-            type: implicit_string
-          type: key_action
-        type: expression
-      - children:
-        - arguments:
-            text: up:10
-            type: implicit_string
-          children:
-          - text: up:10
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: up:10
             type: implicit_string
-          children:
-          - text: up:10
-            type: implicit_string
-          type: key_action
-        type: expression
       - text: '# escape resize mode'
         type: comment
-      - children:
-        - arguments:
-            text: escape
-            type: implicit_string
-          children:
-          - text: escape
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: escape
             type: implicit_string
-          children:
-          - text: escape
-            type: implicit_string
-          type: key_action
-        type: expression
       - text: '# center window'
         type: comment
-      - children:
-        - arguments:
-            text: 200ms
-            type: implicit_string
-          children:
-          - text: 200ms
-            type: implicit_string
-          type: sleep_action
+      - type: expression
+        children: []
         expression:
+          type: sleep_action
+          children: []
           arguments:
             text: 200ms
             type: implicit_string
-          children:
-          - text: 200ms
-            type: implicit_string
-          type: sleep_action
-        type: expression
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move position center
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move position center
-                type: string_content
-              type: string
-            type: argument_list
+      - type: expression
+        children: []
+        expression:
           type: action
-        expression:
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg move position center
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move position center
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
-      children:
-      - children:
-        - text: shrink
-          type: word
-        - text: window
-          type: word
-        type: seq
       type: rule
-    script:
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg mode "resize"
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg mode "resize"
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg mode "resize"
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg mode "resize"
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - arguments:
-            text: left:10
-            type: implicit_string
-          children:
-          - text: left:10
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: left:10
-            type: implicit_string
-          children:
-          - text: left:10
-            type: implicit_string
-          type: key_action
-        type: expression
-      - children:
-        - arguments:
-            text: up:10
-            type: implicit_string
-          children:
-          - text: up:10
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: up:10
-            type: implicit_string
-          children:
-          - text: up:10
-            type: implicit_string
-          type: key_action
-        type: expression
-      - text: '# escape resize mode'
-        type: comment
-      - children:
-        - arguments:
-            text: escape
-            type: implicit_string
-          children:
-          - text: escape
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: escape
-            type: implicit_string
-          children:
-          - text: escape
-            type: implicit_string
-          type: key_action
-        type: expression
-      - text: '# center window'
-        type: comment
-      - children:
-        - arguments:
-            text: 200ms
-            type: implicit_string
-          children:
-          - text: 200ms
-            type: implicit_string
-          type: sleep_action
-        expression:
-          arguments:
-            text: 200ms
-            type: implicit_string
-          children:
-          - text: 200ms
-            type: implicit_string
-          type: sleep_action
-        type: expression
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move position center
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move position center
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move position center
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move position center
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
+      - type: seq
+        children:
         - text: horizontal
           type: word
-        - children:
-          - children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
             - text: shell
               type: word
             - text: terminal
               type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg split h
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg split h
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg split h
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg split h
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.i3wm_shell
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.i3wm_shell
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.i3wm_shell
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.i3wm_shell
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: horizontal
-          type: word
-        - children:
-          - children:
-            - text: shell
-              type: word
-            - text: terminal
-              type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
     script:
-      children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg split h
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg split h
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg split h
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg split h
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.i3wm_shell
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.i3wm_shell
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.i3wm_shell
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.i3wm_shell
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
       type: block
-    type: command
-  - children:
-    - children:
-      - children:
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.system_command
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: i3-msg split h
+                type: string_content
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.i3wm_shell
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: vertical
           type: word
-        - children:
-          - children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
             - text: shell
               type: word
             - text: terminal
               type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg split v
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg split v
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg split v
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg split v
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.i3wm_shell
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.i3wm_shell
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.i3wm_shell
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.i3wm_shell
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: vertical
-          type: word
-        - children:
-          - children:
-            - text: shell
-              type: word
-            - text: terminal
-              type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
     script:
-      children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg split v
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg split v
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg split v
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg split v
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.i3wm_shell
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.i3wm_shell
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.i3wm_shell
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.i3wm_shell
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
       type: block
-    type: command
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.system_command
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: i3-msg split v
+                type: string_content
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.i3wm_shell
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
   - text: '# XXX - just replace with shuffle eventually?'
     type: comment
   - text: '# XXX - like also need to match the generic talon commands'
     type: comment
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
             - text: shuffle
               type: word
-            - children:
+            - type: seq
+              children:
               - text: move
                 type: word
-              - children:
-                - children:
+              - type: parenthesized_rule
+                children:
+                - type: choice
+                  children:
                   - text: win
                     type: word
                   - text: window
                     type: word
-                  type: choice
-                type: parenthesized_rule
-              - children:
+              - type: optional
+                children:
                 - text: to
                   type: word
-                type: optional
               - text: port
                 type: word
-              type: seq
-            type: choice
-          type: parenthesized_rule
-        - capture_name:
+        - type: capture
+          children: []
+          capture_name:
             text: number_small
             type: identifier
-          children:
-          - text: number_small
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: 'i3-msg move container to workspace number '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: number_small
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: 'i3-msg move container to workspace number '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: number_small
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: 'i3-msg move container to workspace number '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: number_small
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: 'i3-msg move container to workspace number '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: number_small
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: shuffle
-              type: word
-            - children:
-              - text: move
-                type: word
-              - children:
-                - children:
-                  - text: win
-                    type: word
-                  - text: window
-                    type: word
-                  type: choice
-                type: parenthesized_rule
-              - children:
-                - text: to
-                  type: word
-                type: optional
-              - text: port
-                type: word
-              type: seq
-            type: choice
-          type: parenthesized_rule
-        - capture_name:
-            text: number_small
-            type: identifier
-          children:
-          - text: number_small
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: 'i3-msg move container to workspace number '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: number_small
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: 'i3-msg move container to workspace number '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: number_small
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: 'i3-msg move container to workspace number '
                 type: string_content
               - text: '{'
@@ -3980,2334 +1159,659 @@ output:
                 type: string_content
               - text: '}'
                 type: string_content
-              type: string
-            type: argument_list
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: parenthesized_rule
+        children:
+        - type: choice
           children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: 'i3-msg move container to workspace number '
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: number_small
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
           - text: shuffle
             type: word
-          - children:
+          - type: seq
+            children:
             - text: move
               type: word
-            - children:
-              - children:
+            - type: parenthesized_rule
+              children:
+              - type: choice
+                children:
                 - text: win
                   type: word
                 - text: window
                   type: word
-                type: choice
-              type: parenthesized_rule
-            - children:
+            - type: optional
+              children:
               - text: to
                 type: word
-              type: optional
             - text: port
               type: word
             - text: ten
               type: word
-            type: seq
-          type: choice
-        type: parenthesized_rule
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move container to workspace number 10
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move container to workspace number 10
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move container to workspace number 10
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move container to workspace number 10
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - text: shuffle
-            type: word
-          - children:
-            - text: move
-              type: word
-            - children:
-              - children:
-                - text: win
-                  type: word
-                - text: window
-                  type: word
-                type: choice
-              type: parenthesized_rule
-            - children:
-              - text: to
-                type: word
-              type: optional
-            - text: port
-              type: word
-            - text: ten
-              type: word
-            type: seq
-          type: choice
-        type: parenthesized_rule
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move container to workspace number 10
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move container to workspace number 10
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg move container to workspace number 10
                 type: string_content
-              type: string
-            type: argument_list
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: parenthesized_rule
+        children:
+        - type: choice
           children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move container to workspace number 10
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
           - text: shuffle
             type: word
-          - children:
+          - type: seq
+            children:
             - text: move
               type: word
-            - children:
-              - children:
+            - type: parenthesized_rule
+              children:
+              - type: choice
+                children:
                 - text: win
                   type: word
                 - text: window
                   type: word
-                type: choice
-              type: parenthesized_rule
-            - children:
+            - type: optional
+              children:
               - text: to
                 type: word
-              type: optional
             - text: last
               type: word
             - text: port
               type: word
-            type: seq
-          type: choice
-        type: parenthesized_rule
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move container to workspace back_and_forth
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move container to workspace back_and_forth
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move container to workspace back_and_forth
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move container to workspace back_and_forth
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - text: shuffle
-            type: word
-          - children:
-            - text: move
-              type: word
-            - children:
-              - children:
-                - text: win
-                  type: word
-                - text: window
-                  type: word
-                type: choice
-              type: parenthesized_rule
-            - children:
-              - text: to
-                type: word
-              type: optional
-            - text: last
-              type: word
-            - text: port
-              type: word
-            type: seq
-          type: choice
-        type: parenthesized_rule
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move container to workspace back_and_forth
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move container to workspace back_and_forth
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg move container to workspace back_and_forth
                 type: string_content
-              type: string
-            type: argument_list
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: parenthesized_rule
+        children:
+        - type: choice
           children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move container to workspace back_and_forth
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
           - text: shuffle
             type: word
-          - children:
+          - type: seq
+            children:
             - text: move
               type: word
-            - children:
-              - children:
+            - type: parenthesized_rule
+              children:
+              - type: choice
+                children:
                 - text: win
                   type: word
                 - text: window
                   type: word
-                type: choice
-              type: parenthesized_rule
             - text: left
               type: word
-            type: seq
-          type: choice
-        type: parenthesized_rule
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move left
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move left
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move left
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move left
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - text: shuffle
-            type: word
-          - children:
-            - text: move
-              type: word
-            - children:
-              - children:
-                - text: win
-                  type: word
-                - text: window
-                  type: word
-                type: choice
-              type: parenthesized_rule
-            - text: left
-              type: word
-            type: seq
-          type: choice
-        type: parenthesized_rule
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move left
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move left
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg move left
                 type: string_content
-              type: string
-            type: argument_list
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: parenthesized_rule
+        children:
+        - type: choice
           children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move left
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
           - text: shuffle
             type: word
-          - children:
+          - type: seq
+            children:
             - text: move
               type: word
-            - children:
-              - children:
+            - type: parenthesized_rule
+              children:
+              - type: choice
+                children:
                 - text: win
                   type: word
                 - text: window
                   type: word
-                type: choice
-              type: parenthesized_rule
             - text: right
               type: word
-            type: seq
-          type: choice
-        type: parenthesized_rule
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move right
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move right
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move right
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move right
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - text: shuffle
-            type: word
-          - children:
-            - text: move
-              type: word
-            - children:
-              - children:
-                - text: win
-                  type: word
-                - text: window
-                  type: word
-                type: choice
-              type: parenthesized_rule
-            - text: right
-              type: word
-            type: seq
-          type: choice
-        type: parenthesized_rule
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move right
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move right
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg move right
                 type: string_content
-              type: string
-            type: argument_list
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: parenthesized_rule
+        children:
+        - type: choice
           children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move right
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
           - text: shuffle
             type: word
-          - children:
+          - type: seq
+            children:
             - text: move
               type: word
-            - children:
-              - children:
+            - type: parenthesized_rule
+              children:
+              - type: choice
+                children:
                 - text: win
                   type: word
                 - text: window
                   type: word
-                type: choice
-              type: parenthesized_rule
             - text: up
               type: word
-            type: seq
-          type: choice
-        type: parenthesized_rule
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move up
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move up
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move up
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move up
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - text: shuffle
-            type: word
-          - children:
-            - text: move
-              type: word
-            - children:
-              - children:
-                - text: win
-                  type: word
-                - text: window
-                  type: word
-                type: choice
-              type: parenthesized_rule
-            - text: up
-              type: word
-            type: seq
-          type: choice
-        type: parenthesized_rule
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move up
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move up
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg move up
                 type: string_content
-              type: string
-            type: argument_list
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: parenthesized_rule
+        children:
+        - type: choice
           children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move up
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
           - text: shuffle
             type: word
-          - children:
+          - type: seq
+            children:
             - text: move
               type: word
-            - children:
-              - children:
+            - type: parenthesized_rule
+              children:
+              - type: choice
+                children:
                 - text: win
                   type: word
                 - text: window
                   type: word
-                type: choice
-              type: parenthesized_rule
             - text: down
               type: word
-            type: seq
-          type: choice
-        type: parenthesized_rule
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move down
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move down
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move down
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move down
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - text: shuffle
-            type: word
-          - children:
-            - text: move
-              type: word
-            - children:
-              - children:
-                - text: win
-                  type: word
-                - text: window
-                  type: word
-                type: choice
-              type: parenthesized_rule
-            - text: down
-              type: word
-            type: seq
-          type: choice
-        type: parenthesized_rule
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move down
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move down
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg move down
                 type: string_content
-              type: string
-            type: argument_list
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
           children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move down
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: choice
+            children:
             - text: win
               type: word
             - text: window
               type: word
-            type: choice
-          type: parenthesized_rule
         - text: horizontal
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg split h
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg split h
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg split h
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg split h
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: win
-              type: word
-            - text: window
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - text: horizontal
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg split h
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg split h
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg split h
                 type: string_content
-              type: string
-            type: argument_list
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
           children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg split h
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: choice
+            children:
             - text: win
               type: word
             - text: window
               type: word
-            type: choice
-          type: parenthesized_rule
         - text: vertical
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg split v
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg split v
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg split v
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg split v
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: win
-              type: word
-            - text: window
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - text: vertical
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg split v
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg split v
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg split v
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg split v
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: make
           type: word
         - text: scratch
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move scratchpad
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move scratchpad
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move scratchpad
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move scratchpad
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: make
-          type: word
-        - text: scratch
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move scratchpad
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move scratchpad
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg move scratchpad
                 type: string_content
-              type: string
-            type: argument_list
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: optional
           children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move scratchpad
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
-            - children:
+          - type: parenthesized_rule
+            children:
+            - type: choice
+              children:
               - text: show
                 type: word
               - text: hide
                 type: word
-              type: choice
-            type: parenthesized_rule
-          type: optional
         - text: scratch
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg scratchpad show
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg scratchpad show
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg scratchpad show
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg scratchpad show
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - children:
-              - text: show
-                type: word
-              - text: hide
-                type: word
-              type: choice
-            type: parenthesized_rule
-          type: optional
-        - text: scratch
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg scratchpad show
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg scratchpad show
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.system_command
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: i3-msg scratchpad show
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg scratchpad show
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: next
           type: word
         - text: scratch
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg scratchpad show
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg scratchpad show
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg scratchpad show
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg scratchpad show
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg scratchpad show
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg scratchpad show
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg scratchpad show
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg scratchpad show
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: next
-          type: word
-        - text: scratch
-          type: word
-        type: seq
-      type: rule
     script:
-      children:
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg scratchpad show
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg scratchpad show
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg scratchpad show
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg scratchpad show
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg scratchpad show
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg scratchpad show
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg scratchpad show
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg scratchpad show
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
       type: block
-    type: command
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.system_command
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: i3-msg scratchpad show
+                type: string_content
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.system_command
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: i3-msg scratchpad show
+                type: string_content
   - text: '# these rely on the user settings for the mod key. see i3wm.py Actions
       class'
     type: comment
-  - children:
-    - children:
-      - text: launch
-        type: word
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.i3wm_launch
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.i3wm_launch
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.i3wm_launch
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.i3wm_launch
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
+      type: rule
       children:
       - text: launch
         type: word
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.i3wm_launch
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.i3wm_launch
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.i3wm_launch
             type: identifier
           arguments:
+            type: argument_list
             children: []
-            type: argument_list
-          children:
-          - text: user.i3wm_launch
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - text: launch
-          type: word
-        - capture_name:
-            text: user.text
-            type: identifier
-          children:
-          - text: user.text
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.i3wm_launch
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.i3wm_launch
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.i3wm_launch
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.i3wm_launch
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - arguments:
-            text: 100ms
-            type: implicit_string
-          children:
-          - text: 100ms
-            type: implicit_string
-          type: sleep_action
-        expression:
-          arguments:
-            text: 100ms
-            type: implicit_string
-          children:
-          - text: 100ms
-            type: implicit_string
-          type: sleep_action
-        type: expression
-      - children:
-        - action_name:
-            text: insert
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: text
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: insert
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: text
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: text
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: insert
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: text
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
+      type: rule
       children:
-      - children:
+      - type: seq
+        children:
         - text: launch
           type: word
-        - capture_name:
+        - type: capture
+          children: []
+          capture_name:
             text: user.text
             type: identifier
-          children:
-          - text: user.text
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
     script:
-      children:
-      - children:
-        - action_name:
-            text: user.i3wm_launch
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.i3wm_launch
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.i3wm_launch
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.i3wm_launch
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - arguments:
-            text: 100ms
-            type: implicit_string
-          children:
-          - text: 100ms
-            type: implicit_string
-          type: sleep_action
-        expression:
-          arguments:
-            text: 100ms
-            type: implicit_string
-          children:
-          - text: 100ms
-            type: implicit_string
-          type: sleep_action
-        type: expression
-      - children:
-        - action_name:
-            text: insert
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: text
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: insert
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: text
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: text
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: insert
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: text
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
       type: block
-    type: command
-  - children:
-    - children:
-      - children:
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.i3wm_launch
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children: []
+        expression:
+          type: sleep_action
+          children: []
+          arguments:
+            text: 100ms
+            type: implicit_string
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '{'
+                type: string_content
+              - text: text
+                type: string_content
+              - text: '}'
+                type: string_content
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: lock
           type: word
         - text: screen
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.i3wm_launch
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.i3wm_launch
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.i3wm_launch
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.i3wm_launch
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: lock
-          type: word
-        - text: screen
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.i3wm_launch
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.i3wm_launch
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.i3wm_launch
             type: identifier
           arguments:
+            type: argument_list
             children: []
-            type: argument_list
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: parenthesized_rule
+        children:
+        - type: choice
           children:
-          - text: user.i3wm_launch
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: seq
+            children:
             - text: launch
               type: word
             - text: shell
               type: word
-            type: seq
           - text: koopa
             type: word
-          type: choice
-        type: parenthesized_rule
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.i3wm_shell
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.i3wm_shell
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.i3wm_shell
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.i3wm_shell
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: launch
-              type: word
-            - text: shell
-              type: word
-            type: seq
-          - text: koopa
-            type: word
-          type: choice
-        type: parenthesized_rule
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.i3wm_shell
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.i3wm_shell
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.i3wm_shell
             type: identifier
           arguments:
+            type: argument_list
             children: []
-            type: argument_list
-          children:
-          - text: user.i3wm_shell
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: new
           type: word
         - text: scratch
           type: word
-        - children:
-          - children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
             - text: shell
               type: word
             - text: window
               type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.i3wm_shell
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.i3wm_shell
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.i3wm_shell
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.i3wm_shell
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - arguments:
-            text: 200ms
-            type: implicit_string
-          children:
-          - text: 200ms
-            type: implicit_string
-          type: sleep_action
-        expression:
-          arguments:
-            text: 200ms
-            type: implicit_string
-          children:
-          - text: 200ms
-            type: implicit_string
-          type: sleep_action
-        type: expression
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move scratchpad
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move scratchpad
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move scratchpad
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move scratchpad
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg scratchpad show
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg scratchpad show
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg scratchpad show
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg scratchpad show
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: new
-          type: word
-        - text: scratch
-          type: word
-        - children:
-          - children:
-            - text: shell
-              type: word
-            - text: window
-              type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
     script:
-      children:
-      - children:
-        - action_name:
-            text: user.i3wm_shell
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.i3wm_shell
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.i3wm_shell
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.i3wm_shell
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - arguments:
-            text: 200ms
-            type: implicit_string
-          children:
-          - text: 200ms
-            type: implicit_string
-          type: sleep_action
-        expression:
-          arguments:
-            text: 200ms
-            type: implicit_string
-          children:
-          - text: 200ms
-            type: implicit_string
-          type: sleep_action
-        type: expression
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move scratchpad
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move scratchpad
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg move scratchpad
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg move scratchpad
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg scratchpad show
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg scratchpad show
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.system_command
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: i3-msg scratchpad show
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.system_command
-            type: identifier
-          - children:
-            - children:
-              - text: i3-msg scratchpad show
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
       type: block
-    type: command
-  type: source_file
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.i3wm_shell
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children: []
+        expression:
+          type: sleep_action
+          children: []
+          arguments:
+            text: 200ms
+            type: implicit_string
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.system_command
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: i3-msg move scratchpad
+                type: string_content
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.system_command
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: i3-msg scratchpad show
+                type: string_content

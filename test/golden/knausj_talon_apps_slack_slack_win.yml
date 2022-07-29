@@ -66,2560 +66,1049 @@ input: |
       app.notify("please use the voice command 'element last' instead of 'last element'")
       key(shift-tab)
 output:
+  type: source_file
   children:
-  - children:
-    - children:
-      - children:
-        - text: os
-          type: identifier
-        - text: ' windows'
-          type: implicit_string
+  - type: context
+    children:
+    - type: or
+      children:
+      - type: match
+        children: []
         key:
           text: os
           type: identifier
         pattern:
           text: ' windows'
           type: implicit_string
-        type: match
-      - children:
-        - text: os
-          type: identifier
-        - text: ' linux'
-          type: implicit_string
+      - type: match
+        children: []
         key:
           text: os
           type: identifier
         pattern:
           text: ' linux'
           type: implicit_string
-        type: match
-      - children:
-        - text: app
-          type: identifier
-        - text: ' slack'
-          type: implicit_string
+      - type: match
+        children: []
         key:
           text: app
           type: identifier
         pattern:
           text: ' slack'
           type: implicit_string
-        type: match
-      type: or
     - text: '#todo: some sort of plugin, consolidate with teams or something?'
       type: comment
-    type: context
-  - children:
-    - text: user.messaging
-      type: identifier
+  - type: include_tag
+    children: []
     tag:
       text: user.messaging
       type: identifier
-    type: include_tag
-  - children:
-    - text: user.emoji
-      type: identifier
+  - type: include_tag
+    children: []
     tag:
       text: user.emoji
       type: identifier
-    type: include_tag
   - text: '# Workspaces'
     type: comment
-  - children:
-    - children:
-      - children:
-        - text: workspace
-          type: word
-        - capture_name:
-            text: number
-            type: identifier
-          children:
-          - text: number
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: '"ctrl-{number}"'
-            type: implicit_string
-          children:
-          - text: '"ctrl-{number}"'
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: '"ctrl-{number}"'
-            type: implicit_string
-          children:
-          - text: '"ctrl-{number}"'
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
+      type: rule
       children:
-      - children:
+      - type: seq
+        children:
         - text: workspace
           type: word
-        - capture_name:
+        - type: capture
+          children: []
+          capture_name:
             text: number
             type: identifier
-          children:
-          - text: number
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: '"ctrl-{number}"'
-            type: implicit_string
-          children:
-          - text: '"ctrl-{number}"'
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: '"ctrl-{number}"'
             type: implicit_string
-          children:
-          - text: '"ctrl-{number}"'
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
   - text: '# Channel'
     type: comment
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
-            - text: slack
-              type: word
-            - text: lack
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
-          - text: channel
-            type: word
-          type: optional
-        - text: info
-          type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: ctrl-shift-i
-            type: implicit_string
-          children:
-          - text: ctrl-shift-i
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: ctrl-shift-i
-            type: implicit_string
-          children:
-          - text: ctrl-shift-i
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
+      type: rule
       children:
-      - children:
-        - children:
-          - children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
             - text: slack
               type: word
             - text: lack
               type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
+        - type: optional
+          children:
           - text: channel
             type: word
-          type: optional
         - text: info
           type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: ctrl-shift-i
-            type: implicit_string
-          children:
-          - text: ctrl-shift-i
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: ctrl-shift-i
             type: implicit_string
-          children:
-          - text: ctrl-shift-i
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
   - text: '# Navigation'
     type: comment
-  - children:
-    - children:
-      - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: focus
           type: word
-        - children:
-          - children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
             - text: move
               type: word
             - text: next
               type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: ctrl-`
-            type: implicit_string
-          children:
-          - text: ctrl-`
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: ctrl-`
-            type: implicit_string
-          children:
-          - text: ctrl-`
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: focus
-          type: word
-        - children:
-          - children:
-            - text: move
-              type: word
-            - text: next
-              type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: ctrl-`
-            type: implicit_string
-          children:
-          - text: ctrl-`
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: ctrl-`
             type: implicit_string
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
           children:
-          - text: ctrl-`
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: choice
+            children:
             - text: section
               type: word
             - text: zone
               type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
+        - type: optional
+          children:
           - text: next
             type: word
-          type: optional
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: f6
-            type: implicit_string
-          children:
-          - text: f6
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: f6
-            type: implicit_string
-          children:
-          - text: f6
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: section
-              type: word
-            - text: zone
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
-          - text: next
-            type: word
-          type: optional
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: f6
-            type: implicit_string
-          children:
-          - text: f6
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: f6
             type: implicit_string
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
           children:
-          - text: f6
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: choice
+            children:
             - text: section
               type: word
             - text: zone
               type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
-          - children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
             - text: previous
               type: word
             - text: last
               type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: shift-f6
-            type: implicit_string
-          children:
-          - text: shift-f6
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: shift-f6
-            type: implicit_string
-          children:
-          - text: shift-f6
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: section
-              type: word
-            - text: zone
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
-          - children:
-            - text: previous
-              type: word
-            - text: last
-              type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: shift-f6
-            type: implicit_string
-          children:
-          - text: shift-f6
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: shift-f6
             type: implicit_string
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
           children:
-          - text: shift-f6
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: choice
+            children:
             - text: slack
               type: word
             - text: lack
               type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
+        - type: optional
+          children:
           - text: direct
             type: word
-          type: optional
         - text: messages
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: ctrl-shift-k
-            type: implicit_string
-          children:
-          - text: ctrl-shift-k
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: ctrl-shift-k
-            type: implicit_string
-          children:
-          - text: ctrl-shift-k
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: slack
-              type: word
-            - text: lack
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
-          - text: direct
-            type: word
-          type: optional
-        - text: messages
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: ctrl-shift-k
-            type: implicit_string
-          children:
-          - text: ctrl-shift-k
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: ctrl-shift-k
             type: implicit_string
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
           children:
-          - text: ctrl-shift-k
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: choice
+            children:
             - text: slack
               type: word
             - text: lack
               type: word
-            type: choice
-          type: parenthesized_rule
         - text: threads
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: ctrl-shift-t
-            type: implicit_string
-          children:
-          - text: ctrl-shift-t
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: ctrl-shift-t
-            type: implicit_string
-          children:
-          - text: ctrl-shift-t
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: slack
-              type: word
-            - text: lack
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - text: threads
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: ctrl-shift-t
-            type: implicit_string
-          children:
-          - text: ctrl-shift-t
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: ctrl-shift-t
             type: implicit_string
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
           children:
-          - text: ctrl-shift-t
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: choice
+            children:
             - text: slack
               type: word
             - text: lack
               type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
-          - children:
-            - children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - type: seq
+              children:
               - text: history
                 type: word
-              - children:
+              - type: optional
+                children:
                 - text: next
                   type: word
-                type: optional
-              type: seq
             - text: back
               type: word
             - text: backward
               type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: alt-left
-            type: implicit_string
-          children:
-          - text: alt-left
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: alt-left
-            type: implicit_string
-          children:
-          - text: alt-left
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: slack
-              type: word
-            - text: lack
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
-          - children:
-            - children:
-              - text: history
-                type: word
-              - children:
-                - text: next
-                  type: word
-                type: optional
-              type: seq
-            - text: back
-              type: word
-            - text: backward
-              type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: alt-left
-            type: implicit_string
-          children:
-          - text: alt-left
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: alt-left
             type: implicit_string
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
           children:
-          - text: alt-left
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: choice
+            children:
             - text: slack
               type: word
             - text: lack
               type: word
-            type: choice
-          type: parenthesized_rule
         - text: forward
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: alt-right
-            type: implicit_string
-          children:
-          - text: alt-right
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: alt-right
-            type: implicit_string
-          children:
-          - text: alt-right
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: slack
-              type: word
-            - text: lack
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - text: forward
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: alt-right
-            type: implicit_string
-          children:
-          - text: alt-right
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: alt-right
             type: implicit_string
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
           children:
-          - text: alt-right
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: choice
+            children:
             - text: element
               type: word
             - text: bit
               type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
+        - type: optional
+          children:
           - text: next
             type: word
-          type: optional
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: tab
-            type: implicit_string
-          children:
-          - text: tab
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: tab
-            type: implicit_string
-          children:
-          - text: tab
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: element
-              type: word
-            - text: bit
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
-          - text: next
-            type: word
-          type: optional
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: tab
-            type: implicit_string
-          children:
-          - text: tab
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: tab
             type: implicit_string
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
           children:
-          - text: tab
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: choice
+            children:
             - text: element
               type: word
             - text: bit
               type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
-          - children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
             - text: previous
               type: word
             - text: last
               type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: shift-tab
-            type: implicit_string
-          children:
-          - text: shift-tab
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: shift-tab
-            type: implicit_string
-          children:
-          - text: shift-tab
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: element
-              type: word
-            - text: bit
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
-          - children:
-            - text: previous
-              type: word
-            - text: last
-              type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: shift-tab
-            type: implicit_string
-          children:
-          - text: shift-tab
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: shift-tab
             type: implicit_string
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
           children:
-          - text: shift-tab
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: choice
+            children:
             - text: slack
               type: word
             - text: lack
               type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
-          - children:
-            - children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - type: seq
+              children:
               - text: my
                 type: word
               - text: stuff
                 type: word
-              type: seq
             - text: activity
               type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: ctrl-shift-m
-            type: implicit_string
-          children:
-          - text: ctrl-shift-m
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: ctrl-shift-m
-            type: implicit_string
-          children:
-          - text: ctrl-shift-m
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: slack
-              type: word
-            - text: lack
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
-          - children:
-            - children:
-              - text: my
-                type: word
-              - text: stuff
-                type: word
-              type: seq
-            - text: activity
-              type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: ctrl-shift-m
-            type: implicit_string
-          children:
-          - text: ctrl-shift-m
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: ctrl-shift-m
             type: implicit_string
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
           children:
-          - text: ctrl-shift-m
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: choice
+            children:
             - text: slack
               type: word
             - text: lack
               type: word
-            type: choice
-          type: parenthesized_rule
         - text: directory
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: ctrl-shift-e
-            type: implicit_string
-          children:
-          - text: ctrl-shift-e
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: ctrl-shift-e
-            type: implicit_string
-          children:
-          - text: ctrl-shift-e
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: slack
-              type: word
-            - text: lack
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - text: directory
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: ctrl-shift-e
-            type: implicit_string
-          children:
-          - text: ctrl-shift-e
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: ctrl-shift-e
             type: implicit_string
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
           children:
-          - text: ctrl-shift-e
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: choice
+            children:
             - text: slack
               type: word
             - text: lack
               type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
-          - children:
-            - children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - type: seq
+              children:
               - text: starred
                 type: word
-              - children:
+              - type: optional
+                children:
                 - text: items
                   type: word
-                type: optional
-              type: seq
             - text: stars
               type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: ctrl-shift-s
-            type: implicit_string
-          children:
-          - text: ctrl-shift-s
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: ctrl-shift-s
-            type: implicit_string
-          children:
-          - text: ctrl-shift-s
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: slack
-              type: word
-            - text: lack
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
-          - children:
-            - children:
-              - text: starred
-                type: word
-              - children:
-                - text: items
-                  type: word
-                type: optional
-              type: seq
-            - text: stars
-              type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: ctrl-shift-s
-            type: implicit_string
-          children:
-          - text: ctrl-shift-s
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: ctrl-shift-s
             type: implicit_string
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
           children:
-          - text: ctrl-shift-s
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: choice
+            children:
             - text: slack
               type: word
             - text: lack
               type: word
-            type: choice
-          type: parenthesized_rule
         - text: unread
           type: word
-        - children:
+        - type: optional
+          children:
           - text: messages
             type: word
-          type: optional
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: ctrl-shift-a
-            type: implicit_string
-          children:
-          - text: ctrl-shift-a
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: ctrl-shift-a
-            type: implicit_string
-          children:
-          - text: ctrl-shift-a
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: slack
-              type: word
-            - text: lack
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - text: unread
-          type: word
-        - children:
-          - text: messages
-            type: word
-          type: optional
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: ctrl-shift-a
-            type: implicit_string
-          children:
-          - text: ctrl-shift-a
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: ctrl-shift-a
             type: implicit_string
-          children:
-          - text: ctrl-shift-a
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
   - text: '# Messaging'
     type: comment
-  - children:
-    - children:
-      - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: grab
           type: word
         - text: left
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: shift-up
-            type: implicit_string
-          children:
-          - text: shift-up
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: shift-up
-            type: implicit_string
-          children:
-          - text: shift-up
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: grab
-          type: word
-        - text: left
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: shift-up
-            type: implicit_string
-          children:
-          - text: shift-up
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: shift-up
             type: implicit_string
-          children:
-          - text: shift-up
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: grab
           type: word
         - text: right
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: shift-down
-            type: implicit_string
-          children:
-          - text: shift-down
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: shift-down
-            type: implicit_string
-          children:
-          - text: shift-down
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: grab
-          type: word
-        - text: right
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: shift-down
-            type: implicit_string
-          children:
-          - text: shift-down
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: shift-down
             type: implicit_string
-          children:
-          - text: shift-down
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: add
           type: word
         - text: line
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: shift-enter
-            type: implicit_string
-          children:
-          - text: shift-enter
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: shift-enter
-            type: implicit_string
-          children:
-          - text: shift-enter
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: add
-          type: word
-        - text: line
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: shift-enter
-            type: implicit_string
-          children:
-          - text: shift-enter
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: shift-enter
             type: implicit_string
-          children:
-          - text: shift-enter
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
   - text: '#"(slack | lack) (slap | slaw | slapper): [key(cmd-right) key(shift-enter")],'
     type: comment
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
             - text: slack
               type: word
             - text: lack
               type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
-          - children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
             - text: react
               type: word
             - text: reaction
               type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: ctrl-shift-\
-            type: implicit_string
-          children:
-          - text: ctrl-shift-\
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: ctrl-shift-\
-            type: implicit_string
-          children:
-          - text: ctrl-shift-\
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: slack
-              type: word
-            - text: lack
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
-          - children:
-            - text: react
-              type: word
-            - text: reaction
-              type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: ctrl-shift-\
-            type: implicit_string
-          children:
-          - text: ctrl-shift-\
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: ctrl-shift-\
             type: implicit_string
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: parenthesized_rule
+        children:
+        - type: choice
           children:
-          - text: ctrl-shift-\
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: seq
+            children:
             - text: insert
               type: word
             - text: command
               type: word
-            type: seq
           - text: commandify
             type: word
-          type: choice
-        type: parenthesized_rule
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: ctrl-shift-c
-            type: implicit_string
-          children:
-          - text: ctrl-shift-c
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: ctrl-shift-c
-            type: implicit_string
-          children:
-          - text: ctrl-shift-c
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: insert
-              type: word
-            - text: command
-              type: word
-            type: seq
-          - text: commandify
-            type: word
-          type: choice
-        type: parenthesized_rule
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: ctrl-shift-c
-            type: implicit_string
-          children:
-          - text: ctrl-shift-c
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: ctrl-shift-c
             type: implicit_string
-          children:
-          - text: ctrl-shift-c
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: insert
           type: word
         - text: code
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: insert
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: '```'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: insert
-            type: identifier
-          - children:
-            - children:
-              - text: '```'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: '```'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: insert
-            type: identifier
-          - children:
-            - children:
-              - text: '```'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: insert
-          type: word
-        - text: code
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: insert
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: '```'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: insert
-            type: identifier
-          - children:
-            - children:
-              - text: '```'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: insert
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: '```'
                 type: string_content
-              type: string
-            type: argument_list
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
           children:
-          - text: insert
-            type: identifier
-          - children:
-            - children:
-              - text: '```'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: choice
+            children:
             - text: slack
               type: word
             - text: lack
               type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
-          - children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
             - text: bull
               type: word
             - text: bullet
               type: word
             - text: bulleted
               type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
+        - type: optional
+          children:
           - text: list
             type: word
-          type: optional
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: ctrl-shift-8
-            type: implicit_string
-          children:
-          - text: ctrl-shift-8
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: ctrl-shift-8
-            type: implicit_string
-          children:
-          - text: ctrl-shift-8
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: slack
-              type: word
-            - text: lack
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
-          - children:
-            - text: bull
-              type: word
-            - text: bullet
-              type: word
-            - text: bulleted
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
-          - text: list
-            type: word
-          type: optional
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: ctrl-shift-8
-            type: implicit_string
-          children:
-          - text: ctrl-shift-8
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: ctrl-shift-8
             type: implicit_string
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
           children:
-          - text: ctrl-shift-8
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: choice
+            children:
             - text: slack
               type: word
             - text: lack
               type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
-          - children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
             - text: number
               type: word
             - text: numbered
               type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
+        - type: optional
+          children:
           - text: list
             type: word
-          type: optional
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: ctrl-shift-7
-            type: implicit_string
-          children:
-          - text: ctrl-shift-7
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: ctrl-shift-7
-            type: implicit_string
-          children:
-          - text: ctrl-shift-7
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: slack
-              type: word
-            - text: lack
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
-          - children:
-            - text: number
-              type: word
-            - text: numbered
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
-          - text: list
-            type: word
-          type: optional
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: ctrl-shift-7
-            type: implicit_string
-          children:
-          - text: ctrl-shift-7
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: ctrl-shift-7
             type: implicit_string
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
           children:
-          - text: ctrl-shift-7
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: choice
+            children:
             - text: slack
               type: word
             - text: lack
               type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
-          - children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
             - text: quotes
               type: word
             - text: quotation
               type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: ctrl-shift-9
-            type: implicit_string
-          children:
-          - text: ctrl-shift-9
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: ctrl-shift-9
-            type: implicit_string
-          children:
-          - text: ctrl-shift-9
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: slack
-              type: word
-            - text: lack
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
-          - children:
-            - text: quotes
-              type: word
-            - text: quotation
-              type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: ctrl-shift-9
-            type: implicit_string
-          children:
-          - text: ctrl-shift-9
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: ctrl-shift-9
             type: implicit_string
-          children:
-          - text: ctrl-shift-9
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - text: bold
-        type: word
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: ctrl-b
-            type: implicit_string
-          children:
-          - text: ctrl-b
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: ctrl-b
-            type: implicit_string
-          children:
-          - text: ctrl-b
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
+      type: rule
       children:
       - text: bold
         type: word
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: ctrl-b
-            type: implicit_string
-          children:
-          - text: ctrl-b
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: ctrl-b
             type: implicit_string
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: parenthesized_rule
+        children:
+        - type: choice
           children:
-          - text: ctrl-b
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
           - text: italic
             type: word
           - text: italicize
             type: word
-          type: choice
-        type: parenthesized_rule
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: ctrl-i
-            type: implicit_string
-          children:
-          - text: ctrl-i
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: ctrl-i
-            type: implicit_string
-          children:
-          - text: ctrl-i
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - text: italic
-            type: word
-          - text: italicize
-            type: word
-          type: choice
-        type: parenthesized_rule
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: ctrl-i
-            type: implicit_string
-          children:
-          - text: ctrl-i
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: ctrl-i
             type: implicit_string
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: parenthesized_rule
+        children:
+        - type: choice
           children:
-          - text: ctrl-i
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
           - text: strike
             type: word
           - text: strikethrough
             type: word
-          type: choice
-        type: parenthesized_rule
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: ctrl-shift-x
-            type: implicit_string
-          children:
-          - text: ctrl-shift-x
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: ctrl-shift-x
-            type: implicit_string
-          children:
-          - text: ctrl-shift-x
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - text: strike
-            type: word
-          - text: strikethrough
-            type: word
-          type: choice
-        type: parenthesized_rule
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: ctrl-shift-x
-            type: implicit_string
-          children:
-          - text: ctrl-shift-x
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: ctrl-shift-x
             type: implicit_string
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
           children:
-          - text: ctrl-shift-x
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: choice
+            children:
             - text: slack
               type: word
             - text: lack
               type: word
-            type: choice
-          type: parenthesized_rule
         - text: snippet
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: ctrl-shift-enter
-            type: implicit_string
-          children:
-          - text: ctrl-shift-enter
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: ctrl-shift-enter
-            type: implicit_string
-          children:
-          - text: ctrl-shift-enter
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: slack
-              type: word
-            - text: lack
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - text: snippet
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: ctrl-shift-enter
-            type: implicit_string
-          children:
-          - text: ctrl-shift-enter
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: ctrl-shift-enter
             type: implicit_string
-          children:
-          - text: ctrl-shift-enter
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
   - text: '# Calls'
     type: comment
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
-            - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: parenthesized_rule
+        children:
+        - type: choice
+          children:
+          - type: seq
+            children:
+            - type: optional
+              children:
               - text: toggle
                 type: word
-              type: optional
             - text: mute
               type: word
-            type: seq
           - text: unmute
             type: word
-          type: choice
-        type: parenthesized_rule
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: m
-            type: implicit_string
-          children:
-          - text: m
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: m
-            type: implicit_string
-          children:
-          - text: m
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - children:
-              - text: toggle
-                type: word
-              type: optional
-            - text: mute
-              type: word
-            type: seq
-          - text: unmute
-            type: word
-          type: choice
-        type: parenthesized_rule
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: m
-            type: implicit_string
-          children:
-          - text: m
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: m
             type: implicit_string
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
           children:
-          - text: m
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: choice
+            children:
             - text: slack
               type: word
             - text: lack
               type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
-          - children:
-            - children:
+        - type: parenthesized_rule
+          children:
+          - type: seq
+            children:
+            - type: optional
+              children:
               - text: toggle
                 type: word
-              type: optional
             - text: video
               type: word
-            type: seq
-          type: parenthesized_rule
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: v
-            type: implicit_string
-          children:
-          - text: v
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: v
-            type: implicit_string
-          children:
-          - text: v
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: slack
-              type: word
-            - text: lack
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
-          - children:
-            - children:
-              - text: toggle
-                type: word
-              type: optional
-            - text: video
-              type: word
-            type: seq
-          type: parenthesized_rule
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: v
-            type: implicit_string
-          children:
-          - text: v
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: v
             type: implicit_string
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
           children:
-          - text: v
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: choice
+            children:
             - text: slack
               type: word
             - text: lack
               type: word
-            type: choice
-          type: parenthesized_rule
         - text: invite
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: a
-            type: implicit_string
-          children:
-          - text: a
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: a
-            type: implicit_string
-          children:
-          - text: a
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: slack
-              type: word
-            - text: lack
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - text: invite
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: a
-            type: implicit_string
-          children:
-          - text: a
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: a
             type: implicit_string
-          children:
-          - text: a
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
   - text: '# Miscellaneous'
     type: comment
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
             - text: slack
               type: word
             - text: lack
               type: word
-            type: choice
-          type: parenthesized_rule
         - text: shortcuts
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: ctrl-/
-            type: implicit_string
-          children:
-          - text: ctrl-/
-            type: implicit_string
-          type: key_action
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: ctrl-/
             type: implicit_string
-          children:
-          - text: ctrl-/
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: slack
-              type: word
-            - text: lack
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - text: shortcuts
-          type: word
-        type: seq
       type: rule
-    script:
       children:
-      - children:
-        - arguments:
-            text: ctrl-/
-            type: implicit_string
-          children:
-          - text: ctrl-/
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: ctrl-/
-            type: implicit_string
-          children:
-          - text: ctrl-/
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
+      - type: seq
+        children:
         - text: emote
           type: word
-        - capture_name:
+        - type: capture
+          children: []
+          capture_name:
             text: user.text
             type: identifier
-          children:
-          - text: user.text
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - children:
-          - text: '{'
-            type: string_content
-          - text: text
-            type: string_content
-          - text: '}'
-            type: string_content
-          type: string
-        expression:
-          children:
-          - text: '{'
-            type: string_content
-          - text: text
-            type: string_content
-          - text: '}'
-            type: string_content
-          type: string
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: emote
-          type: word
-        - capture_name:
-            text: user.text
-            type: identifier
-          children:
-          - text: user.text
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - children:
-          - text: '{'
-            type: string_content
-          - text: text
-            type: string_content
-          - text: '}'
-            type: string_content
-          type: string
+      - type: expression
+        children: []
         expression:
+          type: string
           children:
           - text: '{'
             type: string_content
@@ -2627,978 +1116,288 @@ output:
             type: string_content
           - text: '}'
             type: string_content
-          type: string
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: toggle
           type: word
         - text: left
           type: word
         - text: sidebar
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: ctrl-shift-d
-            type: implicit_string
-          children:
-          - text: ctrl-shift-d
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: ctrl-shift-d
-            type: implicit_string
-          children:
-          - text: ctrl-shift-d
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: toggle
-          type: word
-        - text: left
-          type: word
-        - text: sidebar
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: ctrl-shift-d
-            type: implicit_string
-          children:
-          - text: ctrl-shift-d
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: ctrl-shift-d
             type: implicit_string
-          children:
-          - text: ctrl-shift-d
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: toggle
           type: word
         - text: right
           type: word
         - text: sidebar
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: ctrl-.
-            type: implicit_string
-          children:
-          - text: ctrl-.
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: ctrl-.
-            type: implicit_string
-          children:
-          - text: ctrl-.
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - text: toggle
-          type: word
-        - text: right
-          type: word
-        - text: sidebar
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: ctrl-.
-            type: implicit_string
-          children:
-          - text: ctrl-.
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: ctrl-.
             type: implicit_string
-          children:
-          - text: ctrl-.
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
   - text: '# DEPRECATED'
     type: comment
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
             - text: move
               type: word
             - text: next
               type: word
-            type: choice
-          type: parenthesized_rule
         - text: focus
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: app.notify
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: please use the voice command 'focus next' instead of 'next focus'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: app.notify
-            type: identifier
-          - children:
-            - children:
-              - text: please use the voice command 'focus next' instead of 'next focus'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: app.notify
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: please use the voice command 'focus next' instead of 'next focus'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: app.notify
-            type: identifier
-          - children:
-            - children:
-              - text: please use the voice command 'focus next' instead of 'next focus'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - arguments:
-            text: ctrl-`
-            type: implicit_string
-          children:
-          - text: ctrl-`
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: ctrl-`
-            type: implicit_string
-          children:
-          - text: ctrl-`
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: move
-              type: word
-            - text: next
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - text: focus
-          type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: app.notify
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: please use the voice command 'focus next' instead of 'next focus'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: app.notify
-            type: identifier
-          - children:
-            - children:
-              - text: please use the voice command 'focus next' instead of 'next focus'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: app.notify
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: please use the voice command 'focus next' instead of 'next focus'
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: app.notify
-            type: identifier
-          - children:
-            - children:
-              - text: please use the voice command 'focus next' instead of 'next focus'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - arguments:
-            text: ctrl-`
-            type: implicit_string
-          children:
-          - text: ctrl-`
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: ctrl-`
             type: implicit_string
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: optional
           children:
-          - text: ctrl-`
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
           - text: next
             type: word
-          type: optional
-        - children:
-          - children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
             - text: section
               type: word
             - text: zone
               type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: app.notify
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: please use the voice command 'section next' instead of 'next
-                  section'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: app.notify
-            type: identifier
-          - children:
-            - children:
-              - text: please use the voice command 'section next' instead of 'next
-                  section'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: app.notify
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: please use the voice command 'section next' instead of 'next
                   section'
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: app.notify
-            type: identifier
-          - children:
-            - children:
-              - text: please use the voice command 'section next' instead of 'next
-                  section'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - arguments:
-            text: f6
-            type: implicit_string
-          children:
-          - text: f6
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: f6
             type: implicit_string
-          children:
-          - text: f6
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
+      type: rule
       children:
-      - children:
-        - children:
-          - text: next
-            type: word
-          type: optional
-        - children:
-          - children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: previous
+              type: word
+            - text: last
+              type: word
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
             - text: section
               type: word
             - text: zone
               type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: app.notify
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: please use the voice command 'section next' instead of 'next
-                  section'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: app.notify
-            type: identifier
-          - children:
-            - children:
-              - text: please use the voice command 'section next' instead of 'next
-                  section'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: app.notify
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
-              - text: please use the voice command 'section next' instead of 'next
+            - type: string
+              children:
+              - text: please use the voice command 'section last' instead of 'last
                   section'
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: app.notify
-            type: identifier
-          - children:
-            - children:
-              - text: please use the voice command 'section next' instead of 'next
-                  section'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - arguments:
-            text: f6
-            type: implicit_string
-          children:
-          - text: f6
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
-          arguments:
-            text: f6
-            type: implicit_string
-          children:
-          - text: f6
-            type: implicit_string
           type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
-            - text: previous
-              type: word
-            - text: last
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
-          - children:
-            - text: section
-              type: word
-            - text: zone
-              type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: app.notify
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: please use the voice command 'section last' instead of 'last
-                  section'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: app.notify
-            type: identifier
-          - children:
-            - children:
-              - text: please use the voice command 'section last' instead of 'last
-                  section'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: app.notify
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: please use the voice command 'section last' instead of 'last
-                  section'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: app.notify
-            type: identifier
-          - children:
-            - children:
-              - text: please use the voice command 'section last' instead of 'last
-                  section'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - arguments:
-            text: shift-f6
-            type: implicit_string
-          children:
-          - text: shift-f6
-            type: implicit_string
-          type: key_action
-        expression:
+          children: []
           arguments:
             text: shift-f6
             type: implicit_string
-          children:
-          - text: shift-f6
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: previous
-              type: word
-            - text: last
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
-          - children:
-            - text: section
-              type: word
-            - text: zone
-              type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
       type: rule
-    script:
       children:
-      - children:
-        - action_name:
-            text: app.notify
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: please use the voice command 'section last' instead of 'last
-                  section'
-                type: string_content
-              type: string
-            type: argument_list
+      - type: seq
+        children:
+        - type: optional
           children:
-          - text: app.notify
-            type: identifier
-          - children:
-            - children:
-              - text: please use the voice command 'section last' instead of 'last
-                  section'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: app.notify
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: please use the voice command 'section last' instead of 'last
-                  section'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: app.notify
-            type: identifier
-          - children:
-            - children:
-              - text: please use the voice command 'section last' instead of 'last
-                  section'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - arguments:
-            text: shift-f6
-            type: implicit_string
-          children:
-          - text: shift-f6
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: shift-f6
-            type: implicit_string
-          children:
-          - text: shift-f6
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
           - text: next
             type: word
-          type: optional
-        - children:
-          - children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
             - text: element
               type: word
             - text: bit
               type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: app.notify
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: please use the voice command 'element next' instead of 'next
-                  element'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: app.notify
-            type: identifier
-          - children:
-            - children:
-              - text: please use the voice command 'element next' instead of 'next
-                  element'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: app.notify
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: please use the voice command 'element next' instead of 'next
-                  element'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: app.notify
-            type: identifier
-          - children:
-            - children:
-              - text: please use the voice command 'element next' instead of 'next
-                  element'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - arguments:
-            text: tab
-            type: implicit_string
-          children:
-          - text: tab
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: tab
-            type: implicit_string
-          children:
-          - text: tab
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - text: next
-            type: word
-          type: optional
-        - children:
-          - children:
-            - text: element
-              type: word
-            - text: bit
-              type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: app.notify
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: please use the voice command 'element next' instead of 'next
-                  element'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: app.notify
-            type: identifier
-          - children:
-            - children:
-              - text: please use the voice command 'element next' instead of 'next
-                  element'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: app.notify
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: please use the voice command 'element next' instead of 'next
                   element'
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: app.notify
-            type: identifier
-          - children:
-            - children:
-              - text: please use the voice command 'element next' instead of 'next
-                  element'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - arguments:
-            text: tab
-            type: implicit_string
-          children:
-          - text: tab
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: tab
             type: implicit_string
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
           children:
-          - text: tab
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: choice
+            children:
             - text: previous
               type: word
             - text: last
               type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
-          - children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
             - text: element
               type: word
             - text: bit
               type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: app.notify
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: please use the voice command 'element last' instead of 'last
-                  element'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: app.notify
-            type: identifier
-          - children:
-            - children:
-              - text: please use the voice command 'element last' instead of 'last
-                  element'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: app.notify
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: please use the voice command 'element last' instead of 'last
-                  element'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: app.notify
-            type: identifier
-          - children:
-            - children:
-              - text: please use the voice command 'element last' instead of 'last
-                  element'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - arguments:
-            text: shift-tab
-            type: implicit_string
-          children:
-          - text: shift-tab
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: shift-tab
-            type: implicit_string
-          children:
-          - text: shift-tab
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: previous
-              type: word
-            - text: last
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - children:
-          - children:
-            - text: element
-              type: word
-            - text: bit
-              type: word
-            type: choice
-          type: parenthesized_rule
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: app.notify
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: please use the voice command 'element last' instead of 'last
-                  element'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: app.notify
-            type: identifier
-          - children:
-            - children:
-              - text: please use the voice command 'element last' instead of 'last
-                  element'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: app.notify
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: please use the voice command 'element last' instead of 'last
                   element'
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: app.notify
-            type: identifier
-          - children:
-            - children:
-              - text: please use the voice command 'element last' instead of 'last
-                  element'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - arguments:
-            text: shift-tab
-            type: implicit_string
-          children:
-          - text: shift-tab
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: shift-tab
             type: implicit_string
-          children:
-          - text: shift-tab
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  type: source_file

@@ -16,99 +16,75 @@ input: |
   tag(): user.anaconda
   # tag(): user.kubectl
 output:
+  type: source_file
   children:
-  - children:
-    - children:
-      - children:
-        - children:
-          - text: os
-            type: identifier
-          - text: ' windows'
-            type: implicit_string
+  - type: context
+    children:
+    - type: or
+      children:
+      - type: and
+        children:
+        - type: match
+          children: []
           key:
             text: os
             type: identifier
           pattern:
             text: ' windows'
             type: implicit_string
-          type: match
-        - children:
-          - text: app.name
-            type: identifier
-          - text: ' Windows PowerShell'
-            type: implicit_string
+        - type: match
+          children: []
           key:
             text: app.name
             type: identifier
           pattern:
             text: ' Windows PowerShell'
             type: implicit_string
-          type: match
-        type: and
-      - children:
-        - children:
-          - text: os
-            type: identifier
-          - text: ' windows'
-            type: implicit_string
+      - type: and
+        children:
+        - type: match
+          children: []
           key:
             text: os
             type: identifier
           pattern:
             text: ' windows'
             type: implicit_string
-          type: match
-        - children:
-          - text: app.exe
-            type: identifier
-          - text: ' powershell.exe'
-            type: implicit_string
+        - type: match
+          children: []
           key:
             text: app.exe
             type: identifier
           pattern:
             text: ' powershell.exe'
             type: implicit_string
-          type: match
-        type: and
-      type: or
-    type: context
   - text: '# makes the commands in generic_terminal available'
     type: comment
-  - children:
-    - text: terminal
-      type: identifier
+  - type: include_tag
+    children: []
     tag:
       text: terminal
       type: identifier
-    type: include_tag
   - text: '# activates the implementation of the commands/functions in generic_terminal'
     type: comment
-  - children:
-    - text: user.generic_windows_shell
-      type: identifier
+  - type: include_tag
+    children: []
     tag:
       text: user.generic_windows_shell
       type: identifier
-    type: include_tag
   - text: '# makes commands for certain applications available'
     type: comment
   - text: '# you can deactivate them if you do not use the application'
     type: comment
-  - children:
-    - text: user.git
-      type: identifier
+  - type: include_tag
+    children: []
     tag:
       text: user.git
       type: identifier
-    type: include_tag
-  - children:
-    - text: user.anaconda
-      type: identifier
+  - type: include_tag
+    children: []
     tag:
       text: user.anaconda
       type: identifier
-    type: include_tag
   - text: '# tag(): user.kubectl'
     type: comment
-  type: source_file

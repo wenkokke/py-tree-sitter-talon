@@ -12,818 +12,260 @@ input: |
   # for consistency with dictation mode and explicit arrow keys if you need them.
   press <user.keys>: key(keys)
 output:
+  type: source_file
   children:
-  - children: []
-    type: context
-  - children:
-    - children:
-      - children:
+  - type: context
+    children: []
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: go
           type: word
-        - capture_name:
+        - type: capture
+          children: []
+          capture_name:
             text: user.arrow_keys
             type: identifier
-          children:
-          - text: user.arrow_keys
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.move_cursor
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: arrow_keys
-                type: identifier
-              type: variable
-              variable_name:
-                text: arrow_keys
-                type: identifier
-            type: argument_list
-          children:
-          - text: user.move_cursor
-            type: identifier
-          - children:
-            - children:
-              - text: arrow_keys
-                type: identifier
-              type: variable
-              variable_name:
-                text: arrow_keys
-                type: identifier
-            type: argument_list
-          type: action
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.move_cursor
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
-              - text: arrow_keys
-                type: identifier
-              type: variable
+            - type: variable
+              children: []
               variable_name:
                 text: arrow_keys
                 type: identifier
-            type: argument_list
-          children:
-          - text: user.move_cursor
-            type: identifier
-          - children:
-            - children:
-              - text: arrow_keys
-                type: identifier
-              type: variable
-              variable_name:
-                text: arrow_keys
-                type: identifier
-            type: argument_list
-          type: action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
-      children:
-      - children:
-        - text: go
-          type: word
-        - capture_name:
-            text: user.arrow_keys
-            type: identifier
-          children:
-          - text: user.arrow_keys
-            type: identifier
-          type: capture
-        type: seq
       type: rule
-    script:
       children:
-      - children:
-        - action_name:
-            text: user.move_cursor
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: arrow_keys
-                type: identifier
-              type: variable
-              variable_name:
-                text: arrow_keys
-                type: identifier
-            type: argument_list
-          children:
-          - text: user.move_cursor
-            type: identifier
-          - children:
-            - children:
-              - text: arrow_keys
-                type: identifier
-              type: variable
-              variable_name:
-                text: arrow_keys
-                type: identifier
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.move_cursor
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: arrow_keys
-                type: identifier
-              type: variable
-              variable_name:
-                text: arrow_keys
-                type: identifier
-            type: argument_list
-          children:
-          - text: user.move_cursor
-            type: identifier
-          - children:
-            - children:
-              - text: arrow_keys
-                type: identifier
-              type: variable
-              variable_name:
-                text: arrow_keys
-                type: identifier
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - capture_name:
+      - type: capture
+        children: []
+        capture_name:
           text: user.letter
           type: identifier
-        children:
-        - text: user.letter
-          type: identifier
-        type: capture
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: letter
-            type: implicit_string
-          children:
-          - text: letter
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: letter
-            type: implicit_string
-          children:
-          - text: letter
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - capture_name:
-          text: user.letter
-          type: identifier
-        children:
-        - text: user.letter
-          type: identifier
-        type: capture
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: letter
-            type: implicit_string
-          children:
-          - text: letter
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: letter
             type: implicit_string
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
           children:
-          - text: letter
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
+          - type: choice
+            children:
             - text: ship
               type: word
             - text: uppercase
               type: word
-            type: choice
-          type: parenthesized_rule
-        - capture_name:
+        - type: capture
+          children: []
+          capture_name:
             text: user.letters
             type: identifier
+        - type: optional
           children:
-          - text: user.letters
-            type: identifier
-          type: capture
-        - children:
-          - children:
-            - children:
+          - type: parenthesized_rule
+            children:
+            - type: choice
+              children:
               - text: lowercase
                 type: word
               - text: sunk
                 type: word
-              type: choice
-            type: parenthesized_rule
-          type: optional
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.insert_formatted
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: letters
-                type: identifier
-              type: variable
-              variable_name:
-                text: letters
-                type: identifier
-            - children:
-              - text: ALL_CAPS
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.insert_formatted
-            type: identifier
-          - children:
-            - children:
-              - text: letters
-                type: identifier
-              type: variable
-              variable_name:
-                text: letters
-                type: identifier
-            - children:
-              - text: ALL_CAPS
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.insert_formatted
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
-              - text: letters
-                type: identifier
-              type: variable
+            - type: variable
+              children: []
               variable_name:
                 text: letters
                 type: identifier
-            - children:
+            - type: string
+              children:
               - text: ALL_CAPS
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.insert_formatted
-            type: identifier
-          - children:
-            - children:
-              - text: letters
-                type: identifier
-              type: variable
-              variable_name:
-                text: letters
-                type: identifier
-            - children:
-              - text: ALL_CAPS
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
-      children:
-      - children:
-        - children:
-          - children:
-            - text: ship
-              type: word
-            - text: uppercase
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - capture_name:
-            text: user.letters
-            type: identifier
-          children:
-          - text: user.letters
-            type: identifier
-          type: capture
-        - children:
-          - children:
-            - children:
-              - text: lowercase
-                type: word
-              - text: sunk
-                type: word
-              type: choice
-            type: parenthesized_rule
-          type: optional
-        type: seq
       type: rule
-    script:
       children:
-      - children:
-        - action_name:
-            text: user.insert_formatted
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: letters
-                type: identifier
-              type: variable
-              variable_name:
-                text: letters
-                type: identifier
-            - children:
-              - text: ALL_CAPS
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.insert_formatted
-            type: identifier
-          - children:
-            - children:
-              - text: letters
-                type: identifier
-              type: variable
-              variable_name:
-                text: letters
-                type: identifier
-            - children:
-              - text: ALL_CAPS
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.insert_formatted
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: letters
-                type: identifier
-              type: variable
-              variable_name:
-                text: letters
-                type: identifier
-            - children:
-              - text: ALL_CAPS
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.insert_formatted
-            type: identifier
-          - children:
-            - children:
-              - text: letters
-                type: identifier
-              type: variable
-              variable_name:
-                text: letters
-                type: identifier
-            - children:
-              - text: ALL_CAPS
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - capture_name:
+      - type: capture
+        children: []
+        capture_name:
           text: user.symbol_key
           type: identifier
-        children:
-        - text: user.symbol_key
-          type: identifier
-        type: capture
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: symbol_key
-            type: implicit_string
-          children:
-          - text: symbol_key
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: symbol_key
-            type: implicit_string
-          children:
-          - text: symbol_key
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - capture_name:
-          text: user.symbol_key
-          type: identifier
-        children:
-        - text: user.symbol_key
-          type: identifier
-        type: capture
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: symbol_key
-            type: implicit_string
-          children:
-          - text: symbol_key
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: symbol_key
             type: implicit_string
-          children:
-          - text: symbol_key
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - capture_name:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: capture
+        children: []
+        capture_name:
           text: user.function_key
           type: identifier
-        children:
-        - text: user.function_key
-          type: identifier
-        type: capture
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: function_key
-            type: implicit_string
-          children:
-          - text: function_key
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: function_key
-            type: implicit_string
-          children:
-          - text: function_key
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - capture_name:
-          text: user.function_key
-          type: identifier
-        children:
-        - text: user.function_key
-          type: identifier
-        type: capture
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: function_key
-            type: implicit_string
-          children:
-          - text: function_key
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: function_key
             type: implicit_string
-          children:
-          - text: function_key
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - capture_name:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: capture
+        children: []
+        capture_name:
           text: user.special_key
           type: identifier
-        children:
-        - text: user.special_key
-          type: identifier
-        type: capture
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: special_key
-            type: implicit_string
-          children:
-          - text: special_key
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: special_key
-            type: implicit_string
-          children:
-          - text: special_key
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - capture_name:
-          text: user.special_key
-          type: identifier
-        children:
-        - text: user.special_key
-          type: identifier
-        type: capture
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: special_key
-            type: implicit_string
-          children:
-          - text: special_key
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: special_key
             type: implicit_string
-          children:
-          - text: special_key
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
-        - capture_name:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: capture
+          children: []
+          capture_name:
             text: user.modifiers
             type: identifier
-          children:
-          - text: user.modifiers
-            type: identifier
-          type: capture
-        - capture_name:
+        - type: capture
+          children: []
+          capture_name:
             text: user.unmodified_key
             type: identifier
-          children:
-          - text: user.unmodified_key
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: '"{modifiers}-{unmodified_key}"'
-            type: implicit_string
-          children:
-          - text: '"{modifiers}-{unmodified_key}"'
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: '"{modifiers}-{unmodified_key}"'
-            type: implicit_string
-          children:
-          - text: '"{modifiers}-{unmodified_key}"'
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - children:
-        - capture_name:
-            text: user.modifiers
-            type: identifier
-          children:
-          - text: user.modifiers
-            type: identifier
-          type: capture
-        - capture_name:
-            text: user.unmodified_key
-            type: identifier
-          children:
-          - text: user.unmodified_key
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: '"{modifiers}-{unmodified_key}"'
-            type: implicit_string
-          children:
-          - text: '"{modifiers}-{unmodified_key}"'
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: '"{modifiers}-{unmodified_key}"'
             type: implicit_string
-          children:
-          - text: '"{modifiers}-{unmodified_key}"'
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
   - text: '# for key combos consisting only of modifiers, eg. `press super`.'
     type: comment
-  - children:
-    - children:
-      - children:
-        - text: press
-          type: word
-        - capture_name:
-            text: user.modifiers
-            type: identifier
-          children:
-          - text: user.modifiers
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: modifiers
-            type: implicit_string
-          children:
-          - text: modifiers
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: modifiers
-            type: implicit_string
-          children:
-          - text: modifiers
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
+      type: rule
       children:
-      - children:
+      - type: seq
+        children:
         - text: press
           type: word
-        - capture_name:
+        - type: capture
+          children: []
+          capture_name:
             text: user.modifiers
             type: identifier
-          children:
-          - text: user.modifiers
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: modifiers
-            type: implicit_string
-          children:
-          - text: modifiers
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: modifiers
             type: implicit_string
-          children:
-          - text: modifiers
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
   - text: '# for consistency with dictation mode and explicit arrow keys if you need
       them.'
     type: comment
-  - children:
-    - children:
-      - children:
-        - text: press
-          type: word
-        - capture_name:
-            text: user.keys
-            type: identifier
-          children:
-          - text: user.keys
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: keys
-            type: implicit_string
-          children:
-          - text: keys
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: keys
-            type: implicit_string
-          children:
-          - text: keys
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
+      type: rule
       children:
-      - children:
+      - type: seq
+        children:
         - text: press
           type: word
-        - capture_name:
+        - type: capture
+          children: []
+          capture_name:
             text: user.keys
             type: identifier
-          children:
-          - text: user.keys
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: keys
-            type: implicit_string
-          children:
-          - text: keys
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: keys
             type: implicit_string
-          children:
-          - text: keys
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  type: source_file

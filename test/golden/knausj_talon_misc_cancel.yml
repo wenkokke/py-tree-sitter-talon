@@ -6,225 +6,78 @@ input: |
   # allows you to say something (eg to a human) that you don't want talon to hear, eg "ignore hey Jerry"
   ignore [<phrase>]$: app.notify("Command ignored")
 output:
+  type: source_file
   children:
-  - children: []
-    type: context
+  - type: context
+    children: []
   - text: '# allows you to prevent a command executing by ending it with "cancel cancel"'
     type: comment
-  - children:
-    - children:
-      - children:
-        - text: cancel
-          type: word
-        - text: cancel
-          type: word
-        type: seq
-      - text: $
-        type: end_anchor
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: skip
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: skip
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: skip
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: skip
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
+      type: rule
       children:
-      - children:
+      - type: seq
+        children:
         - text: cancel
           type: word
         - text: cancel
           type: word
-        type: seq
       - text: $
         type: end_anchor
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: skip
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: skip
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: skip
             type: identifier
           arguments:
+            type: argument_list
             children: []
-            type: argument_list
-          children:
-          - text: skip
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
   - text: '# the actual behavior of "cancel cancel" is implemented in code/cancel.py;
       if you want to use a different phrase you must also change cancel_phrase there.'
     type: comment
-  - text: '# allows you to say something (eg to a human) that you don''t want talon
-      to hear, eg "ignore hey Jerry"'
+  - text: "# allows you to say something (eg to a human) that you don't want talon\
+      \ to hear, eg \"ignore hey Jerry\""
     type: comment
-  - children:
-    - children:
-      - children:
-        - text: ignore
-          type: word
-        - children:
-          - capture_name:
-              text: phrase
-              type: identifier
-            children:
-            - text: phrase
-              type: identifier
-            type: capture
-          type: optional
-        type: seq
-      - text: $
-        type: end_anchor
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: app.notify
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: Command ignored
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: app.notify
-            type: identifier
-          - children:
-            - children:
-              - text: Command ignored
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: app.notify
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: Command ignored
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: app.notify
-            type: identifier
-          - children:
-            - children:
-              - text: Command ignored
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
+      type: rule
       children:
-      - children:
+      - type: seq
+        children:
         - text: ignore
           type: word
-        - children:
-          - capture_name:
+        - type: optional
+          children:
+          - type: capture
+            children: []
+            capture_name:
               text: phrase
               type: identifier
-            children:
-            - text: phrase
-              type: identifier
-            type: capture
-          type: optional
-        type: seq
       - text: $
         type: end_anchor
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: app.notify
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: Command ignored
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: app.notify
-            type: identifier
-          - children:
-            - children:
-              - text: Command ignored
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: app.notify
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: Command ignored
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: app.notify
-            type: identifier
-          - children:
-            - children:
-              - text: Command ignored
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  type: source_file

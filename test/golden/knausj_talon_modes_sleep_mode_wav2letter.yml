@@ -6,118 +6,54 @@ input: |
   #you probably shouldn't have any other commands here
   <phrase>: skip()
 output:
+  type: source_file
   children:
-  - children:
-    - children:
-      - children:
-        - text: mode
-          type: identifier
-        - text: ' sleep'
-          type: implicit_string
+  - type: context
+    children:
+    - type: or
+      children:
+      - type: match
+        children: []
         key:
           text: mode
           type: identifier
         pattern:
           text: ' sleep'
           type: implicit_string
-        type: match
-      - children:
-        - text: speech.engine
-          type: identifier
-        - text: ' wav2letter'
-          type: implicit_string
+      - type: match
+        children: []
         key:
           text: speech.engine
           type: identifier
         pattern:
           text: ' wav2letter'
           type: implicit_string
-        type: match
-      type: or
-    type: context
   - text: '#this exists solely to prevent talon from waking up super easily in sleep
       mode at the moment with wav2letter'
     type: comment
-  - text: '#you probably shouldn''t have any other commands here'
+  - text: "#you probably shouldn't have any other commands here"
     type: comment
-  - children:
-    - children:
-      - capture_name:
-          text: phrase
-          type: identifier
-        children:
-        - text: phrase
-          type: identifier
-        type: capture
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: skip
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: skip
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: skip
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: skip
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
+      type: rule
       children:
-      - capture_name:
+      - type: capture
+        children: []
+        capture_name:
           text: phrase
           type: identifier
-        children:
-        - text: phrase
-          type: identifier
-        type: capture
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: skip
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: skip
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: skip
             type: identifier
           arguments:
+            type: argument_list
             children: []
-            type: argument_list
-          children:
-          - text: skip
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  type: source_file

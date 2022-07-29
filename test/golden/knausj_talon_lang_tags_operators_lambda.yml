@@ -13,30 +13,27 @@ input: |
   # syntax for anonymous functions
   op lambda: user.code_operator_lambda()
 output:
+  type: source_file
   children:
-  - children:
-    - children:
-      - text: tag
-        type: identifier
-      - text: ' user.code_operators_lambda'
-        type: implicit_string
+  - type: context
+    children:
+    - type: match
+      children: []
       key:
         text: tag
         type: identifier
       pattern:
         text: ' user.code_operators_lambda'
         type: implicit_string
-      type: match
-    type: context
-  - text: '# In many languages, anonymous functions aren''t merely infix syntax:'
+  - text: "# In many languages, anonymous functions aren't merely infix syntax:"
     type: comment
   - text: '#'
     type: comment
-  - text: '#       Haskell  ''\x -> bla'''
+  - text: "#       Haskell  '\\x -> bla'"
     type: comment
-  - text: '#       OCaml    ''fun x -> bla'''
+  - text: "#       OCaml    'fun x -> bla'"
     type: comment
-  - text: '#       Rust     ''|x| { bla }'''
+  - text: "#       Rust     '|x| { bla }'"
     type: comment
   - text: '#'
     type: comment
@@ -44,82 +41,28 @@ output:
     type: comment
   - text: '# syntax for anonymous functions'
     type: comment
-  - children:
-    - children:
-      - children:
-        - text: op
-          type: word
-        - text: lambda
-          type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.code_operator_lambda
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.code_operator_lambda
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.code_operator_lambda
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.code_operator_lambda
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
+      type: rule
       children:
-      - children:
+      - type: seq
+        children:
         - text: op
           type: word
         - text: lambda
           type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.code_operator_lambda
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.code_operator_lambda
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.code_operator_lambda
             type: identifier
           arguments:
+            type: argument_list
             children: []
-            type: argument_list
-          children:
-          - text: user.code_operator_lambda
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  type: source_file

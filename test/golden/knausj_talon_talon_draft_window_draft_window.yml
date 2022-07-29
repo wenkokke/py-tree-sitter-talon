@@ -48,2479 +48,590 @@ input: |
       user.draft_select(draft_anchor_1, draft_anchor_2, 1)
       user.formatters_reformat_selection(user.formatters)
 output:
+  type: source_file
   children:
   - text: '# These are active when we have focus on the draft window'
     type: comment
-  - children:
-    - children:
-      - text: title
-        type: identifier
-      - text: Talon Draft
-        type: implicit_string
+  - type: context
+    children:
+    - type: match
+      children: []
       key:
         text: title
         type: identifier
       pattern:
         text: Talon Draft
         type: implicit_string
-      type: match
-    type: context
-  - children:
-    - text: '# Enable ''Smart dictation mode'', see https://github.com/knausj85/knausj_talon/pull/356'
+  - type: settings
+    children:
+    - text: "# Enable 'Smart dictation mode', see https://github.com/knausj85/knausj_talon/pull/356"
       type: comment
-    - children:
-      - children:
-        - text: user.context_sensitive_dictation
-          type: identifier
-        - text: '1'
-          type: integer
+    - type: block
+      children:
+      - type: assignment
+        children: []
         left:
           text: user.context_sensitive_dictation
           type: identifier
         right:
           text: '1'
           type: integer
-        type: assignment
-      type: block
-    type: settings
   - text: '# Replace a single word with a phrase'
     type: comment
-  - children:
-    - children:
-      - children:
-        - text: replace
-          type: word
-        - capture_name:
-            text: user.draft_anchor
-            type: identifier
-          children:
-          - text: user.draft_anchor
-            type: identifier
-          type: capture
-        - text: with
-          type: word
-        - capture_name:
-            text: user.text
-            type: identifier
-          children:
-          - text: user.text
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.draft_select
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.draft_select
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.draft_select
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.draft_select
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - text: result
-          type: identifier
-        - action_name:
-            text: user.formatted_text
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: text
-                type: identifier
-              type: variable
-              variable_name:
-                text: text
-                type: identifier
-            - children:
-              - text: NOOP
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.formatted_text
-            type: identifier
-          - children:
-            - children:
-              - text: text
-                type: identifier
-              type: variable
-              variable_name:
-                text: text
-                type: identifier
-            - children:
-              - text: NOOP
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        left:
-          text: result
-          type: identifier
-        right:
-          action_name:
-            text: user.formatted_text
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: text
-                type: identifier
-              type: variable
-              variable_name:
-                text: text
-                type: identifier
-            - children:
-              - text: NOOP
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.formatted_text
-            type: identifier
-          - children:
-            - children:
-              - text: text
-                type: identifier
-              type: variable
-              variable_name:
-                text: text
-                type: identifier
-            - children:
-              - text: NOOP
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: assignment
-      - children:
-        - action_name:
-            text: insert
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: result
-                type: identifier
-              type: variable
-              variable_name:
-                text: result
-                type: identifier
-            type: argument_list
-          children:
-          - text: insert
-            type: identifier
-          - children:
-            - children:
-              - text: result
-                type: identifier
-              type: variable
-              variable_name:
-                text: result
-                type: identifier
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: result
-                type: identifier
-              type: variable
-              variable_name:
-                text: result
-                type: identifier
-            type: argument_list
-          children:
-          - text: insert
-            type: identifier
-          - children:
-            - children:
-              - text: result
-                type: identifier
-              type: variable
-              variable_name:
-                text: result
-                type: identifier
-            type: argument_list
-          type: action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
+      type: rule
       children:
-      - children:
+      - type: seq
+        children:
         - text: replace
           type: word
-        - capture_name:
+        - type: capture
+          children: []
+          capture_name:
             text: user.draft_anchor
             type: identifier
-          children:
-          - text: user.draft_anchor
-            type: identifier
-          type: capture
         - text: with
           type: word
-        - capture_name:
+        - type: capture
+          children: []
+          capture_name:
             text: user.text
             type: identifier
-          children:
-          - text: user.text
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.draft_select
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.draft_select
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.draft_select
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: '{'
                 type: string_content
               - text: draft_anchor
                 type: string_content
               - text: '}'
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.draft_select
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - text: result
-          type: identifier
-        - action_name:
-            text: user.formatted_text
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: text
-                type: identifier
-              type: variable
-              variable_name:
-                text: text
-                type: identifier
-            - children:
-              - text: NOOP
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.formatted_text
-            type: identifier
-          - children:
-            - children:
-              - text: text
-                type: identifier
-              type: variable
-              variable_name:
-                text: text
-                type: identifier
-            - children:
-              - text: NOOP
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: assignment
+        children: []
         left:
           text: result
           type: identifier
         right:
+          type: action
+          children: []
           action_name:
             text: user.formatted_text
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
-              - text: text
-                type: identifier
-              type: variable
+            - type: variable
+              children: []
               variable_name:
                 text: text
                 type: identifier
-            - children:
+            - type: string
+              children:
               - text: NOOP
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.formatted_text
-            type: identifier
-          - children:
-            - children:
-              - text: text
-                type: identifier
-              type: variable
-              variable_name:
-                text: text
-                type: identifier
-            - children:
-              - text: NOOP
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: assignment
-      - children:
-        - action_name:
-            text: insert
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: result
-                type: identifier
-              type: variable
-              variable_name:
-                text: result
-                type: identifier
-            type: argument_list
-          children:
-          - text: insert
-            type: identifier
-          - children:
-            - children:
-              - text: result
-                type: identifier
-              type: variable
-              variable_name:
-                text: result
-                type: identifier
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: insert
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
-              - text: result
-                type: identifier
-              type: variable
+            - type: variable
+              children: []
               variable_name:
                 text: result
                 type: identifier
-            type: argument_list
-          children:
-          - text: insert
-            type: identifier
-          - children:
-            - children:
-              - text: result
-                type: identifier
-              type: variable
-              variable_name:
-                text: result
-                type: identifier
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
   - text: '# Position cursor before word'
     type: comment
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
-            - text: pre
-              type: word
-            - text: cursor
-              type: word
-            - children:
-              - text: cursor
-                type: word
-              - text: before
-                type: word
-              type: seq
-            type: choice
-          type: parenthesized_rule
-        - capture_name:
-            text: user.draft_anchor
-            type: identifier
-          children:
-          - text: user.draft_anchor
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.draft_position_caret
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.draft_position_caret
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.draft_position_caret
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.draft_position_caret
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
+      type: rule
       children:
-      - children:
-        - children:
-          - children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
             - text: pre
               type: word
             - text: cursor
               type: word
-            - children:
+            - type: seq
+              children:
               - text: cursor
                 type: word
               - text: before
                 type: word
-              type: seq
-            type: choice
-          type: parenthesized_rule
-        - capture_name:
+        - type: capture
+          children: []
+          capture_name:
             text: user.draft_anchor
             type: identifier
-          children:
-          - text: user.draft_anchor
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.draft_position_caret
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.draft_position_caret
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.draft_position_caret
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: '{'
                 type: string_content
               - text: draft_anchor
                 type: string_content
               - text: '}'
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.draft_position_caret
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
   - text: '# Position cursor after word'
     type: comment
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
-            - text: post
-              type: word
-            - children:
-              - text: cursor
-                type: word
-              - text: after
-                type: word
-              type: seq
-            type: choice
-          type: parenthesized_rule
-        - capture_name:
-            text: user.draft_anchor
-            type: identifier
-          children:
-          - text: user.draft_anchor
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.draft_position_caret
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            - text: '1'
-              type: integer
-            type: argument_list
-          children:
-          - text: user.draft_position_caret
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            - text: '1'
-              type: integer
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.draft_position_caret
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            - text: '1'
-              type: integer
-            type: argument_list
-          children:
-          - text: user.draft_position_caret
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            - text: '1'
-              type: integer
-            type: argument_list
-          type: action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
+      type: rule
       children:
-      - children:
-        - children:
-          - children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
             - text: post
               type: word
-            - children:
+            - type: seq
+              children:
               - text: cursor
                 type: word
               - text: after
                 type: word
-              type: seq
-            type: choice
-          type: parenthesized_rule
-        - capture_name:
+        - type: capture
+          children: []
+          capture_name:
             text: user.draft_anchor
             type: identifier
-          children:
-          - text: user.draft_anchor
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.draft_position_caret
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            - text: '1'
-              type: integer
-            type: argument_list
-          children:
-          - text: user.draft_position_caret
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            - text: '1'
-              type: integer
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.draft_position_caret
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: '{'
                 type: string_content
               - text: draft_anchor
                 type: string_content
               - text: '}'
                 type: string_content
-              type: string
             - text: '1'
               type: integer
-            type: argument_list
-          children:
-          - text: user.draft_position_caret
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            - text: '1'
-              type: integer
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
   - text: '# Select a whole word'
     type: comment
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
-            - text: take
-              type: word
-            - text: select
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - capture_name:
-            text: user.draft_anchor
-            type: identifier
-          children:
-          - text: user.draft_anchor
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.draft_select
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.draft_select
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.draft_select
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.draft_select
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
+      type: rule
       children:
-      - children:
-        - children:
-          - children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
             - text: take
               type: word
             - text: select
               type: word
-            type: choice
-          type: parenthesized_rule
-        - capture_name:
+        - type: capture
+          children: []
+          capture_name:
             text: user.draft_anchor
             type: identifier
-          children:
-          - text: user.draft_anchor
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.draft_select
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.draft_select
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.draft_select
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: '{'
                 type: string_content
               - text: draft_anchor
                 type: string_content
               - text: '}'
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.draft_select
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
   - text: '# Select a range of words'
     type: comment
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
-            - text: take
-              type: word
-            - text: select
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - capture_name:
-            text: user.draft_anchor
-            type: identifier
-          children:
-          - text: user.draft_anchor
-            type: identifier
-          type: capture
-        - children:
-          - children:
-            - text: through
-              type: word
-            - text: past
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - capture_name:
-            text: user.draft_anchor
-            type: identifier
-          children:
-          - text: user.draft_anchor
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.draft_select
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor_1
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor_2
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.draft_select
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor_1
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor_2
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.draft_select
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor_1
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor_2
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.draft_select
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor_1
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor_2
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
+      type: rule
       children:
-      - children:
-        - children:
-          - children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
             - text: take
               type: word
             - text: select
               type: word
-            type: choice
-          type: parenthesized_rule
-        - capture_name:
+        - type: capture
+          children: []
+          capture_name:
             text: user.draft_anchor
             type: identifier
+        - type: parenthesized_rule
           children:
-          - text: user.draft_anchor
-            type: identifier
-          type: capture
-        - children:
-          - children:
+          - type: choice
+            children:
             - text: through
               type: word
             - text: past
               type: word
-            type: choice
-          type: parenthesized_rule
-        - capture_name:
+        - type: capture
+          children: []
+          capture_name:
             text: user.draft_anchor
             type: identifier
-          children:
-          - text: user.draft_anchor
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.draft_select
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor_1
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor_2
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.draft_select
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor_1
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor_2
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.draft_select
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: '{'
                 type: string_content
               - text: draft_anchor_1
                 type: string_content
               - text: '}'
                 type: string_content
-              type: string
-            - children:
+            - type: string
+              children:
               - text: '{'
                 type: string_content
               - text: draft_anchor_2
                 type: string_content
               - text: '}'
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: user.draft_select
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor_1
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor_2
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
   - text: '# Delete a word'
     type: comment
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
-            - text: change
-              type: word
-            - text: chuck
-              type: word
-            - text: clear
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - capture_name:
-            text: user.draft_anchor
-            type: identifier
-          children:
-          - text: user.draft_anchor
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.draft_select
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            - children: []
-              type: string
-            - text: '1'
-              type: integer
-            type: argument_list
-          children:
-          - text: user.draft_select
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            - children: []
-              type: string
-            - text: '1'
-              type: integer
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.draft_select
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            - children: []
-              type: string
-            - text: '1'
-              type: integer
-            type: argument_list
-          children:
-          - text: user.draft_select
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            - children: []
-              type: string
-            - text: '1'
-              type: integer
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - arguments:
-            text: backspace
-            type: implicit_string
-          children:
-          - text: backspace
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: backspace
-            type: implicit_string
-          children:
-          - text: backspace
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
+      type: rule
       children:
-      - children:
-        - children:
-          - children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
             - text: change
               type: word
             - text: chuck
               type: word
             - text: clear
               type: word
-            type: choice
-          type: parenthesized_rule
-        - capture_name:
+        - type: capture
+          children: []
+          capture_name:
             text: user.draft_anchor
             type: identifier
-          children:
-          - text: user.draft_anchor
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.draft_select
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            - children: []
-              type: string
-            - text: '1'
-              type: integer
-            type: argument_list
-          children:
-          - text: user.draft_select
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            - children: []
-              type: string
-            - text: '1'
-              type: integer
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.draft_select
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: '{'
                 type: string_content
               - text: draft_anchor
                 type: string_content
               - text: '}'
                 type: string_content
-              type: string
-            - children: []
-              type: string
+            - type: string
+              children: []
             - text: '1'
               type: integer
-            type: argument_list
-          children:
-          - text: user.draft_select
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            - children: []
-              type: string
-            - text: '1'
-              type: integer
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - arguments:
-            text: backspace
-            type: implicit_string
-          children:
-          - text: backspace
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: backspace
             type: implicit_string
-          children:
-          - text: backspace
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
   - text: '# Delete a range of words'
     type: comment
-  - children:
-    - children:
-      - children:
-        - children:
-          - children:
-            - text: change
-              type: word
-            - text: chuck
-              type: word
-            - text: clear
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - capture_name:
-            text: user.draft_anchor
-            type: identifier
-          children:
-          - text: user.draft_anchor
-            type: identifier
-          type: capture
-        - children:
-          - children:
-            - text: through
-              type: word
-            - text: past
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - capture_name:
-            text: user.draft_anchor
-            type: identifier
-          children:
-          - text: user.draft_anchor
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.draft_select
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: draft_anchor_1
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_anchor_1
-                type: identifier
-            - children:
-              - text: draft_anchor_2
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_anchor_2
-                type: identifier
-            - text: '1'
-              type: integer
-            type: argument_list
-          children:
-          - text: user.draft_select
-            type: identifier
-          - children:
-            - children:
-              - text: draft_anchor_1
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_anchor_1
-                type: identifier
-            - children:
-              - text: draft_anchor_2
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_anchor_2
-                type: identifier
-            - text: '1'
-              type: integer
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.draft_select
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: draft_anchor_1
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_anchor_1
-                type: identifier
-            - children:
-              - text: draft_anchor_2
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_anchor_2
-                type: identifier
-            - text: '1'
-              type: integer
-            type: argument_list
-          children:
-          - text: user.draft_select
-            type: identifier
-          - children:
-            - children:
-              - text: draft_anchor_1
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_anchor_1
-                type: identifier
-            - children:
-              - text: draft_anchor_2
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_anchor_2
-                type: identifier
-            - text: '1'
-              type: integer
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - arguments:
-            text: backspace
-            type: implicit_string
-          children:
-          - text: backspace
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: backspace
-            type: implicit_string
-          children:
-          - text: backspace
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
+      type: rule
       children:
-      - children:
-        - children:
-          - children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
             - text: change
               type: word
             - text: chuck
               type: word
             - text: clear
               type: word
-            type: choice
-          type: parenthesized_rule
-        - capture_name:
+        - type: capture
+          children: []
+          capture_name:
             text: user.draft_anchor
             type: identifier
+        - type: parenthesized_rule
           children:
-          - text: user.draft_anchor
-            type: identifier
-          type: capture
-        - children:
-          - children:
+          - type: choice
+            children:
             - text: through
               type: word
             - text: past
               type: word
-            type: choice
-          type: parenthesized_rule
-        - capture_name:
+        - type: capture
+          children: []
+          capture_name:
             text: user.draft_anchor
             type: identifier
-          children:
-          - text: user.draft_anchor
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.draft_select
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: draft_anchor_1
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_anchor_1
-                type: identifier
-            - children:
-              - text: draft_anchor_2
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_anchor_2
-                type: identifier
-            - text: '1'
-              type: integer
-            type: argument_list
-          children:
-          - text: user.draft_select
-            type: identifier
-          - children:
-            - children:
-              - text: draft_anchor_1
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_anchor_1
-                type: identifier
-            - children:
-              - text: draft_anchor_2
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_anchor_2
-                type: identifier
-            - text: '1'
-              type: integer
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.draft_select
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
-              - text: draft_anchor_1
-                type: identifier
-              type: variable
+            - type: variable
+              children: []
               variable_name:
                 text: draft_anchor_1
                 type: identifier
-            - children:
-              - text: draft_anchor_2
-                type: identifier
-              type: variable
+            - type: variable
+              children: []
               variable_name:
                 text: draft_anchor_2
                 type: identifier
             - text: '1'
               type: integer
-            type: argument_list
-          children:
-          - text: user.draft_select
-            type: identifier
-          - children:
-            - children:
-              - text: draft_anchor_1
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_anchor_1
-                type: identifier
-            - children:
-              - text: draft_anchor_2
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_anchor_2
-                type: identifier
-            - text: '1'
-              type: integer
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - arguments:
-            text: backspace
-            type: implicit_string
-          children:
-          - text: backspace
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: backspace
             type: implicit_string
-          children:
-          - text: backspace
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
   - text: '# reformat word'
     type: comment
-  - children:
-    - children:
-      - children:
-        - capture_name:
-            text: user.formatters
-            type: identifier
-          children:
-          - text: user.formatters
-            type: identifier
-          type: capture
-        - text: word
-          type: word
-        - capture_name:
-            text: user.draft_anchor
-            type: identifier
-          children:
-          - text: user.draft_anchor
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.draft_select
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            - children: []
-              type: string
-            - text: '1'
-              type: integer
-            type: argument_list
-          children:
-          - text: user.draft_select
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            - children: []
-              type: string
-            - text: '1'
-              type: integer
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.draft_select
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            - children: []
-              type: string
-            - text: '1'
-              type: integer
-            type: argument_list
-          children:
-          - text: user.draft_select
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            - children: []
-              type: string
-            - text: '1'
-              type: integer
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.formatters_reformat_selection
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: user.formatters
-                type: identifier
-              type: variable
-              variable_name:
-                text: user.formatters
-                type: identifier
-            type: argument_list
-          children:
-          - text: user.formatters_reformat_selection
-            type: identifier
-          - children:
-            - children:
-              - text: user.formatters
-                type: identifier
-              type: variable
-              variable_name:
-                text: user.formatters
-                type: identifier
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.formatters_reformat_selection
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: user.formatters
-                type: identifier
-              type: variable
-              variable_name:
-                text: user.formatters
-                type: identifier
-            type: argument_list
-          children:
-          - text: user.formatters_reformat_selection
-            type: identifier
-          - children:
-            - children:
-              - text: user.formatters
-                type: identifier
-              type: variable
-              variable_name:
-                text: user.formatters
-                type: identifier
-            type: argument_list
-          type: action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
+      type: rule
       children:
-      - children:
-        - capture_name:
+      - type: seq
+        children:
+        - type: capture
+          children: []
+          capture_name:
             text: user.formatters
             type: identifier
-          children:
-          - text: user.formatters
-            type: identifier
-          type: capture
         - text: word
           type: word
-        - capture_name:
+        - type: capture
+          children: []
+          capture_name:
             text: user.draft_anchor
             type: identifier
-          children:
-          - text: user.draft_anchor
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
     script:
-      children:
-      - children:
-        - action_name:
-            text: user.draft_select
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            - children: []
-              type: string
-            - text: '1'
-              type: integer
-            type: argument_list
-          children:
-          - text: user.draft_select
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            - children: []
-              type: string
-            - text: '1'
-              type: integer
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.draft_select
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            - children: []
-              type: string
-            - text: '1'
-              type: integer
-            type: argument_list
-          children:
-          - text: user.draft_select
-            type: identifier
-          - children:
-            - children:
-              - text: '{'
-                type: string_content
-              - text: draft_anchor
-                type: string_content
-              - text: '}'
-                type: string_content
-              type: string
-            - children: []
-              type: string
-            - text: '1'
-              type: integer
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.formatters_reformat_selection
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: user.formatters
-                type: identifier
-              type: variable
-              variable_name:
-                text: user.formatters
-                type: identifier
-            type: argument_list
-          children:
-          - text: user.formatters_reformat_selection
-            type: identifier
-          - children:
-            - children:
-              - text: user.formatters
-                type: identifier
-              type: variable
-              variable_name:
-                text: user.formatters
-                type: identifier
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.formatters_reformat_selection
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: user.formatters
-                type: identifier
-              type: variable
-              variable_name:
-                text: user.formatters
-                type: identifier
-            type: argument_list
-          children:
-          - text: user.formatters_reformat_selection
-            type: identifier
-          - children:
-            - children:
-              - text: user.formatters
-                type: identifier
-              type: variable
-              variable_name:
-                text: user.formatters
-                type: identifier
-            type: argument_list
-          type: action
-        type: expression
       type: block
-    type: command
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.draft_select
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: '{'
+                type: string_content
+              - text: draft_anchor
+                type: string_content
+              - text: '}'
+                type: string_content
+            - type: string
+              children: []
+            - text: '1'
+              type: integer
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.formatters_reformat_selection
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children: []
+              variable_name:
+                text: user.formatters
+                type: identifier
   - text: '# reformat range'
     type: comment
-  - children:
-    - children:
-      - children:
-        - capture_name:
-            text: user.formatters
-            type: identifier
-          children:
-          - text: user.formatters
-            type: identifier
-          type: capture
-        - capture_name:
-            text: user.draft_anchor
-            type: identifier
-          children:
-          - text: user.draft_anchor
-            type: identifier
-          type: capture
-        - children:
-          - children:
-            - text: through
-              type: word
-            - text: past
-              type: word
-            type: choice
-          type: parenthesized_rule
-        - capture_name:
-            text: user.draft_anchor
-            type: identifier
-          children:
-          - text: user.draft_anchor
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.draft_select
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: draft_anchor_1
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_anchor_1
-                type: identifier
-            - children:
-              - text: draft_anchor_2
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_anchor_2
-                type: identifier
-            - text: '1'
-              type: integer
-            type: argument_list
-          children:
-          - text: user.draft_select
-            type: identifier
-          - children:
-            - children:
-              - text: draft_anchor_1
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_anchor_1
-                type: identifier
-            - children:
-              - text: draft_anchor_2
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_anchor_2
-                type: identifier
-            - text: '1'
-              type: integer
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.draft_select
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: draft_anchor_1
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_anchor_1
-                type: identifier
-            - children:
-              - text: draft_anchor_2
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_anchor_2
-                type: identifier
-            - text: '1'
-              type: integer
-            type: argument_list
-          children:
-          - text: user.draft_select
-            type: identifier
-          - children:
-            - children:
-              - text: draft_anchor_1
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_anchor_1
-                type: identifier
-            - children:
-              - text: draft_anchor_2
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_anchor_2
-                type: identifier
-            - text: '1'
-              type: integer
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.formatters_reformat_selection
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: user.formatters
-                type: identifier
-              type: variable
-              variable_name:
-                text: user.formatters
-                type: identifier
-            type: argument_list
-          children:
-          - text: user.formatters_reformat_selection
-            type: identifier
-          - children:
-            - children:
-              - text: user.formatters
-                type: identifier
-              type: variable
-              variable_name:
-                text: user.formatters
-                type: identifier
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.formatters_reformat_selection
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: user.formatters
-                type: identifier
-              type: variable
-              variable_name:
-                text: user.formatters
-                type: identifier
-            type: argument_list
-          children:
-          - text: user.formatters_reformat_selection
-            type: identifier
-          - children:
-            - children:
-              - text: user.formatters
-                type: identifier
-              type: variable
-              variable_name:
-                text: user.formatters
-                type: identifier
-            type: argument_list
-          type: action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
+      type: rule
       children:
-      - children:
-        - capture_name:
+      - type: seq
+        children:
+        - type: capture
+          children: []
+          capture_name:
             text: user.formatters
             type: identifier
-          children:
-          - text: user.formatters
-            type: identifier
-          type: capture
-        - capture_name:
+        - type: capture
+          children: []
+          capture_name:
             text: user.draft_anchor
             type: identifier
+        - type: parenthesized_rule
           children:
-          - text: user.draft_anchor
-            type: identifier
-          type: capture
-        - children:
-          - children:
+          - type: choice
+            children:
             - text: through
               type: word
             - text: past
               type: word
-            type: choice
-          type: parenthesized_rule
-        - capture_name:
+        - type: capture
+          children: []
+          capture_name:
             text: user.draft_anchor
             type: identifier
-          children:
-          - text: user.draft_anchor
-            type: identifier
-          type: capture
-        type: seq
-      type: rule
     script:
-      children:
-      - children:
-        - action_name:
-            text: user.draft_select
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: draft_anchor_1
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_anchor_1
-                type: identifier
-            - children:
-              - text: draft_anchor_2
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_anchor_2
-                type: identifier
-            - text: '1'
-              type: integer
-            type: argument_list
-          children:
-          - text: user.draft_select
-            type: identifier
-          - children:
-            - children:
-              - text: draft_anchor_1
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_anchor_1
-                type: identifier
-            - children:
-              - text: draft_anchor_2
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_anchor_2
-                type: identifier
-            - text: '1'
-              type: integer
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.draft_select
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: draft_anchor_1
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_anchor_1
-                type: identifier
-            - children:
-              - text: draft_anchor_2
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_anchor_2
-                type: identifier
-            - text: '1'
-              type: integer
-            type: argument_list
-          children:
-          - text: user.draft_select
-            type: identifier
-          - children:
-            - children:
-              - text: draft_anchor_1
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_anchor_1
-                type: identifier
-            - children:
-              - text: draft_anchor_2
-                type: identifier
-              type: variable
-              variable_name:
-                text: draft_anchor_2
-                type: identifier
-            - text: '1'
-              type: integer
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: user.formatters_reformat_selection
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: user.formatters
-                type: identifier
-              type: variable
-              variable_name:
-                text: user.formatters
-                type: identifier
-            type: argument_list
-          children:
-          - text: user.formatters_reformat_selection
-            type: identifier
-          - children:
-            - children:
-              - text: user.formatters
-                type: identifier
-              type: variable
-              variable_name:
-                text: user.formatters
-                type: identifier
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.formatters_reformat_selection
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: user.formatters
-                type: identifier
-              type: variable
-              variable_name:
-                text: user.formatters
-                type: identifier
-            type: argument_list
-          children:
-          - text: user.formatters_reformat_selection
-            type: identifier
-          - children:
-            - children:
-              - text: user.formatters
-                type: identifier
-              type: variable
-              variable_name:
-                text: user.formatters
-                type: identifier
-            type: argument_list
-          type: action
-        type: expression
       type: block
-    type: command
-  type: source_file
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.draft_select
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children: []
+              variable_name:
+                text: draft_anchor_1
+                type: identifier
+            - type: variable
+              children: []
+              variable_name:
+                text: draft_anchor_2
+                type: identifier
+            - text: '1'
+              type: integer
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.formatters_reformat_selection
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children: []
+              variable_name:
+                text: user.formatters
+                type: identifier

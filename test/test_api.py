@@ -1,8 +1,12 @@
 from collections.abc import Generator
-import tree_sitter_talon as talon
 import inspect
 import pytest
 import re
+import tree_sitter_talon
+import typing
+
+
+Context: typing.TypeAlias = typing.Union[None, typing.Mapping[str, typing.Any]]
 
 
 def short(sig: inspect.Signature) -> str:
@@ -16,23 +20,25 @@ def short(sig: inspect.Signature) -> str:
     return out
 
 
-def function_signatures(object: object) -> Generator[str, None, None]:
+def function_signatures(
+    object: object, ctx: Context = None
+) -> Generator[str, None, None]:
     for name, fun in inspect.getmembers(object, inspect.isfunction):
         if not (name.startswith("_") or name in ["to_dict", "to_json"]):
             try:
-                funsig = inspect.signature(fun, eval_str=True)
+                funsig = inspect.signature(fun, globals=ctx, eval_str=True)
                 yield f"{name}{short(funsig)}"
             except ValueError:
                 pass
 
 
-def class_signatures(object: object) -> Generator[str, None, None]:
+def class_signatures(object: object, ctx: Context = None) -> Generator[str, None, None]:
     for name, cls in inspect.getmembers(object, inspect.isclass):
         if not name.startswith("_"):
             try:
-                clssig = inspect.signature(cls, eval_str=True)
+                clssig = inspect.signature(cls, globals=ctx, eval_str=True)
                 yield f"{name}{short(clssig)}"
-                for funsigstr in function_signatures(cls):
+                for funsigstr in function_signatures(cls, ctx=ctx):
                     yield f"  {funsigstr}"
             except ValueError:
                 pass
@@ -42,10 +48,12 @@ def class_signatures(object: object) -> Generator[str, None, None]:
 def test_talon_api(golden):
     assert golden["input"] is None
 
+    ctx = globals() | tree_sitter_talon.__dict__
+
     output: list[str] = []
-    output.extend(function_signatures(talon.__class__))
-    output.extend(function_signatures(talon))
-    output.extend(class_signatures(talon.__class__))
-    output.extend(class_signatures(talon))
+    output.extend(function_signatures(tree_sitter_talon.__class__, ctx=ctx))
+    output.extend(function_signatures(tree_sitter_talon, ctx=ctx))
+    output.extend(class_signatures(tree_sitter_talon.__class__, ctx=ctx))
+    output.extend(class_signatures(tree_sitter_talon, ctx=ctx))
 
     assert "\n".join(output) == golden.out["output"]

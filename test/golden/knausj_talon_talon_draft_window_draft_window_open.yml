@@ -12,226 +12,101 @@ input: |
     # https://github.com/talonvoice/talon/issues/254#issuecomment-789355238
     # user.paste(content)
 output:
+  type: source_file
   children:
   - text: '# These are available when the draft window is open, but not necessarily
       focussed'
     type: comment
-  - children:
-    - children:
-      - text: tag
-        type: identifier
-      - text: ' user.draft_window_showing'
-        type: implicit_string
+  - type: context
+    children:
+    - type: match
+      children: []
       key:
         text: tag
         type: identifier
       pattern:
         text: ' user.draft_window_showing'
         type: implicit_string
-      type: match
-    type: context
-  - children:
-    - children:
-      - children:
-        - text: draft
-          type: word
-        - text: hide
-          type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: user.draft_hide
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.draft_hide
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.draft_hide
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.draft_hide
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
+      type: rule
       children:
-      - children:
+      - type: seq
+        children:
         - text: draft
           type: word
         - text: hide
           type: word
-        type: seq
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - action_name:
-            text: user.draft_hide
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.draft_hide
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.draft_hide
             type: identifier
           arguments:
+            type: argument_list
             children: []
-            type: argument_list
-          children:
-          - text: user.draft_hide
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
-      - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
         - text: draft
           type: word
         - text: submit
           type: word
-        type: seq
-      type: rule
-    - children:
-      - children:
-        - text: content
-          type: identifier
-        - action_name:
-            text: user.draft_get_text
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.draft_get_text
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
+    script:
+      type: block
+      children:
+      - type: assignment
+        children: []
         left:
           text: content
           type: identifier
         right:
+          type: action
+          children: []
           action_name:
             text: user.draft_get_text
             type: identifier
           arguments:
+            type: argument_list
             children: []
-            type: argument_list
-          children:
-          - text: user.draft_get_text
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: assignment
-      - children:
-        - action_name:
-            text: user.draft_hide
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.draft_hide
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: user.draft_hide
             type: identifier
           arguments:
+            type: argument_list
             children: []
-            type: argument_list
-          children:
-          - text: user.draft_hide
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: insert
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: content
-                type: identifier
-              type: variable
-              variable_name:
-                text: content
-                type: identifier
-            type: argument_list
-          children:
-          - text: insert
-            type: identifier
-          - children:
-            - children:
-              - text: content
-                type: identifier
-              type: variable
-              variable_name:
-                text: content
-                type: identifier
-            type: argument_list
-          type: action
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: insert
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
-              - text: content
-                type: identifier
-              type: variable
+            - type: variable
+              children: []
               variable_name:
                 text: content
                 type: identifier
-            type: argument_list
-          children:
-          - text: insert
-            type: identifier
-          - children:
-            - children:
-              - text: content
-                type: identifier
-              type: variable
-              variable_name:
-                text: content
-                type: identifier
-            type: argument_list
-          type: action
-        type: expression
       - text: '# user.paste may be somewhat faster, but seems to be unreliable on
           MacOSX, see'
         type: comment
@@ -239,139 +114,3 @@ output:
         type: comment
       - text: '# user.paste(content)'
         type: comment
-      type: block
-    rule:
-      children:
-      - children:
-        - text: draft
-          type: word
-        - text: submit
-          type: word
-        type: seq
-      type: rule
-    script:
-      children:
-      - children:
-        - text: content
-          type: identifier
-        - action_name:
-            text: user.draft_get_text
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.draft_get_text
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        left:
-          text: content
-          type: identifier
-        right:
-          action_name:
-            text: user.draft_get_text
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.draft_get_text
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: assignment
-      - children:
-        - action_name:
-            text: user.draft_hide
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.draft_hide
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: user.draft_hide
-            type: identifier
-          arguments:
-            children: []
-            type: argument_list
-          children:
-          - text: user.draft_hide
-            type: identifier
-          - children: []
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - action_name:
-            text: insert
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: content
-                type: identifier
-              type: variable
-              variable_name:
-                text: content
-                type: identifier
-            type: argument_list
-          children:
-          - text: insert
-            type: identifier
-          - children:
-            - children:
-              - text: content
-                type: identifier
-              type: variable
-              variable_name:
-                text: content
-                type: identifier
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: content
-                type: identifier
-              type: variable
-              variable_name:
-                text: content
-                type: identifier
-            type: argument_list
-          children:
-          - text: insert
-            type: identifier
-          - children:
-            - children:
-              - text: content
-                type: identifier
-              type: variable
-              variable_name:
-                text: content
-                type: identifier
-            type: argument_list
-          type: action
-        type: expression
-      - text: '# user.paste may be somewhat faster, but seems to be unreliable on
-          MacOSX, see'
-        type: comment
-      - text: '# https://github.com/talonvoice/talon/issues/254#issuecomment-789355238'
-        type: comment
-      - text: '# user.paste(content)'
-        type: comment
-      type: block
-    type: command
-  type: source_file

@@ -23,264 +23,111 @@ input: |
       insert("fg")
       key(enter)
 output:
+  type: source_file
   children:
-  - children:
-    - children:
-      - text: app
-        type: identifier
-      - text: ' apple_terminal'
-        type: implicit_string
+  - type: context
+    children:
+    - type: match
+      children: []
       key:
         text: app
         type: identifier
       pattern:
         text: ' apple_terminal'
         type: implicit_string
-      type: match
-    type: context
   - text: '# makes the commands in generic_terminal available'
     type: comment
-  - children:
-    - text: terminal
-      type: identifier
+  - type: include_tag
+    children: []
     tag:
       text: terminal
       type: identifier
-    type: include_tag
   - text: '# activates the implementation of the commands/functions in generic_terminal'
     type: comment
-  - children:
-    - text: user.generic_unix_shell
-      type: identifier
+  - type: include_tag
+    children: []
     tag:
       text: user.generic_unix_shell
       type: identifier
-    type: include_tag
   - text: '# makes commands for certain applications available'
     type: comment
   - text: '# you can deactivate them if you do not use the application'
     type: comment
-  - children:
-    - text: user.git
-      type: identifier
+  - type: include_tag
+    children: []
     tag:
       text: user.git
       type: identifier
-    type: include_tag
-  - children:
-    - text: user.anaconda
-      type: identifier
+  - type: include_tag
+    children: []
     tag:
       text: user.anaconda
       type: identifier
-    type: include_tag
-  - children:
-    - text: user.kubectl
-      type: identifier
+  - type: include_tag
+    children: []
     tag:
       text: user.kubectl
       type: identifier
-    type: include_tag
   - text: '# TODO: explain'
     type: comment
-  - children:
-    - text: user.tabs
-      type: identifier
+  - type: include_tag
+    children: []
     tag:
       text: user.tabs
       type: identifier
-    type: include_tag
-  - children:
-    - text: user.file_manager
-      type: identifier
+  - type: include_tag
+    children: []
     tag:
       text: user.file_manager
       type: identifier
-    type: include_tag
-  - children:
-    - children:
-      - text: suspend
-        type: word
-      type: rule
-    - children:
-      - children:
-        - arguments:
-            text: ctrl-z
-            type: implicit_string
-          children:
-          - text: ctrl-z
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: ctrl-z
-            type: implicit_string
-          children:
-          - text: ctrl-z
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
+  - type: command
+    children: []
     rule:
+      type: rule
       children:
       - text: suspend
         type: word
-      type: rule
     script:
+      type: block
       children:
-      - children:
-        - arguments:
-            text: ctrl-z
-            type: implicit_string
-          children:
-          - text: ctrl-z
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: ctrl-z
             type: implicit_string
-          children:
-          - text: ctrl-z
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  - children:
-    - children:
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
       - text: resume
         type: word
-      type: rule
-    - children:
-      - children:
-        - action_name:
-            text: insert
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: fg
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: insert
-            type: identifier
-          - children:
-            - children:
-              - text: fg
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
         expression:
+          type: action
+          children: []
           action_name:
             text: insert
             type: identifier
           arguments:
+            type: argument_list
             children:
-            - children:
+            - type: string
+              children:
               - text: fg
                 type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: insert
-            type: identifier
-          - children:
-            - children:
-              - text: fg
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - arguments:
-            text: enter
-            type: implicit_string
-          children:
-          - text: enter
-            type: implicit_string
-          type: key_action
+      - type: expression
+        children: []
         expression:
+          type: key_action
+          children: []
           arguments:
             text: enter
             type: implicit_string
-          children:
-          - text: enter
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    rule:
-      children:
-      - text: resume
-        type: word
-      type: rule
-    script:
-      children:
-      - children:
-        - action_name:
-            text: insert
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: fg
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: insert
-            type: identifier
-          - children:
-            - children:
-              - text: fg
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        expression:
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            children:
-            - children:
-              - text: fg
-                type: string_content
-              type: string
-            type: argument_list
-          children:
-          - text: insert
-            type: identifier
-          - children:
-            - children:
-              - text: fg
-                type: string_content
-              type: string
-            type: argument_list
-          type: action
-        type: expression
-      - children:
-        - arguments:
-            text: enter
-            type: implicit_string
-          children:
-          - text: enter
-            type: implicit_string
-          type: key_action
-        expression:
-          arguments:
-            text: enter
-            type: implicit_string
-          children:
-          - text: enter
-            type: implicit_string
-          type: key_action
-        type: expression
-      type: block
-    type: command
-  type: source_file
