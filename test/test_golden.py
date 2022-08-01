@@ -1,11 +1,11 @@
-from typing import Any
+import typing
 
 import pytest
 
-import tree_sitter_talon as talon
+import tree_sitter_talon
 
 
-def node_dict_simplify(node_dict: dict[str, Any]) -> None:
+def node_dict_simplify(node_dict: dict[str, typing.Any]) -> None:
     if len(node_dict) > 4:
         del node_dict["text"]
 
@@ -23,6 +23,6 @@ def node_dict_simplify(node_dict: dict[str, Any]) -> None:
 
 @pytest.mark.golden_test("golden/*.yml")
 def test_golden(golden):
-    node_dict = talon.parse(golden["input"]).to_dict()
+    node_dict = tree_sitter_talon.parse(golden["input"]).to_dict()
     node_dict_simplify(node_dict)
     assert node_dict == golden.out["output"]

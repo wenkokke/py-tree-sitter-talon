@@ -1,14 +1,35 @@
-SPHINXBUILD   ?= sphinx-build
-SOURCEDIR     = doc-source
-BUILDDIR      = _build
+# Bump versions
 
-# Put it first so that "make" without argument is like "make help".
-help:
-	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(O)
+patch:
+	bumpver update --patch
 
-.PHONY: help Makefile
+minor:
+	bumpver update --minor
 
-# Catch-all target: route all unknown targets to Sphinx using the new
-# "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
-%: Makefile
-	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(O)
+major:
+	bumpver update --major
+
+.PHONY: patch minor major
+
+# Publish to PyPi
+
+CURRENT_VERSION = $(shell eval $$(bumpver show --no-fetch --env) && echo "$$CURRENT_VERSION")
+
+CURRENT_WHEEL = dist/tree-sitter-talon-$(CURRENT_VERSION)-py3-none-any.whl
+CURRENT_TARGZ = dist/tree_sitter_talon-$(CURRENT_VERSION).tar.gz
+
+SOURCES = $(shell find tree_sitter_talon -name "*.py")
+
+$(CURRENT_WHEEL) $(CURRENT_TARGZ): $(SOURCES)
+	pytest
+	python -m build
+
+testpublish: $(CURRENT_WHEEL) $(CURRENT_TARGZ)
+	twine check $(CURRENT_WHEEL) $(CURRENT_TARGZ)
+	twine upload -r testpypi $(CURRENT_WHEEL) $(CURRENT_TARGZ)
+	touch testpublish
+
+publish: $(CURRENT_WHEEL) $(CURRENT_TARGZ)
+	twine check $(CURRENT_WHEEL) $(CURRENT_TARGZ)
+	twine upload -r pypi $(CURRENT_WHEEL) $(CURRENT_TARGZ)
+	touch publish

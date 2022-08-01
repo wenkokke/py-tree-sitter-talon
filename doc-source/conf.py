@@ -31,7 +31,7 @@ release = "1.5.1"
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ["sphinx.ext.autodoc", "sphinx_toolbox.more_autodoc.typevars"]
+extensions = ["sphinx.ext.autodoc"]
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
