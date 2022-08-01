@@ -1,57 +1,63 @@
-from dataclasses import dataclass
-from pathlib import Path
-from typing import Optional, Union
+import dataclasses
+import pathlib
+import typing
 
+import dataclasses_json
 import tree_sitter  # type: ignore
-from dataclasses_json import dataclass_json
-from tree_sitter_type_provider import *
+from tree_sitter_type_provider import Branch as Branch
+from tree_sitter_type_provider import Leaf as Leaf
+from tree_sitter_type_provider import Node as Node
 
 parser: tree_sitter.Parser
 
 language: tree_sitter.Language
 
 def parse(
-    contents: Union[str, bytes],
-    has_header: Optional[bool] = None,
+    contents: typing.Union[str, bytes],
+    *,
+    has_header: typing.Optional[bool] = None,
     encoding: str = "utf-8",
 ) -> Node: ...
 def parse_file(
-    path: Union[str, Path],
-    has_header: Optional[bool] = None,
+    path: typing.Union[str, pathlib.Path],
+    *,
+    has_header: typing.Optional[bool] = None,
     encoding: str = "utf-8",
 ) -> Node: ...
 def parse_as_tree_sitter(
-    contents: Union[str, bytes],
-    has_header: Optional[bool] = None,
+    contents: typing.Union[str, bytes],
+    *,
+    has_header: typing.Optional[bool] = None,
     encoding: str = "utf-8",
 ) -> tree_sitter.Tree: ...
 def parse_file_as_tree_sitter(
-    path: Union[str, Path],
-    has_header: Optional[bool] = None,
+    path: typing.Union[str, pathlib.Path],
+    *,
+    has_header: typing.Optional[bool] = None,
     encoding: str = "utf-8",
 ) -> tree_sitter.Tree: ...
 def from_tree_sitter(
-    tsvalue: Union[tree_sitter.Tree, tree_sitter.Node, tree_sitter.TreeCursor],
+    tsvalue: typing.Union[tree_sitter.Tree, tree_sitter.Node, tree_sitter.TreeCursor],
     *,
-    encoding: str = "utf-8"
+    encoding: str = "utf-8",
 ) -> Node: ...
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonAction(Branch):
     children: list[TalonComment]
     action_name: TalonIdentifier
     arguments: TalonArgumentList
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonAnd(Branch):
-    children: list[Union[TalonAnd, TalonMatch, TalonNot, TalonComment]]
+    children: list[typing.Union[TalonAnd, TalonMatch, TalonNot, TalonComment]]
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonArgumentList(Branch):
     children: list[
-        Union[
+        typing.Union[
             TalonAction,
             TalonBinaryOperator,
             TalonFloat,
@@ -65,12 +71,12 @@ class TalonArgumentList(Branch):
         ]
     ]
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonAssignment(Branch):
     children: list[TalonComment]
     left: TalonIdentifier
-    right: Union[
+    right: typing.Union[
         TalonAction,
         TalonBinaryOperator,
         TalonFloat,
@@ -83,11 +89,11 @@ class TalonAssignment(Branch):
         TalonComment,
     ]
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonBinaryOperator(Branch):
     children: list[TalonComment]
-    left: Union[
+    left: typing.Union[
         TalonAction,
         TalonBinaryOperator,
         TalonFloat,
@@ -100,7 +106,7 @@ class TalonBinaryOperator(Branch):
         TalonComment,
     ]
     operator: TalonOperator
-    right: Union[
+    right: typing.Union[
         TalonAction,
         TalonBinaryOperator,
         TalonFloat,
@@ -113,24 +119,24 @@ class TalonBinaryOperator(Branch):
         TalonComment,
     ]
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonBlock(Branch):
     children: list[
-        Union[TalonAssignment, TalonDocstring, TalonExpression, TalonComment]
+        typing.Union[TalonAssignment, TalonDocstring, TalonExpression, TalonComment]
     ]
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonCapture(Branch):
     children: list[TalonComment]
     capture_name: TalonIdentifier
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonChoice(Branch):
     children: list[
-        Union[
+        typing.Union[
             TalonCapture,
             TalonEndAnchor,
             TalonList,
@@ -145,40 +151,42 @@ class TalonChoice(Branch):
         ]
     ]
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonCommand(Branch):
     children: list[TalonComment]
     rule: TalonRule
     script: TalonBlock
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonComment(Leaf):
     pass
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonContext(Branch):
     children: list[
-        Union[TalonAnd, TalonDocstring, TalonMatch, TalonNot, TalonOr, TalonComment]
+        typing.Union[
+            TalonAnd, TalonDocstring, TalonMatch, TalonNot, TalonOr, TalonComment
+        ]
     ]
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonDocstring(Leaf):
     pass
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonEndAnchor(Leaf):
     pass
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonError(Branch):
     children: list[
-        Union[
+        typing.Union[
             TalonAction,
             TalonAnd,
             TalonArgumentList,
@@ -227,11 +235,11 @@ class TalonError(Branch):
         ]
     ]
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonExpression(Branch):
     children: list[TalonComment]
-    expression: Union[
+    expression: typing.Union[
         TalonAction,
         TalonBinaryOperator,
         TalonFloat,
@@ -244,37 +252,37 @@ class TalonExpression(Branch):
         TalonComment,
     ]
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonFloat(Leaf):
     pass
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonIdentifier(Leaf):
     pass
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonImplicitString(Leaf):
     pass
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonIncludeTag(Branch):
     children: list[TalonComment]
     tag: TalonIdentifier
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonInteger(Leaf):
     pass
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonInterpolation(Branch):
     children: list[
-        Union[
+        typing.Union[
             TalonAction,
             TalonBinaryOperator,
             TalonFloat,
@@ -288,45 +296,45 @@ class TalonInterpolation(Branch):
         ]
     ]
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonKeyAction(Branch):
     children: list[TalonComment]
     arguments: TalonImplicitString
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonList(Branch):
     children: list[TalonComment]
     list_name: TalonIdentifier
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonMatch(Branch):
     children: list[TalonComment]
     key: TalonIdentifier
     pattern: TalonImplicitString
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonNot(Branch):
-    children: list[Union[TalonMatch, TalonComment]]
+    children: list[typing.Union[TalonMatch, TalonComment]]
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonNumber(Branch):
-    children: list[Union[TalonFloat, TalonInteger, TalonComment]]
+    children: list[typing.Union[TalonFloat, TalonInteger, TalonComment]]
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonOperator(Leaf):
     pass
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonOptional(Branch):
     children: list[
-        Union[
+        typing.Union[
             TalonCapture,
             TalonChoice,
             TalonEndAnchor,
@@ -342,16 +350,16 @@ class TalonOptional(Branch):
         ]
     ]
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonOr(Branch):
-    children: list[Union[TalonAnd, TalonMatch, TalonNot, TalonComment]]
+    children: list[typing.Union[TalonAnd, TalonMatch, TalonNot, TalonComment]]
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonParenthesizedExpression(Branch):
     children: list[
-        Union[
+        typing.Union[
             TalonAction,
             TalonBinaryOperator,
             TalonFloat,
@@ -365,11 +373,11 @@ class TalonParenthesizedExpression(Branch):
         ]
     ]
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonParenthesizedRule(Branch):
     children: list[
-        Union[
+        typing.Union[
             TalonCapture,
             TalonChoice,
             TalonEndAnchor,
@@ -385,16 +393,16 @@ class TalonParenthesizedRule(Branch):
         ]
     ]
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonRegexEscapeSequence(Branch):
-    children: list[Union[TalonRegexEscapeSequence, TalonComment]]
+    children: list[typing.Union[TalonRegexEscapeSequence, TalonComment]]
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonRepeat(Branch):
     children: list[
-        Union[
+        typing.Union[
             TalonCapture,
             TalonList,
             TalonOptional,
@@ -406,11 +414,11 @@ class TalonRepeat(Branch):
         ]
     ]
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonRepeat1(Branch):
     children: list[
-        Union[
+        typing.Union[
             TalonCapture,
             TalonList,
             TalonOptional,
@@ -422,11 +430,11 @@ class TalonRepeat1(Branch):
         ]
     ]
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonRule(Branch):
     children: list[
-        Union[
+        typing.Union[
             TalonCapture,
             TalonChoice,
             TalonEndAnchor,
@@ -442,11 +450,11 @@ class TalonRule(Branch):
         ]
     ]
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonSeq(Branch):
     children: list[
-        Union[
+        typing.Union[
             TalonCapture,
             TalonList,
             TalonOptional,
@@ -458,34 +466,36 @@ class TalonSeq(Branch):
         ]
     ]
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonSettings(Branch):
-    children: list[Union[TalonBlock, TalonComment]]
+    children: list[typing.Union[TalonBlock, TalonComment]]
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonSleepAction(Branch):
     children: list[TalonComment]
     arguments: TalonImplicitString
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonSourceFile(Branch):
     children: list[
-        Union[TalonCommand, TalonContext, TalonIncludeTag, TalonSettings, TalonComment]
+        typing.Union[
+            TalonCommand, TalonContext, TalonIncludeTag, TalonSettings, TalonComment
+        ]
     ]
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonStartAnchor(Leaf):
     pass
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonString(Branch):
     children: list[
-        Union[
+        typing.Union[
             TalonInterpolation,
             TalonStringContent,
             TalonStringEscapeSequence,
@@ -493,23 +503,23 @@ class TalonString(Branch):
         ]
     ]
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonStringContent(Leaf):
     pass
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonStringEscapeSequence(Leaf):
     pass
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonVariable(Branch):
     children: list[TalonComment]
     variable_name: TalonIdentifier
 
-@dataclass_json
-@dataclass
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
 class TalonWord(Leaf):
     pass
