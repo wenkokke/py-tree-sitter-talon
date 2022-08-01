@@ -1,6 +1,7 @@
 from typing import Any
 
 import pytest
+
 import tree_sitter_talon as talon
 
 

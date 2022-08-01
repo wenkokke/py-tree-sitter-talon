@@ -10,79 +10,79 @@ input: |
 output:
   type: source_file
   children:
-  - text: '#defines modes specific to Dragon.'
-    type: comment
-  - type: context
-    children:
-    - type: or
+    - text: "#defines modes specific to Dragon."
+      type: comment
+    - type: context
       children:
-      - type: match
-        children: []
-        key:
-          text: speech.engine
-          type: identifier
-        pattern:
-          text: ' dragon'
-          type: implicit_string
-      - type: match
-        children: []
-        key:
-          text: mode
-          type: identifier
-        pattern:
-          text: ' all'
-          type: implicit_string
-  - text: '# wakes Dragon on Mac, deactivates talon speech commands'
-    type: comment
-  - type: command
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+        - type: or
+          children:
+            - type: match
+              children: []
+              key:
+                text: speech.engine
+                type: identifier
+              pattern:
+                text: " dragon"
+                type: implicit_string
+            - type: match
+              children: []
+              key:
+                text: mode
+                type: identifier
+              pattern:
+                text: " all"
+                type: implicit_string
+    - text: "# wakes Dragon on Mac, deactivates talon speech commands"
+      type: comment
+    - type: command
+      children: []
+      rule:
+        type: rule
         children:
-        - text: dragon
-          type: word
-        - text: mode
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.dragon_mode
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - text: '#sleep dragon on Mac, activates talon speech commands'
-    type: comment
-  - type: command
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+          - type: seq
+            children:
+              - text: dragon
+                type: word
+              - text: mode
+                type: word
+      script:
+        type: block
         children:
-        - text: talon
-          type: word
-        - text: mode
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.talon_mode
-            type: identifier
-          arguments:
-            type: argument_list
+          - type: expression
             children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: user.dragon_mode
+                type: identifier
+              arguments:
+                type: argument_list
+                children: []
+    - text: "#sleep dragon on Mac, activates talon speech commands"
+      type: comment
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: talon
+                type: word
+              - text: mode
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: user.talon_mode
+                type: identifier
+              arguments:
+                type: argument_list
+                children: []

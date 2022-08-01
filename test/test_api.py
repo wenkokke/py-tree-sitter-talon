@@ -1,10 +1,11 @@
-from collections.abc import Generator
 import inspect
-import pytest
 import re
-import tree_sitter_talon
 import typing
+from collections.abc import Generator
 
+import pytest
+
+import tree_sitter_talon
 
 Context: typing.TypeAlias = typing.Union[None, typing.Mapping[str, typing.Any]]
 

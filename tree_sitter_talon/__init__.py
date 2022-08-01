@@ -1,11 +1,11 @@
+import os
+import sys
+import typing
 from pathlib import Path
+
+import tree_sitter
 from pkg_resources import resource_filename  # type: ignore
 from tree_sitter_type_provider import *
-
-import sys
-import tree_sitter
-import typing
-import os
 
 
 class TreeSitterTalon(TreeSitterTypeProvider):
@@ -47,7 +47,7 @@ class TreeSitterTalon(TreeSitterTypeProvider):
 
     def __init__(self, *, encoding: str = "utf-8"):
         # Read node-types.json
-        node_types = NodeType.schema().loads( # type: ignore
+        node_types = NodeType.schema().loads(  # type: ignore
             self.node_types_path.read_text(encoding=encoding), many=True
         )
 
