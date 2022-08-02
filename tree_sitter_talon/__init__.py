@@ -1,5 +1,6 @@
 import os
 import pathlib
+import platform
 import sys
 import typing
 
@@ -35,12 +36,24 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
         return self.resource_path("data")
 
     @property
+    def library_ext(self) -> str:
+        supported_systems: dict[str, str] = {
+            "Linux": "so",
+            "Darwin": "dylib",
+            "Windows": "dll",
+        }
+        ext = supported_systems.get(platform.system(), None)
+        if ext:
+            return ext
+        else:
+            raise RuntimeError(f"Unsupported platform '{platform.system()}'")
+
+    @property
     def library_path(self) -> str:
-        library_name = {
-            "linux": "talon.so",
-            "darwin": "talon.dylib",
-            "win32": "talon.dll",
-        }[sys.platform]
+        machine = platform.machine()
+        python_version = platform.python_version()
+        ext = self.library_ext
+        library_name = f"talon-{python_version}-{machine}.{ext}"
         return str(self.data_path / library_name)
 
     @property
