@@ -33,8 +33,10 @@ try:
             self.root_is_pure = False
 
         def get_tag(self):
-            _python, _abi, plat = _bdist_wheel.get_tag(self)
+            _, _, plat = _bdist_wheel.get_tag(self)
             python, abi = "py3", "none"
+            # Pretend to be manylinux:
+            plat = plat.replace("linux", "manylinux1")
             return python, abi, plat
 
     library_path = build_library()
