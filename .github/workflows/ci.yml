@@ -21,12 +21,41 @@ jobs:
       - run: pip install .[test,publish]
       - run: pytest
       - run: stubtest --mypy-config-file pyproject.toml tree_sitter_talon
-      - run: make run/dist
-      - uses: pypa/gh-action-pypi-publish@release/v1
-        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
-        with:
-          password: ${{ secrets.PYPI_API_TOKEN }}
-          skip_existing: true
+
+      - name: Publish to PyPi (Linux)
+        if: runner.os == "Linux" && github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
+        run: |
+          python setup.py sdist
+          twine check dist/*.tar.gz
+          twine upload -r pypi dist/*.tar.gz
+          pip install auditwheel
+          python setup.py bdist
+          auditwheel repair dist/*.whl
+          twine check dist/*manylinux*.whl
+          twine upload -r pypi dist/*manylinux*.whl
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+
+      - name: Publish to PyPi (macOS)
+        if: runner.os == "macOS" && github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
+        run: |
+          python setup.py bdist
+          twine check dist/*.whl
+          twine upload -r pypi dist/*.whl
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+
+      - name: Publish to PyPi (Windows)
+        if: runner.os == "Windows" && github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
+        run: |
+          python setup.py bdist
+          twine check dist/*.whl
+          twine upload -r pypi dist/*.whl
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
 
   sphinx:
     name: Publish API Documentation

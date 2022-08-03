@@ -29,11 +29,11 @@ run/dist:
 	mkdir -p run && touch run/dist
 
 run/testpypi: run/dist
-	twine upload -r testpypi dist/*
+	twine upload --skip-existing -r testpypi dist/*
 	mkdir -p run && touch run/testpypi
 
 run/pypi: run/dist
-	twine upload -r pypi dist/*
+	twine upload --skip-existing -r pypi dist/*
 	mkdir -p run && touch run/pypi
 
 .PHONY: run/dist run/testpypi run/pypi
