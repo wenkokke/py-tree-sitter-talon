@@ -23,9 +23,7 @@ major:
 
 # Publish to PyPi
 
-SOURCES = $(shell find . -name "*.py")
-
-run/dist: $(SOURCES)
+run/dist:
 	python -m build
 	twine check dist/*
 	mkdir -p run && touch run/dist
@@ -37,3 +35,5 @@ run/testpypi: run/dist
 run/pypi: run/dist
 	twine upload -r pypi dist/*
 	mkdir -p run && touch run/pypi
+
+.PHONY: run/dist run/testpypi run/pypi
