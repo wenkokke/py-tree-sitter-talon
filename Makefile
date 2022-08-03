@@ -23,29 +23,17 @@ major:
 
 # Publish to PyPi
 
-PROJECT = "tree_sitter_talon"
+SOURCES = $(shell find . -name "*.py")
 
-CURRENT_VERSION = $(shell eval $$(bumpver show --no-fetch --env) && echo "$$CURRENT_VERSION")
-
-CURRENT_WHEEL = dist/$(PROJECT)-$(CURRENT_VERSION)-py3-none-any.whl
-CURRENT_TARGZ = dist/$(PROJECT)-$(CURRENT_VERSION).tar.gz
-
-SOURCES = $(shell find $(PROJECT) -name "*.py")
-
-$(CURRENT_WHEEL) $(CURRENT_TARGZ): $(SOURCES)
-	pytest
+run/dist: $(SOURCES)
 	python -m build
-
-run/dist: $(CURRENT_WHEEL) $(CURRENT_TARGZ)
-	twine check $(CURRENT_WHEEL) $(CURRENT_TARGZ)
+	twine check dist/*
 	mkdir -p run && touch run/dist
 
-run/testpypi: $(CURRENT_WHEEL) $(CURRENT_TARGZ)
-	twine check $(CURRENT_WHEEL) $(CURRENT_TARGZ)
-	twine upload -r testpypi $(CURRENT_WHEEL) $(CURRENT_TARGZ)
+run/testpypi: run/dist
+	twine upload -r testpypi dist/*
 	mkdir -p run && touch run/testpypi
 
-run/pypi: $(CURRENT_WHEEL) $(CURRENT_TARGZ)
-	twine check $(CURRENT_WHEEL) $(CURRENT_TARGZ)
-	twine upload -r pypi $(CURRENT_WHEEL) $(CURRENT_TARGZ)
+run/pypi: run/dist
+	twine upload -r pypi dist/*
 	mkdir -p run && touch run/pypi
