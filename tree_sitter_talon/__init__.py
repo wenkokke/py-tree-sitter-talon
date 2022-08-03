@@ -46,7 +46,10 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
         return self.resource_path("data", "tree-sitter-talon", "src", "node-types.json")
 
     def build_library(self) -> None:
+        old = os.getcwd()
+        os.chdir(os.path.dirname(__file__))
         tree_sitter.Language.build_library(self.library_path, [self.repository_path])
+        os.chdir(old)
 
     def __init__(self, *, encoding: str = "utf-8"):
         # Read node-types.json
