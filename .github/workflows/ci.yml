@@ -1,9 +1,6 @@
 name: CI
 
-on:
-  push:
-    branches:
-      - dev
+on: [push]
 
 jobs:
   test:
@@ -25,9 +22,6 @@ jobs:
       - run: pytest
       - run: stubtest --mypy-config-file pyproject.toml tree_sitter_talon
       - run: make run/dist
-      - run: echo ${{ github.event_name }}
-      - run: echo ${{ github.ref }}
-      - run: echo ${{ startsWith(github.ref, 'refs/tags') }}
       - uses: pypa/gh-action-pypi-publish@release/v1
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
         with:
