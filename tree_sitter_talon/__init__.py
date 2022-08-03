@@ -10,56 +10,49 @@ import tree_sitter_type_provider
 
 
 class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
-    def resource_path(self, resource_name: str) -> pathlib.Path:
-        dirname = os.path.dirname(__file__)
+    def resource_path(self, *resource_name_part: str) -> str:
+        resource_name = os.path.join(*resource_name_part)
         try:
-            filename = pathlib.Path(
-                pkg_resources.resource_filename("tree_sitter_talon", resource_name)
-            )
-            if filename.exists() and filename.match(f"dirname/**"):
-                return filename
+            return pkg_resources.resource_filename("tree_sitter_talon", resource_name)
         except (KeyError, ModuleNotFoundError):
-            pass
+            return os.path.join(os.path.dirname(__file__), resource_name)
 
-        filename = pathlib.Path(dirname) / resource_name
-        if filename.exists():
-            return filename
-
-        raise FileNotFoundError(resource_name)
+    @property
+    def tree_sitter_talon_version(self) -> str:
+        return "1.1.0"
 
     @property
     def repository_path(self) -> str:
-        return str(self.resource_path("data/tree-sitter-talon"))
-
-    @property
-    def data_path(self) -> pathlib.Path:
-        return self.resource_path("data")
+        return self.resource_path("data", "tree-sitter-talon")
 
     @property
     def library_name(self) -> str:
         machine = platform.machine()
-        supported_systems: dict[str, str] = {
+        ext = {
             "Linux": "so",
             "Darwin": "dylib",
             "Windows": "dll",
-        }
-        ext = supported_systems.get(platform.system(), None)
+        }.get(platform.system(), None)
         if ext is None:
             raise RuntimeError(f"Unsupported platform '{platform.system()}'")
-        return f"talon-{machine}.{ext}"
+        return f"tree_sitter_talon-{self.tree_sitter_talon_version}-{machine}.{ext}"
 
     @property
     def library_path(self) -> str:
-        return str(self.data_path / self.library_name)
+        return self.resource_path("data", self.library_name)
 
     @property
-    def node_types_path(self) -> pathlib.Path:
-        return self.resource_path("data/tree-sitter-talon/src/node-types.json")
+    def node_types_path(self) -> str:
+        return self.resource_path("data", "tree-sitter-talon", "src", "node-types.json")
+
+    def build_library(self) -> None:
+        tree_sitter.Language.build_library(self.library_path, [self.repository_path])
 
     def __init__(self, *, encoding: str = "utf-8"):
         # Read node-types.json
+        node_types_path = pathlib.Path(self.node_types_path)
         node_types = tree_sitter_type_provider.NodeType.schema().loads(  # type: ignore
-            self.node_types_path.read_text(encoding=encoding), many=True
+            node_types_path.read_text(encoding=encoding), many=True
         )
 
         # Conversion from tree-sitter names to Python names
@@ -79,12 +72,9 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
         )
 
         # Build tree-sitter-talon
-        if os.getenv("CI") and os.path.exists(self.library_path):
-            pass
-        else:
-            tree_sitter.Language.build_library(
-                self.library_path, [self.repository_path]
-            )
+        if not os.path.exists(self.library_path):
+            self.build_library()
+
         self.language = tree_sitter.Language(self.library_path, "talon")
         self.parser = tree_sitter.Parser()
         self.parser.set_language(self.language)

@@ -15,6 +15,7 @@ def build_library() -> tuple[str, ...]:
         sys.path.insert(0, str(package_root))
         import tree_sitter_talon
 
+        tree_sitter_talon.build_library()  # type: ignore
         library_path = pathlib.Path(tree_sitter_talon.library_path)  # type: ignore
         library_path = library_path.relative_to(package_root)
         return (str(library_path),)
