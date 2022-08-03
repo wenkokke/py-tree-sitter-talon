@@ -36,16 +36,16 @@ $(CURRENT_WHEEL) $(CURRENT_TARGZ): $(SOURCES)
 	pytest
 	python -m build
 
-cidist: $(CURRENT_WHEEL) $(CURRENT_TARGZ)
+run/dist: $(CURRENT_WHEEL) $(CURRENT_TARGZ)
 	twine check $(CURRENT_WHEEL) $(CURRENT_TARGZ)
-	touch cidist
+	mkdir -p run && touch run/dist
 
-testpublish: $(CURRENT_WHEEL) $(CURRENT_TARGZ)
+run/testpypi: $(CURRENT_WHEEL) $(CURRENT_TARGZ)
 	twine check $(CURRENT_WHEEL) $(CURRENT_TARGZ)
 	twine upload -r testpypi $(CURRENT_WHEEL) $(CURRENT_TARGZ)
-	touch testpublish
+	mkdir -p run && touch run/testpypi
 
-publish: $(CURRENT_WHEEL) $(CURRENT_TARGZ)
+run/pypi: $(CURRENT_WHEEL) $(CURRENT_TARGZ)
 	twine check $(CURRENT_WHEEL) $(CURRENT_TARGZ)
 	twine upload -r pypi $(CURRENT_WHEEL) $(CURRENT_TARGZ)
-	touch publish
+	mkdir -p run && touch run/pypi
