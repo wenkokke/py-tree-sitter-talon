@@ -24,8 +24,13 @@ jobs:
       - run: pip install .[test]
       - run: pytest
       - run: stubtest --mypy-config-file pyproject.toml tree_sitter_talon
-      - run: python -c 'import tree_sitter_talon; print(f"TALON_LIBRARY_PATH={tree_sitter_talon.library_path}")' >> $GITHUB_ENV
+      - run: python -c 'import tree_sitter_talon; print(f"TALON_LIBRARY_NAME={tree_sitter_talon.library_name}")' >> $GITHUB_ENV
         shell: bash
+      - uses: actions/upload-artifact@v3
+        with:
+          name: $TALON_LIBRARY_NAME
+          path: tree_sitter_talon/data/$TALON_LIBRARY_NAME
+          if-no-files-found: error
 
   sphinx:
     name: Sphinx
