@@ -36,9 +36,9 @@ $(CURRENT_WHEEL) $(CURRENT_TARGZ): $(SOURCES)
 	pytest
 	python -m build
 
-cipublish: $(CURRENT_WHEEL) $(CURRENT_TARGZ)
+cidist: $(CURRENT_WHEEL) $(CURRENT_TARGZ)
 	twine check $(CURRENT_WHEEL) $(CURRENT_TARGZ)
-	touch cipublish
+	touch cidist
 
 testpublish: $(CURRENT_WHEEL) $(CURRENT_TARGZ)
 	twine check $(CURRENT_WHEEL) $(CURRENT_TARGZ)
