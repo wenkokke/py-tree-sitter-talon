@@ -17,7 +17,7 @@ def build_library() -> tuple[str, ...]:
 
         tree_sitter_talon.build_library()  # type: ignore
         library_path = pathlib.Path(tree_sitter_talon.library_path)  # type: ignore
-        library_path = library_path.relative_to(package_root)
+        library_path = package_root / "tree_sitter_talon" / package_root
         return (str(library_path),)
     except (ImportError, RuntimeError):
         return ()
