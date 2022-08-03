@@ -37,7 +37,6 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
 
     @property
     def library_name(self) -> str:
-        python_version = platform.python_version()
         machine = platform.machine()
         supported_systems: dict[str, str] = {
             "Linux": "so",
@@ -47,7 +46,7 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
         ext = supported_systems.get(platform.system(), None)
         if ext is None:
             raise RuntimeError(f"Unsupported platform '{platform.system()}'")
-        return f"talon-{python_version}-{machine}.{ext}"
+        return f"talon-{machine}.{ext}"
 
     @property
     def library_path(self) -> str:
