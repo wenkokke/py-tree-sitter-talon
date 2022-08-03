@@ -49,8 +49,8 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
         return f"talon-{machine}.{ext}"
 
     @property
-    def library_path(self) -> pathlib.Path:
-        return self.data_path / self.library_name
+    def library_path(self) -> str:
+        return str(self.data_path / self.library_name)
 
     @property
     def node_types_path(self) -> pathlib.Path:
@@ -79,13 +79,13 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
         )
 
         # Build tree-sitter-talon
-        if os.getenv("CI") and self.library_path.exists():
+        if os.getenv("CI") and os.path.exists(self.library_path):
             pass
         else:
             tree_sitter.Language.build_library(
-                str(self.library_path), [self.repository_path]
+                self.library_path, [self.repository_path]
             )
-        self.language = tree_sitter.Language(str(self.library_path), "talon")
+        self.language = tree_sitter.Language(self.library_path, "talon")
         self.parser = tree_sitter.Parser()
         self.parser.set_language(self.language)
 
