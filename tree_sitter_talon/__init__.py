@@ -36,25 +36,22 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
         return self.resource_path("data")
 
     @property
-    def library_ext(self) -> str:
+    def library_name(self) -> str:
+        python_version = platform.python_version()
+        machine = platform.machine()
         supported_systems: dict[str, str] = {
             "Linux": "so",
             "Darwin": "dylib",
             "Windows": "dll",
         }
         ext = supported_systems.get(platform.system(), None)
-        if ext:
-            return ext
-        else:
+        if ext is None:
             raise RuntimeError(f"Unsupported platform '{platform.system()}'")
+        return f"talon-{python_version}-{machine}.{ext}"
 
     @property
     def library_path(self) -> str:
-        machine = platform.machine()
-        python_version = platform.python_version()
-        ext = self.library_ext
-        library_name = f"talon-{python_version}-{machine}.{ext}"
-        return str(self.data_path / library_name)
+        return str(self.data_path / self.library_name)
 
     @property
     def node_types_path(self) -> pathlib.Path:
