@@ -83,7 +83,11 @@ setuptools.setup(
             "pytest-golden",
             "mypy",
         ],
-        "publish": ["build", "twine"],
+        "publish": [
+            "bumpver",
+            "build",
+            "twine",
+        ],
     },
     package_data={
         "tree_sitter_talon": [
