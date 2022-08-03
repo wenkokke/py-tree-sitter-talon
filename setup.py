@@ -52,7 +52,7 @@ with open(os.path.join(os.path.dirname(__file__), "README.md")) as f:
 
 setuptools.setup(
     name="tree_sitter_talon",
-    version="1.5.20",
+    version="1.5.21",
     description="Parser for Talon files in Python",
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
