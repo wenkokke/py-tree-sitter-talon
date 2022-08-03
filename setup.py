@@ -87,6 +87,7 @@ setuptools.setup(
             "bumpver",
             "build",
             "twine",
+            "auditwheel;platform_system=='Linux'",
         ],
     },
     package_data={

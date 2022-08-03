@@ -9,6 +9,9 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
         python-version: ["3.9", "3.10"]
+        include:
+          - pypi-publish: true
+            python-version: "3.9"
     runs-on: ${{ matrix.os }}
     continue-on-error: true
     steps:
@@ -23,36 +26,21 @@ jobs:
       - run: stubtest --mypy-config-file pyproject.toml tree_sitter_talon
 
       - name: Publish to PyPi (Linux)
-        if: runner.os == 'Linux' && github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
+        if: matrix.pypi-publish && runner.os == 'Linux' && github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
         run: |
-          python setup.py sdist
-          twine check dist/*.tar.gz
-          twine upload -r pypi dist/*.tar.gz
-          pip install auditwheel
-          python setup.py bdist
+          python -m build
           auditwheel repair dist/*.whl
-          twine check dist/*manylinux*.whl
-          twine upload -r pypi dist/*manylinux*.whl
+          twine check dist/*.tar.gz dist/*manylinux*.whl
+          twine upload -r pypi dist/*.tar.gz dist/*manylinux*.whl
         shell: bash
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
 
-      - name: Publish to PyPi (macOS)
-        if: runner.os == 'macOS' && github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
+      - name: Publish to PyPi (macOS & Windows)
+        if: matrix.pypi-publish && runner.os != 'Linux' && github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
         run: |
-          python setup.py bdist
-          twine check dist/*.whl
-          twine upload -r pypi dist/*.whl
-        shell: bash
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-
-      - name: Publish to PyPi (Windows)
-        if: runner.os == 'Windows' && github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
-        run: |
-          python setup.py bdist
+          python -m build
           twine check dist/*.whl
           twine upload -r pypi dist/*.whl
         shell: bash
