@@ -14,6 +14,8 @@ import tree_sitter_type_provider
 
 class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
 
+    __version__: str = "1.6.11"
+
     DEFAULT_LIBRARY_PATH: str = appdirs.user_cache_dir("tree_sitter_talon", "wenkokke")
 
     _library_path: typing.Optional[str] = None

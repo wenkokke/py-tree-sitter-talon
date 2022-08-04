@@ -11,6 +11,8 @@ from tree_sitter_type_provider.node_types import NodeTypeError as NodeTypeError
 from tree_sitter_type_provider.node_types import NodeTypeName as NodeTypeName
 from tree_sitter_type_provider.node_types import Point as Point
 
+__version__: str
+
 DEFAULT_LIBRARY_PATH: str
 
 library_name: str

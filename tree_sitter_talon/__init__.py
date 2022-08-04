@@ -50,6 +50,7 @@ from .dynamic import TalonStringContent as TalonStringContent
 from .dynamic import TalonStringEscapeSequence as TalonStringEscapeSequence
 from .dynamic import TalonVariable as TalonVariable
 from .dynamic import TalonWord as TalonWord
+from .dynamic import __version__ as __version__
 from .dynamic import build_library as build_library
 from .dynamic import find_library as find_library
 from .dynamic import from_tree_sitter as from_tree_sitter
