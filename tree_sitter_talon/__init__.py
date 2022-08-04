@@ -54,6 +54,7 @@ from .dynamic import build_library as build_library
 from .dynamic import find_library as find_library
 from .dynamic import from_tree_sitter as from_tree_sitter
 from .dynamic import language as language
+from .dynamic import library_name as library_name
 from .dynamic import library_path as library_path
 from .dynamic import parse as parse
 from .dynamic import parse_as_tree_sitter as parse_as_tree_sitter

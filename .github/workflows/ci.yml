@@ -27,8 +27,9 @@ jobs:
       - run: pip install .[test,publish]
       - run: pytest
       - run: stubtest --mypy-config-file pyproject.toml tree_sitter_talon
-      - run: python -c 'import tree_sitter_talon;print(f"LIBPATH={tree_sitter_talon.build_library()}")' >> $GITHUB_ENV
-      - run: echo "LIBNAME=$(basename ${{ env.LIBPATH }})" >> $GITHUB_ENV
+      - run: |
+          python -c 'import tree_sitter_talon;print(f"LIBPATH={tree_sitter_talon.library_path}")' >> $GITHUB_ENV
+          python -c 'import tree_sitter_talon;print(f"LIBNAME={tree_sitter_talon.library_name}")' >> $GITHUB_ENV
       - if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
         uses: actions/upload-artifact@v3
         with:

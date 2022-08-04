@@ -13,6 +13,7 @@ from tree_sitter_type_provider.node_types import Point as Point
 
 DEFAULT_LIBRARY_PATH: str
 
+library_name: str
 library_path: str
 
 def build_library(library_path: typing.Optional[str] = None) -> str: ...

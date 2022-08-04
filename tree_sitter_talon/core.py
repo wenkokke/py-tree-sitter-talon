@@ -74,6 +74,10 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
         yield f"tree_sitter_talon.{ext}"
 
     @property
+    def library_name(self) -> str:
+        return os.path.basename(self.library_path)
+
+    @property
     def library_path(self) -> str:
         return self.find_library() or self.build_library()
 
@@ -82,6 +86,8 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
         if os.path.exists(library_or_library_path):
             if os.path.isdir(library_or_library_path):
                 self.find_library(library_or_library_path)
+            else:
+                self._library_path = library_or_library_path
 
     def find_library(self, *extra_library_paths: str) -> typing.Optional[str]:
         if not self._library_path:
