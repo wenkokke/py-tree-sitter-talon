@@ -6,7 +6,7 @@ import pathlib
 import platform
 import typing
 
-import appdirs
+import appdirs  # type: ignore
 import pkg_resources  # type: ignore
 import tree_sitter  # type: ignore
 import tree_sitter_type_provider
