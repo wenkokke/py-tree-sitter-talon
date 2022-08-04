@@ -10,7 +10,7 @@ import appdirs  # type: ignore
 import pkg_resources  # type: ignore
 import tree_sitter  # type: ignore
 import tree_sitter_type_provider
-import wget
+import wget  # type: ignore
 
 
 class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
@@ -37,19 +37,22 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
             pass
         raise FileNotFoundError(resource_name)
 
+    @property
     def _repository_path(self) -> str:
         return self._resource_path("data", "tree-sitter-talon")
 
+    @property
     def _package_json_path(self) -> str:
         return self._resource_path("data", "tree-sitter-talon", "package.json")
 
+    @property
     def _node_types_json_path(self) -> str:
         return self._resource_path(
             "data", "tree-sitter-talon", "src", "node-types.json"
         )
 
     def _node_types_json(self, *, encoding: str = "utf-8") -> str:
-        return pathlib.Path(self._node_types_json_path()).read_text(encoding=encoding)
+        return pathlib.Path(self._node_types_json_path).read_text(encoding=encoding)
 
     def _node_types(
         self, *, encoding: str = "utf-8"
@@ -58,6 +61,7 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
             self._node_types_json(encoding=encoding), many=True
         )
 
+    @property
     def _tree_sitter_talon_version(self) -> str:
         package_json_path = pathlib.Path(
             self._resource_path("data", "tree-sitter-talon", "package.json")
@@ -65,8 +69,9 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
         package_json = json.loads(package_json_path.read_text())
         return package_json["version"]
 
-    def library_names(self) -> collections.abc.Iterator[str]:
-        version = self._tree_sitter_talon_version()
+    @property
+    def _library_names(self) -> collections.abc.Iterator[str]:
+        version = self._tree_sitter_talon_version
         system = platform.system()
         machine = platform.machine()
         ext = {"Linux": "so", "Darwin": "dylib", "Windows": "dll"}.get(system, None)
@@ -94,7 +99,7 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
 
     def find_library(self, *extra_library_paths: str) -> typing.Optional[str]:
         if not self._library_path:
-            for library_name in self.library_names():
+            for library_name in self._library_names:
                 # try extra_library_path
                 for extra_library_path in extra_library_paths:
                     library_path = os.path.join(extra_library_path, library_name)
@@ -120,27 +125,26 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
                     break
         return self._library_path
 
+    def _or_default_library_path(self, library_path: typing.Optional[str]) -> str:
+        library_name = next(self._library_names)
+        if library_path:
+            return os.path.join(library_path, library_name)
+        else:
+            return os.path.join(self.DEFAULT_LIBRARY_PATH, library_name)
+
     def build_library(self, library_path: typing.Optional[str] = None) -> str:
         if not self._library_path:
-            library_name = next(self.library_names())
-            if library_path:
-                self._library_path = os.path.join(library_path, library_name)
-            else:
-                self._library_path = os.path.join(
-                    self.DEFAULT_LIBRARY_PATH, library_name
-                )
+            self._library_path = self._or_default_library_path(library_path)
             tree_sitter.Language.build_library(
-                self._library_path, [self._repository_path()]
+                self._library_path, [self._repository_path]
             )
         return self._library_path
 
-    def download_library(self) -> str:
+    def download_library(self, library_path: typing.Optional[str] = None) -> str:
         if not self._library_path:
-            library_name = next(self.library_names())
-            self._library_path = os.path.join(self.DEFAULT_LIBRARY_PATH, library_name)
-            url = f"https://github.com/wenkokke/py-tree-sitter-talon/releases/download/{self.__version__}/{library_name}"
-            library_path = wget.download(url, self._library_path)
-            assert self._library_path == library_path
+            self._library_path = self._or_default_library_path(library_path)
+            url = f"https://github.com/wenkokke/py-tree-sitter-talon/releases/download/{self.__version__}/{self.library_name}"
+            assert self._library_path == wget.download(url, self._library_path)
         return self._library_path
 
     @property
