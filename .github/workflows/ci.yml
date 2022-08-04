@@ -109,8 +109,15 @@ jobs:
         with:
           path: dist
 
+      - run: ls -R
+
       - if: startsWith(github.ref, 'refs/tags')
         uses: softprops/action-gh-release@v1
         with:
-          files: dist/*
+          files: |
+            dist/*.whl
+            dist/*.tar.gz
+            dist/**/tree_sitter_talon-*.so
+            dist/**/tree_sitter_talon-*.dylib
+            dist/**/tree_sitter_talon-*.dll
           fail_on_unmatched_files: true
