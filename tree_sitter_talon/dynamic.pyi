@@ -11,6 +11,13 @@ from tree_sitter_type_provider.node_types import NodeTypeError as NodeTypeError
 from tree_sitter_type_provider.node_types import NodeTypeName as NodeTypeName
 from tree_sitter_type_provider.node_types import Point as Point
 
+DEFAULT_LIBRARY_PATH: str
+
+library_path: str
+
+def build_library(library_path: typing.Optional[str] = None) -> str: ...
+def find_library(*extra_library_paths: str) -> typing.Optional[str]: ...
+
 parser: tree_sitter.Parser
 
 language: tree_sitter.Language

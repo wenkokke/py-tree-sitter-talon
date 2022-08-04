@@ -13,8 +13,16 @@ import tree_sitter_type_provider
 
 
 class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
-    @classmethod
-    def _resource_path(cls, *paths: str) -> str:
+
+    DEFAULT_LIBRARY_PATH: str = appdirs.user_cache_dir("tree_sitter_talon", "wenkokke")
+
+    _library_path: typing.Optional[str] = None
+
+    _language: typing.Optional[tree_sitter.Language] = None
+
+    _parser: typing.Optional[tree_sitter.Parser] = None
+
+    def _resource_path(self, *paths: str) -> str:
         resource_name = os.path.join(*paths)
         try:
             filename = pkg_resources.resource_filename(
@@ -26,41 +34,36 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
             pass
         raise FileNotFoundError(resource_name)
 
-    @classmethod
-    def _repository_path(cls) -> str:
-        return cls._resource_path("data", "tree-sitter-talon")
+    def _repository_path(self) -> str:
+        return self._resource_path("data", "tree-sitter-talon")
 
-    @classmethod
-    def _package_json_path(cls) -> str:
-        return cls._resource_path("data", "tree-sitter-talon", "package.json")
+    def _package_json_path(self) -> str:
+        return self._resource_path("data", "tree-sitter-talon", "package.json")
 
-    @classmethod
-    def _node_types_json_path(cls) -> str:
-        return cls._resource_path("data", "tree-sitter-talon", "src", "node-types.json")
-
-    @classmethod
-    def _node_types_json(cls, *, encoding: str = "utf-8") -> str:
-        return pathlib.Path(cls._node_types_json_path()).read_text(encoding=encoding)
-
-    @classmethod
-    def _node_types(
-        cls, *, encoding: str = "utf-8"
-    ) -> collections.abc.Sequence[tree_sitter_type_provider.NodeType]:
-        return tree_sitter_type_provider.NodeType.schema().loads(  # type: ignore
-            cls._node_types_json(encoding=encoding), many=True
+    def _node_types_json_path(self) -> str:
+        return self._resource_path(
+            "data", "tree-sitter-talon", "src", "node-types.json"
         )
 
-    @classmethod
-    def _tree_sitter_talon_version(cls) -> str:
+    def _node_types_json(self, *, encoding: str = "utf-8") -> str:
+        return pathlib.Path(self._node_types_json_path()).read_text(encoding=encoding)
+
+    def _node_types(
+        self, *, encoding: str = "utf-8"
+    ) -> collections.abc.Sequence[tree_sitter_type_provider.NodeType]:
+        return tree_sitter_type_provider.NodeType.schema().loads(  # type: ignore
+            self._node_types_json(encoding=encoding), many=True
+        )
+
+    def _tree_sitter_talon_version(self) -> str:
         package_json_path = pathlib.Path(
-            cls._resource_path("data", "tree-sitter-talon", "package.json")
+            self._resource_path("data", "tree-sitter-talon", "package.json")
         )
         package_json = json.loads(package_json_path.read_text())
         return package_json["version"]
 
-    @classmethod
-    def library_names(cls) -> collections.abc.Iterator[str]:
-        version = cls._tree_sitter_talon_version()
+    def library_names(self) -> collections.abc.Iterator[str]:
+        version = self._tree_sitter_talon_version()
         system = platform.system()
         machine = platform.machine()
         ext = {"Linux": "so", "Darwin": "dylib", "Windows": "dll"}.get(system, None)
@@ -70,82 +73,70 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
         yield f"tree_sitter_talon-{version}.{ext}"
         yield f"tree_sitter_talon.{ext}"
 
-    _library_path: typing.ClassVar[typing.Optional[str]] = None
-
     @property
     def library_path(self) -> str:
-        return self.__class__.find_library() or self.__class__.build_library()
+        return self.find_library() or self.build_library()
 
     @library_path.setter
     def library_path(self, library_or_library_path: str) -> None:
         if os.path.exists(library_or_library_path):
             if os.path.isdir(library_or_library_path):
-                self.__class__.find_library(library_or_library_path)
+                self.find_library(library_or_library_path)
 
-    DEFAULT_LIBRARY_PATH: typing.ClassVar[str] = appdirs.user_cache_dir(
-        "tree_sitter_talon", "wenkokke"
-    )
-
-    @classmethod
-    def find_library(
-        cls, extra_library_path: typing.Optional[str] = None
-    ) -> typing.Optional[str]:
-        if not cls._library_path:
-            for library_name in cls.library_names():
+    def find_library(self, *extra_library_paths: str) -> typing.Optional[str]:
+        if not self._library_path:
+            for library_name in self.library_names():
                 # try extra_library_path
-                if extra_library_path:
+                for extra_library_path in extra_library_paths:
                     library_path = os.path.join(extra_library_path, library_name)
                     if os.path.exists(library_path):
-                        cls._library_path = library_path
+                        self._library_path = library_path
                         break
                 # try package resource_path
                 try:
-                    library_path = cls._resource_path("data", library_name)
+                    library_path = self._resource_path("data", library_name)
                     if library_path:
-                        cls._library_path = library_path
+                        self._library_path = library_path
                         break
                 except FileNotFoundError:
                     pass
                 # try DEFAULT_LIBRARY_PATH
-                library_path = os.path.join(cls.DEFAULT_LIBRARY_PATH, library_name)
+                library_path = os.path.join(self.DEFAULT_LIBRARY_PATH, library_name)
                 if os.path.exists(library_path):
-                    cls._library_path = library_path
+                    self._library_path = library_path
                     break
                 # try ctypes.util.find_library
-                cls._library_path = ctypes.util.find_library(library_name)
-                if cls._library_path:
+                self._library_path = ctypes.util.find_library(library_name)
+                if self._library_path:
                     break
-        return cls._library_path
+        return self._library_path
 
-    @classmethod
-    def build_library(cls, library_path: typing.Optional[str] = None) -> str:
-        if not cls._library_path:
-            library_name = next(cls.library_names())
+    def build_library(self, library_path: typing.Optional[str] = None) -> str:
+        if not self._library_path:
+            library_name = next(self.library_names())
             if library_path:
-                cls._library_path = os.path.join(library_path, library_name)
+                self._library_path = os.path.join(library_path, library_name)
             else:
-                cls._library_path = os.path.join(cls.DEFAULT_LIBRARY_PATH, library_name)
+                self._library_path = os.path.join(
+                    self.DEFAULT_LIBRARY_PATH, library_name
+                )
             tree_sitter.Language.build_library(
-                cls._library_path, [cls._repository_path()]
+                self._library_path, [self._repository_path()]
             )
-        return cls._library_path
-
-    _language: typing.ClassVar[typing.Optional[tree_sitter.Language]] = None
+        return self._library_path
 
     @property
     def language(self) -> tree_sitter.Language:
-        if not self.__class__._language:
-            self.__class__._language = tree_sitter.Language(self.library_path, "talon")
-        return self.__class__._language
-
-    _parser: typing.ClassVar[typing.Optional[tree_sitter.Parser]] = None
+        if not self._language:
+            self._language = tree_sitter.Language(self.library_path, "talon")
+        return self._language
 
     @property
     def parser(self) -> tree_sitter.Parser:
-        if not self.__class__._parser:
-            self.__class__._parser = tree_sitter.Parser()
-            self.__class__._parser.set_language(self.language)
-        return self.__class__._parser
+        if not self._parser:
+            self._parser = tree_sitter.Parser()
+            self._parser.set_language(self.language)
+        return self._parser
 
     def __init__(self, *, encoding: str = "utf-8"):
         # Conversion from tree-sitter names to Python names
@@ -158,7 +149,7 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
         # Initialize module
         super().__init__(
             "tree_sitter_talon",
-            self.__class__._node_types(encoding=encoding),
+            self._node_types(encoding=encoding),
             error_as_node=True,
             as_class_name=as_class_name,
             extra=["comment"],
