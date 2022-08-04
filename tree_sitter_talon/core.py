@@ -10,6 +10,7 @@ import appdirs  # type: ignore
 import pkg_resources  # type: ignore
 import tree_sitter  # type: ignore
 import tree_sitter_type_provider
+import wget
 
 
 class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
@@ -131,6 +132,15 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
             tree_sitter.Language.build_library(
                 self._library_path, [self._repository_path()]
             )
+        return self._library_path
+
+    def download_library(self) -> str:
+        if not self._library_path:
+            library_name = next(self.library_names())
+            self._library_path = os.path.join(self.DEFAULT_LIBRARY_PATH, library_name)
+            url = f"https://github.com/wenkokke/py-tree-sitter-talon/releases/download/{self.__version__}/{library_name}"
+            library_path = wget.download(url, self._library_path)
+            assert self._library_path == library_path
         return self._library_path
 
     @property
