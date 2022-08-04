@@ -15,7 +15,7 @@ import wget  # type: ignore
 
 class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
 
-    __version__: str = "1.6.11"
+    __version__: str = "1.6.12"
 
     DEFAULT_LIBRARY_PATH: str = appdirs.user_cache_dir("tree_sitter_talon", "wenkokke")
 
