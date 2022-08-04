@@ -7,7 +7,7 @@ defaults:
     shell: bash
 
 env:
-  RECOMMENDED_OS: ubuntu-latest
+  RECOMMENDED_OS: "Linux"
   RECOMMENDED_PYTHON_VERSION: "3.9"
 
 jobs:
@@ -60,7 +60,7 @@ jobs:
       - name: Build Sphinx Doc
         run: make html
       - name: Publish Sphinx Doc
-        if: matrix.python-version == env.RECOMMENDED_PYTHON_VERSION && matrix.os == env.RECOMMENDED_OS
+        if: matrix.python-version == env.RECOMMENDED_PYTHON_VERSION && runner.os == env.RECOMMENDED_OS
         uses: JamesIves/github-pages-deploy-action@v4.3.4
         with:
           branch: docs
@@ -68,7 +68,7 @@ jobs:
 
   release:
     name: Release
-    runs-on: ${{ env.RECOMMENDED_OS }}
+    runs-on: ubuntu-latest
     steps:
       ################################################################################
       # Setup
