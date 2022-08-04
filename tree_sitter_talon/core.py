@@ -6,6 +6,7 @@ import pathlib
 import platform
 import typing
 
+import appdirs
 import pkg_resources  # type: ignore
 import tree_sitter  # type: ignore
 import tree_sitter_type_provider
@@ -75,14 +76,43 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
     def library_path(self) -> str:
         return self.__class__.find_library() or self.__class__.build_library()
 
+    @library_path.setter
+    def library_path(self, library_or_library_path: str) -> None:
+        if os.path.exists(library_or_library_path):
+            if os.path.isdir(library_or_library_path):
+                self.__class__.find_library(library_or_library_path)
+
+    DEFAULT_LIBRARY_PATH: typing.ClassVar[str] = appdirs.user_cache_dir(
+        "tree_sitter_talon", "wenkokke"
+    )
+
     @classmethod
-    def find_library(cls) -> typing.Optional[str]:
+    def find_library(
+        cls, extra_library_path: typing.Optional[str] = None
+    ) -> typing.Optional[str]:
         if not cls._library_path:
             for library_name in cls.library_names():
+                # try extra_library_path
+                if extra_library_path:
+                    library_path = os.path.join(extra_library_path, library_name)
+                    if os.path.exists(library_path):
+                        cls._library_path = library_path
+                        break
+                # try package resource_path
                 try:
-                    cls._library_path = cls._resource_path("data", library_name)
+                    library_path = cls._resource_path("data", library_name)
+                    if library_path:
+                        cls._library_path = library_path
+                        break
                 except FileNotFoundError:
-                    cls._library_path = ctypes.util.find_library(library_name)
+                    pass
+                # try DEFAULT_LIBRARY_PATH
+                library_path = os.path.join(cls.DEFAULT_LIBRARY_PATH, library_name)
+                if os.path.exists(library_path):
+                    cls._library_path = library_path
+                    break
+                # try ctypes.util.find_library
+                cls._library_path = ctypes.util.find_library(library_name)
                 if cls._library_path:
                     break
         return cls._library_path
@@ -94,7 +124,7 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
             if library_path:
                 cls._library_path = os.path.join(library_path, library_name)
             else:
-                cls._library_path = os.path.join("_build", library_name)
+                cls._library_path = os.path.join(cls.DEFAULT_LIBRARY_PATH, library_name)
             tree_sitter.Language.build_library(
                 cls._library_path, [cls._repository_path()]
             )
