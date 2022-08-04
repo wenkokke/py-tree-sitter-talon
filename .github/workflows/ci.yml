@@ -7,8 +7,8 @@ defaults:
     shell: bash
 
 jobs:
-  test:
-    name: Build
+  build_and_test:
+    name: Build and Test
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
@@ -37,10 +37,10 @@ jobs:
           name: ${{ env.LIBNAME }}
           path: ${{ env.LIBPATH }}
 
-  sphinx:
-    name: Publish API Documentation
+  publish_sphinx_doc:
+    name: Publish Sphinx Doc
     runs-on: ubuntu-latest
-    needs: [test]
+    needs: [build_and_test]
     steps:
       - uses: actions/checkout@v3
         with:
