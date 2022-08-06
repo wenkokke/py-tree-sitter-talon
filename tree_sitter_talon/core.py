@@ -1,6 +1,7 @@
 import collections.abc
 import ctypes.util
 import json
+import logging
 import os
 import pathlib
 import platform
@@ -135,6 +136,7 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
     def build_library(self, library_path: typing.Optional[str] = None) -> str:
         if not self._library_path:
             self._library_path = self._or_default_library_path(library_path)
+            logging.info(f"Building {os.path.basename(self._library_path)}")
             tree_sitter.Language.build_library(
                 self._library_path, [self._repository_path]
             )
@@ -143,6 +145,7 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
     def download_library(self, library_path: typing.Optional[str] = None) -> str:
         if not self._library_path:
             self._library_path = self._or_default_library_path(library_path)
+            logging.info(f"Downloading {os.path.basename(self._library_path)}")
             url = f"https://github.com/wenkokke/py-tree-sitter-talon/releases/download/{self.__version__}/{self.library_name}"
             assert self._library_path == wget.download(url, self._library_path)
         return self._library_path
