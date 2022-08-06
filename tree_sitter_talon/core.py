@@ -26,6 +26,26 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
 
     _parser: typing.Optional[tree_sitter.Parser] = None
 
+    _allow_build: bool = True
+
+    @property
+    def allow_build(self) -> bool:
+        return self._allow_build
+
+    @allow_build.setter
+    def allow_build(self, allow_build: bool) -> None:
+        self._allow_build = allow_build
+
+    _allow_download: bool = True
+
+    @property
+    def allow_download(self) -> bool:
+        return self._allow_download
+
+    @allow_download.setter
+    def allow_download(self, allow_download: bool) -> None:
+        self._allow_download = allow_download
+
     def _resource_path(self, *paths: str) -> str:
         resource_name = os.path.join(*paths)
         try:
@@ -91,10 +111,8 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
         library_path = self.find_library()
         if library_path:
             return library_path
-        library_path = self.build_library()
-        if library_path:
-            return library_path
-        raise FileNotFoundError(tuple(self._library_names))
+        else:
+            raise FileNotFoundError(tuple(self._library_names))
 
     @library_path.setter
     def library_path(self, library_or_library_path: str) -> None:
@@ -144,45 +162,58 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
     def build_library(
         self, library_path: typing.Optional[str] = None
     ) -> typing.Optional[str]:
-        library_path, library_name = self._or_default_library_path(library_path)
-        try:
+        if self.allow_build:
+            library_path, _ = self._or_default_library_path(library_path)
             logging.info(f"Building {os.path.basename(library_path)}")
             tree_sitter.Language.build_library(library_path, [self._repository_path])
             self._library_path = library_path
             return self._library_path
-        except OSError:
-            return None
+        return None
 
     def download_library(
         self, library_path: typing.Optional[str] = None
     ) -> typing.Optional[str]:
-        library_path, library_name = self._or_default_library_path(library_path)
-        try:
+        if self.allow_download:
+            library_path, library_name = self._or_default_library_path(library_path)
             logging.info(f"Downloading {library_name}")
             url = f"https://github.com/wenkokke/py-tree-sitter-talon/releases/download/{self.__version__}/{library_name}"
             self._library_path = wget.download(url, library_path)
             return self._library_path
-        except OSError:
-            return None
+        return None
 
     @property
     def language(self) -> tree_sitter.Language:
         if not self._language:
+            error_buffer: list[typing.Union[FileNotFoundError, OSError]] = []
             try:
+                # try to load library_path
                 self._language = tree_sitter.Language(self.library_path, "talon")
                 return self._language
-            except OSError:
-                pass
+            except (FileNotFoundError, OSError) as e:
+                error_buffer.append(e)
+                logging.warn(f"Could not load {tuple(self._library_names)}", e)
             try:
                 # fallback #1: rebuild library
-                self.build_library()
-                self._language = tree_sitter.Language(self.library_path, "talon")
-                return self._language
-            except OSError:
+                library_path = self.build_library()
+                if library_path:
+                    self._language = tree_sitter.Language(library_path, "talon")
+                    return self._language
+            except (FileNotFoundError, OSError) as e:
+                error_buffer.append(e)
+                logging.warn(f"Could not build {tuple(self._library_names)}", e)
+            try:
                 # fallback #2: download library
-                self.download_library()
-                self._language = tree_sitter.Language(self.library_path, "talon")
-                return self._language
+                library_path = self.download_library()
+                if library_path:
+                    self._language = tree_sitter.Language(library_path, "talon")
+                    return self._language
+            except (FileNotFoundError, OSError) as e:
+                error_buffer.append(e)
+                logging.warn(f"Could not download {tuple(self._library_names)}", e)
+            raise OSError(
+                f"Could not find, build, or download {tuple(self._library_names)}",
+                *error_buffer,
+            )
         return self._language
 
     @property
