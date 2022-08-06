@@ -8,7 +8,7 @@ import pkg_resources  # type: ignore
 import tree_sitter  # type: ignore
 import tree_sitter_type_provider
 
-from .binding import _tree_sitter_talon_id
+from .binding import _tree_sitter_talon_id  # type: ignore
 
 
 class TalonLanguage(tree_sitter.Language):
