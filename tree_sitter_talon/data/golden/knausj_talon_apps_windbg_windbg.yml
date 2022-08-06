@@ -1,0 +1,652 @@
+input: |
+  # XXX - trigger alt-1 to hit command window for necessary commands?
+  # ex: user.windbg_insert_in_cmd()
+  #    edit.left()
+
+  mode: user.windbg
+  -
+  tag(): user.debugger
+  tag(): user.windbg
+  register <user.registers>:
+      key(@)
+      insert("{registers}")
+
+  open help: insert(".hh\n")
+
+  # xxx - add window switching
+
+  add microsoft symbols:
+      insert("srv*C:\\symbols*http://msdl.microsoft.com/download/symbols;\n")
+  force reload symbols:
+      insert(".reload /f\n")
+  reload symbols:
+      insert(".reload\n")
+  loaded modules:
+      insert("lm l\n")
+
+  display pointers:
+      insert("dps ")
+
+  # XXX - should be generic
+  dereference pointer:
+      user.insert_between("poi(", ")")
+
+  show version: key(ctrl-alt-w)
+
+  ##
+  # Windows
+  ##
+
+  view command: key(alt-1)
+  view watch: key(alt-2)
+  view locals: key(alt-3)
+  view registers: key(alt-4)
+  view memory: key(alt-5)
+  view call stack: key(alt-6)
+  view disassembly: key(alt-7)
+  view scratch pad: key(alt-8)
+  view (processes|threads): key(alt-9)
+
+  # XXX - temp
+  dump function params: "r @rcx,@rdx,@r8,@r9\n"
+
+  (lib|library) <user.windows_dlls>: "{windows_dlls}"
+output:
+  type: source_file
+  children:
+    - text: "# XXX - trigger alt-1 to hit command window for necessary commands?"
+      type: comment
+    - text: "# ex: user.windbg_insert_in_cmd()"
+      type: comment
+    - text: "#    edit.left()"
+      type: comment
+    - type: context
+      children:
+        - type: match
+          children: []
+          key:
+            text: mode
+            type: identifier
+          pattern:
+            text: " user.windbg"
+            type: implicit_string
+    - type: include_tag
+      children: []
+      tag:
+        text: user.debugger
+        type: identifier
+    - type: include_tag
+      children: []
+      tag:
+        text: user.windbg
+        type: identifier
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: register
+                type: word
+              - type: capture
+                children: []
+                capture_name:
+                  text: user.registers
+                  type: identifier
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: "@"
+                type: implicit_string
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: insert
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: string
+                    children:
+                      - text: "{"
+                        type: string_content
+                      - text: registers
+                        type: string_content
+                      - text: "}"
+                        type: string_content
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: open
+                type: word
+              - text: help
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: insert
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: string
+                    children:
+                      - text: .hh
+                        type: string_content
+                      - text: \n
+                        type: string_escape_sequence
+    - text: "# xxx - add window switching"
+      type: comment
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: add
+                type: word
+              - text: microsoft
+                type: word
+              - text: symbols
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: insert
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: string
+                    children:
+                      - text: "srv*C:"
+                        type: string_content
+                      - text: \\
+                        type: string_escape_sequence
+                      - text: symbols*http://msdl.microsoft.com/download/symbols;
+                        type: string_content
+                      - text: \n
+                        type: string_escape_sequence
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: force
+                type: word
+              - text: reload
+                type: word
+              - text: symbols
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: insert
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: string
+                    children:
+                      - text: .reload /f
+                        type: string_content
+                      - text: \n
+                        type: string_escape_sequence
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: reload
+                type: word
+              - text: symbols
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: insert
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: string
+                    children:
+                      - text: .reload
+                        type: string_content
+                      - text: \n
+                        type: string_escape_sequence
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: loaded
+                type: word
+              - text: modules
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: insert
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: string
+                    children:
+                      - text: lm l
+                        type: string_content
+                      - text: \n
+                        type: string_escape_sequence
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: display
+                type: word
+              - text: pointers
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: insert
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: string
+                    children:
+                      - text: "dps "
+                        type: string_content
+    - text: "# XXX - should be generic"
+      type: comment
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: dereference
+                type: word
+              - text: pointer
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: user.insert_between
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: string
+                    children:
+                      - text: poi(
+                        type: string_content
+                  - type: string
+                    children:
+                      - text: )
+                        type: string_content
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: show
+                type: word
+              - text: version
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: ctrl-alt-w
+                type: implicit_string
+    - text: "##"
+      type: comment
+    - text: "# Windows"
+      type: comment
+    - text: "##"
+      type: comment
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: view
+                type: word
+              - text: command
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: alt-1
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: view
+                type: word
+              - text: watch
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: alt-2
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: view
+                type: word
+              - text: locals
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: alt-3
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: view
+                type: word
+              - text: registers
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: alt-4
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: view
+                type: word
+              - text: memory
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: alt-5
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: view
+                type: word
+              - text: call
+                type: word
+              - text: stack
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: alt-6
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: view
+                type: word
+              - text: disassembly
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: alt-7
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: view
+                type: word
+              - text: scratch
+                type: word
+              - text: pad
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: alt-8
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: view
+                type: word
+              - type: parenthesized_rule
+                children:
+                  - type: choice
+                    children:
+                      - text: processes
+                        type: word
+                      - text: threads
+                        type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: alt-9
+                type: implicit_string
+    - text: "# XXX - temp"
+      type: comment
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: dump
+                type: word
+              - text: function
+                type: word
+              - text: params
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: string
+              children:
+                - text: r @rcx,@rdx,@r8,@r9
+                  type: string_content
+                - text: \n
+                  type: string_escape_sequence
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - type: parenthesized_rule
+                children:
+                  - type: choice
+                    children:
+                      - text: lib
+                        type: word
+                      - text: library
+                        type: word
+              - type: capture
+                children: []
+                capture_name:
+                  text: user.windows_dlls
+                  type: identifier
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: string
+              children:
+                - text: "{"
+                  type: string_content
+                - text: windows_dlls
+                  type: string_content
+                - text: "}"
+                  type: string_content

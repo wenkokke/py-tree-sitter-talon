@@ -13,14 +13,7 @@ from tree_sitter_type_provider.node_types import Point as Point
 
 __version__: str
 
-DEFAULT_LIBRARY_PATH: str
-
-library_name: str
-library_path: str
-
-def build_library(library_path: typing.Optional[str] = None) -> str: ...
-def download_library(library_path: typing.Optional[str] = None) -> str: ...
-def find_library(*extra_library_paths: str) -> typing.Optional[str]: ...
+__grammar_version__: str
 
 parser: tree_sitter.Parser
 

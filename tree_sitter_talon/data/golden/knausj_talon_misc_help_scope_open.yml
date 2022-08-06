@@ -1,0 +1,51 @@
+input: |
+  mode: user.help_scope
+  -
+
+  scope (hide | close)$:   user.help_scope_toggle()
+output:
+  type: source_file
+  children:
+    - type: context
+      children:
+        - type: match
+          children: []
+          key:
+            text: mode
+            type: identifier
+          pattern:
+            text: " user.help_scope"
+            type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: scope
+                type: word
+              - type: parenthesized_rule
+                children:
+                  - type: choice
+                    children:
+                      - text: hide
+                        type: word
+                      - text: close
+                        type: word
+          - text: $
+            type: end_anchor
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: user.help_scope_toggle
+                type: identifier
+              arguments:
+                type: argument_list
+                children: []

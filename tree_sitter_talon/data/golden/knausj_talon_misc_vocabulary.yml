@@ -1,0 +1,354 @@
+input: |
+  mode: command
+  mode: dictation
+  -
+  copy to vocab [as <phrase>]$: user.add_selection_to_vocabulary(phrase or "")
+  # Automatically adds possessive form by appending "'s".
+  copy name to vocab [as <phrase>]$: user.add_selection_to_vocabulary(phrase or "", "name")
+  # Automatically adds plural form by simply appending "s".
+  copy noun to vocab [as <phrase>]$: user.add_selection_to_vocabulary(phrase or "", "noun")
+  copy to replacements as <phrase>$: user.add_selection_to_words_to_replace(phrase)
+  # Automatically adds possessive form by appending "'s".
+  copy name to replacements as <phrase>$: user.add_selection_to_words_to_replace(phrase, "name")
+  # Automatically adds plural form by simply appending "s".
+  copy noun to replacements as <phrase>$: user.add_selection_to_words_to_replace(phrase, "noun")
+output:
+  type: source_file
+  children:
+    - type: context
+      children:
+        - type: or
+          children:
+            - type: match
+              children: []
+              key:
+                text: mode
+                type: identifier
+              pattern:
+                text: " command"
+                type: implicit_string
+            - type: match
+              children: []
+              key:
+                text: mode
+                type: identifier
+              pattern:
+                text: " dictation"
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: copy
+                type: word
+              - text: to
+                type: word
+              - text: vocab
+                type: word
+              - type: optional
+                children:
+                  - type: seq
+                    children:
+                      - text: as
+                        type: word
+                      - type: capture
+                        children: []
+                        capture_name:
+                          text: phrase
+                          type: identifier
+          - text: $
+            type: end_anchor
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: user.add_selection_to_vocabulary
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: binary_operator
+                    children: []
+                    left:
+                      type: variable
+                      children: []
+                      variable_name:
+                        text: phrase
+                        type: identifier
+                    operator:
+                      text: or
+                      type: operator
+                    right:
+                      type: string
+                      children: []
+    - text: '# Automatically adds possessive form by appending "''s".'
+      type: comment
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: copy
+                type: word
+              - text: name
+                type: word
+              - text: to
+                type: word
+              - text: vocab
+                type: word
+              - type: optional
+                children:
+                  - type: seq
+                    children:
+                      - text: as
+                        type: word
+                      - type: capture
+                        children: []
+                        capture_name:
+                          text: phrase
+                          type: identifier
+          - text: $
+            type: end_anchor
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: user.add_selection_to_vocabulary
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: binary_operator
+                    children: []
+                    left:
+                      type: variable
+                      children: []
+                      variable_name:
+                        text: phrase
+                        type: identifier
+                    operator:
+                      text: or
+                      type: operator
+                    right:
+                      type: string
+                      children: []
+                  - type: string
+                    children:
+                      - text: name
+                        type: string_content
+    - text: '# Automatically adds plural form by simply appending "s".'
+      type: comment
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: copy
+                type: word
+              - text: noun
+                type: word
+              - text: to
+                type: word
+              - text: vocab
+                type: word
+              - type: optional
+                children:
+                  - type: seq
+                    children:
+                      - text: as
+                        type: word
+                      - type: capture
+                        children: []
+                        capture_name:
+                          text: phrase
+                          type: identifier
+          - text: $
+            type: end_anchor
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: user.add_selection_to_vocabulary
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: binary_operator
+                    children: []
+                    left:
+                      type: variable
+                      children: []
+                      variable_name:
+                        text: phrase
+                        type: identifier
+                    operator:
+                      text: or
+                      type: operator
+                    right:
+                      type: string
+                      children: []
+                  - type: string
+                    children:
+                      - text: noun
+                        type: string_content
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: copy
+                type: word
+              - text: to
+                type: word
+              - text: replacements
+                type: word
+              - text: as
+                type: word
+              - type: capture
+                children: []
+                capture_name:
+                  text: phrase
+                  type: identifier
+          - text: $
+            type: end_anchor
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: user.add_selection_to_words_to_replace
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: variable
+                    children: []
+                    variable_name:
+                      text: phrase
+                      type: identifier
+    - text: '# Automatically adds possessive form by appending "''s".'
+      type: comment
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: copy
+                type: word
+              - text: name
+                type: word
+              - text: to
+                type: word
+              - text: replacements
+                type: word
+              - text: as
+                type: word
+              - type: capture
+                children: []
+                capture_name:
+                  text: phrase
+                  type: identifier
+          - text: $
+            type: end_anchor
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: user.add_selection_to_words_to_replace
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: variable
+                    children: []
+                    variable_name:
+                      text: phrase
+                      type: identifier
+                  - type: string
+                    children:
+                      - text: name
+                        type: string_content
+    - text: '# Automatically adds plural form by simply appending "s".'
+      type: comment
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: copy
+                type: word
+              - text: noun
+                type: word
+              - text: to
+                type: word
+              - text: replacements
+                type: word
+              - text: as
+                type: word
+              - type: capture
+                children: []
+                capture_name:
+                  text: phrase
+                  type: identifier
+          - text: $
+            type: end_anchor
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: user.add_selection_to_words_to_replace
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: variable
+                    children: []
+                    variable_name:
+                      text: phrase
+                      type: identifier
+                  - type: string
+                    children:
+                      - text: noun
+                        type: string_content

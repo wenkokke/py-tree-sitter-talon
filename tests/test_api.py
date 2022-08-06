@@ -40,7 +40,7 @@ def class_signatures(object: object) -> collections.abc.Iterator[str]:
                 pass
 
 
-@pytest.mark.golden_test("api.yml")
+@pytest.mark.golden_test("data/api.yml")
 def test_talon_api(golden):
     assert golden["input"] is None
 

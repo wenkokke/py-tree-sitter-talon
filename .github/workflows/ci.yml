@@ -29,9 +29,10 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           cache: "pip"
-          cache-dependency-path: "requirements-dev.txt"
-      - run: pip install .[test,sphinx,publish]
-
+          cache-dependency-path: |
+            requirements.txt
+            requirements-dev.txt
+      - run: pip install -r requirements.txt -r requirements-dev.txt
       ################################################################################
       # Test
       ################################################################################
@@ -41,21 +42,16 @@ jobs:
         run: stubtest --mypy-config-file pyproject.toml tree_sitter_talon
 
       ################################################################################
-      # Dynamic Library: Build & Publish
+      # Build Wheels
       ################################################################################
-      - name: Build library
-        run: |
-          python -c 'import tree_sitter_talon;print(f"LIBPATH={tree_sitter_talon.library_path}")' >> $GITHUB_ENV
-          python -c 'import tree_sitter_talon;print(f"LIBNAME={tree_sitter_talon.library_name}")' >> $GITHUB_ENV
-      - name: Upload library
-        if: matrix.python-version == env.RECOMMENDED_PYTHON_VERSION && startsWith(github.ref, 'refs/tags')
-        uses: actions/upload-artifact@v3
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.8.1
+      - uses: actions/upload-artifact@v3
         with:
-          name: ${{ env.LIBNAME }}
-          path: ${{ env.LIBPATH }}
+          path: ./wheelhouse/*.whl
 
       ################################################################################
-      # Sphinx Doc: Build & Publish
+      # Build API Documentation
       ################################################################################
       - name: Build Sphinx Doc
         run: make html
@@ -81,22 +77,31 @@ jobs:
         with:
           python-version: ${{ env.RECOMMENDED_PYTHON_VERSION }}
           cache: "pip"
-          cache-dependency-path: "requirements-dev.txt"
-      - run: pip install .[test,sphinx,publish]
-
+          cache-dependency-path: |
+            requirements.txt
+            requirements-dev.txt
+      - run: pip install -r requirements.txt -r requirements-dev.txt
       ################################################################################
-      # Build
+      # Build Source Distribution
       ################################################################################
       - if: startsWith(github.ref, 'refs/tags')
-        run: python -m build
+        run: python -m build --sdist
+
+      ################################################################################
+      # Download Wheels
+      ################################################################################
+      - if: startsWith(github.ref, 'refs/tags')
+        uses: actions/download-artifact@v3
+        with:
+          path: dist
 
       ################################################################################
       # Publish to PyPi
       ################################################################################
       - if: startsWith(github.ref, 'refs/tags')
         run: |
-          twine check dist/*
-          twine upload --skip-existing -r pypi dist/*
+          twine check dist/**.tar.gz dist/**.whl
+          twine upload --skip-existing -r pypi dist/**.tar.gz dist/**.whl
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
@@ -105,19 +110,9 @@ jobs:
       # Publish to GitHub Release
       ################################################################################
       - if: startsWith(github.ref, 'refs/tags')
-        uses: actions/download-artifact@v3
-        with:
-          path: dist
-
-      - run: ls -R
-
-      - if: startsWith(github.ref, 'refs/tags')
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            dist/*.whl
-            dist/*.tar.gz
-            dist/**/tree_sitter_talon-*.so
-            dist/**/tree_sitter_talon-*.dylib
-            dist/**/tree_sitter_talon-*.dll
+            dist/**.whl
+            dist/**.tar.gz
           fail_on_unmatched_files: true

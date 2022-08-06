@@ -1,0 +1,203 @@
+input: |
+  volume up: key(volup)
+  volume down: key(voldown)
+  set volume <number>: user.media_set_volume(number)
+  (volume|media) mute: key(mute)
+  [media] play next: key(next)
+  [media] play previous: key(prev)
+  media (play | pause): user.play_pause()
+output:
+  type: source_file
+  children:
+    - type: context
+      children: []
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: volume
+                type: word
+              - text: up
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: volup
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: volume
+                type: word
+              - text: down
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: voldown
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: set
+                type: word
+              - text: volume
+                type: word
+              - type: capture
+                children: []
+                capture_name:
+                  text: number
+                  type: identifier
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: user.media_set_volume
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: variable
+                    children: []
+                    variable_name:
+                      text: number
+                      type: identifier
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - type: parenthesized_rule
+                children:
+                  - type: choice
+                    children:
+                      - text: volume
+                        type: word
+                      - text: media
+                        type: word
+              - text: mute
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: mute
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - type: optional
+                children:
+                  - text: media
+                    type: word
+              - text: play
+                type: word
+              - text: next
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: next
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - type: optional
+                children:
+                  - text: media
+                    type: word
+              - text: play
+                type: word
+              - text: previous
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: prev
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: media
+                type: word
+              - type: parenthesized_rule
+                children:
+                  - type: choice
+                    children:
+                      - text: play
+                        type: word
+                      - text: pause
+                        type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: user.play_pause
+                type: identifier
+              arguments:
+                type: argument_list
+                children: []

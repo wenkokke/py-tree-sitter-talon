@@ -2,7 +2,7 @@ import typing
 
 import pytest
 
-import tree_sitter_talon
+from tree_sitter_talon import parse
 
 
 def node_dict_simplify(node_dict: dict[str, typing.Any]) -> None:
@@ -21,8 +21,8 @@ def node_dict_simplify(node_dict: dict[str, typing.Any]) -> None:
                     node_dict_simplify(val)
 
 
-@pytest.mark.golden_test("golden/*.yml")
+@pytest.mark.golden_test("data/golden/*.yml")
 def test_golden(golden):
-    node_dict = tree_sitter_talon.parse(golden["input"]).to_dict()
+    node_dict = parse(golden["input"]).to_dict()
     node_dict_simplify(node_dict)
     assert node_dict == golden.out["output"]

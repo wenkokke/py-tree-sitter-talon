@@ -1,0 +1,130 @@
+input: |
+  tag: user.mouse_grid_showing
+  -
+  <user.number_key>:
+      user.grid_narrow(number_key)
+  grid off:
+      user.grid_close()
+
+  grid reset:
+      user.grid_reset()
+
+  grid back:
+      user.grid_go_back()
+output:
+  type: source_file
+  children:
+    - type: context
+      children:
+        - type: match
+          children: []
+          key:
+            text: tag
+            type: identifier
+          pattern:
+            text: " user.mouse_grid_showing"
+            type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: capture
+            children: []
+            capture_name:
+              text: user.number_key
+              type: identifier
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: user.grid_narrow
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: variable
+                    children: []
+                    variable_name:
+                      text: number_key
+                      type: identifier
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: grid
+                type: word
+              - text: off
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: user.grid_close
+                type: identifier
+              arguments:
+                type: argument_list
+                children: []
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: grid
+                type: word
+              - text: reset
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: user.grid_reset
+                type: identifier
+              arguments:
+                type: argument_list
+                children: []
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: grid
+                type: word
+              - text: back
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: user.grid_go_back
+                type: identifier
+              arguments:
+                type: argument_list
+                children: []

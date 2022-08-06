@@ -1,0 +1,165 @@
+input: |
+  # -1 because we are repeating, so the initial command counts as one
+  <user.ordinals>: core.repeat_command(ordinals-1)
+  <number_small> times: core.repeat_command(number_small-1)
+  (repeat that|twice): core.repeat_command(1)
+  repeat that <number_small> [times]: core.repeat_command(number_small)
+output:
+  type: source_file
+  children:
+    - type: context
+      children: []
+    - text: "# -1 because we are repeating, so the initial command counts as one"
+      type: comment
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: capture
+            children: []
+            capture_name:
+              text: user.ordinals
+              type: identifier
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: core.repeat_command
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: binary_operator
+                    children: []
+                    left:
+                      type: variable
+                      children: []
+                      variable_name:
+                        text: ordinals
+                        type: identifier
+                    operator:
+                      text: "-"
+                      type: operator
+                    right:
+                      text: "1"
+                      type: integer
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - type: capture
+                children: []
+                capture_name:
+                  text: number_small
+                  type: identifier
+              - text: times
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: core.repeat_command
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: binary_operator
+                    children: []
+                    left:
+                      type: variable
+                      children: []
+                      variable_name:
+                        text: number_small
+                        type: identifier
+                    operator:
+                      text: "-"
+                      type: operator
+                    right:
+                      text: "1"
+                      type: integer
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: parenthesized_rule
+            children:
+              - type: choice
+                children:
+                  - type: seq
+                    children:
+                      - text: repeat
+                        type: word
+                      - text: that
+                        type: word
+                  - text: twice
+                    type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: core.repeat_command
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - text: "1"
+                    type: integer
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: repeat
+                type: word
+              - text: that
+                type: word
+              - type: capture
+                children: []
+                capture_name:
+                  text: number_small
+                  type: identifier
+              - type: optional
+                children:
+                  - text: times
+                    type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: core.repeat_command
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: variable
+                    children: []
+                    variable_name:
+                      text: number_small
+                      type: identifier

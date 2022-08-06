@@ -1,24 +1,24 @@
 import collections.abc
-import ctypes.util
 import json
-import logging
 import os
 import pathlib
-import platform
 import typing
 
-import appdirs  # type: ignore
 import pkg_resources  # type: ignore
 import tree_sitter  # type: ignore
 import tree_sitter_type_provider
-import wget  # type: ignore
+
+from .binding import _tree_sitter_talon_id
+
+
+class TalonLanguage(tree_sitter.Language):
+    def __init__(self):
+        self.language_id = _tree_sitter_talon_id()
 
 
 class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
 
     __version__: str = "1.6.16"
-
-    DEFAULT_LIBRARY_PATH: str = appdirs.user_cache_dir("tree_sitter_talon", "wenkokke")
 
     _library_path: typing.Optional[str] = None
 
@@ -26,50 +26,18 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
 
     _parser: typing.Optional[tree_sitter.Parser] = None
 
-    _allow_build: bool = True
-
-    @property
-    def allow_build(self) -> bool:
-        return self._allow_build
-
-    @allow_build.setter
-    def allow_build(self, allow_build: bool) -> None:
-        self._allow_build = allow_build
-
-    _allow_download: bool = True
-
-    @property
-    def allow_download(self) -> bool:
-        return self._allow_download
-
-    @allow_download.setter
-    def allow_download(self, allow_download: bool) -> None:
-        self._allow_download = allow_download
-
-    def _resource_path(self, *paths: str) -> str:
-        resource_name = os.path.join(*paths)
-        try:
-            filename = pkg_resources.resource_filename(
-                "tree_sitter_talon", resource_name
-            )
-            if os.path.exists(filename):
-                return filename
-        except (KeyError, ModuleNotFoundError):
-            pass
-        raise FileNotFoundError(resource_name)
-
-    @property
-    def _repository_path(self) -> str:
-        return self._resource_path("data", "tree-sitter-talon")
-
     @property
     def _package_json_path(self) -> str:
-        return self._resource_path("data", "tree-sitter-talon", "package.json")
+        return pkg_resources.resource_filename(
+            "tree_sitter_talon",
+            os.path.join("data", "tree-sitter-talon", "package.json"),
+        )
 
     @property
     def _node_types_json_path(self) -> str:
-        return self._resource_path(
-            "data", "tree-sitter-talon", "src", "node-types.json"
+        return pkg_resources.resource_filename(
+            "tree_sitter_talon",
+            os.path.join("data", "tree-sitter-talon", "src", "node-types.json"),
         )
 
     def _node_types_json(self, *, encoding: str = "utf-8") -> str:
@@ -83,137 +51,15 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
         )
 
     @property
-    def _tree_sitter_talon_version(self) -> str:
-        package_json_path = pathlib.Path(
-            self._resource_path("data", "tree-sitter-talon", "package.json")
-        )
+    def __grammar_version__(self) -> str:
+        package_json_path = pathlib.Path(self._package_json_path)
         package_json = json.loads(package_json_path.read_text())
         return package_json["version"]
 
     @property
-    def _library_names(self) -> collections.abc.Iterator[str]:
-        version = self._tree_sitter_talon_version
-        system = platform.system()
-        machine = platform.machine()
-        ext = {"Linux": "so", "Darwin": "dylib", "Windows": "dll"}.get(system, None)
-        if ext is None:
-            raise RuntimeError(f"Unsupported platform '{system}'")
-        yield f"tree_sitter_talon-{version}-{machine}.{ext}"
-        yield f"tree_sitter_talon-{version}.{ext}"
-        yield f"tree_sitter_talon.{ext}"
-
-    @property
-    def library_name(self) -> str:
-        return os.path.basename(self.library_path)
-
-    @property
-    def library_path(self) -> str:
-        library_path = self.find_library()
-        if library_path:
-            return library_path
-        else:
-            raise FileNotFoundError(tuple(self._library_names))
-
-    @library_path.setter
-    def library_path(self, library_or_library_path: str) -> None:
-        if os.path.exists(library_or_library_path):
-            if os.path.isdir(library_or_library_path):
-                self.find_library(library_or_library_path)
-            else:
-                self._library_path = library_or_library_path
-
-    def find_library(self, *extra_library_paths: str) -> typing.Optional[str]:
-        if not self._library_path:
-            for library_name in self._library_names:
-                # try extra_library_path
-                for extra_library_path in extra_library_paths:
-                    library_path = os.path.join(extra_library_path, library_name)
-                    if os.path.exists(library_path):
-                        self._library_path = library_path
-                        return self._library_path
-                # try package resource_path
-                try:
-                    library_path = self._resource_path("data", library_name)
-                    if library_path:
-                        self._library_path = library_path
-                        return self._library_path
-                except FileNotFoundError:
-                    pass
-                # try DEFAULT_LIBRARY_PATH
-                library_path = os.path.join(self.DEFAULT_LIBRARY_PATH, library_name)
-                if os.path.exists(library_path):
-                    self._library_path = library_path
-                    return self._library_path
-                # try ctypes.util.find_library
-                self._library_path = ctypes.util.find_library(library_name)
-                if self._library_path:
-                    return self._library_path
-        return self._library_path
-
-    def _or_default_library_path(
-        self, library_path: typing.Optional[str]
-    ) -> tuple[str, str]:
-        library_name = next(self._library_names)
-        if library_path:
-            return (os.path.join(library_path, library_name), library_name)
-        else:
-            return (os.path.join(self.DEFAULT_LIBRARY_PATH, library_name), library_name)
-
-    def build_library(
-        self, library_path: typing.Optional[str] = None
-    ) -> typing.Optional[str]:
-        if self.allow_build:
-            library_path, _ = self._or_default_library_path(library_path)
-            logging.info(f"Building {os.path.basename(library_path)}")
-            tree_sitter.Language.build_library(library_path, [self._repository_path])
-            self._library_path = library_path
-            return self._library_path
-        return None
-
-    def download_library(
-        self, library_path: typing.Optional[str] = None
-    ) -> typing.Optional[str]:
-        if self.allow_download:
-            library_path, library_name = self._or_default_library_path(library_path)
-            logging.info(f"Downloading {library_name}")
-            url = f"https://github.com/wenkokke/py-tree-sitter-talon/releases/download/{self.__version__}/{library_name}"
-            self._library_path = wget.download(url, library_path)
-            return self._library_path
-        return None
-
-    @property
     def language(self) -> tree_sitter.Language:
         if not self._language:
-            error_buffer: list[typing.Union[FileNotFoundError, OSError]] = []
-            try:
-                # try to load library_path
-                self._language = tree_sitter.Language(self.library_path, "talon")
-                return self._language
-            except (FileNotFoundError, OSError) as e:
-                error_buffer.append(e)
-                logging.warn(f"Could not load {tuple(self._library_names)}", e)
-            try:
-                # fallback #1: rebuild library
-                library_path = self.build_library()
-                if library_path:
-                    self._language = tree_sitter.Language(library_path, "talon")
-                    return self._language
-            except (FileNotFoundError, OSError) as e:
-                error_buffer.append(e)
-                logging.warn(f"Could not build {tuple(self._library_names)}", e)
-            try:
-                # fallback #2: download library
-                library_path = self.download_library()
-                if library_path:
-                    self._language = tree_sitter.Language(library_path, "talon")
-                    return self._language
-            except (FileNotFoundError, OSError) as e:
-                error_buffer.append(e)
-                logging.warn(f"Could not download {tuple(self._library_names)}", e)
-            raise OSError(
-                f"Could not find, build, or download {tuple(self._library_names)}",
-                *error_buffer,
-            )
+            self._language = TalonLanguage()
         return self._language
 
     @property

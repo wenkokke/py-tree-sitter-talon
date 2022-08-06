@@ -1,0 +1,283 @@
+input: |
+  tag: user.protobuf
+  -
+
+  # this is pretty bare-bones, further contributions welcome
+  state message: "message "
+  state package: "package "
+  state reserved: "reserved "
+  state enum: "enum "
+  op equals: " = "
+  state import: "import "
+  state import public: "import public "
+  state option: "option "
+  state repeated: "repeated "
+
+  type {user.code_type}: "{code_type}"
+  repeated type {user.code_type}: "repeated {code_type}"
+output:
+  type: source_file
+  children:
+    - type: context
+      children:
+        - type: match
+          children: []
+          key:
+            text: tag
+            type: identifier
+          pattern:
+            text: " user.protobuf"
+            type: implicit_string
+    - text: "# this is pretty bare-bones, further contributions welcome"
+      type: comment
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: state
+                type: word
+              - text: message
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: string
+              children:
+                - text: "message "
+                  type: string_content
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: state
+                type: word
+              - text: package
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: string
+              children:
+                - text: "package "
+                  type: string_content
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: state
+                type: word
+              - text: reserved
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: string
+              children:
+                - text: "reserved "
+                  type: string_content
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: state
+                type: word
+              - text: enum
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: string
+              children:
+                - text: "enum "
+                  type: string_content
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: op
+                type: word
+              - text: equals
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: string
+              children:
+                - text: " = "
+                  type: string_content
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: state
+                type: word
+              - text: import
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: string
+              children:
+                - text: "import "
+                  type: string_content
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: state
+                type: word
+              - text: import
+                type: word
+              - text: public
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: string
+              children:
+                - text: "import public "
+                  type: string_content
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: state
+                type: word
+              - text: option
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: string
+              children:
+                - text: "option "
+                  type: string_content
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: state
+                type: word
+              - text: repeated
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: string
+              children:
+                - text: "repeated "
+                  type: string_content
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: type
+                type: word
+              - type: list
+                children: []
+                list_name:
+                  text: user.code_type
+                  type: identifier
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: string
+              children:
+                - text: "{"
+                  type: string_content
+                - text: code_type
+                  type: string_content
+                - text: "}"
+                  type: string_content
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: repeated
+                type: word
+              - text: type
+                type: word
+              - type: list
+                children: []
+                list_name:
+                  text: user.code_type
+                  type: identifier
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: string
+              children:
+                - text: "repeated "
+                  type: string_content
+                - text: "{"
+                  type: string_content
+                - text: code_type
+                  type: string_content
+                - text: "}"
+                  type: string_content

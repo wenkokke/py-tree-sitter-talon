@@ -1,4 +1,3 @@
-from .dynamic import DEFAULT_LIBRARY_PATH as DEFAULT_LIBRARY_PATH
 from .dynamic import Branch as Branch
 from .dynamic import Leaf as Leaf
 from .dynamic import Node as Node
@@ -50,14 +49,10 @@ from .dynamic import TalonStringContent as TalonStringContent
 from .dynamic import TalonStringEscapeSequence as TalonStringEscapeSequence
 from .dynamic import TalonVariable as TalonVariable
 from .dynamic import TalonWord as TalonWord
+from .dynamic import __grammar_version__ as __grammar_version__
 from .dynamic import __version__ as __version__
-from .dynamic import build_library as build_library
-from .dynamic import download_library as download_library
-from .dynamic import find_library as find_library
 from .dynamic import from_tree_sitter as from_tree_sitter
 from .dynamic import language as language
-from .dynamic import library_name as library_name
-from .dynamic import library_path as library_path
 from .dynamic import parse as parse
 from .dynamic import parse_as_tree_sitter as parse_as_tree_sitter
 from .dynamic import parse_file as parse_file

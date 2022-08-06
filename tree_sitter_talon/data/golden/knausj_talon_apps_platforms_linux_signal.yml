@@ -1,0 +1,831 @@
+input: |
+  app: signal
+  -
+  show shortcuts: key("ctrl-/")
+
+  # Note that the order below matches Keyboard Shortcuts listings
+
+  # Navigation
+  (next|nav|navigate) [by] (sec|section): key("ctrl-t")
+  (prev|previous) (chat|conversation): key("alt-down")
+  next (chat|conversation): key("alt-up")
+  (prev|previous) unread: key("alt-shift-down")
+  next unread: key("alt-shift-up")
+  [open] (pref|preferences): key("ctrl-,")
+  open conversation menu: key("ctrl-shift-l")
+  search: key("ctrl-f")
+  search chat: key("ctrl-shift-f")
+  focus (chat|composer): key("ctrl-shift-t")
+  open media: key("ctrl-shift-m")
+  open emoji: key("ctrl-shift-j")
+  open sticker: key("ctrl-shift-s")
+  record [voice] message: key("ctrl-shift-v")
+  archive chat: key("ctrl-shift-a")
+  unarchive chat: key("ctrl-shift-u")
+  (first|top) message: key("ctrl-up")
+  (last|bottom) message: key("ctrl-down")
+  close chat: key("ctrl-shift-c")
+
+  # Messages
+  send it: key("enter")
+  message details: key("ctrl-d")
+  reply [message]: key("ctrl-shift-r")
+  react [message]: key("ctrl-shift-e")
+  save attachment: key("ctrl-s")
+  delete [message]: key("ctrl-shift-d")
+
+  # Composer
+  send message: key("ctrl-enter")
+  expand chat: key("ctrl-shift-x")
+  attach [file]: key("ctrl-u")
+  remove [link] preview: key("ctrl-p")
+  remove [link] attachment: key("ctrl-shift-p")
+output:
+  type: source_file
+  children:
+    - type: context
+      children:
+        - type: match
+          children: []
+          key:
+            text: app
+            type: identifier
+          pattern:
+            text: " signal"
+            type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: show
+                type: word
+              - text: shortcuts
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: '"ctrl-/"'
+                type: implicit_string
+    - text: "# Note that the order below matches Keyboard Shortcuts listings"
+      type: comment
+    - text: "# Navigation"
+      type: comment
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - type: parenthesized_rule
+                children:
+                  - type: choice
+                    children:
+                      - text: next
+                        type: word
+                      - text: nav
+                        type: word
+                      - text: navigate
+                        type: word
+              - type: optional
+                children:
+                  - text: by
+                    type: word
+              - type: parenthesized_rule
+                children:
+                  - type: choice
+                    children:
+                      - text: sec
+                        type: word
+                      - text: section
+                        type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: '"ctrl-t"'
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - type: parenthesized_rule
+                children:
+                  - type: choice
+                    children:
+                      - text: prev
+                        type: word
+                      - text: previous
+                        type: word
+              - type: parenthesized_rule
+                children:
+                  - type: choice
+                    children:
+                      - text: chat
+                        type: word
+                      - text: conversation
+                        type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: '"alt-down"'
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: next
+                type: word
+              - type: parenthesized_rule
+                children:
+                  - type: choice
+                    children:
+                      - text: chat
+                        type: word
+                      - text: conversation
+                        type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: '"alt-up"'
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - type: parenthesized_rule
+                children:
+                  - type: choice
+                    children:
+                      - text: prev
+                        type: word
+                      - text: previous
+                        type: word
+              - text: unread
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: '"alt-shift-down"'
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: next
+                type: word
+              - text: unread
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: '"alt-shift-up"'
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - type: optional
+                children:
+                  - text: open
+                    type: word
+              - type: parenthesized_rule
+                children:
+                  - type: choice
+                    children:
+                      - text: pref
+                        type: word
+                      - text: preferences
+                        type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: '"ctrl-,"'
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: open
+                type: word
+              - text: conversation
+                type: word
+              - text: menu
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: '"ctrl-shift-l"'
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - text: search
+            type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: '"ctrl-f"'
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: search
+                type: word
+              - text: chat
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: '"ctrl-shift-f"'
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: focus
+                type: word
+              - type: parenthesized_rule
+                children:
+                  - type: choice
+                    children:
+                      - text: chat
+                        type: word
+                      - text: composer
+                        type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: '"ctrl-shift-t"'
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: open
+                type: word
+              - text: media
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: '"ctrl-shift-m"'
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: open
+                type: word
+              - text: emoji
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: '"ctrl-shift-j"'
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: open
+                type: word
+              - text: sticker
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: '"ctrl-shift-s"'
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: record
+                type: word
+              - type: optional
+                children:
+                  - text: voice
+                    type: word
+              - text: message
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: '"ctrl-shift-v"'
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: archive
+                type: word
+              - text: chat
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: '"ctrl-shift-a"'
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: unarchive
+                type: word
+              - text: chat
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: '"ctrl-shift-u"'
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - type: parenthesized_rule
+                children:
+                  - type: choice
+                    children:
+                      - text: first
+                        type: word
+                      - text: top
+                        type: word
+              - text: message
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: '"ctrl-up"'
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - type: parenthesized_rule
+                children:
+                  - type: choice
+                    children:
+                      - text: last
+                        type: word
+                      - text: bottom
+                        type: word
+              - text: message
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: '"ctrl-down"'
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: close
+                type: word
+              - text: chat
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: '"ctrl-shift-c"'
+                type: implicit_string
+    - text: "# Messages"
+      type: comment
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: send
+                type: word
+              - text: it
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: '"enter"'
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: message
+                type: word
+              - text: details
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: '"ctrl-d"'
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: reply
+                type: word
+              - type: optional
+                children:
+                  - text: message
+                    type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: '"ctrl-shift-r"'
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: react
+                type: word
+              - type: optional
+                children:
+                  - text: message
+                    type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: '"ctrl-shift-e"'
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: save
+                type: word
+              - text: attachment
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: '"ctrl-s"'
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: delete
+                type: word
+              - type: optional
+                children:
+                  - text: message
+                    type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: '"ctrl-shift-d"'
+                type: implicit_string
+    - text: "# Composer"
+      type: comment
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: send
+                type: word
+              - text: message
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: '"ctrl-enter"'
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: expand
+                type: word
+              - text: chat
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: '"ctrl-shift-x"'
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: attach
+                type: word
+              - type: optional
+                children:
+                  - text: file
+                    type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: '"ctrl-u"'
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: remove
+                type: word
+              - type: optional
+                children:
+                  - text: link
+                    type: word
+              - text: preview
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: '"ctrl-p"'
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: remove
+                type: word
+              - type: optional
+                children:
+                  - text: link
+                    type: word
+              - text: attachment
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: '"ctrl-shift-p"'
+                type: implicit_string

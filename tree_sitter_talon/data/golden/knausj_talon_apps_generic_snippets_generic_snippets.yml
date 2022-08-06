@@ -1,0 +1,166 @@
+input: |
+  tag: user.snippets
+  -
+  snip {user.snippets}: user.snippet_insert(user.snippets)
+  snip hunt <user.text>: user.snippet_search(user.text)
+  snip hunt: user.snippet_search("")
+  snip create: user.snippet_create()
+  snip show: user.snippet_toggle()
+output:
+  type: source_file
+  children:
+    - type: context
+      children:
+        - type: match
+          children: []
+          key:
+            text: tag
+            type: identifier
+          pattern:
+            text: " user.snippets"
+            type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: snip
+                type: word
+              - type: list
+                children: []
+                list_name:
+                  text: user.snippets
+                  type: identifier
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: user.snippet_insert
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: variable
+                    children: []
+                    variable_name:
+                      text: user.snippets
+                      type: identifier
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: snip
+                type: word
+              - text: hunt
+                type: word
+              - type: capture
+                children: []
+                capture_name:
+                  text: user.text
+                  type: identifier
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: user.snippet_search
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: variable
+                    children: []
+                    variable_name:
+                      text: user.text
+                      type: identifier
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: snip
+                type: word
+              - text: hunt
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: user.snippet_search
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: string
+                    children: []
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: snip
+                type: word
+              - text: create
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: user.snippet_create
+                type: identifier
+              arguments:
+                type: argument_list
+                children: []
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - type: seq
+            children:
+              - text: snip
+                type: word
+              - text: show
+                type: word
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: user.snippet_toggle
+                type: identifier
+              arguments:
+                type: argument_list
+                children: []

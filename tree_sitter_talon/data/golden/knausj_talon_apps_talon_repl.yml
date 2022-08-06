@@ -1,0 +1,746 @@
+input: |
+  win.title:/repl/
+  win.title:/Talon - REPL/
+  -
+  tag(): user.talon_python
+
+  # uncomment user.talon_populate_lists tag to activate talon-specific lists of actions, scopes, modes etcetera.
+  # Do not enable this tag with dragon, as it will be unusable.
+  # with conformer, the latency increase may also be unacceptable depending on your cpu
+  # see https://github.com/knausj85/knausj_talon/issues/600
+  # tag(): user.talon_populate_lists
+
+  ^test last$:
+      phrase = user.history_get(1)
+      command = "sim('{phrase}')"
+      insert(command)
+      key(enter)
+  ^test <phrase>$:
+      insert("sim('{phrase}')")
+      key(enter)
+  ^test numb <number_small>$:
+      phrase = user.history_get(number_small)
+      command = "sim('{phrase}')"
+      #to do: shouldn't this work?
+      #user.paste("sim({phrase})")
+      insert(command)
+      key(enter)
+  # requires user.talon_populate_lists tag. do not use with dragon
+  ^debug action {user.talon_actions}$:
+      insert("actions.find('{user.talon_actions}')")
+      key(enter)
+  # requires user.talon_populate_lists tag. do not use with dragon
+  ^debug list {user.talon_lists}$:
+      insert("actions.user.talon_pretty_print(registry.lists['{talon_lists}'])")
+      key(enter)
+  ^debug tags$:
+      insert("actions.user.talon_pretty_print(registry.tags)")
+      key(enter)
+  ^debug settings$:
+      insert("actions.user.talon_pretty_print(registry.settings)")
+      key(enter)
+  ^debug modes$:
+      insert("actions.user.talon_pretty_print(scope.get('mode'))")
+      key(enter)
+  # requires user.talon_populate_lists tag. do not use with dragon
+  ^debug scope {user.talon_scopes}$:
+      insert("actions.user.talon_pretty_print(scope.get('{talon_scopes}'))")
+      key(enter)
+  ^debug running apps$:
+      insert("actions.user.talon_pretty_print(ui.apps(background=False))")
+      key(enter)
+  ^debug all windows$:
+      insert("actions.user.talon_pretty_print(ui.windows())")
+      key(enter)
+  ^debug {user.running} windows$:
+      insert("actions.user.talon_debug_app_windows('{running}')")
+      key(enter)
+output:
+  type: source_file
+  children:
+    - type: context
+      children:
+        - type: or
+          children:
+            - type: match
+              children: []
+              key:
+                text: win.title
+                type: identifier
+              pattern:
+                text: /repl/
+                type: implicit_string
+            - type: match
+              children: []
+              key:
+                text: win.title
+                type: identifier
+              pattern:
+                text: /Talon - REPL/
+                type: implicit_string
+    - type: include_tag
+      children: []
+      tag:
+        text: user.talon_python
+        type: identifier
+    - text:
+        "# uncomment user.talon_populate_lists tag to activate talon-specific lists
+        of actions, scopes, modes etcetera."
+      type: comment
+    - text: "# Do not enable this tag with dragon, as it will be unusable."
+      type: comment
+    - text:
+        "# with conformer, the latency increase may also be unacceptable depending
+        on your cpu"
+      type: comment
+    - text: "# see https://github.com/knausj85/knausj_talon/issues/600"
+      type: comment
+    - text: "# tag(): user.talon_populate_lists"
+      type: comment
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - text: ^
+            type: start_anchor
+          - type: seq
+            children:
+              - text: test
+                type: word
+              - text: last
+                type: word
+          - text: $
+            type: end_anchor
+      script:
+        type: block
+        children:
+          - type: assignment
+            children: []
+            left:
+              text: phrase
+              type: identifier
+            right:
+              type: action
+              children: []
+              action_name:
+                text: user.history_get
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - text: "1"
+                    type: integer
+          - type: assignment
+            children: []
+            left:
+              text: command
+              type: identifier
+            right:
+              type: string
+              children:
+                - text: sim('
+                  type: string_content
+                - text: "{"
+                  type: string_content
+                - text: phrase
+                  type: string_content
+                - text: "}"
+                  type: string_content
+                - text: "')"
+                  type: string_content
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: insert
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: variable
+                    children: []
+                    variable_name:
+                      text: command
+                      type: identifier
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: enter
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - text: ^
+            type: start_anchor
+          - type: seq
+            children:
+              - text: test
+                type: word
+              - type: capture
+                children: []
+                capture_name:
+                  text: phrase
+                  type: identifier
+          - text: $
+            type: end_anchor
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: insert
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: string
+                    children:
+                      - text: sim('
+                        type: string_content
+                      - text: "{"
+                        type: string_content
+                      - text: phrase
+                        type: string_content
+                      - text: "}"
+                        type: string_content
+                      - text: "')"
+                        type: string_content
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: enter
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - text: ^
+            type: start_anchor
+          - type: seq
+            children:
+              - text: test
+                type: word
+              - text: numb
+                type: word
+              - type: capture
+                children: []
+                capture_name:
+                  text: number_small
+                  type: identifier
+          - text: $
+            type: end_anchor
+      script:
+        type: block
+        children:
+          - type: assignment
+            children: []
+            left:
+              text: phrase
+              type: identifier
+            right:
+              type: action
+              children: []
+              action_name:
+                text: user.history_get
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: variable
+                    children: []
+                    variable_name:
+                      text: number_small
+                      type: identifier
+          - type: assignment
+            children: []
+            left:
+              text: command
+              type: identifier
+            right:
+              type: string
+              children:
+                - text: sim('
+                  type: string_content
+                - text: "{"
+                  type: string_content
+                - text: phrase
+                  type: string_content
+                - text: "}"
+                  type: string_content
+                - text: "')"
+                  type: string_content
+          - text: "#to do: shouldn't this work?"
+            type: comment
+          - text: '#user.paste("sim({phrase})")'
+            type: comment
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: insert
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: variable
+                    children: []
+                    variable_name:
+                      text: command
+                      type: identifier
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: enter
+                type: implicit_string
+    - text: "# requires user.talon_populate_lists tag. do not use with dragon"
+      type: comment
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - text: ^
+            type: start_anchor
+          - type: seq
+            children:
+              - text: debug
+                type: word
+              - text: action
+                type: word
+              - type: list
+                children: []
+                list_name:
+                  text: user.talon_actions
+                  type: identifier
+          - text: $
+            type: end_anchor
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: insert
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: string
+                    children:
+                      - text: actions.find('
+                        type: string_content
+                      - text: "{"
+                        type: string_content
+                      - text: user.talon_actions
+                        type: string_content
+                      - text: "}"
+                        type: string_content
+                      - text: "')"
+                        type: string_content
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: enter
+                type: implicit_string
+    - text: "# requires user.talon_populate_lists tag. do not use with dragon"
+      type: comment
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - text: ^
+            type: start_anchor
+          - type: seq
+            children:
+              - text: debug
+                type: word
+              - text: list
+                type: word
+              - type: list
+                children: []
+                list_name:
+                  text: user.talon_lists
+                  type: identifier
+          - text: $
+            type: end_anchor
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: insert
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: string
+                    children:
+                      - text: actions.user.talon_pretty_print(registry.lists['
+                        type: string_content
+                      - text: "{"
+                        type: string_content
+                      - text: talon_lists
+                        type: string_content
+                      - text: "}"
+                        type: string_content
+                      - text: "'])"
+                        type: string_content
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: enter
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - text: ^
+            type: start_anchor
+          - type: seq
+            children:
+              - text: debug
+                type: word
+              - text: tags
+                type: word
+          - text: $
+            type: end_anchor
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: insert
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: string
+                    children:
+                      - text: actions.user.talon_pretty_print(registry.tags)
+                        type: string_content
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: enter
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - text: ^
+            type: start_anchor
+          - type: seq
+            children:
+              - text: debug
+                type: word
+              - text: settings
+                type: word
+          - text: $
+            type: end_anchor
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: insert
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: string
+                    children:
+                      - text: actions.user.talon_pretty_print(registry.settings)
+                        type: string_content
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: enter
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - text: ^
+            type: start_anchor
+          - type: seq
+            children:
+              - text: debug
+                type: word
+              - text: modes
+                type: word
+          - text: $
+            type: end_anchor
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: insert
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: string
+                    children:
+                      - text: actions.user.talon_pretty_print(scope.get('mode'))
+                        type: string_content
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: enter
+                type: implicit_string
+    - text: "# requires user.talon_populate_lists tag. do not use with dragon"
+      type: comment
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - text: ^
+            type: start_anchor
+          - type: seq
+            children:
+              - text: debug
+                type: word
+              - text: scope
+                type: word
+              - type: list
+                children: []
+                list_name:
+                  text: user.talon_scopes
+                  type: identifier
+          - text: $
+            type: end_anchor
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: insert
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: string
+                    children:
+                      - text: actions.user.talon_pretty_print(scope.get('
+                        type: string_content
+                      - text: "{"
+                        type: string_content
+                      - text: talon_scopes
+                        type: string_content
+                      - text: "}"
+                        type: string_content
+                      - text: "'))"
+                        type: string_content
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: enter
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - text: ^
+            type: start_anchor
+          - type: seq
+            children:
+              - text: debug
+                type: word
+              - text: running
+                type: word
+              - text: apps
+                type: word
+          - text: $
+            type: end_anchor
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: insert
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: string
+                    children:
+                      - text: actions.user.talon_pretty_print(ui.apps(background=False))
+                        type: string_content
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: enter
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - text: ^
+            type: start_anchor
+          - type: seq
+            children:
+              - text: debug
+                type: word
+              - text: all
+                type: word
+              - text: windows
+                type: word
+          - text: $
+            type: end_anchor
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: insert
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: string
+                    children:
+                      - text: actions.user.talon_pretty_print(ui.windows())
+                        type: string_content
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: enter
+                type: implicit_string
+    - type: command
+      children: []
+      rule:
+        type: rule
+        children:
+          - text: ^
+            type: start_anchor
+          - type: seq
+            children:
+              - text: debug
+                type: word
+              - type: list
+                children: []
+                list_name:
+                  text: user.running
+                  type: identifier
+              - text: windows
+                type: word
+          - text: $
+            type: end_anchor
+      script:
+        type: block
+        children:
+          - type: expression
+            children: []
+            expression:
+              type: action
+              children: []
+              action_name:
+                text: insert
+                type: identifier
+              arguments:
+                type: argument_list
+                children:
+                  - type: string
+                    children:
+                      - text: actions.user.talon_debug_app_windows('
+                        type: string_content
+                      - text: "{"
+                        type: string_content
+                      - text: running
+                        type: string_content
+                      - text: "}"
+                        type: string_content
+                      - text: "')"
+                        type: string_content
+          - type: expression
+            children: []
+            expression:
+              type: key_action
+              children: []
+              arguments:
+                text: enter
+                type: implicit_string
