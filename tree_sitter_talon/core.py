@@ -88,7 +88,13 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
 
     @property
     def library_path(self) -> str:
-        return self.find_library() or self.build_library()
+        library_path = self.find_library()
+        if library_path:
+            return library_path
+        library_path = self.build_library()
+        if library_path:
+            return library_path
+        raise FileNotFoundError(tuple(self._library_names))
 
     @library_path.setter
     def library_path(self, library_or_library_path: str) -> None:
@@ -106,54 +112,77 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
                     library_path = os.path.join(extra_library_path, library_name)
                     if os.path.exists(library_path):
                         self._library_path = library_path
-                        break
+                        return self._library_path
                 # try package resource_path
                 try:
                     library_path = self._resource_path("data", library_name)
                     if library_path:
                         self._library_path = library_path
-                        break
+                        return self._library_path
                 except FileNotFoundError:
                     pass
                 # try DEFAULT_LIBRARY_PATH
                 library_path = os.path.join(self.DEFAULT_LIBRARY_PATH, library_name)
                 if os.path.exists(library_path):
                     self._library_path = library_path
-                    break
+                    return self._library_path
                 # try ctypes.util.find_library
                 self._library_path = ctypes.util.find_library(library_name)
                 if self._library_path:
-                    break
+                    return self._library_path
         return self._library_path
 
-    def _or_default_library_path(self, library_path: typing.Optional[str]) -> str:
+    def _or_default_library_path(
+        self, library_path: typing.Optional[str]
+    ) -> tuple[str, str]:
         library_name = next(self._library_names)
         if library_path:
-            return os.path.join(library_path, library_name)
+            return (os.path.join(library_path, library_name), library_name)
         else:
-            return os.path.join(self.DEFAULT_LIBRARY_PATH, library_name)
+            return (os.path.join(self.DEFAULT_LIBRARY_PATH, library_name), library_name)
 
-    def build_library(self, library_path: typing.Optional[str] = None) -> str:
-        if not self._library_path:
-            self._library_path = self._or_default_library_path(library_path)
-            logging.info(f"Building {os.path.basename(self._library_path)}")
-            tree_sitter.Language.build_library(
-                self._library_path, [self._repository_path]
-            )
-        return self._library_path
+    def build_library(
+        self, library_path: typing.Optional[str] = None
+    ) -> typing.Optional[str]:
+        library_path, library_name = self._or_default_library_path(library_path)
+        try:
+            logging.info(f"Building {os.path.basename(library_path)}")
+            tree_sitter.Language.build_library(library_path, [self._repository_path])
+            self._library_path = library_path
+            return self._library_path
+        except OSError:
+            return None
 
-    def download_library(self, library_path: typing.Optional[str] = None) -> str:
-        if not self._library_path:
-            self._library_path = self._or_default_library_path(library_path)
-            logging.info(f"Downloading {os.path.basename(self._library_path)}")
-            url = f"https://github.com/wenkokke/py-tree-sitter-talon/releases/download/{self.__version__}/{self.library_name}"
-            assert self._library_path == wget.download(url, self._library_path)
-        return self._library_path
+    def download_library(
+        self, library_path: typing.Optional[str] = None
+    ) -> typing.Optional[str]:
+        library_path, library_name = self._or_default_library_path(library_path)
+        try:
+            logging.info(f"Downloading {library_name}")
+            url = f"https://github.com/wenkokke/py-tree-sitter-talon/releases/download/{self.__version__}/{library_name}"
+            self._library_path = wget.download(url, library_path)
+            return self._library_path
+        except OSError:
+            return None
 
     @property
     def language(self) -> tree_sitter.Language:
         if not self._language:
-            self._language = tree_sitter.Language(self.library_path, "talon")
+            try:
+                self._language = tree_sitter.Language(self.library_path, "talon")
+                return self._language
+            except OSError:
+                pass
+            try:
+                # fallback #1: rebuild library
+                self.build_library()
+                self._language = tree_sitter.Language(self.library_path, "talon")
+                return self._language
+            except OSError:
+                # fallback #2: download library
+                self.download_library()
+                self._language = tree_sitter.Language(self.library_path, "talon")
+                return self._language
         return self._language
 
     @property
