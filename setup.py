@@ -9,7 +9,7 @@ with open(os.path.join(os.path.dirname(__file__), "README.md")) as f:
 
 setuptools.setup(
     name="tree_sitter_talon",
-    version="1.6.17",
+    version="1.7.0",
     description="Parser for Talon files in Python",
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
