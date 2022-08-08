@@ -24,7 +24,7 @@ sys.path.insert(0, os.path.abspath(".."))
 project = "tree_sitter_talon"
 copyright = "2022, Wen Kokke"
 author = "Wen Kokke"
-release = "1.7.0"
+release = "1.8.0"
 
 # -- General configuration ---------------------------------------------------
 
