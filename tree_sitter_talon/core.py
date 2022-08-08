@@ -85,6 +85,7 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
         self.Leaf = tree_sitter_type_provider.Leaf
         self.Branch = tree_sitter_type_provider.Branch
         self.Point = tree_sitter_type_provider.Point
+        self.ParseError = tree_sitter_type_provider.ParseError
 
     def parse(
         self,

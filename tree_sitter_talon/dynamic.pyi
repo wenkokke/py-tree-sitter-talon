@@ -4,12 +4,13 @@ import typing
 
 import dataclasses_json
 import tree_sitter  # type: ignore
-from tree_sitter_type_provider.node_types import Branch as Branch
-from tree_sitter_type_provider.node_types import Leaf as Leaf
-from tree_sitter_type_provider.node_types import Node as Node
-from tree_sitter_type_provider.node_types import NodeTypeError as NodeTypeError
-from tree_sitter_type_provider.node_types import NodeTypeName as NodeTypeName
-from tree_sitter_type_provider.node_types import Point as Point
+from tree_sitter_type_provider import Branch as Branch
+from tree_sitter_type_provider import Leaf as Leaf
+from tree_sitter_type_provider import Node as Node
+from tree_sitter_type_provider import NodeTypeError as NodeTypeError
+from tree_sitter_type_provider import NodeTypeName as NodeTypeName
+from tree_sitter_type_provider import ParseError as ParseError
+from tree_sitter_type_provider import Point as Point
 
 __version__: str
 
