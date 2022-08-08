@@ -48,10 +48,7 @@ setuptools.setup(
             "Sphinx >=5.1.1, <6",
             "sphinx-bootstrap-theme >=0.8.1, <0.9",
         ],
-        "test": [
-            "pytest >=7.1.2, <8",
-            "pytest-golden >=0.2.2, <0.3",
-        ],
+        "test": ["pytest >=7.1.2, <8", "pytest-golden >=0.2.2, <0.3"],
     },
     ext_modules=[
         distutils.extension.Extension(
