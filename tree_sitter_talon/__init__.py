@@ -15,7 +15,6 @@ from .dynamic import TalonChoice as TalonChoice
 from .dynamic import TalonCommand as TalonCommand
 from .dynamic import TalonComment as TalonComment
 from .dynamic import TalonContext as TalonContext
-from .dynamic import TalonDocstring as TalonDocstring
 from .dynamic import TalonEndAnchor as TalonEndAnchor
 from .dynamic import TalonError as TalonError
 from .dynamic import TalonExpression as TalonExpression
@@ -26,6 +25,7 @@ from .dynamic import TalonIncludeTag as TalonIncludeTag
 from .dynamic import TalonInteger as TalonInteger
 from .dynamic import TalonInterpolation as TalonInterpolation
 from .dynamic import TalonKeyAction as TalonKeyAction
+from .dynamic import TalonKeyBinding as TalonKeyBinding
 from .dynamic import TalonList as TalonList
 from .dynamic import TalonMatch as TalonMatch
 from .dynamic import TalonNot as TalonNot

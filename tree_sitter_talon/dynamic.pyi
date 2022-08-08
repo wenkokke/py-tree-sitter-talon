@@ -129,9 +129,7 @@ class TalonBinaryOperator(Branch):
 @dataclasses_json.dataclass_json
 @dataclasses.dataclass
 class TalonBlock(Branch):
-    children: list[
-        typing.Union[TalonAssignment, TalonDocstring, TalonExpression, TalonComment]
-    ]
+    children: list[typing.Union[TalonAssignment, TalonExpression, TalonComment]]
 
 @dataclasses_json.dataclass_json
 @dataclasses.dataclass
@@ -173,16 +171,7 @@ class TalonComment(Leaf):
 @dataclasses_json.dataclass_json
 @dataclasses.dataclass
 class TalonContext(Branch):
-    children: list[
-        typing.Union[
-            TalonAnd, TalonDocstring, TalonMatch, TalonNot, TalonOr, TalonComment
-        ]
-    ]
-
-@dataclasses_json.dataclass_json
-@dataclasses.dataclass
-class TalonDocstring(Leaf):
-    pass
+    children: list[typing.Union[TalonAnd, TalonMatch, TalonNot, TalonOr, TalonComment]]
 
 @dataclasses_json.dataclass_json
 @dataclasses.dataclass
@@ -228,7 +217,6 @@ class TalonError(Branch):
             TalonStringContent,
             TalonVariable,
             TalonComment,
-            TalonDocstring,
             TalonEndAnchor,
             TalonFloat,
             TalonIdentifier,
@@ -308,6 +296,13 @@ class TalonInterpolation(Branch):
 class TalonKeyAction(Branch):
     children: list[TalonComment]
     arguments: TalonImplicitString
+
+@dataclasses_json.dataclass_json
+@dataclasses.dataclass
+class TalonKeyBinding(Branch):
+    children: list[TalonComment]
+    key: TalonKeyAction
+    script: TalonBlock
 
 @dataclasses_json.dataclass_json
 @dataclasses.dataclass
