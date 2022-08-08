@@ -47,6 +47,8 @@ def from_tree_sitter(
     tsvalue: typing.Union[tree_sitter.Tree, tree_sitter.Node, tree_sitter.TreeCursor],
     *,
     encoding: str = "utf-8",
+    filename: typing.Optional[str] = None,
+    raise_parse_error: bool = False,
 ) -> Node: ...
 @dataclasses_json.dataclass_json
 @dataclasses.dataclass

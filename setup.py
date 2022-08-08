@@ -1,8 +1,6 @@
+import setuptools  # isort:skip
+import distutils.extension
 import os
-import platform
-from distutils.extension import Extension
-
-import setuptools
 
 with open(os.path.join(os.path.dirname(__file__), "README.md")) as f:
     LONG_DESCRIPTION = f.read()
@@ -32,31 +30,31 @@ setuptools.setup(
         "pytest-runner",
     ],
     tests_require=[
-        "pytest==7.1.2",
-        "pytest-golden==0.2.2",
+        "pytest >=7.1.2, <8",
+        "pytest-golden >=0.2.2, <0.3",
     ],
     install_requires=[
-        "tree_sitter==0.20.0",
-        "tree_sitter_type_provider==1.5.0",
-        "dataclasses-json==0.5.7",
+        "tree_sitter ==0.20.0",
+        "tree_sitter_type_provider ==2.0.0",
+        "dataclasses-json >=0.5.7, <0.6",
     ],
     extras_require={
         "dev": [
-            "build==0.8.0",
-            "mypy==0.971",
-            "twine==4.0.1",
+            "build >=0.8.0, <0.9",
+            "mypy >=0.971, <1",
+            "twine >=4.0.1, <5",
         ],
         "doc": [
-            "Sphinx==5.1.1",
-            "sphinx-bootstrap-theme==0.8.1",
+            "Sphinx >=5.1.1, <6",
+            "sphinx-bootstrap-theme >=0.8.1, <0.9",
         ],
         "test": [
-            "pytest==7.1.2",
-            "pytest-golden==0.2.2",
+            "pytest >=7.1.2, <8",
+            "pytest-golden >=0.2.2, <0.3",
         ],
     },
     ext_modules=[
-        Extension(
+        distutils.extension.Extension(
             name="tree_sitter_talon.binding",
             sources=[
                 "tree_sitter_talon/binding.c",
@@ -66,7 +64,6 @@ setuptools.setup(
             include_dirs=[
                 "tree_sitter_talon/data/tree-sitter-talon/src",
             ],
-            extra_compile_args=[],
         )
     ],
     package_data={

@@ -64,7 +64,7 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
             self._parser.set_language(self.language)
         return self._parser
 
-    def __init__(self, *, error_as_node: bool = True):
+    def __init__(self):
         # Conversion from tree-sitter names to Python names
         def as_class_name(node_type_name: str) -> str:
             buffer = ["Talon"]
@@ -76,7 +76,6 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
         super().__init__(
             "tree_sitter_talon",
             self._node_types,
-            error_as_node=error_as_node,
             as_class_name=as_class_name,
             extra=["comment"],
         )
@@ -93,6 +92,8 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
         *,
         has_header: typing.Optional[bool] = None,
         encoding: str = "utf-8",
+        filename: typing.Optional[str] = None,
+        raise_parse_error: bool = False,
     ) -> typing.Union[
         typing.Sequence[tree_sitter_type_provider.Node],
         tree_sitter_type_provider.Node,
@@ -101,7 +102,9 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
         tree = self.parse_as_tree_sitter(
             contents, has_header=has_header, encoding=encoding
         )
-        return self.from_tree_sitter(tree.root_node)
+        return self.from_tree_sitter(
+            tree.root_node, filename=filename, raise_parse_error=raise_parse_error
+        )
 
     def parse_file(
         self,
@@ -109,6 +112,7 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
         *,
         has_header: typing.Optional[bool] = None,
         encoding: str = "utf-8",
+        raise_parse_error: bool = False,
     ) -> typing.Union[
         typing.Sequence[tree_sitter_type_provider.Node],
         tree_sitter_type_provider.Node,
@@ -117,7 +121,9 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
         tree = self.parse_file_as_tree_sitter(
             path, has_header=has_header, encoding=encoding
         )
-        return self.from_tree_sitter(tree.root_node)
+        return self.from_tree_sitter(
+            tree.root_node, filename=str(path), raise_parse_error=raise_parse_error
+        )
 
     def parse_as_tree_sitter(
         self,
