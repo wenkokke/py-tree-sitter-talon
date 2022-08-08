@@ -32,28 +32,27 @@ setuptools.setup(
         "pytest-runner",
     ],
     tests_require=[
-        "pytest >=7.1.2, <7.2",
-        "pytest-golden >=0.2.2, <0.3",
+        "pytest==7.1.2",
+        "pytest-golden==0.2.2",
     ],
     install_requires=[
-        "tree_sitter ==0.20.0",
-        "tree_sitter_type_provider >=1.4.8, <1.5",
-        "dataclasses-json >=0.5.7, <0.6",
+        "tree_sitter==0.20.0",
+        "tree_sitter_type_provider==1.5.0",
+        "dataclasses-json==0.5.7",
     ],
     extras_require={
         "dev": [
-            "build >=0.8.0, <0.9",
-            "bumpver >=2022.1118",
-            "mypy >=0.971",
-            "twine >=4.0.1, <4.1",
+            "build==0.8.0",
+            "mypy==0.971",
+            "twine==4.0.1",
         ],
         "doc": [
-            "Sphinx >=5.1.1, <6.2",
-            "sphinx-bootstrap-theme >=0.8.1, <0.9",
+            "Sphinx==5.1.1",
+            "sphinx-bootstrap-theme==0.8.1",
         ],
         "test": [
-            "pytest >=7.1.2, <7.2",
-            "pytest-golden >=0.2.2, <0.3",
+            "pytest==7.1.2",
+            "pytest-golden==0.2.2",
         ],
     },
     ext_modules=[
