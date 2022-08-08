@@ -8,125 +8,125 @@ input: |
 output:
   type: source_file
   children:
-    - type: context
+  - type: context
+    children:
+    - type: match
+      children: []
+      key:
+        text: tag
+        type: identifier
+      pattern:
+        text: ' user.pages'
+        type: implicit_string
+  - type: command
+    children: []
+    rule:
+      type: rule
       children:
-        - type: match
+      - type: seq
+        children:
+        - text: page
+          type: word
+        - text: next
+          type: word
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
           children: []
-          key:
-            text: tag
+          action_name:
+            text: user.page_next
             type: identifier
-          pattern:
-            text: " user.pages"
-            type: implicit_string
-    - type: command
-      children: []
-      rule:
-        type: rule
-        children:
-          - type: seq
-            children:
-              - text: page
-                type: word
-              - text: next
-                type: word
-      script:
-        type: block
-        children:
-          - type: expression
+          arguments:
+            type: argument_list
             children: []
-            expression:
-              type: action
-              children: []
-              action_name:
-                text: user.page_next
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-    - type: command
-      children: []
-      rule:
-        type: rule
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
         children:
-          - type: seq
-            children:
-              - text: page
-                type: word
-              - text: last
-                type: word
-      script:
-        type: block
-        children:
-          - type: expression
+        - text: page
+          type: word
+        - text: last
+          type: word
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.page_previous
+            type: identifier
+          arguments:
+            type: argument_list
             children: []
-            expression:
-              type: action
-              children: []
-              action_name:
-                text: user.page_previous
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-    - type: command
-      children: []
-      rule:
-        type: rule
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
         children:
-          - type: seq
+        - text: go
+          type: word
+        - text: page
+          type: word
+        - type: capture
+          children: []
+          capture_name:
+            text: number
+            type: identifier
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.page_jump
+            type: identifier
+          arguments:
+            type: argument_list
             children:
-              - text: go
-                type: word
-              - text: page
-                type: word
-              - type: capture
-                children: []
-                capture_name:
-                  text: number
-                  type: identifier
-      script:
-        type: block
-        children:
-          - type: expression
-            children: []
-            expression:
-              type: action
+            - type: variable
               children: []
-              action_name:
-                text: user.page_jump
+              variable_name:
+                text: number
                 type: identifier
-              arguments:
-                type: argument_list
-                children:
-                  - type: variable
-                    children: []
-                    variable_name:
-                      text: number
-                      type: identifier
-    - type: command
-      children: []
-      rule:
-        type: rule
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
         children:
-          - type: seq
-            children:
-              - text: go
-                type: word
-              - text: page
-                type: word
-              - text: final
-                type: word
-      script:
-        type: block
-        children:
-          - type: expression
+        - text: go
+          type: word
+        - text: page
+          type: word
+        - text: final
+          type: word
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.page_final
+            type: identifier
+          arguments:
+            type: argument_list
             children: []
-            expression:
-              type: action
-              children: []
-              action_name:
-                text: user.page_final
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []

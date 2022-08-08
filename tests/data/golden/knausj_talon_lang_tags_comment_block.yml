@@ -1,527 +1,591 @@
-input:
-  "tag: user.code_comment_block\n-\nblock comment: user.code_comment_block()\n\
-  block comment line:\n    #todo: this should probably be a single function once\n\
-  \    #.talon supports implementing actions with parameters?\n\tedit.line_start()\n\
-  \    user.code_comment_block_prefix()\n    key(space)\n\tedit.line_end()\n    key(space)\n\
-  \    user.code_comment_block_suffix()\n#adds comment to the start of the line\n\
-  block comment line <user.text> over:\n    #todo: this should probably be a single\
-  \ function once\n    #.talon supports implementing actions with parameters?\n  \
-  \  edit.line_start()\n    user.code_comment_block()\n\tinsert(user.text)\nblock\
-  \ comment <user.text> over:\n    #todo: this should probably be a single function\
-  \ once\n    #.talon supports implementing actions with parameters?\n\tuser.code_comment_block()\n\
-  \    insert(user.text)\nblock comment <user.text>$:\n    #todo: this should probably\
-  \ be a single function once\n    #.talon supports implementing actions with parameters?\n\
-  \    user.code_comment_block()\n    insert(user.text)\n(line | inline) block comment\
-  \ <user.text> over:\n    #todo: this should probably be a single function once\n\
-  \    #.talon supports implementing actions with parameters?\n\tedit.line_end()\n\
-  \   \tuser.code_comment_block_prefix()\n    key(space)\n    insert(user.text)\n\
-  \    key(space)\n   \tuser.code_comment_block_suffix()\n(line | inline) block comment\
-  \ <user.text>$:\n    #todo: this should probably be a single function once\n   \
-  \ #.talon supports implementing actions with parameters?\n\tedit.line_end()\n  \
-  \ \tuser.code_comment_block_prefix()\n    key(space)\n    insert(user.text)\n  \
-  \  key(space)\n   \tuser.code_comment_block_suffix()\nopen block comment:\n    user.code_comment_block_prefix()\n\
-  close block comment:\n    user.code_comment_block_suffix()\n"
+input: |
+  tag: user.code_comment_block
+  -
+  block comment: user.code_comment_block()
+  block comment line:
+      #todo: this should probably be a single function once
+      #.talon supports implementing actions with parameters?
+      edit.line_start()
+      user.code_comment_block_prefix()
+      key(space)
+      edit.line_end()
+      key(space)
+      user.code_comment_block_suffix()
+  #adds comment to the start of the line
+  block comment line <user.text> over:
+      #todo: this should probably be a single function once
+      #.talon supports implementing actions with parameters?
+      edit.line_start()
+      user.code_comment_block()
+      insert(user.text)
+  block comment <user.text> over:
+      #todo: this should probably be a single function once
+      #.talon supports implementing actions with parameters?
+      user.code_comment_block()
+      insert(user.text)
+  block comment <user.text>$:
+      #todo: this should probably be a single function once
+      #.talon supports implementing actions with parameters?
+      user.code_comment_block()
+      insert(user.text)
+  (line | inline) block comment <user.text> over:
+      #todo: this should probably be a single function once
+      #.talon supports implementing actions with parameters?
+      edit.line_end()
+      user.code_comment_block_prefix()
+      key(space)
+      insert(user.text)
+      key(space)
+      user.code_comment_block_suffix()
+  (line | inline) block comment <user.text>$:
+      #todo: this should probably be a single function once
+      #.talon supports implementing actions with parameters?
+      edit.line_end()
+      user.code_comment_block_prefix()
+      key(space)
+      insert(user.text)
+      key(space)
+      user.code_comment_block_suffix()
+  open block comment:
+      user.code_comment_block_prefix()
+  close block comment:
+      user.code_comment_block_suffix()
 output:
   type: source_file
   children:
-    - type: context
+  - type: context
+    children:
+    - type: match
+      children: []
+      key:
+        text: tag
+        type: identifier
+      pattern:
+        text: ' user.code_comment_block'
+        type: implicit_string
+  - type: command
+    children: []
+    rule:
+      type: rule
       children:
-        - type: match
+      - type: seq
+        children:
+        - text: block
+          type: word
+        - text: comment
+          type: word
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
           children: []
-          key:
-            text: tag
+          action_name:
+            text: user.code_comment_block
             type: identifier
-          pattern:
-            text: " user.code_comment_block"
+          arguments:
+            type: argument_list
+            children: []
+  - type: command
+    children:
+    - text: '#todo: this should probably be a single function once'
+      type: comment
+    - text: '#.talon supports implementing actions with parameters?'
+      type: comment
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - text: block
+          type: word
+        - text: comment
+          type: word
+        - text: line
+          type: word
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: edit.line_start
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.code_comment_block_prefix
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children: []
+        expression:
+          type: key_action
+          children: []
+          arguments:
+            text: space
             type: implicit_string
-    - type: command
-      children: []
-      rule:
-        type: rule
-        children:
-          - type: seq
-            children:
-              - text: block
-                type: word
-              - text: comment
-                type: word
-      script:
-        type: block
-        children:
-          - type: expression
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: edit.line_end
+            type: identifier
+          arguments:
+            type: argument_list
             children: []
-            expression:
-              type: action
-              children: []
-              action_name:
-                text: user.code_comment_block
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-    - type: command
+      - type: expression
+        children: []
+        expression:
+          type: key_action
+          children: []
+          arguments:
+            text: space
+            type: implicit_string
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.code_comment_block_suffix
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+  - text: '#adds comment to the start of the line'
+    type: comment
+  - type: command
+    children:
+    - text: '#todo: this should probably be a single function once'
+      type: comment
+    - text: '#.talon supports implementing actions with parameters?'
+      type: comment
+    rule:
+      type: rule
       children:
-        - text: "#todo: this should probably be a single function once"
-          type: comment
-        - text: "#.talon supports implementing actions with parameters?"
-          type: comment
-      rule:
-        type: rule
+      - type: seq
         children:
-          - type: seq
-            children:
-              - text: block
-                type: word
-              - text: comment
-                type: word
-              - text: line
-                type: word
-      script:
-        type: block
-        children:
-          - type: expression
-            children: []
-            expression:
-              type: action
-              children: []
-              action_name:
-                text: edit.line_start
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-    - type: command
+        - text: block
+          type: word
+        - text: comment
+          type: word
+        - text: line
+          type: word
+        - type: capture
+          children: []
+          capture_name:
+            text: user.text
+            type: identifier
+        - text: over
+          type: word
+    script:
+      type: block
       children:
-        - text: "#todo: this should probably be a single function once"
-          type: comment
-        - text: "#.talon supports implementing actions with parameters?"
-          type: comment
-      rule:
-        type: rule
-        children:
-          - type: seq
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: edit.line_start
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.code_comment_block
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
             children:
-              - text: user
-                type: word
-              - type: ERROR
-                children:
-                  - type: ERROR
-                    children: []
-              - type: parenthesized_rule
-                children:
-                  - text: ""
-                    type: word
-              - text: key
-                type: word
-              - type: parenthesized_rule
-                children:
-                  - text: space
-                    type: word
-              - text: edit
-                type: word
-              - type: ERROR
-                children:
-                  - type: ERROR
-                    children: []
-              - type: parenthesized_rule
-                children:
-                  - text: ""
-                    type: word
-              - text: key
-                type: word
-              - type: parenthesized_rule
-                children:
-                  - text: space
-                    type: word
-              - text: user
-                type: word
-              - type: ERROR
-                children:
-                  - type: ERROR
-                    children: []
-              - type: parenthesized_rule
-                children:
-                  - text: ""
-                    type: word
-              - text: "#adds comment to the start of the line"
-                type: comment
-              - text: block
-                type: word
-              - text: comment
-                type: word
-              - text: line
-                type: word
-              - type: capture
-                children: []
-                capture_name:
-                  text: user.text
-                  type: identifier
-              - text: over
-                type: word
-      script:
-        type: block
-        children:
-          - type: expression
-            children: []
-            expression:
-              type: action
+            - type: variable
               children: []
-              action_name:
-                text: edit.line_start
+              variable_name:
+                text: user.text
                 type: identifier
-              arguments:
-                type: argument_list
-                children: []
-          - type: expression
-            children: []
-            expression:
-              type: action
-              children: []
-              action_name:
-                text: user.code_comment_block
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-          - type: expression
-            children: []
-            expression:
-              type: action
-              children: []
-              action_name:
-                text: insert
-                type: identifier
-              arguments:
-                type: argument_list
-                children:
-                  - type: variable
-                    children: []
-                    variable_name:
-                      text: user.text
-                      type: identifier
-    - type: command
+  - type: command
+    children:
+    - text: '#todo: this should probably be a single function once'
+      type: comment
+    - text: '#.talon supports implementing actions with parameters?'
+      type: comment
+    rule:
+      type: rule
       children:
-        - text: "#todo: this should probably be a single function once"
-          type: comment
-        - text: "#.talon supports implementing actions with parameters?"
-          type: comment
-      rule:
-        type: rule
+      - type: seq
         children:
-          - type: seq
-            children:
-              - text: block
-                type: word
-              - text: comment
-                type: word
-              - type: capture
-                children: []
-                capture_name:
-                  text: user.text
-                  type: identifier
-              - text: over
-                type: word
-      script:
-        type: block
-        children:
-          - type: expression
-            children: []
-            expression:
-              type: action
-              children: []
-              action_name:
-                text: user.code_comment_block
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-    - type: command
+        - text: block
+          type: word
+        - text: comment
+          type: word
+        - type: capture
+          children: []
+          capture_name:
+            text: user.text
+            type: identifier
+        - text: over
+          type: word
+    script:
+      type: block
       children:
-        - text: "#todo: this should probably be a single function once"
-          type: comment
-        - text: "#.talon supports implementing actions with parameters?"
-          type: comment
-      rule:
-        type: rule
-        children:
-          - type: seq
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.code_comment_block
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
             children:
-              - text: insert
-                type: word
-              - type: parenthesized_rule
-                children:
-                  - text: user
-                    type: word
-                  - type: ERROR
-                    children:
-                      - type: ERROR
-                        children: []
-              - text: block
-                type: word
-              - text: comment
-                type: word
-              - type: capture
-                children: []
-                capture_name:
-                  text: user.text
-                  type: identifier
-          - text: $
-            type: end_anchor
-      script:
-        type: block
-        children:
-          - type: expression
-            children: []
-            expression:
-              type: action
+            - type: variable
               children: []
-              action_name:
-                text: user.code_comment_block
+              variable_name:
+                text: user.text
                 type: identifier
-              arguments:
-                type: argument_list
-                children: []
-          - type: expression
-            children: []
-            expression:
-              type: action
-              children: []
-              action_name:
-                text: insert
-                type: identifier
-              arguments:
-                type: argument_list
-                children:
-                  - type: variable
-                    children: []
-                    variable_name:
-                      text: user.text
-                      type: identifier
-    - type: command
+  - type: command
+    children:
+    - text: '#todo: this should probably be a single function once'
+      type: comment
+    - text: '#.talon supports implementing actions with parameters?'
+      type: comment
+    rule:
+      type: rule
       children:
-        - text: "#todo: this should probably be a single function once"
-          type: comment
-        - text: "#.talon supports implementing actions with parameters?"
-          type: comment
-      rule:
-        type: rule
+      - type: seq
         children:
-          - type: seq
-            children:
-              - type: parenthesized_rule
-                children:
-                  - type: choice
-                    children:
-                      - text: line
-                        type: word
-                      - text: inline
-                        type: word
-              - text: block
-                type: word
-              - text: comment
-                type: word
-              - type: capture
-                children: []
-                capture_name:
-                  text: user.text
-                  type: identifier
-              - text: over
-                type: word
-      script:
-        type: block
-        children:
-          - type: expression
-            children: []
-            expression:
-              type: action
-              children: []
-              action_name:
-                text: edit.line_end
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-          - type: expression
-            children: []
-            expression:
-              type: action
-              children: []
-              action_name:
-                text: user.code_comment_block_prefix
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-    - type: command
+        - text: block
+          type: word
+        - text: comment
+          type: word
+        - type: capture
+          children: []
+          capture_name:
+            text: user.text
+            type: identifier
+      - text: $
+        type: end_anchor
+    script:
+      type: block
       children:
-        - text: "#todo: this should probably be a single function once"
-          type: comment
-        - text: "#.talon supports implementing actions with parameters?"
-          type: comment
-      rule:
-        type: rule
-        children:
-          - type: seq
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.code_comment_block
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
             children:
-              - text: key
-                type: word
-              - type: parenthesized_rule
-                children:
-                  - text: space
-                    type: word
-              - text: insert
-                type: word
-              - type: parenthesized_rule
-                children:
-                  - text: user
-                    type: word
-                  - type: ERROR
-                    children:
-                      - type: ERROR
-                        children: []
-              - text: key
-                type: word
-              - type: parenthesized_rule
-                children:
-                  - text: space
-                    type: word
-              - text: user
-                type: word
-              - type: ERROR
-                children:
-                  - type: ERROR
-                    children: []
-              - type: parenthesized_rule
-                children:
-                  - text: ""
-                    type: word
-              - type: parenthesized_rule
-                children:
-                  - type: choice
-                    children:
-                      - text: line
-                        type: word
-                      - text: inline
-                        type: word
-              - text: block
-                type: word
-              - text: comment
-                type: word
-              - type: capture
-                children: []
-                capture_name:
-                  text: user.text
-                  type: identifier
-          - text: $
-            type: end_anchor
-      script:
-        type: block
-        children:
-          - type: expression
-            children: []
-            expression:
-              type: action
+            - type: variable
               children: []
-              action_name:
-                text: edit.line_end
+              variable_name:
+                text: user.text
                 type: identifier
-              arguments:
-                type: argument_list
-                children: []
-          - type: expression
-            children: []
-            expression:
-              type: action
-              children: []
-              action_name:
-                text: user.code_comment_block_prefix
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-    - type: command
-      children: []
-      rule:
-        type: rule
+  - type: command
+    children:
+    - text: '#todo: this should probably be a single function once'
+      type: comment
+    - text: '#.talon supports implementing actions with parameters?'
+      type: comment
+    rule:
+      type: rule
+      children:
+      - type: seq
         children:
-          - type: seq
+        - type: parenthesized_rule
+          children:
+          - type: choice
             children:
-              - text: key
-                type: word
-              - type: parenthesized_rule
-                children:
-                  - text: space
-                    type: word
-              - text: insert
-                type: word
-              - type: parenthesized_rule
-                children:
-                  - text: user
-                    type: word
-                  - type: ERROR
-                    children:
-                      - type: ERROR
-                        children: []
-              - text: key
-                type: word
-              - type: parenthesized_rule
-                children:
-                  - text: space
-                    type: word
-              - text: user
-                type: word
-              - type: ERROR
-                children:
-                  - type: ERROR
-                    children: []
-              - type: parenthesized_rule
-                children:
-                  - text: ""
-                    type: word
-              - text: open
-                type: word
-              - text: block
-                type: word
-              - text: comment
-                type: word
-      script:
-        type: block
-        children:
-          - type: expression
+            - text: line
+              type: word
+            - text: inline
+              type: word
+        - text: block
+          type: word
+        - text: comment
+          type: word
+        - type: capture
+          children: []
+          capture_name:
+            text: user.text
+            type: identifier
+        - text: over
+          type: word
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: edit.line_end
+            type: identifier
+          arguments:
+            type: argument_list
             children: []
-            expression:
-              type: action
-              children: []
-              action_name:
-                text: user.code_comment_block_prefix
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-    - type: command
-      children: []
-      rule:
-        type: rule
-        children:
-          - type: seq
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.code_comment_block_prefix
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children: []
+        expression:
+          type: key_action
+          children: []
+          arguments:
+            text: space
+            type: implicit_string
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
             children:
-              - text: close
-                type: word
-              - text: block
-                type: word
-              - text: comment
-                type: word
-      script:
-        type: block
-        children:
-          - type: expression
-            children: []
-            expression:
-              type: action
+            - type: variable
               children: []
-              action_name:
-                text: user.code_comment_block_suffix
+              variable_name:
+                text: user.text
                 type: identifier
-              arguments:
-                type: argument_list
-                children: []
+      - type: expression
+        children: []
+        expression:
+          type: key_action
+          children: []
+          arguments:
+            text: space
+            type: implicit_string
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.code_comment_block_suffix
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+  - type: command
+    children:
+    - text: '#todo: this should probably be a single function once'
+      type: comment
+    - text: '#.talon supports implementing actions with parameters?'
+      type: comment
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: line
+              type: word
+            - text: inline
+              type: word
+        - text: block
+          type: word
+        - text: comment
+          type: word
+        - type: capture
+          children: []
+          capture_name:
+            text: user.text
+            type: identifier
+      - text: $
+        type: end_anchor
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: edit.line_end
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.code_comment_block_prefix
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+      - type: expression
+        children: []
+        expression:
+          type: key_action
+          children: []
+          arguments:
+            text: space
+            type: implicit_string
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: insert
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: variable
+              children: []
+              variable_name:
+                text: user.text
+                type: identifier
+      - type: expression
+        children: []
+        expression:
+          type: key_action
+          children: []
+          arguments:
+            text: space
+            type: implicit_string
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.code_comment_block_suffix
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - text: open
+          type: word
+        - text: block
+          type: word
+        - text: comment
+          type: word
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.code_comment_block_prefix
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - text: close
+          type: word
+        - text: block
+          type: word
+        - text: comment
+          type: word
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.code_comment_block_suffix
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []

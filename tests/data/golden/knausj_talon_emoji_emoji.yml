@@ -7,107 +7,107 @@ input: |
 output:
   type: source_file
   children:
-    - type: context
+  - type: context
+    children:
+    - type: match
+      children: []
+      key:
+        text: tag
+        type: identifier
+      pattern:
+        text: ' user.emoji'
+        type: implicit_string
+  - type: command
+    children: []
+    rule:
+      type: rule
       children:
-        - type: match
+      - type: seq
+        children:
+        - text: emoticon
+          type: word
+        - type: list
           children: []
-          key:
-            text: tag
+          list_name:
+            text: user.emoticon
             type: identifier
-          pattern:
-            text: " user.emoji"
-            type: implicit_string
-    - type: command
-      children: []
-      rule:
-        type: rule
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: string
+          children:
+          - text: '{'
+            type: string_content
+          - text: emoticon
+            type: string_content
+          - text: '}'
+            type: string_content
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
         children:
-          - type: seq
+        - text: emoji
+          type: word
+        - type: list
+          children: []
+          list_name:
+            text: user.emoji
+            type: identifier
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.paste
+            type: identifier
+          arguments:
+            type: argument_list
             children:
-              - text: emoticon
-                type: word
-              - type: list
-                children: []
-                list_name:
-                  text: user.emoticon
-                  type: identifier
-      script:
-        type: block
-        children:
-          - type: expression
-            children: []
-            expression:
-              type: string
-              children:
-                - text: "{"
-                  type: string_content
-                - text: emoticon
-                  type: string_content
-                - text: "}"
-                  type: string_content
-    - type: command
-      children: []
-      rule:
-        type: rule
-        children:
-          - type: seq
-            children:
-              - text: emoji
-                type: word
-              - type: list
-                children: []
-                list_name:
-                  text: user.emoji
-                  type: identifier
-      script:
-        type: block
-        children:
-          - type: expression
-            children: []
-            expression:
-              type: action
+            - type: variable
               children: []
-              action_name:
-                text: user.paste
+              variable_name:
+                text: emoji
                 type: identifier
-              arguments:
-                type: argument_list
-                children:
-                  - type: variable
-                    children: []
-                    variable_name:
-                      text: emoji
-                      type: identifier
-    - type: command
-      children: []
-      rule:
-        type: rule
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
         children:
-          - type: seq
+        - text: kaomoji
+          type: word
+        - type: list
+          children: []
+          list_name:
+            text: user.kaomoji
+            type: identifier
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.paste
+            type: identifier
+          arguments:
+            type: argument_list
             children:
-              - text: kaomoji
-                type: word
-              - type: list
-                children: []
-                list_name:
-                  text: user.kaomoji
-                  type: identifier
-      script:
-        type: block
-        children:
-          - type: expression
-            children: []
-            expression:
-              type: action
+            - type: variable
               children: []
-              action_name:
-                text: user.paste
+              variable_name:
+                text: kaomoji
                 type: identifier
-              arguments:
-                type: argument_list
-                children:
-                  - type: variable
-                    children: []
-                    variable_name:
-                      text: kaomoji
-                      type: identifier

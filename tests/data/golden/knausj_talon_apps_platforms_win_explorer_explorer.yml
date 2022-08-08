@@ -9,132 +9,132 @@ input: |
 output:
   type: source_file
   children:
-    - type: context
+  - type: context
+    children:
+    - type: or
       children:
-        - type: or
-          children:
-            - type: match
-              children: []
-              key:
-                text: app
-                type: identifier
-              pattern:
-                text: " windows_explorer"
-                type: implicit_string
-            - type: match
-              children: []
-              key:
-                text: app
-                type: identifier
-              pattern:
-                text: " windows_file_browser"
-                type: implicit_string
-    - type: include_tag
-      children: []
-      tag:
-        text: user.file_manager
-        type: identifier
-    - type: command
-      children: []
-      rule:
-        type: rule
+      - type: match
+        children: []
+        key:
+          text: app
+          type: identifier
+        pattern:
+          text: ' windows_explorer'
+          type: implicit_string
+      - type: match
+        children: []
+        key:
+          text: app
+          type: identifier
+        pattern:
+          text: ' windows_file_browser'
+          type: implicit_string
+  - type: include_tag
+    children: []
+    tag:
+      text: user.file_manager
+      type: identifier
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - text: ^
+        type: start_anchor
+      - type: seq
         children:
-          - text: ^
-            type: start_anchor
-          - type: seq
+        - text: go
+          type: word
+        - type: capture
+          children: []
+          capture_name:
+            text: user.letter
+            type: identifier
+      - text: $
+        type: end_anchor
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.file_manager_open_volume
+            type: identifier
+          arguments:
+            type: argument_list
             children:
-              - text: go
-                type: word
-              - type: capture
-                children: []
-                capture_name:
-                  text: user.letter
-                  type: identifier
-          - text: $
-            type: end_anchor
-      script:
-        type: block
+            - type: string
+              children:
+              - text: '{'
+                type: string_content
+              - text: letter
+                type: string_content
+              - text: '}'
+                type: string_content
+              - text: ':'
+                type: string_content
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
         children:
-          - type: expression
-            children: []
-            expression:
-              type: action
-              children: []
-              action_name:
-                text: user.file_manager_open_volume
-                type: identifier
-              arguments:
-                type: argument_list
-                children:
-                  - type: string
-                    children:
-                      - text: "{"
-                        type: string_content
-                      - text: letter
-                        type: string_content
-                      - text: "}"
-                        type: string_content
-                      - text: ":"
-                        type: string_content
-    - type: command
-      children: []
-      rule:
-        type: rule
-        children:
-          - type: seq
+        - text: go
+          type: word
+        - text: app
+          type: word
+        - text: data
+          type: word
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.file_manager_open_directory
+            type: identifier
+          arguments:
+            type: argument_list
             children:
-              - text: go
-                type: word
-              - text: app
-                type: word
-              - text: data
-                type: word
-      script:
-        type: block
+            - type: string
+              children:
+              - text: '%AppData%'
+                type: string_content
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
         children:
-          - type: expression
-            children: []
-            expression:
-              type: action
-              children: []
-              action_name:
-                text: user.file_manager_open_directory
-                type: identifier
-              arguments:
-                type: argument_list
-                children:
-                  - type: string
-                    children:
-                      - text: "%AppData%"
-                        type: string_content
-    - type: command
-      children: []
-      rule:
-        type: rule
-        children:
-          - type: seq
+        - text: go
+          type: word
+        - text: program
+          type: word
+        - text: files
+          type: word
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.file_manager_open_directory
+            type: identifier
+          arguments:
+            type: argument_list
             children:
-              - text: go
-                type: word
-              - text: program
-                type: word
-              - text: files
-                type: word
-      script:
-        type: block
-        children:
-          - type: expression
-            children: []
-            expression:
-              type: action
-              children: []
-              action_name:
-                text: user.file_manager_open_directory
-                type: identifier
-              arguments:
-                type: argument_list
-                children:
-                  - type: string
-                    children:
-                      - text: "%programfiles%"
-                        type: string_content
+            - type: string
+              children:
+              - text: '%programfiles%'
+                type: string_content

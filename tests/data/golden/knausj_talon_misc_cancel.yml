@@ -8,78 +8,76 @@ input: |
 output:
   type: source_file
   children:
-    - type: context
-      children: []
-    - text: '# allows you to prevent a command executing by ending it with "cancel cancel"'
-      type: comment
-    - type: command
-      children: []
-      rule:
-        type: rule
+  - type: context
+    children: []
+  - text: '# allows you to prevent a command executing by ending it with "cancel cancel"'
+    type: comment
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
         children:
-          - type: seq
-            children:
-              - text: cancel
-                type: word
-              - text: cancel
-                type: word
-          - text: $
-            type: end_anchor
-      script:
-        type: block
-        children:
-          - type: expression
+        - text: cancel
+          type: word
+        - text: cancel
+          type: word
+      - text: $
+        type: end_anchor
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: skip
+            type: identifier
+          arguments:
+            type: argument_list
             children: []
-            expression:
-              type: action
-              children: []
-              action_name:
-                text: skip
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-    - text:
-        '# the actual behavior of "cancel cancel" is implemented in code/cancel.py;
-        if you want to use a different phrase you must also change cancel_phrase there.'
-      type: comment
-    - text:
-        "# allows you to say something (eg to a human) that you don't want talon\
-        \ to hear, eg \"ignore hey Jerry\""
-      type: comment
-    - type: command
-      children: []
-      rule:
-        type: rule
+  - text: '# the actual behavior of "cancel cancel" is implemented in code/cancel.py;
+      if you want to use a different phrase you must also change cancel_phrase there.'
+    type: comment
+  - text: "# allows you to say something (eg to a human) that you don't want talon\
+      \ to hear, eg \"ignore hey Jerry\""
+    type: comment
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
         children:
-          - type: seq
-            children:
-              - text: ignore
-                type: word
-              - type: optional
-                children:
-                  - type: capture
-                    children: []
-                    capture_name:
-                      text: phrase
-                      type: identifier
-          - text: $
-            type: end_anchor
-      script:
-        type: block
-        children:
-          - type: expression
+        - text: ignore
+          type: word
+        - type: optional
+          children:
+          - type: capture
             children: []
-            expression:
-              type: action
-              children: []
-              action_name:
-                text: app.notify
-                type: identifier
-              arguments:
-                type: argument_list
-                children:
-                  - type: string
-                    children:
-                      - text: Command ignored
-                        type: string_content
+            capture_name:
+              text: phrase
+              type: identifier
+      - text: $
+        type: end_anchor
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: app.notify
+            type: identifier
+          arguments:
+            type: argument_list
+            children:
+            - type: string
+              children:
+              - text: Command ignored
+                type: string_content

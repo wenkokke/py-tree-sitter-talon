@@ -22,385 +22,385 @@ input: |
 output:
   type: source_file
   children:
-    - type: context
+  - type: context
+    children:
+    - type: match
+      children: []
+      key:
+        text: tag
+        type: identifier
+      pattern:
+        text: ' user.code_operators_assignment'
+        type: implicit_string
+  - type: include_tag
+    children: []
+    tag:
+      text: user.code_operators_math
+      type: identifier
+  - type: include_tag
+    children: []
+    tag:
+      text: user.code_operators_bitwise
+      type: identifier
+  - text: '# assignment'
+    type: comment
+  - type: command
+    children: []
+    rule:
+      type: rule
       children:
-        - type: match
+      - type: seq
+        children:
+        - text: op
+          type: word
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: equals
+              type: word
+            - text: assign
+              type: word
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
           children: []
-          key:
-            text: tag
+          action_name:
+            text: user.code_operator_assignment
             type: identifier
-          pattern:
-            text: " user.code_operators_assignment"
-            type: implicit_string
-    - type: include_tag
-      children: []
-      tag:
-        text: user.code_operators_math
-        type: identifier
-    - type: include_tag
-      children: []
-      tag:
-        text: user.code_operators_bitwise
-        type: identifier
-    - text: "# assignment"
-      type: comment
-    - type: command
-      children: []
-      rule:
-        type: rule
+          arguments:
+            type: argument_list
+            children: []
+  - text: '# combined computation and assignment'
+    type: comment
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
         children:
-          - type: seq
+        - text: op
+          type: word
+        - type: parenthesized_rule
+          children:
+          - type: choice
             children:
+            - text: minus
+              type: word
+            - text: subtract
+              type: word
+        - text: equals
+          type: word
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.code_operator_subtraction_assignment
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - text: op
+          type: word
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: plus
+              type: word
+            - text: add
+              type: word
+        - text: equals
+          type: word
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.code_operator_addition_assignment
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - text: op
+          type: word
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: times
+              type: word
+            - text: multiply
+              type: word
+        - text: equals
+          type: word
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.code_operator_multiplication_assignment
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - text: op
+          type: word
+        - text: divide
+          type: word
+        - text: equals
+          type: word
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.code_operator_division_assignment
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - text: op
+          type: word
+        - text: mod
+          type: word
+        - text: equals
+          type: word
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.code_operator_modulo_assignment
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: optional
+          children:
+          - text: op
+            type: word
+        - text: increment
+          type: word
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.code_operator_increment
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+  - text: '#bitwise operators'
+    type: comment
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: op
+              type: word
+            - text: logical
+              type: word
+            - text: bitwise
+              type: word
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: ex
+              type: word
+            - text: exclusive
+              type: word
+        - text: or
+          type: word
+        - text: equals
+          type: word
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.code_operator_bitwise_exclusive_or_assignment
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: optional
+          children:
+          - type: parenthesized_rule
+            children:
+            - type: choice
+              children:
               - text: op
                 type: word
-              - type: parenthesized_rule
-                children:
-                  - type: choice
-                    children:
-                      - text: equals
-                        type: word
-                      - text: assign
-                        type: word
-      script:
-        type: block
-        children:
-          - type: expression
-            children: []
-            expression:
-              type: action
-              children: []
-              action_name:
-                text: user.code_operator_assignment
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-    - text: "# combined computation and assignment"
-      type: comment
-    - type: command
-      children: []
-      rule:
-        type: rule
-        children:
-          - type: seq
+              - text: logical
+                type: word
+              - text: bitwise
+                type: word
+        - type: parenthesized_rule
+          children:
+          - type: choice
             children:
+            - type: seq
+              children:
+              - text: left
+                type: word
+              - text: shift
+                type: word
+            - type: seq
+              children:
+              - text: shift
+                type: word
+              - text: left
+                type: word
+        - text: equals
+          type: word
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.code_operator_bitwise_left_shift_assignment
+            type: identifier
+          arguments:
+            type: argument_list
+            children: []
+  - type: command
+    children: []
+    rule:
+      type: rule
+      children:
+      - type: seq
+        children:
+        - type: optional
+          children:
+          - type: parenthesized_rule
+            children:
+            - type: choice
+              children:
               - text: op
                 type: word
-              - type: parenthesized_rule
-                children:
-                  - type: choice
-                    children:
-                      - text: minus
-                        type: word
-                      - text: subtract
-                        type: word
-              - text: equals
+              - text: logical
                 type: word
-      script:
-        type: block
-        children:
-          - type: expression
-            children: []
-            expression:
-              type: action
-              children: []
-              action_name:
-                text: user.code_operator_subtraction_assignment
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-    - type: command
-      children: []
-      rule:
-        type: rule
-        children:
-          - type: seq
+              - text: bitwise
+                type: word
+        - type: parenthesized_rule
+          children:
+          - type: choice
             children:
-              - text: op
+            - type: seq
+              children:
+              - text: right
                 type: word
-              - type: parenthesized_rule
-                children:
-                  - type: choice
-                    children:
-                      - text: plus
-                        type: word
-                      - text: add
-                        type: word
-              - text: equals
+              - text: shift
                 type: word
-      script:
-        type: block
-        children:
-          - type: expression
+            - type: seq
+              children:
+              - text: shift
+                type: word
+              - text: right
+                type: word
+        - text: equals
+          type: word
+    script:
+      type: block
+      children:
+      - type: expression
+        children: []
+        expression:
+          type: action
+          children: []
+          action_name:
+            text: user.code_operator_bitwise_right_shift_assignment
+            type: identifier
+          arguments:
+            type: argument_list
             children: []
-            expression:
-              type: action
-              children: []
-              action_name:
-                text: user.code_operator_addition_assignment
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-    - type: command
-      children: []
-      rule:
-        type: rule
-        children:
-          - type: seq
-            children:
-              - text: op
-                type: word
-              - type: parenthesized_rule
-                children:
-                  - type: choice
-                    children:
-                      - text: times
-                        type: word
-                      - text: multiply
-                        type: word
-              - text: equals
-                type: word
-      script:
-        type: block
-        children:
-          - type: expression
-            children: []
-            expression:
-              type: action
-              children: []
-              action_name:
-                text: user.code_operator_multiplication_assignment
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-    - type: command
-      children: []
-      rule:
-        type: rule
-        children:
-          - type: seq
-            children:
-              - text: op
-                type: word
-              - text: divide
-                type: word
-              - text: equals
-                type: word
-      script:
-        type: block
-        children:
-          - type: expression
-            children: []
-            expression:
-              type: action
-              children: []
-              action_name:
-                text: user.code_operator_division_assignment
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-    - type: command
-      children: []
-      rule:
-        type: rule
-        children:
-          - type: seq
-            children:
-              - text: op
-                type: word
-              - text: mod
-                type: word
-              - text: equals
-                type: word
-      script:
-        type: block
-        children:
-          - type: expression
-            children: []
-            expression:
-              type: action
-              children: []
-              action_name:
-                text: user.code_operator_modulo_assignment
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-    - type: command
-      children: []
-      rule:
-        type: rule
-        children:
-          - type: seq
-            children:
-              - type: optional
-                children:
-                  - text: op
-                    type: word
-              - text: increment
-                type: word
-      script:
-        type: block
-        children:
-          - type: expression
-            children: []
-            expression:
-              type: action
-              children: []
-              action_name:
-                text: user.code_operator_increment
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-    - text: "#bitwise operators"
-      type: comment
-    - type: command
-      children: []
-      rule:
-        type: rule
-        children:
-          - type: seq
-            children:
-              - type: parenthesized_rule
-                children:
-                  - type: choice
-                    children:
-                      - text: op
-                        type: word
-                      - text: logical
-                        type: word
-                      - text: bitwise
-                        type: word
-              - type: parenthesized_rule
-                children:
-                  - type: choice
-                    children:
-                      - text: ex
-                        type: word
-                      - text: exclusive
-                        type: word
-              - text: or
-                type: word
-              - text: equals
-                type: word
-      script:
-        type: block
-        children:
-          - type: expression
-            children: []
-            expression:
-              type: action
-              children: []
-              action_name:
-                text: user.code_operator_bitwise_exclusive_or_assignment
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-    - type: command
-      children: []
-      rule:
-        type: rule
-        children:
-          - type: seq
-            children:
-              - type: optional
-                children:
-                  - type: parenthesized_rule
-                    children:
-                      - type: choice
-                        children:
-                          - text: op
-                            type: word
-                          - text: logical
-                            type: word
-                          - text: bitwise
-                            type: word
-              - type: parenthesized_rule
-                children:
-                  - type: choice
-                    children:
-                      - type: seq
-                        children:
-                          - text: left
-                            type: word
-                          - text: shift
-                            type: word
-                      - type: seq
-                        children:
-                          - text: shift
-                            type: word
-                          - text: left
-                            type: word
-              - text: equals
-                type: word
-      script:
-        type: block
-        children:
-          - type: expression
-            children: []
-            expression:
-              type: action
-              children: []
-              action_name:
-                text: user.code_operator_bitwise_left_shift_assignment
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
-    - type: command
-      children: []
-      rule:
-        type: rule
-        children:
-          - type: seq
-            children:
-              - type: optional
-                children:
-                  - type: parenthesized_rule
-                    children:
-                      - type: choice
-                        children:
-                          - text: op
-                            type: word
-                          - text: logical
-                            type: word
-                          - text: bitwise
-                            type: word
-              - type: parenthesized_rule
-                children:
-                  - type: choice
-                    children:
-                      - type: seq
-                        children:
-                          - text: right
-                            type: word
-                          - text: shift
-                            type: word
-                      - type: seq
-                        children:
-                          - text: shift
-                            type: word
-                          - text: right
-                            type: word
-              - text: equals
-                type: word
-      script:
-        type: block
-        children:
-          - type: expression
-            children: []
-            expression:
-              type: action
-              children: []
-              action_name:
-                text: user.code_operator_bitwise_right_shift_assignment
-                type: identifier
-              arguments:
-                type: argument_list
-                children: []
