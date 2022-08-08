@@ -25,12 +25,15 @@ def parse(
     *,
     has_header: typing.Optional[bool] = None,
     encoding: str = "utf-8",
+    filename: typing.Optional[str] = None,
+    raise_parse_error: bool = False,
 ) -> Node: ...
 def parse_file(
     path: typing.Union[str, pathlib.Path],
     *,
     has_header: typing.Optional[bool] = None,
     encoding: str = "utf-8",
+    raise_parse_error: bool = False,
 ) -> Node: ...
 def parse_as_tree_sitter(
     contents: typing.Union[str, bytes],
@@ -183,7 +186,7 @@ class TalonEndAnchor(Leaf):
 
 @dataclasses_json.dataclass_json
 @dataclasses.dataclass
-class TalonError(Branch):
+class TalonError(Exception, Branch):
     children: list[
         typing.Union[
             TalonAction,
@@ -232,6 +235,8 @@ class TalonError(Branch):
             TalonError,
         ]
     ]
+    contents: typing.Optional[str] = None
+    filename: typing.Optional[str] = None
 
 @dataclasses_json.dataclass_json
 @dataclasses.dataclass

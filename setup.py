@@ -32,6 +32,7 @@ setuptools.setup(
     tests_require=[
         "pytest >=7.1.2, <8",
         "pytest-golden >=0.2.2, <0.3",
+        "tox >=3.25.1, <4",
     ],
     install_requires=[
         "tree_sitter ==0.20.0",
@@ -51,6 +52,7 @@ setuptools.setup(
         "test": [
             "pytest >=7.1.2, <8",
             "pytest-golden >=0.2.2, <0.3",
+            "tox >=3.25.1, <4",
         ],
     },
     ext_modules=[
