@@ -27,32 +27,27 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
     _parser: typing.Optional[tree_sitter.Parser] = None
 
     @property
-    def _package_json_path(self) -> str:
-        return pkg_resources.resource_filename(
-            "tree_sitter_talon",
-            os.path.join("data", "tree-sitter-talon", "package.json"),
-        )
-
-    @property
-    def _node_types_json_path(self) -> str:
-        return pkg_resources.resource_filename(
-            "tree_sitter_talon",
-            os.path.join("data", "tree-sitter-talon", "src", "node-types.json"),
-        )
-
-    def _node_types_json(self, *, encoding: str = "utf-8") -> str:
-        return pathlib.Path(self._node_types_json_path).read_text(encoding=encoding)
-
     def _node_types(
-        self, *, encoding: str = "utf-8"
+        self,
     ) -> collections.abc.Sequence[tree_sitter_type_provider.NodeType]:
+        node_types_path = pathlib.Path(
+            pkg_resources.resource_filename(
+                "tree_sitter_talon",
+                os.path.join("data", "tree-sitter-talon", "src", "node-types.json"),
+            )
+        )
         return tree_sitter_type_provider.NodeType.schema().loads(  # type: ignore
-            self._node_types_json(encoding=encoding), many=True
+            node_types_path.read_text(), many=True
         )
 
     @property
     def __grammar_version__(self) -> str:
-        package_json_path = pathlib.Path(self._package_json_path)
+        package_json_path = pathlib.Path(
+            pkg_resources.resource_filename(
+                "tree_sitter_talon",
+                os.path.join("data", "tree-sitter-talon", "package.json"),
+            )
+        )
         package_json = json.loads(package_json_path.read_text())
         return package_json["version"]
 
@@ -69,7 +64,7 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
             self._parser.set_language(self.language)
         return self._parser
 
-    def __init__(self, *, encoding: str = "utf-8"):
+    def __init__(self, *, error_as_node: bool = True):
         # Conversion from tree-sitter names to Python names
         def as_class_name(node_type_name: str) -> str:
             buffer = ["Talon"]
@@ -80,8 +75,8 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
         # Initialize module
         super().__init__(
             "tree_sitter_talon",
-            self._node_types(encoding=encoding),
-            error_as_node=True,
+            self._node_types,
+            error_as_node=error_as_node,
             as_class_name=as_class_name,
             extra=["comment"],
         )
