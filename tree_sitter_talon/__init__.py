@@ -17,7 +17,6 @@ from .dynamic import TalonCommand as TalonCommand
 from .dynamic import TalonComment as TalonComment
 from .dynamic import TalonContext as TalonContext
 from .dynamic import TalonEndAnchor as TalonEndAnchor
-from .dynamic import TalonError as TalonError
 from .dynamic import TalonExpression as TalonExpression
 from .dynamic import TalonFloat as TalonFloat
 from .dynamic import TalonIdentifier as TalonIdentifier
