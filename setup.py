@@ -69,7 +69,9 @@ setuptools.setup(
     package_data={
         "tree_sitter_talon": [
             "py.typed",
-            "__init__.pyi",
+            "binding.c",
+            "binding.pyi",
+            "dynamic.pyi",
             "data/tree-sitter-talon/binding.gyp",
             "data/tree-sitter-talon/bindings/node/binding.cc",
             "data/tree-sitter-talon/bindings/node/index.js",
