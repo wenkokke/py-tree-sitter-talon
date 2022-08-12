@@ -35,7 +35,6 @@ from .dynamic import TalonOptional as TalonOptional
 from .dynamic import TalonOr as TalonOr
 from .dynamic import TalonParenthesizedExpression as TalonParenthesizedExpression
 from .dynamic import TalonParenthesizedRule as TalonParenthesizedRule
-from .dynamic import TalonRegexEscapeSequence as TalonRegexEscapeSequence
 from .dynamic import TalonRepeat as TalonRepeat
 from .dynamic import TalonRepeat1 as TalonRepeat1
 from .dynamic import TalonRule as TalonRule
