@@ -211,7 +211,6 @@ class TalonError(Exception, Branch):
             TalonOr,
             TalonParenthesizedExpression,
             TalonParenthesizedRule,
-            TalonRegexEscapeSequence,
             TalonRepeat,
             TalonRepeat1,
             TalonRule,
@@ -402,11 +401,6 @@ class TalonParenthesizedRule(Branch):
             TalonComment,
         ]
     ]
-
-@dataclasses_json.dataclass_json
-@dataclasses.dataclass
-class TalonRegexEscapeSequence(Branch):
-    children: list[typing.Union[TalonRegexEscapeSequence, TalonComment]]
 
 @dataclasses_json.dataclass_json
 @dataclasses.dataclass
