@@ -35,18 +35,6 @@ def parse_file(
     encoding: str = "utf-8",
     raise_parse_error: bool = False,
 ) -> Node: ...
-def parse_as_tree_sitter(
-    contents: typing.Union[str, bytes],
-    *,
-    has_header: typing.Optional[bool] = None,
-    encoding: str = "utf-8",
-) -> tree_sitter.Tree: ...
-def parse_file_as_tree_sitter(
-    path: typing.Union[str, pathlib.Path],
-    *,
-    has_header: typing.Optional[bool] = None,
-    encoding: str = "utf-8",
-) -> tree_sitter.Tree: ...
 def from_tree_sitter(
     tsvalue: typing.Union[tree_sitter.Tree, tree_sitter.Node, tree_sitter.TreeCursor],
     *,

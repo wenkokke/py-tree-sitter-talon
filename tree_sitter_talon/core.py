@@ -100,9 +100,10 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
         tree_sitter_type_provider.Node,
         None,
     ]:
-        tree = self.parse_as_tree_sitter(
+        tree, inserted_header = self._parse(
             contents, has_header=has_header, encoding=encoding
         )
+        # TODO: if inserted_header, adjust output of from_tree_sitter
         return self.from_tree_sitter(
             tree.root_node, filename=filename, raise_parse_error=raise_parse_error
         )
@@ -119,38 +120,36 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
         tree_sitter_type_provider.Node,
         None,
     ]:
-        tree = self.parse_file_as_tree_sitter(
+        tree, inserted_header = self._parse_file(
             path, has_header=has_header, encoding=encoding
         )
         return self.from_tree_sitter(
             tree.root_node, filename=str(path), raise_parse_error=raise_parse_error
         )
 
-    def parse_as_tree_sitter(
+    def _parse(
         self,
         contents: typing.Union[str, bytes],
         *,
         has_header: typing.Optional[bool] = None,
         encoding: str = "utf-8",
-    ) -> tree_sitter.Tree:
+    ) -> tuple[tree_sitter.Tree, bool]:
         if isinstance(contents, str):
             contents = bytes(contents, encoding)
         if has_header is None:
             has_header = contents.startswith(b"-\n") or (b"\n-\n" in contents)
         if not has_header:
             contents = b"-\n" + contents
-        return self.parser.parse(contents)
+        return (self.parser.parse(contents), not has_header)
 
-    def parse_file_as_tree_sitter(
+    def _parse_file(
         self,
         path: typing.Union[str, pathlib.Path],
         *,
         has_header: typing.Optional[bool] = None,
         encoding: str = "utf-8",
-    ) -> tree_sitter.Tree:
+    ) -> tuple[tree_sitter.Tree, bool]:
         if not isinstance(path, pathlib.Path):
             path = pathlib.Path(path)
         contents = path.read_bytes()
-        return self.parse_as_tree_sitter(
-            contents, has_header=has_header, encoding=encoding
-        )
+        return self._parse(contents, has_header=has_header, encoding=encoding)
