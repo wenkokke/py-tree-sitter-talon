@@ -35,7 +35,7 @@ setuptools.setup(
     ],
     install_requires=[
         "tree_sitter ==0.20.0",
-        "tree_sitter_type_provider ==2.1.0",
+        "tree_sitter_type_provider ==2.1.2",
         "dataclasses-json >=0.5.7, <0.6",
     ],
     extras_require={
