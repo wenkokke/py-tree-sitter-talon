@@ -23,7 +23,7 @@ language: tree_sitter.Language
 def parse(
     contents: typing.Union[str, bytes],
     *,
-    has_header: typing.Optional[bool] = None,
+    has_match_context: typing.Optional[bool] = None,
     encoding: str = "utf-8",
     filename: typing.Optional[str] = None,
     raise_parse_error: bool = False,
@@ -31,7 +31,7 @@ def parse(
 def parse_file(
     path: typing.Union[str, pathlib.Path],
     *,
-    has_header: typing.Optional[bool] = None,
+    has_match_context: typing.Optional[bool] = None,
     encoding: str = "utf-8",
     raise_parse_error: bool = False,
 ) -> Node: ...
