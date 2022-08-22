@@ -16,50 +16,49 @@ input: |
 output:
   type: source_file
   children:
-  - type: context
+  - type: matches
     children:
-    - type: and
-      children:
-      - type: match
-        children: []
-        key:
-          text: app
-          type: identifier
-        pattern:
-          text: ' thunderbird'
-          type: implicit_string
-      - type: and
-        children:
-        - type: not
-          children:
-          - type: match
-            children: []
-            key:
-              text: app
-              type: identifier
-            pattern:
-              text: ' thunderbird_contacts'
-              type: implicit_string
-        - type: not
-          children:
-          - type: match
-            children: []
-            key:
-              text: app
-              type: identifier
-            pattern:
-              text: ' thunderbird_composer'
-              type: implicit_string
+    - type: match
+      children: []
+      key:
+        text: app
+        type: identifier
+      modifier: []
+      pattern:
+        text: ' thunderbird'
+        type: implicit_string
+    - type: match
+      children: []
+      key:
+        text: app
+        type: identifier
+      modifier:
+        text: not
+        type: match_modifier
+      pattern:
+        text: ' thunderbird_contacts'
+        type: implicit_string
+    - type: match
+      children: []
+      key:
+        text: app
+        type: identifier
+      modifier:
+        text: not
+        type: match_modifier
+      pattern:
+        text: ' thunderbird_composer'
+        type: implicit_string
   - text: '# Set tags'
     type: comment
-  - type: include_tag
+  - type: tag_import_declaration
     children: []
     tag:
       text: user.tabs
       type: identifier
   - text: '# navigate tabs'
     type: comment
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -81,7 +80,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -94,7 +93,7 @@ output:
             children:
             - text: '1'
               type: integer
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -114,7 +113,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -129,7 +128,7 @@ output:
               children:
               - text: shift-c
                 type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -143,7 +142,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -160,7 +159,7 @@ output:
                 type: string_content
   - text: '# open windows'
     type: comment
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -194,7 +193,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -209,7 +208,7 @@ output:
               children:
               - text: shift-b
                 type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -223,7 +222,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action

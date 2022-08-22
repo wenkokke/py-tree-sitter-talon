@@ -126,29 +126,31 @@ input: |
 output:
   type: source_file
   children:
-  - type: context
+  - type: matches
     children:
-    - type: and
-      children:
-      - type: match
-        children: []
-        key:
-          text: tag
-          type: identifier
-        pattern:
-          text: ' terminal'
-          type: implicit_string
-      - type: match
-        children: []
-        key:
-          text: tag
-          type: identifier
-        pattern:
-          text: ' user.git'
-          type: implicit_string
+    - type: match
+      children: []
+      key:
+        text: tag
+        type: identifier
+      modifier: []
+      pattern:
+        text: ' terminal'
+        type: implicit_string
+    - type: match
+      children: []
+      key:
+        text: tag
+        type: identifier
+      modifier:
+        text: and
+        type: match_modifier
+      pattern:
+        text: ' user.git'
+        type: implicit_string
   - text: '# Standard commands'
     type: comment
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -164,7 +166,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -173,7 +175,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -187,14 +189,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git add '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -210,7 +212,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -219,7 +221,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -233,14 +235,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git bisect '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -254,14 +256,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git blame '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -275,14 +277,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git branch '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -298,7 +300,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -307,7 +309,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -323,7 +325,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -332,7 +334,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -351,7 +353,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -364,7 +366,7 @@ output:
             type: string_content
           - text: '}'
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -378,14 +380,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git checkout '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -401,7 +403,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -410,7 +412,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -426,7 +428,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -435,7 +437,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -454,7 +456,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -467,7 +469,7 @@ output:
             type: string_content
           - text: '}'
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -483,14 +485,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git cherry-pick '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -508,14 +510,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git cherry-pick --continue '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -533,14 +535,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git cherry-pick --abort '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -558,14 +560,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git cherry-pick --skip '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -579,7 +581,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -588,7 +590,7 @@ output:
             type: string_content
   - text: '# Leave \n out for confirmation since the operation is destructive'
     type: comment
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -604,14 +606,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: git clean -dfx
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -632,7 +634,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -647,7 +649,7 @@ output:
             type: string_content
           - text: "'"
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -661,7 +663,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -670,7 +672,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -686,7 +688,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -695,7 +697,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -713,14 +715,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: git commit -n
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -736,7 +738,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -745,7 +747,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -769,14 +771,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git diff --color-words '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -790,14 +792,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git diff '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -813,7 +815,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -822,7 +824,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -838,7 +840,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -847,7 +849,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -865,7 +867,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -874,7 +876,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -888,7 +890,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -897,7 +899,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -913,7 +915,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -922,7 +924,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -941,7 +943,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -954,7 +956,7 @@ output:
             type: string_content
           - text: '}'
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -970,7 +972,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -979,7 +981,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -995,7 +997,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1004,7 +1006,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1020,7 +1022,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1029,7 +1031,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1047,7 +1049,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1056,7 +1058,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1070,14 +1072,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git log '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1093,14 +1095,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git log -c '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1114,14 +1116,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git merge '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1140,7 +1142,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1153,7 +1155,7 @@ output:
             type: string_content
           - text: '}'
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1169,7 +1171,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1178,7 +1180,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1192,14 +1194,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git mv '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1213,7 +1215,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1222,7 +1224,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1238,14 +1240,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git pull origin '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1261,7 +1263,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1270,7 +1272,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1288,7 +1290,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1297,7 +1299,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1316,7 +1318,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1331,7 +1333,7 @@ output:
             type: string_content
           - text: ' '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1345,7 +1347,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1354,7 +1356,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1370,14 +1372,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git push origin '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1397,14 +1399,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: git push -u origin
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1423,7 +1425,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1438,7 +1440,7 @@ output:
             type: string_content
           - text: ' '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1454,7 +1456,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1463,7 +1465,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1477,14 +1479,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git rebase '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1500,14 +1502,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: git rebase --continue
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1523,14 +1525,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: git rebase --skip
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1544,14 +1546,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git rm '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1573,14 +1575,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git branch -d '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1604,14 +1606,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git push --delete origin '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1625,14 +1627,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git reset '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1648,14 +1650,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git reset --soft '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1671,14 +1673,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git reset --hard '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1692,14 +1694,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git restore '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1715,14 +1717,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git restore --staged '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1738,14 +1740,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: git restore --source=
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1759,14 +1761,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git remote '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1782,14 +1784,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git remote add '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1805,7 +1807,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1814,7 +1816,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1832,14 +1834,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git remote set-url '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1857,14 +1859,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git remote add upstream '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1880,14 +1882,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git remote remove '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1905,7 +1907,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1914,7 +1916,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1928,14 +1930,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git show '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1951,7 +1953,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1960,7 +1962,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1974,7 +1976,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1983,7 +1985,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1999,7 +2001,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -2018,7 +2020,7 @@ output:
               children:
               - text: "'"
                 type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -2034,7 +2036,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -2043,7 +2045,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -2059,7 +2061,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -2068,7 +2070,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -2084,14 +2086,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: git stash show
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -2105,7 +2107,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -2114,7 +2116,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -2135,7 +2137,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -2148,7 +2150,7 @@ output:
             type: string_content
           - text: '}'
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -2164,14 +2166,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git switch master '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -2187,14 +2189,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git switch main '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -2210,14 +2212,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git switch --detach '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -2252,7 +2254,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -2265,7 +2267,7 @@ output:
             type: string_content
           - text: '}'
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -2281,14 +2283,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git switch --orphan '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -2304,14 +2306,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'git submodule add '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -2325,7 +2327,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -2334,7 +2336,7 @@ output:
             type: string_content
   - text: '# Convenience'
     type: comment
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -2350,7 +2352,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -2359,7 +2361,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -2375,7 +2377,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -2390,7 +2392,7 @@ output:
               children:
               - text: 'git clone '
                 type: string_content
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -2401,7 +2403,7 @@ output:
           arguments:
             type: argument_list
             children: []
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: key_action
@@ -2409,7 +2411,7 @@ output:
           arguments:
             text: enter
             type: implicit_string
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -2425,7 +2427,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -2436,7 +2438,7 @@ output:
           arguments:
             type: argument_list
             children: []
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -2451,7 +2453,7 @@ output:
               children:
               - text: 'git diff '
                 type: string_content
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -2462,7 +2464,7 @@ output:
           arguments:
             type: argument_list
             children: []
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: key_action
@@ -2470,7 +2472,7 @@ output:
           arguments:
             text: enter
             type: implicit_string
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -2486,7 +2488,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -2501,7 +2503,7 @@ output:
               children:
               - text: 'git diff '
                 type: string_content
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -2512,7 +2514,7 @@ output:
           arguments:
             type: argument_list
             children: []
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: key_action
@@ -2520,7 +2522,7 @@ output:
           arguments:
             text: enter
             type: implicit_string
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -2536,7 +2538,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -2547,7 +2549,7 @@ output:
           arguments:
             type: argument_list
             children: []
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -2562,7 +2564,7 @@ output:
               children:
               - text: 'git add '
                 type: string_content
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -2573,7 +2575,7 @@ output:
           arguments:
             type: argument_list
             children: []
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: key_action
@@ -2581,7 +2583,7 @@ output:
           arguments:
             text: enter
             type: implicit_string
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -2597,7 +2599,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -2612,7 +2614,7 @@ output:
               children:
               - text: 'git add '
                 type: string_content
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -2623,7 +2625,7 @@ output:
           arguments:
             type: argument_list
             children: []
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: key_action
@@ -2631,7 +2633,7 @@ output:
           arguments:
             text: enter
             type: implicit_string
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -2647,7 +2649,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -2658,7 +2660,7 @@ output:
           arguments:
             type: argument_list
             children: []
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -2673,7 +2675,7 @@ output:
               children:
               - text: 'git add '
                 type: string_content
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -2684,7 +2686,7 @@ output:
           arguments:
             type: argument_list
             children: []
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action

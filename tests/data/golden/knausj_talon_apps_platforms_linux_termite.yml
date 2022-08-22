@@ -19,57 +19,57 @@ input: |
 output:
   type: source_file
   children:
-  - type: context
+  - type: matches
     children:
-    - type: and
-      children:
-      - type: match
-        children: []
-        key:
-          text: app
-          type: identifier
-        pattern:
-          text: ' termite'
-          type: implicit_string
-      - type: not
-        children:
-        - type: match
-          children: []
-          key:
-            text: win.title
-            type: identifier
-          pattern:
-            text: ' /VIM/'
-            type: implicit_string
+    - type: match
+      children: []
+      key:
+        text: app
+        type: identifier
+      modifier: []
+      pattern:
+        text: ' termite'
+        type: implicit_string
+    - type: match
+      children: []
+      key:
+        text: win.title
+        type: identifier
+      modifier:
+        text: not
+        type: match_modifier
+      pattern:
+        text: ' /VIM/'
+        type: implicit_string
   - text: "#comment or remove tags for command sets you don't want"
     type: comment
   - text: "#termite doesn't support the file_manager stuff yet"
     type: comment
   - text: '#tag(): user.file_manager'
     type: comment
-  - type: include_tag
+  - type: tag_import_declaration
     children: []
     tag:
       text: user.kubectl
       type: identifier
-  - type: include_tag
+  - type: tag_import_declaration
     children: []
     tag:
       text: user.git
       type: identifier
-  - type: include_tag
+  - type: tag_import_declaration
     children: []
     tag:
       text: user.taskwarrior
       type: identifier
-  - type: include_tag
+  - type: tag_import_declaration
     children: []
     tag:
       text: terminal
       type: identifier
   - text: '# Selection mode'
     type: comment
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -83,7 +83,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: key_action
@@ -91,7 +91,7 @@ output:
           arguments:
             text: '"y"'
             type: implicit_string
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -105,7 +105,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: key_action
@@ -113,7 +113,7 @@ output:
           arguments:
             text: '"ctrl-shift-space"'
             type: implicit_string
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -127,7 +127,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: key_action
@@ -135,7 +135,7 @@ output:
           arguments:
             text: '"escape"'
             type: implicit_string
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -149,7 +149,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: key_action
@@ -157,7 +157,7 @@ output:
           arguments:
             text: '"v"'
             type: implicit_string
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -173,7 +173,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: key_action

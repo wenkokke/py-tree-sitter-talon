@@ -8,27 +8,29 @@ input: |
 output:
   type: source_file
   children:
-  - type: context
+  - type: matches
     children:
-    - type: and
-      children:
-      - type: match
-        children: []
-        key:
-          text: tag
-          type: identifier
-        pattern:
-          text: ' user.draft_editor_active'
-          type: implicit_string
-      - type: match
-        children: []
-        key:
-          text: tag
-          type: identifier
-        pattern:
-          text: ' user.draft_editor_app_focused'
-          type: implicit_string
-  - type: command
+    - type: match
+      children: []
+      key:
+        text: tag
+        type: identifier
+      modifier: []
+      pattern:
+        text: ' user.draft_editor_active'
+        type: implicit_string
+    - type: match
+      children: []
+      key:
+        text: tag
+        type: identifier
+      modifier:
+        text: and
+        type: match_modifier
+      pattern:
+        text: ' user.draft_editor_app_focused'
+        type: implicit_string
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -42,7 +44,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -53,7 +55,7 @@ output:
           arguments:
             type: argument_list
             children: []
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -67,7 +69,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action

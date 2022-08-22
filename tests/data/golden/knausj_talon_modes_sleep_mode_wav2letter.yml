@@ -8,32 +8,32 @@ input: |
 output:
   type: source_file
   children:
-  - type: context
+  - type: matches
     children:
-    - type: or
-      children:
-      - type: match
-        children: []
-        key:
-          text: mode
-          type: identifier
-        pattern:
-          text: ' sleep'
-          type: implicit_string
-      - type: match
-        children: []
-        key:
-          text: speech.engine
-          type: identifier
-        pattern:
-          text: ' wav2letter'
-          type: implicit_string
+    - type: match
+      children: []
+      key:
+        text: mode
+        type: identifier
+      modifier: []
+      pattern:
+        text: ' sleep'
+        type: implicit_string
+    - type: match
+      children: []
+      key:
+        text: speech.engine
+        type: identifier
+      modifier: []
+      pattern:
+        text: ' wav2letter'
+        type: implicit_string
   - text: '#this exists solely to prevent talon from waking up super easily in sleep
       mode at the moment with wav2letter'
     type: comment
   - text: "#you probably shouldn't have any other commands here"
     type: comment
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -46,7 +46,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action

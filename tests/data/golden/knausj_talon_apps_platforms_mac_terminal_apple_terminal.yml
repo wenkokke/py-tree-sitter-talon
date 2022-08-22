@@ -25,26 +25,27 @@ input: |
 output:
   type: source_file
   children:
-  - type: context
+  - type: matches
     children:
     - type: match
       children: []
       key:
         text: app
         type: identifier
+      modifier: []
       pattern:
         text: ' apple_terminal'
         type: implicit_string
   - text: '# makes the commands in generic_terminal available'
     type: comment
-  - type: include_tag
+  - type: tag_import_declaration
     children: []
     tag:
       text: terminal
       type: identifier
   - text: '# activates the implementation of the commands/functions in generic_terminal'
     type: comment
-  - type: include_tag
+  - type: tag_import_declaration
     children: []
     tag:
       text: user.generic_unix_shell
@@ -53,34 +54,34 @@ output:
     type: comment
   - text: '# you can deactivate them if you do not use the application'
     type: comment
-  - type: include_tag
+  - type: tag_import_declaration
     children: []
     tag:
       text: user.git
       type: identifier
-  - type: include_tag
+  - type: tag_import_declaration
     children: []
     tag:
       text: user.anaconda
       type: identifier
-  - type: include_tag
+  - type: tag_import_declaration
     children: []
     tag:
       text: user.kubectl
       type: identifier
   - text: '# TODO: explain'
     type: comment
-  - type: include_tag
+  - type: tag_import_declaration
     children: []
     tag:
       text: user.tabs
       type: identifier
-  - type: include_tag
+  - type: tag_import_declaration
     children: []
     tag:
       text: user.file_manager
       type: identifier
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -90,7 +91,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: key_action
@@ -98,7 +99,7 @@ output:
           arguments:
             text: ctrl-z
             type: implicit_string
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -108,7 +109,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -123,7 +124,7 @@ output:
               children:
               - text: fg
                 type: string_content
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: key_action

@@ -18,56 +18,58 @@ input: |
 output:
   type: source_file
   children:
-  - type: context
+  - type: matches
     children:
-    - type: or
-      children:
-      - type: and
-        children:
-        - type: match
-          children: []
-          key:
-            text: os
-            type: identifier
-          pattern:
-            text: ' windows'
-            type: implicit_string
-        - type: match
-          children: []
-          key:
-            text: app.name
-            type: identifier
-          pattern:
-            text: ' Windows PowerShell'
-            type: implicit_string
-      - type: and
-        children:
-        - type: match
-          children: []
-          key:
-            text: os
-            type: identifier
-          pattern:
-            text: ' windows'
-            type: implicit_string
-        - type: match
-          children: []
-          key:
-            text: app.exe
-            type: identifier
-          pattern:
-            text: ' powershell.exe'
-            type: implicit_string
+    - type: match
+      children: []
+      key:
+        text: os
+        type: identifier
+      modifier: []
+      pattern:
+        text: ' windows'
+        type: implicit_string
+    - type: match
+      children: []
+      key:
+        text: app.name
+        type: identifier
+      modifier:
+        text: and
+        type: match_modifier
+      pattern:
+        text: ' Windows PowerShell'
+        type: implicit_string
+    - type: match
+      children: []
+      key:
+        text: os
+        type: identifier
+      modifier: []
+      pattern:
+        text: ' windows'
+        type: implicit_string
+    - type: match
+      children: []
+      key:
+        text: app.exe
+        type: identifier
+      modifier:
+        text: and
+        type: match_modifier
+      pattern:
+        text: ' powershell.exe'
+        type: implicit_string
   - text: '# makes the commands in generic_terminal available'
     type: comment
-  - type: include_tag
+  - type: tag_import_declaration
     children: []
     tag:
       text: terminal
       type: identifier
   - text: '# activates the implementation of the commands/functions in generic_terminal'
     type: comment
-  - type: include_tag
+  - type: tag_import_declaration
     children: []
     tag:
       text: user.generic_windows_shell
@@ -76,12 +78,12 @@ output:
     type: comment
   - text: '# you can deactivate them if you do not use the application'
     type: comment
-  - type: include_tag
+  - type: tag_import_declaration
     children: []
     tag:
       text: user.git
       type: identifier
-  - type: include_tag
+  - type: tag_import_declaration
     children: []
     tag:
       text: user.anaconda

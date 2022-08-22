@@ -106,49 +106,50 @@ input: |
 output:
   type: source_file
   children:
-  - type: context
+  - type: matches
     children:
-    - type: or
-      children:
-      - type: match
-        children: []
-        key:
-          text: os
-          type: identifier
-        pattern:
-          text: ' linux'
-          type: implicit_string
-      - text: '# XXX - this matches .gdb files atm'
-        type: comment
-      - text: '#win.title: /gdb/'
-        type: comment
-      - type: match
-        children: []
-        key:
-          text: tag
-          type: identifier
-        pattern:
-          text: ' terminal'
-          type: implicit_string
-      - type: match
-        children: []
-        key:
-          text: mode
-          type: identifier
-        pattern:
-          text: ' user.gdb'
-          type: implicit_string
-  - type: include_tag
+    - type: match
+      children: []
+      key:
+        text: os
+        type: identifier
+      modifier: []
+      pattern:
+        text: ' linux'
+        type: implicit_string
+    - text: '# XXX - this matches .gdb files atm'
+      type: comment
+    - text: '#win.title: /gdb/'
+      type: comment
+    - type: match
+      children: []
+      key:
+        text: tag
+        type: identifier
+      modifier: []
+      pattern:
+        text: ' terminal'
+        type: implicit_string
+    - type: match
+      children: []
+      key:
+        text: mode
+        type: identifier
+      modifier: []
+      pattern:
+        text: ' user.gdb'
+        type: implicit_string
+  - type: tag_import_declaration
     children: []
     tag:
       text: user.gdb
       type: identifier
-  - type: include_tag
+  - type: tag_import_declaration
     children: []
     tag:
       text: user.debugger
       type: identifier
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -165,7 +166,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -178,7 +179,7 @@ output:
             type: string_content
           - text: '}'
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -198,7 +199,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -215,7 +216,7 @@ output:
                 type: string_content
               - text: \n
                 type: string_escape_sequence
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -232,7 +233,7 @@ output:
                 type: string_content
               - text: \n
                 type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -250,7 +251,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -265,7 +266,7 @@ output:
               children:
               - text: 'break '
                 type: string_content
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: key_action
@@ -273,7 +274,7 @@ output:
           arguments:
             text: ctrl-shift-v
             type: implicit_string
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: key_action
@@ -283,7 +284,7 @@ output:
             type: implicit_string
   - text: '# information'
     type: comment
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -299,7 +300,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -308,7 +309,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -322,7 +323,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -331,7 +332,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -341,14 +342,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'p '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -369,7 +370,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -382,7 +383,7 @@ output:
             type: string_content
           - text: '}'
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -396,14 +397,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'p/x '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -426,7 +427,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -439,7 +440,7 @@ output:
             type: string_content
           - text: '}'
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -453,7 +454,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -466,7 +467,7 @@ output:
     type: comment
   - text: '# XXX - should cache the last used size'
     type: comment
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -487,7 +488,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -502,7 +503,7 @@ output:
             type: string_content
           - text: 'bx '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -531,7 +532,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -546,7 +547,7 @@ output:
             type: string_content
           - text: 'hx '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -575,7 +576,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -590,7 +591,7 @@ output:
             type: string_content
           - text: 'dx '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -613,7 +614,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -630,7 +631,7 @@ output:
             type: string_content
   - text: '# this is some arbitrary default for convenience'
     type: comment
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -644,14 +645,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'x/100gx '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -667,7 +668,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -682,7 +683,7 @@ output:
               children:
               - text: 'x/100gx '
                 type: string_content
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -693,7 +694,7 @@ output:
           arguments:
             type: argument_list
             children: []
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -704,7 +705,7 @@ output:
           arguments:
             type: argument_list
             children: []
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: key_action
@@ -712,7 +713,7 @@ output:
           arguments:
             text: enter
             type: implicit_string
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -728,7 +729,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -743,7 +744,7 @@ output:
               children:
               - text: 'x/100gx '
                 type: string_content
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -754,7 +755,7 @@ output:
           arguments:
             type: argument_list
             children: []
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: key_action
@@ -764,7 +765,7 @@ output:
             type: implicit_string
   - text: '# execution'
     type: comment
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -774,7 +775,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -789,7 +790,7 @@ output:
     type: comment
   - text: '# XXX - move thee invoke command into a python script'
     type: comment
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -811,7 +812,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -820,7 +821,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -838,7 +839,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -847,7 +848,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -861,14 +862,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'display '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -887,7 +888,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -902,7 +903,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -921,7 +922,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -936,7 +937,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -946,7 +947,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -957,7 +958,7 @@ output:
             type: string_escape_sequence
   - text: '# variables'
     type: comment
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -979,14 +980,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'info local '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1010,14 +1011,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'info local -t '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1039,14 +1040,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'info variable '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1070,14 +1071,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'info variable -t '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1099,7 +1100,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1108,7 +1109,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1130,7 +1131,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1141,7 +1142,7 @@ output:
             type: string_escape_sequence
   - text: '# threads'
     type: comment
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1155,7 +1156,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1164,7 +1165,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1180,7 +1181,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1189,7 +1190,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1199,7 +1200,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1208,7 +1209,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1222,7 +1223,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1231,7 +1232,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1245,7 +1246,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1256,7 +1257,7 @@ output:
             type: string_escape_sequence
   - text: '# more quickly quit when there are inferiors'
     type: comment
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1272,7 +1273,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1285,7 +1286,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1311,7 +1312,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1320,7 +1321,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1339,7 +1340,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1354,7 +1355,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1364,14 +1365,14 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
           children:
           - text: 'inferior '
             type: string_content
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1393,7 +1394,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -1410,7 +1411,7 @@ output:
                 type: string_content
               - text: \n
                 type: string_escape_sequence
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -1427,7 +1428,7 @@ output:
                 type: string_content
               - text: \n
                 type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1458,7 +1459,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -1481,7 +1482,7 @@ output:
                 type: string_content
               - text: \n
                 type: string_escape_sequence
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: action
@@ -1500,7 +1501,7 @@ output:
                 type: string_escape_sequence
   - text: '# arguments'
     type: comment
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1514,7 +1515,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1523,7 +1524,7 @@ output:
             type: string_content
   - text: '# settings'
     type: comment
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1549,7 +1550,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1558,7 +1559,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1588,7 +1589,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1597,7 +1598,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1627,7 +1628,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1636,7 +1637,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1654,7 +1655,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1663,7 +1664,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1681,7 +1682,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1690,7 +1691,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1708,7 +1709,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1719,7 +1720,7 @@ output:
             type: string_escape_sequence
   - text: '# list'
     type: comment
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1735,7 +1736,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1744,7 +1745,7 @@ output:
             type: string_content
           - text: \n
             type: string_escape_sequence
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1765,7 +1766,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
@@ -1782,7 +1783,7 @@ output:
             type: string_escape_sequence
   - text: '# misc'
     type: comment
-  - type: command
+  - type: command_declaration
     children: []
     rule:
       type: rule
@@ -1796,7 +1797,7 @@ output:
     script:
       type: block
       children:
-      - type: expression
+      - type: expression_statement
         children: []
         expression:
           type: string
