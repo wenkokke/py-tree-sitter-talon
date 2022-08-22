@@ -1,6 +1,7 @@
 import collections.abc
 import inspect
 import re
+import types
 import typing
 
 
@@ -17,10 +18,12 @@ def short(sig: inspect.Signature) -> str:
 
 def function_signatures(object: object) -> collections.abc.Iterator[str]:
     for name, fun in inspect.getmembers(object, inspect.isfunction):
-        if not (name.startswith("_") or name in ["to_dict", "to_json"]):
+        assert isinstance(fun, types.FunctionType)
+        if not name.startswith("_"):
             try:
                 funsig = inspect.signature(fun)
-                yield f"{name}{short(funsig)}"
+                yield f"def {name}{short(funsig)}:"
+                yield f"  pass"
             except ValueError:
                 pass
 
@@ -29,10 +32,11 @@ def class_signatures(object: object) -> collections.abc.Iterator[str]:
     for name, cls in inspect.getmembers(object, inspect.isclass):
         if not name.startswith("_"):
             try:
-                clssig = inspect.signature(cls)
-                yield f"{name}{short(clssig)}"
-                for funsigstr in function_signatures(cls):
-                    yield f"  {funsigstr}"
+                parent = cls.__mro__[1].__name__
+                init = short(inspect.signature(cls))
+                yield f"class {name}({parent}):"
+                yield f"  def __init__{init}:"
+                yield f"    pass"
             except ValueError:
                 pass
 

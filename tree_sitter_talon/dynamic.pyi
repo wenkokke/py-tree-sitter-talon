@@ -2,7 +2,6 @@ import dataclasses
 import pathlib
 import typing
 
-import dataclasses_json
 import tree_sitter  # type: ignore
 from tree_sitter_type_provider import Branch as Branch
 from tree_sitter_type_provider import Leaf as Leaf
@@ -42,295 +41,102 @@ def from_tree_sitter(
     filename: typing.Optional[str] = None,
     raise_parse_error: bool = False,
 ) -> Node: ...
-@dataclasses_json.dataclass_json
-@dataclasses.dataclass
-class TalonAction(Branch):
-    children: list[TalonComment]
-    action_name: TalonIdentifier
-    arguments: TalonArgumentList
 
-@dataclasses_json.dataclass_json
-@dataclasses.dataclass
-class TalonAnd(Branch):
-    children: list[typing.Union[TalonAnd, TalonMatch, TalonNot, TalonComment]]
+# AST node classes.
 
-@dataclasses_json.dataclass_json
 @dataclasses.dataclass
-class TalonArgumentList(Branch):
-    children: list[
-        typing.Union[
-            TalonAction,
-            TalonBinaryOperator,
-            TalonFloat,
-            TalonInteger,
-            TalonKeyAction,
-            TalonParenthesizedExpression,
-            TalonSleepAction,
-            TalonString,
-            TalonVariable,
-            TalonComment,
-        ]
+class TalonSourceFile(Branch):
+    children: typing.Sequence[
+        typing.Union[TalonDeclaration, TalonMatches, TalonComment]
     ]
 
-@dataclasses_json.dataclass_json
-@dataclasses.dataclass
-class TalonAssignment(Branch):
-    children: list[TalonComment]
-    left: TalonIdentifier
-    right: typing.Union[
-        TalonAction,
-        TalonBinaryOperator,
-        TalonFloat,
-        TalonInteger,
-        TalonKeyAction,
-        TalonParenthesizedExpression,
-        TalonSleepAction,
-        TalonString,
-        TalonVariable,
-        TalonComment,
-    ]
-
-@dataclasses_json.dataclass_json
-@dataclasses.dataclass
-class TalonBinaryOperator(Branch):
-    children: list[TalonComment]
-    left: typing.Union[
-        TalonAction,
-        TalonBinaryOperator,
-        TalonFloat,
-        TalonInteger,
-        TalonKeyAction,
-        TalonParenthesizedExpression,
-        TalonSleepAction,
-        TalonString,
-        TalonVariable,
-        TalonComment,
-    ]
-    operator: TalonOperator
-    right: typing.Union[
-        TalonAction,
-        TalonBinaryOperator,
-        TalonFloat,
-        TalonInteger,
-        TalonKeyAction,
-        TalonParenthesizedExpression,
-        TalonSleepAction,
-        TalonString,
-        TalonVariable,
-        TalonComment,
-    ]
-
-@dataclasses_json.dataclass_json
-@dataclasses.dataclass
-class TalonBlock(Branch):
-    children: list[typing.Union[TalonAssignment, TalonExpression, TalonComment]]
-
-@dataclasses_json.dataclass_json
-@dataclasses.dataclass
-class TalonCapture(Branch):
-    children: list[TalonComment]
-    capture_name: TalonIdentifier
-
-@dataclasses_json.dataclass_json
-@dataclasses.dataclass
-class TalonChoice(Branch):
-    children: list[
-        typing.Union[
-            TalonCapture,
-            TalonEndAnchor,
-            TalonList,
-            TalonOptional,
-            TalonParenthesizedRule,
-            TalonRepeat,
-            TalonRepeat1,
-            TalonSeq,
-            TalonStartAnchor,
-            TalonWord,
-            TalonComment,
-        ]
-    ]
-
-@dataclasses_json.dataclass_json
-@dataclasses.dataclass
-class TalonCommand(Branch):
-    children: list[TalonComment]
-    rule: TalonRule
-    script: TalonBlock
-
-@dataclasses_json.dataclass_json
-@dataclasses.dataclass
 class TalonComment(Leaf):
     pass
 
-@dataclasses_json.dataclass_json
-@dataclasses.dataclass
-class TalonContext(Branch):
-    children: list[typing.Union[TalonAnd, TalonMatch, TalonNot, TalonOr, TalonComment]]
-
-@dataclasses_json.dataclass_json
-@dataclasses.dataclass
-class TalonEndAnchor(Leaf):
-    pass
-
-@dataclasses_json.dataclass_json
 @dataclasses.dataclass
 class TalonError(Exception, Branch):
-    children: list[
-        typing.Union[
-            TalonAction,
-            TalonAnd,
-            TalonArgumentList,
-            TalonAssignment,
-            TalonBinaryOperator,
-            TalonBlock,
-            TalonCapture,
-            TalonChoice,
-            TalonCommand,
-            TalonContext,
-            TalonExpression,
-            TalonIncludeTag,
-            TalonInterpolation,
-            TalonKeyAction,
-            TalonList,
-            TalonMatch,
-            TalonNot,
-            TalonNumber,
-            TalonOptional,
-            TalonOr,
-            TalonParenthesizedExpression,
-            TalonParenthesizedRule,
-            TalonRepeat,
-            TalonRepeat1,
-            TalonRule,
-            TalonSeq,
-            TalonSettings,
-            TalonSleepAction,
-            TalonSourceFile,
-            TalonString,
-            TalonStringContent,
-            TalonVariable,
-            TalonComment,
-            TalonEndAnchor,
-            TalonFloat,
-            TalonIdentifier,
-            TalonImplicitString,
-            TalonInteger,
-            TalonOperator,
-            TalonStartAnchor,
-            TalonStringEscapeSequence,
-            TalonWord,
-            TalonError,
-        ]
-    ]
+    children: typing.Sequence[Node]
     contents: typing.Optional[str] = None
     filename: typing.Optional[str] = None
 
-@dataclasses_json.dataclass_json
-@dataclasses.dataclass
-class TalonExpression(Branch):
-    children: list[TalonComment]
-    expression: typing.Union[
-        TalonAction,
-        TalonBinaryOperator,
-        TalonFloat,
-        TalonInteger,
-        TalonKeyAction,
-        TalonParenthesizedExpression,
-        TalonSleepAction,
-        TalonString,
-        TalonVariable,
-        TalonComment,
-    ]
+# Matches.
 
-@dataclasses_json.dataclass_json
 @dataclasses.dataclass
-class TalonFloat(Leaf):
+class TalonMatches(Branch):
+    children: typing.Sequence[typing.Union[TalonMatch, TalonComment]]
+
+@dataclasses.dataclass
+class TalonMatch(Branch):
+    children: typing.Sequence[TalonComment]
+    key: TalonIdentifier
+    modifier: list[TalonMatchModifier]
+    pattern: TalonImplicitString
+
+class TalonMatchModifier(Leaf):
     pass
 
-@dataclasses_json.dataclass_json
-@dataclasses.dataclass
-class TalonIdentifier(Leaf):
+# Declarations.
+
+class TalonDeclaration(Node):
     pass
 
-@dataclasses_json.dataclass_json
 @dataclasses.dataclass
-class TalonImplicitString(Leaf):
-    pass
+class TalonCommandDeclaration(Branch, TalonDeclaration):
+    children: typing.Sequence[TalonComment]
+    rule: TalonRule
+    script: TalonBlock
 
-@dataclasses_json.dataclass_json
 @dataclasses.dataclass
-class TalonIncludeTag(Branch):
-    children: list[TalonComment]
-    tag: TalonIdentifier
-
-@dataclasses_json.dataclass_json
-@dataclasses.dataclass
-class TalonInteger(Leaf):
-    pass
-
-@dataclasses_json.dataclass_json
-@dataclasses.dataclass
-class TalonInterpolation(Branch):
-    children: list[
-        typing.Union[
-            TalonAction,
-            TalonBinaryOperator,
-            TalonFloat,
-            TalonInteger,
-            TalonKeyAction,
-            TalonParenthesizedExpression,
-            TalonSleepAction,
-            TalonString,
-            TalonVariable,
-            TalonComment,
-        ]
-    ]
-
-@dataclasses_json.dataclass_json
-@dataclasses.dataclass
-class TalonKeyAction(Branch):
-    children: list[TalonComment]
-    arguments: TalonImplicitString
-
-@dataclasses_json.dataclass_json
-@dataclasses.dataclass
-class TalonKeyBinding(Branch):
-    children: list[TalonComment]
+class TalonKeyBindingDeclaration(Branch, TalonDeclaration):
+    children: typing.Sequence[TalonComment]
     key: TalonKeyAction
     script: TalonBlock
 
-@dataclasses_json.dataclass_json
 @dataclasses.dataclass
-class TalonList(Branch):
-    children: list[TalonComment]
-    list_name: TalonIdentifier
+class TalonSettingsDeclaration(Branch, TalonDeclaration):
+    children: typing.Sequence[typing.Union[TalonBlock, TalonComment]]
 
-@dataclasses_json.dataclass_json
 @dataclasses.dataclass
-class TalonMatch(Branch):
-    children: list[TalonComment]
-    key: TalonIdentifier
-    pattern: TalonImplicitString
+class TalonTagImportDeclaration(Branch, TalonDeclaration):
+    children: typing.Sequence[TalonComment]
+    tag: TalonIdentifier
 
-@dataclasses_json.dataclass_json
-@dataclasses.dataclass
-class TalonNot(Branch):
-    children: list[typing.Union[TalonMatch, TalonComment]]
+# Rules.
 
-@dataclasses_json.dataclass_json
 @dataclasses.dataclass
-class TalonNumber(Branch):
-    children: list[typing.Union[TalonFloat, TalonInteger, TalonComment]]
+class TalonCapture(Branch):
+    children: typing.Sequence[TalonComment]
+    capture_name: TalonIdentifier
 
-@dataclasses_json.dataclass_json
 @dataclasses.dataclass
-class TalonOperator(Leaf):
+class TalonChoice(Branch):
+    children: typing.Sequence[
+        typing.Union[
+            TalonCapture,
+            TalonEndAnchor,
+            TalonList,
+            TalonOptional,
+            TalonParenthesizedRule,
+            TalonRepeat,
+            TalonRepeat1,
+            TalonSeq,
+            TalonStartAnchor,
+            TalonWord,
+            TalonComment,
+        ]
+    ]
+
+class TalonEndAnchor(Leaf):
     pass
 
-@dataclasses_json.dataclass_json
+@dataclasses.dataclass
+class TalonList(Branch):
+    children: typing.Sequence[TalonComment]
+    list_name: TalonIdentifier
+
 @dataclasses.dataclass
 class TalonOptional(Branch):
-    children: list[
+    children: typing.Sequence[
         typing.Union[
             TalonCapture,
             TalonChoice,
@@ -347,33 +153,9 @@ class TalonOptional(Branch):
         ]
     ]
 
-@dataclasses_json.dataclass_json
-@dataclasses.dataclass
-class TalonOr(Branch):
-    children: list[typing.Union[TalonAnd, TalonMatch, TalonNot, TalonComment]]
-
-@dataclasses_json.dataclass_json
-@dataclasses.dataclass
-class TalonParenthesizedExpression(Branch):
-    children: list[
-        typing.Union[
-            TalonAction,
-            TalonBinaryOperator,
-            TalonFloat,
-            TalonInteger,
-            TalonKeyAction,
-            TalonParenthesizedExpression,
-            TalonSleepAction,
-            TalonString,
-            TalonVariable,
-            TalonComment,
-        ]
-    ]
-
-@dataclasses_json.dataclass_json
 @dataclasses.dataclass
 class TalonParenthesizedRule(Branch):
-    children: list[
+    children: typing.Sequence[
         typing.Union[
             TalonCapture,
             TalonChoice,
@@ -390,10 +172,9 @@ class TalonParenthesizedRule(Branch):
         ]
     ]
 
-@dataclasses_json.dataclass_json
 @dataclasses.dataclass
 class TalonRepeat(Branch):
-    children: list[
+    children: typing.Sequence[
         typing.Union[
             TalonCapture,
             TalonList,
@@ -406,10 +187,9 @@ class TalonRepeat(Branch):
         ]
     ]
 
-@dataclasses_json.dataclass_json
 @dataclasses.dataclass
 class TalonRepeat1(Branch):
-    children: list[
+    children: typing.Sequence[
         typing.Union[
             TalonCapture,
             TalonList,
@@ -422,10 +202,9 @@ class TalonRepeat1(Branch):
         ]
     ]
 
-@dataclasses_json.dataclass_json
 @dataclasses.dataclass
 class TalonRule(Branch):
-    children: list[
+    children: typing.Sequence[
         typing.Union[
             TalonCapture,
             TalonChoice,
@@ -442,10 +221,9 @@ class TalonRule(Branch):
         ]
     ]
 
-@dataclasses_json.dataclass_json
 @dataclasses.dataclass
 class TalonSeq(Branch):
-    children: list[
+    children: typing.Sequence[
         typing.Union[
             TalonCapture,
             TalonList,
@@ -458,35 +236,93 @@ class TalonSeq(Branch):
         ]
     ]
 
-@dataclasses_json.dataclass_json
-@dataclasses.dataclass
-class TalonSettings(Branch):
-    children: list[typing.Union[TalonBlock, TalonComment]]
-
-@dataclasses_json.dataclass_json
-@dataclasses.dataclass
-class TalonSleepAction(Branch):
-    children: list[TalonComment]
-    arguments: TalonImplicitString
-
-@dataclasses_json.dataclass_json
-@dataclasses.dataclass
-class TalonSourceFile(Branch):
-    children: list[
-        typing.Union[
-            TalonCommand, TalonContext, TalonIncludeTag, TalonSettings, TalonComment
-        ]
-    ]
-
-@dataclasses_json.dataclass_json
-@dataclasses.dataclass
 class TalonStartAnchor(Leaf):
     pass
 
-@dataclasses_json.dataclass_json
+class TalonWord(Leaf):
+    pass
+
+# Statements.
+
+class TalonStatement(Node):
+    pass
+
+@dataclasses.dataclass
+class TalonAssignmentStatement(Branch, TalonStatement):
+    children: typing.Sequence[TalonComment]
+    left: TalonIdentifier
+    right: TalonExpression
+
+@dataclasses.dataclass
+class TalonExpressionStatement(Branch, TalonStatement):
+    children: typing.Sequence[TalonComment]
+    expression: TalonExpression
+
+@dataclasses.dataclass
+class TalonBlock(Branch):
+    children: typing.Sequence[typing.Union[TalonStatement, TalonComment]]
+
+# Expressions.
+
+class TalonExpression(Node):
+    pass
+
+@dataclasses.dataclass
+class TalonAction(Branch, TalonExpression):
+    children: typing.Sequence[TalonComment]
+    action_name: TalonIdentifier
+    arguments: TalonArgumentList
+
+@dataclasses.dataclass
+class TalonArgumentList(Branch):
+    children: typing.Sequence[typing.Union[TalonExpression, TalonComment]]
+
+@dataclasses.dataclass
+class TalonBinaryOperator(Branch, TalonExpression):
+    children: typing.Sequence[TalonComment]
+    left: TalonExpression
+    operator: TalonOperator
+    right: TalonExpression
+
+@dataclasses.dataclass
+class TalonKeyAction(Branch, TalonExpression):
+    children: typing.Sequence[TalonComment]
+    arguments: TalonImplicitString
+
+@dataclasses.dataclass
+class TalonParenthesizedExpression(Branch, TalonExpression):
+    children: typing.Sequence[typing.Union[TalonExpression, TalonComment]]
+
+@dataclasses.dataclass
+class TalonSleepAction(Branch, TalonExpression):
+    children: typing.Sequence[TalonComment]
+    arguments: TalonImplicitString
+
+@dataclasses.dataclass
+class TalonVariable(Branch, TalonExpression):
+    children: typing.Sequence[TalonComment]
+    variable_name: TalonIdentifier
+
+# Identifiers.
+
+class TalonIdentifier(Leaf):
+    pass
+
+class TalonOperator(Leaf):
+    pass
+
+# Strings.
+
+class TalonImplicitString(Leaf):
+    pass
+
+@dataclasses.dataclass
+class TalonInterpolation(Branch):
+    children: typing.Sequence[typing.Union[TalonExpression, TalonComment]]
+
 @dataclasses.dataclass
 class TalonString(Branch):
-    children: list[
+    children: typing.Sequence[
         typing.Union[
             TalonInterpolation,
             TalonStringContent,
@@ -495,23 +331,19 @@ class TalonString(Branch):
         ]
     ]
 
-@dataclasses_json.dataclass_json
-@dataclasses.dataclass
 class TalonStringContent(Leaf):
     pass
 
-@dataclasses_json.dataclass_json
-@dataclasses.dataclass
 class TalonStringEscapeSequence(Leaf):
     pass
 
-@dataclasses_json.dataclass_json
-@dataclasses.dataclass
-class TalonVariable(Branch):
-    children: list[TalonComment]
-    variable_name: TalonIdentifier
+# Numbers.
 
-@dataclasses_json.dataclass_json
-@dataclasses.dataclass
-class TalonWord(Leaf):
+class TalonFloat(Leaf, TalonNumber):
+    pass
+
+class TalonInteger(Leaf, TalonNumber):
+    pass
+
+class TalonNumber(Node):
     pass
