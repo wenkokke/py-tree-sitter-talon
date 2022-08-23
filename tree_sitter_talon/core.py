@@ -91,7 +91,6 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
         self,
         contents: typing.Union[str, bytes],
         *,
-        has_match_context: typing.Optional[bool] = None,
         encoding: str = "utf-8",
         filename: typing.Optional[str] = None,
         raise_parse_error: bool = False,
@@ -100,19 +99,15 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
         tree_sitter_type_provider.Node,
         None,
     ]:
-        tree, inserted_empty_match_context = self._parse(
-            contents, has_match_context=has_match_context, encoding=encoding
-        )
-        node = self.from_tree_sitter(
+        tree = self._parse(contents, encoding=encoding)
+        return self.from_tree_sitter(
             tree.root_node, filename=filename, raise_parse_error=raise_parse_error
         )
-        return self._fix(node) if inserted_empty_match_context else node
 
     def parse_file(
         self,
         path: typing.Union[str, pathlib.Path],
         *,
-        has_match_context: typing.Optional[bool] = None,
         encoding: str = "utf-8",
         raise_parse_error: bool = False,
     ) -> typing.Union[
@@ -120,57 +115,28 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
         tree_sitter_type_provider.Node,
         None,
     ]:
-        tree, inserted_empty_match_context = self._parse_file(
-            path, has_match_context=has_match_context, encoding=encoding
-        )
-        node = self.from_tree_sitter(
+        tree = self._parse_file(path, encoding=encoding)
+        return self.from_tree_sitter(
             tree.root_node, filename=str(path), raise_parse_error=raise_parse_error
         )
-        return self._fix(node) if inserted_empty_match_context else node
-
-    def _fix(
-        self, node: tree_sitter_type_provider.Node
-    ) -> tree_sitter_type_provider.Node:
-        node.start_position.line -= 1
-        node.end_position.line -= 1
-        if isinstance(node, tree_sitter_type_provider.Branch):
-            if node.children is None:
-                pass
-            elif isinstance(node.children, tree_sitter_type_provider.Node):
-                node.children = self._fix(node.children)
-            else:
-                node.children = [
-                    self._fix(child)
-                    for child in node.children
-                    if child.type_name != "context"
-                ]
-        return node
 
     def _parse(
         self,
         contents: typing.Union[str, bytes],
         *,
-        has_match_context: typing.Optional[bool] = None,
         encoding: str = "utf-8",
-    ) -> tuple[tree_sitter.Tree, bool]:
+    ) -> tree_sitter.Tree:
         if isinstance(contents, str):
             contents = bytes(contents, encoding)
-        if has_match_context is None:
-            has_match_context = contents.startswith(b"-\n") or (b"\n-\n" in contents)
-        if not has_match_context:
-            contents = b"-\n" + contents
-        return (self.parser.parse(contents), not has_match_context)
+        return self.parser.parse(contents)
 
     def _parse_file(
         self,
         path: typing.Union[str, pathlib.Path],
         *,
-        has_match_context: typing.Optional[bool] = None,
         encoding: str = "utf-8",
-    ) -> tuple[tree_sitter.Tree, bool]:
+    ) -> tree_sitter.Tree:
         if not isinstance(path, pathlib.Path):
             path = pathlib.Path(path)
         contents = path.read_bytes()
-        return self._parse(
-            contents, has_match_context=has_match_context, encoding=encoding
-        )
+        return self._parse(contents, encoding=encoding)
