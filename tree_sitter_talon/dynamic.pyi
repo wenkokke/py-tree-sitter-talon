@@ -69,7 +69,7 @@ class TalonMatches(Branch):
 class TalonMatch(Branch):
     children: typing.Sequence[TalonComment]
     key: TalonIdentifier
-    modifier: list[TalonMatchModifier]
+    modifier: typing.Sequence[TalonMatchModifier]
     pattern: TalonImplicitString
 
 class TalonMatchModifier(Leaf):
