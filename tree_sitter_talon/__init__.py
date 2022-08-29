@@ -1,3 +1,5 @@
+import dataclasses
+
 from .dynamic import Branch as Branch
 from .dynamic import Leaf as Leaf
 from .dynamic import Node as Node
@@ -57,3 +59,232 @@ from .dynamic import language as language
 from .dynamic import parse as parse
 from .dynamic import parse_file as parse_file
 from .dynamic import parser as parser
+
+# Implement __reduce__
+
+setattr(
+    TalonAction,
+    "__reduce__",
+    lambda self: (TalonAction, dataclasses.astuple(self)),
+)
+setattr(
+    TalonArgumentList,
+    "__reduce__",
+    lambda self: (TalonArgumentList, dataclasses.astuple(self)),
+)
+setattr(
+    TalonAssignmentStatement,
+    "__reduce__",
+    lambda self: (TalonAssignmentStatement, dataclasses.astuple(self)),
+)
+setattr(
+    TalonBinaryOperator,
+    "__reduce__",
+    lambda self: (TalonBinaryOperator, dataclasses.astuple(self)),
+)
+setattr(
+    TalonBlock,
+    "__reduce__",
+    lambda self: (TalonBlock, dataclasses.astuple(self)),
+)
+setattr(
+    TalonCapture,
+    "__reduce__",
+    lambda self: (TalonCapture, dataclasses.astuple(self)),
+)
+setattr(
+    TalonChoice,
+    "__reduce__",
+    lambda self: (TalonChoice, dataclasses.astuple(self)),
+)
+setattr(
+    TalonCommandDeclaration,
+    "__reduce__",
+    lambda self: (TalonCommandDeclaration, dataclasses.astuple(self)),
+)
+setattr(
+    TalonComment,
+    "__reduce__",
+    lambda self: (TalonComment, dataclasses.astuple(self)),
+)
+setattr(
+    TalonDeclaration,
+    "__reduce__",
+    lambda self: (TalonDeclaration, dataclasses.astuple(self)),
+)
+setattr(
+    TalonEndAnchor,
+    "__reduce__",
+    lambda self: (TalonEndAnchor, dataclasses.astuple(self)),
+)
+setattr(
+    TalonError,
+    "__reduce__",
+    lambda self: (TalonError, dataclasses.astuple(self)),
+)
+setattr(
+    TalonExpression,
+    "__reduce__",
+    lambda self: (TalonExpression, dataclasses.astuple(self)),
+)
+setattr(
+    TalonExpressionStatement,
+    "__reduce__",
+    lambda self: (TalonExpressionStatement, dataclasses.astuple(self)),
+)
+setattr(
+    TalonFloat,
+    "__reduce__",
+    lambda self: (TalonFloat, dataclasses.astuple(self)),
+)
+setattr(
+    TalonIdentifier,
+    "__reduce__",
+    lambda self: (TalonIdentifier, dataclasses.astuple(self)),
+)
+setattr(
+    TalonImplicitString,
+    "__reduce__",
+    lambda self: (TalonImplicitString, dataclasses.astuple(self)),
+)
+setattr(
+    TalonInteger,
+    "__reduce__",
+    lambda self: (
+        TalonInteger,
+        dataclasses.astuple(self),
+    ),
+)
+setattr(
+    TalonInterpolation,
+    "__reduce__",
+    lambda self: (TalonInterpolation, dataclasses.astuple(self)),
+)
+setattr(
+    TalonKeyAction,
+    "__reduce__",
+    lambda self: (TalonKeyAction, dataclasses.astuple(self)),
+)
+setattr(
+    TalonKeyBindingDeclaration,
+    "__reduce__",
+    lambda self: (TalonKeyBindingDeclaration, dataclasses.astuple(self)),
+)
+setattr(
+    TalonList,
+    "__reduce__",
+    lambda self: (TalonList, dataclasses.astuple(self)),
+)
+setattr(
+    TalonMatch,
+    "__reduce__",
+    lambda self: (TalonMatch, dataclasses.astuple(self)),
+)
+setattr(
+    TalonMatches, "__reduce__", lambda self: (TalonMatches, dataclasses.astuple(self))
+)
+setattr(
+    TalonMatchModifier,
+    "__reduce__",
+    lambda self: (TalonMatchModifier, dataclasses.astuple(self)),
+)
+setattr(
+    TalonNumber,
+    "__reduce__",
+    lambda self: (TalonNumber, dataclasses.astuple(self)),
+)
+setattr(
+    TalonOperator,
+    "__reduce__",
+    lambda self: (TalonOperator, dataclasses.astuple(self)),
+)
+setattr(
+    TalonOptional,
+    "__reduce__",
+    lambda self: (TalonOptional, dataclasses.astuple(self)),
+)
+setattr(
+    TalonParenthesizedExpression,
+    "__reduce__",
+    lambda self: (TalonParenthesizedExpression, dataclasses.astuple(self)),
+)
+setattr(
+    TalonParenthesizedRule,
+    "__reduce__",
+    lambda self: (TalonParenthesizedRule, dataclasses.astuple(self)),
+)
+setattr(
+    TalonRepeat,
+    "__reduce__",
+    lambda self: (TalonRepeat, dataclasses.astuple(self)),
+)
+setattr(
+    TalonRepeat1,
+    "__reduce__",
+    lambda self: (TalonRepeat1, dataclasses.astuple(self)),
+)
+setattr(
+    TalonRule,
+    "__reduce__",
+    lambda self: (TalonRule, dataclasses.astuple(self)),
+)
+setattr(
+    TalonSeq,
+    "__reduce__",
+    lambda self: (TalonSeq, dataclasses.astuple(self)),
+)
+setattr(
+    TalonSettingsDeclaration,
+    "__reduce__",
+    lambda self: (TalonSettingsDeclaration, dataclasses.astuple(self)),
+)
+setattr(
+    TalonSleepAction,
+    "__reduce__",
+    lambda self: (TalonSleepAction, dataclasses.astuple(self)),
+)
+setattr(
+    TalonSourceFile,
+    "__reduce__",
+    lambda self: (TalonSourceFile, dataclasses.astuple(self)),
+)
+setattr(
+    TalonStartAnchor,
+    "__reduce__",
+    lambda self: (TalonStartAnchor, dataclasses.astuple(self)),
+)
+setattr(
+    TalonStatement,
+    "__reduce__",
+    lambda self: (TalonStatement, dataclasses.astuple(self)),
+)
+setattr(
+    TalonString,
+    "__reduce__",
+    lambda self: (TalonString, dataclasses.astuple(self)),
+)
+setattr(
+    TalonStringContent,
+    "__reduce__",
+    lambda self: (TalonStringContent, dataclasses.astuple(self)),
+)
+setattr(
+    TalonStringEscapeSequence,
+    "__reduce__",
+    lambda self: (TalonStringEscapeSequence, dataclasses.astuple(self)),
+)
+setattr(
+    TalonTagImportDeclaration,
+    "__reduce__",
+    lambda self: (TalonTagImportDeclaration, dataclasses.astuple(self)),
+)
+setattr(
+    TalonVariable,
+    "__reduce__",
+    lambda self: (TalonVariable, dataclasses.astuple(self)),
+)
+setattr(
+    TalonWord,
+    "__reduce__",
+    lambda self: (TalonWord, dataclasses.astuple(self)),
+)
