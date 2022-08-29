@@ -2,7 +2,7 @@ import dataclasses
 
 from ..dynamic import *
 
-__extra_reduce__ = ()
+__pickle_compat = ()
 
 
 def _make_TalonAction(*args, **kwargs) -> TalonAction:

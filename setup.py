@@ -17,7 +17,7 @@ setuptools.setup(
         "Documentation": "https://wenkokke.github.io/py-tree-sitter-talon/",
         "Source": "https://github.com/tree-sitter/py-tree-sitter",
     },
-    packages=["tree_sitter_talon"],
+    packages=setuptools.find_packages(),
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Topic :: Software Development :: Compilers",
