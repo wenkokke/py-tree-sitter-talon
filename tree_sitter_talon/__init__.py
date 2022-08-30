@@ -57,4 +57,4 @@ from .dynamic import language as language
 from .dynamic import parse as parse
 from .dynamic import parse_file as parse_file
 from .dynamic import parser as parser
-from .extra.__pickle_compat import __pickle_compat
+from .extra import __pickle_compat
