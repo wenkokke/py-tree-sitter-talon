@@ -18,7 +18,7 @@ class TalonLanguage(tree_sitter.Language):
 
 class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
 
-    __version__: str = "3.0.4"
+    __version__: str = "3.0.5"
 
     _library_path: typing.Optional[str] = None
 
