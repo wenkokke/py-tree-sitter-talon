@@ -1,6 +1,5 @@
 import re
-from functools import singledispatch
-from typing import Optional, Sequence, Union
+import typing
 
 from .dynamic import (
     TalonCapture,
@@ -18,7 +17,7 @@ from .dynamic import (
     TalonWord,
 )
 
-TalonRuleTop = Union[
+TalonRuleTop = typing.Union[
     TalonCapture,
     TalonChoice,
     TalonEndAnchor,
@@ -41,7 +40,7 @@ def compile(
 
 
 def _get_only_child(
-    children: Sequence[Union[TalonRuleTop, TalonComment]]
+    children: typing.Sequence[typing.Union[TalonRuleTop, TalonComment]]
 ) -> TalonRuleTop:
     for i, child in enumerate(children):
         if not isinstance(child, TalonComment):
