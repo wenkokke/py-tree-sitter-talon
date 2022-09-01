@@ -1,6 +1,6 @@
 import re
 from functools import singledispatch
-from typing import Union
+from typing import Optional, Sequence, Union
 
 from .dynamic import (
     TalonCapture,
@@ -35,119 +35,78 @@ TalonRuleTop = Union[
 
 
 def compile(
-    rule: TalonRuleTop, *, captures: dict[str, str] = {}, lists: dict[str, str]
+    rule: TalonRuleTop, *, captures: dict[str, str] = {}, lists: dict[str, str] = {}
 ) -> re.Pattern[str]:
-    return re.compile(compile_str(rule, captures=captures, lists=lists))
+    return re.compile(_compile_str(rule, captures=captures, lists=lists))
 
 
-@singledispatch
-def compile_str(
-    rule: TalonRuleTop, *, captures: dict[str, str] = {}, lists: dict[str, str]
+def _get_only_child(
+    children: Sequence[Union[TalonRuleTop, TalonComment]]
+) -> TalonRuleTop:
+    for i, child in enumerate(children):
+        if not isinstance(child, TalonComment):
+            assert all(isinstance(child, TalonComment) for child in children[i + 1 :])
+            return child
+    raise ValueError(children)
+
+
+def _compile_str(
+    rule: TalonRuleTop, *, captures: dict[str, str], lists: dict[str, str]
 ) -> str:
-    raise TypeError(type(rule))
-
-
-@compile_str.register
-def _(
-    rule: TalonCapture, *, captures: dict[str, str] = {}, lists: dict[str, str]
-) -> str:
-    capture_name = rule.capture_name.text.strip()
-    capture_text = re.escape(rf"<{capture_name}>")
-    return captures.get(capture_name, capture_text)
-
-
-@compile_str.register
-def _(
-    rule: TalonChoice, *, captures: dict[str, str] = {}, lists: dict[str, str]
-) -> str:
-    rule_compile_str = r"|".join(
-        [
-            compile_str(child, captures=captures, lists=lists)
-            for child in rule.children
-            if not isinstance(child, TalonComment)
-        ]
-    )
-    return rf"({rule_compile_str})"
-
-
-@compile_str.register
-def _(
-    rule: TalonEndAnchor, *, captures: dict[str, str] = {}, lists: dict[str, str]
-) -> str:
-    return r"$"
-
-
-@compile_str.register
-def _(rule: TalonList, *, captures: dict[str, str] = {}, lists: dict[str, str]) -> str:
-    list_name = rule.list_name.text.strip()
-    list_text = re.escape(rf"<{list_name}>")
-    return lists.get(list_name, list_text)
-
-
-@compile_str.register
-def _(
-    rule: TalonOptional, *, captures: dict[str, str] = {}, lists: dict[str, str]
-) -> str:
-    rule_compile_str = compile_str(rule, captures=captures, lists=lists)
-    return rf"({rule_compile_str})?"
-
-
-@compile_str.register
-def _(
-    rule: TalonParenthesizedRule,
-    *,
-    captures: dict[str, str] = {},
-    lists: dict[str, str],
-) -> str:
-    rule_compile_str = compile_str(rule, captures=captures, lists=lists)
-    return rf"({rule_compile_str})"
-
-
-@compile_str.register
-def _(
-    rule: TalonRepeat, *, captures: dict[str, str] = {}, lists: dict[str, str]
-) -> str:
-    rule_compile_str = compile_str(rule, captures=captures, lists=lists)
-    return rf"({rule_compile_str})*"
-
-
-@compile_str.register
-def _(
-    rule: TalonRepeat1, *, captures: dict[str, str] = {}, lists: dict[str, str]
-) -> str:
-    rule_compile_str = compile_str(rule, captures=captures, lists=lists)
-    return rf"({rule_compile_str})+"
-
-
-@compile_str.register
-def _(rule: TalonRule, *, captures: dict[str, str] = {}, lists: dict[str, str]) -> str:
-    return r"\s+".join(
-        [
-            compile_str(child, captures=captures, lists=lists)
-            for child in rule.children
-            if not isinstance(child, TalonComment)
-        ]
-    )
-
-
-@compile_str.register
-def _(rule: TalonSeq, *, captures: dict[str, str] = {}, lists: dict[str, str]) -> str:
-    return r"\s+".join(
-        [
-            compile_str(child, captures=captures, lists=lists)
-            for child in rule.children
-            if not isinstance(child, TalonComment)
-        ]
-    )
-
-
-@compile_str.register
-def _(
-    rule: TalonStartAnchor, *, captures: dict[str, str] = {}, lists: dict[str, str]
-) -> str:
-    return r"^"
-
-
-@compile_str.register
-def _(rule: TalonWord, *, captures: dict[str, str] = {}, lists: dict[str, str]) -> str:
-    return re.escape(rule.text.strip())
+    if isinstance(rule, TalonCapture):
+        capture_name = rule.capture_name.text.strip()
+        capture_text = re.escape(rf"<{capture_name}>")
+        return captures.get(capture_name, capture_text)
+    elif isinstance(rule, TalonChoice):
+        rule_compile_str = r"|".join(
+            [
+                _compile_str(child, captures=captures, lists=lists)
+                for child in rule.children
+                if not isinstance(child, TalonComment)
+            ]
+        )
+        return rf"({rule_compile_str})"
+    elif isinstance(rule, TalonEndAnchor):
+        return r"$"
+    elif isinstance(rule, TalonList):
+        list_name = rule.list_name.text.strip()
+        list_text = re.escape(rf"<{list_name}>")
+        return lists.get(list_name, list_text)
+    elif isinstance(rule, TalonOptional):
+        child = _get_only_child(rule.children)
+        rule_compile_str = _compile_str(child, captures=captures, lists=lists)
+        return rf"({rule_compile_str})?"
+    elif isinstance(rule, TalonParenthesizedRule):
+        child = _get_only_child(rule.children)
+        rule_compile_str = _compile_str(child, captures=captures, lists=lists)
+        return rf"({rule_compile_str})"
+    elif isinstance(rule, TalonRepeat):
+        child = _get_only_child(rule.children)
+        rule_compile_str = _compile_str(child, captures=captures, lists=lists)
+        return rf"({rule_compile_str})*"
+    elif isinstance(rule, TalonRepeat1):
+        child = _get_only_child(rule.children)
+        rule_compile_str = _compile_str(child, captures=captures, lists=lists)
+        return rf"({rule_compile_str})+"
+    elif isinstance(rule, TalonRule):
+        return r"\s+".join(
+            [
+                _compile_str(child, captures=captures, lists=lists)
+                for child in rule.children
+                if not isinstance(child, TalonComment)
+            ]
+        )
+    elif isinstance(rule, TalonSeq):
+        return r"\s+".join(
+            [
+                _compile_str(child, captures=captures, lists=lists)
+                for child in rule.children
+                if not isinstance(child, TalonComment)
+            ]
+        )
+    elif isinstance(rule, TalonStartAnchor):
+        return r"^"
+    elif isinstance(rule, TalonWord):
+        return re.escape(rule.text.strip())
+    else:
+        raise TypeError(type(rule))
