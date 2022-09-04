@@ -1,4 +1,3 @@
-import collections.abc
 import dataclasses
 import pathlib
 import re
@@ -12,10 +11,6 @@ from tree_sitter_type_provider import NodeTypeError as NodeTypeError
 from tree_sitter_type_provider import NodeTypeName as NodeTypeName
 from tree_sitter_type_provider import ParseError as ParseError
 from tree_sitter_type_provider import Point as Point
-
-from .types import AnyTalonRule as AnyTalonRule
-from .types import TalonCaptureLookup as TalonCaptureLookup
-from .types import TalonListLookup as TalonListLookup
 
 __version__: str
 
@@ -114,8 +109,30 @@ class TalonCapture(Branch):
     def to_pattern(
         self,
         *,
-        captures: typing.Optional[TalonCaptureLookup] = None,
-        lists: typing.Optional[TalonListLookup] = None,
+        captures: typing.Optional[
+            typing.Callable[
+                [str],
+                typing.Optional[
+                    typing.Union[
+                        TalonCapture,
+                        TalonChoice,
+                        TalonEndAnchor,
+                        TalonList,
+                        TalonOptional,
+                        TalonParenthesizedRule,
+                        TalonRepeat,
+                        TalonRepeat1,
+                        TalonRule,
+                        TalonSeq,
+                        TalonStartAnchor,
+                        TalonWord,
+                    ]
+                ],
+            ]
+        ] = None,
+        lists: typing.Optional[
+            typing.Callable[[str], typing.Optional[list[str]]]
+        ] = None,
     ) -> re.Pattern[str]: ...
 
 @dataclasses.dataclass
@@ -138,16 +155,60 @@ class TalonChoice(Branch):
     def to_pattern(
         self,
         *,
-        captures: typing.Optional[TalonCaptureLookup] = None,
-        lists: typing.Optional[TalonListLookup] = None,
+        captures: typing.Optional[
+            typing.Callable[
+                [str],
+                typing.Optional[
+                    typing.Union[
+                        TalonCapture,
+                        TalonChoice,
+                        TalonEndAnchor,
+                        TalonList,
+                        TalonOptional,
+                        TalonParenthesizedRule,
+                        TalonRepeat,
+                        TalonRepeat1,
+                        TalonRule,
+                        TalonSeq,
+                        TalonStartAnchor,
+                        TalonWord,
+                    ]
+                ],
+            ]
+        ] = None,
+        lists: typing.Optional[
+            typing.Callable[[str], typing.Optional[list[str]]]
+        ] = None,
     ) -> re.Pattern[str]: ...
 
 class TalonEndAnchor(Leaf):
     def to_pattern(
         self,
         *,
-        captures: typing.Optional[TalonCaptureLookup] = None,
-        lists: typing.Optional[TalonListLookup] = None,
+        captures: typing.Optional[
+            typing.Callable[
+                [str],
+                typing.Optional[
+                    typing.Union[
+                        TalonCapture,
+                        TalonChoice,
+                        TalonEndAnchor,
+                        TalonList,
+                        TalonOptional,
+                        TalonParenthesizedRule,
+                        TalonRepeat,
+                        TalonRepeat1,
+                        TalonRule,
+                        TalonSeq,
+                        TalonStartAnchor,
+                        TalonWord,
+                    ]
+                ],
+            ]
+        ] = None,
+        lists: typing.Optional[
+            typing.Callable[[str], typing.Optional[list[str]]]
+        ] = None,
     ) -> re.Pattern[str]: ...
 
 @dataclasses.dataclass
@@ -157,8 +218,30 @@ class TalonList(Branch):
     def to_pattern(
         self,
         *,
-        captures: typing.Optional[TalonCaptureLookup] = None,
-        lists: typing.Optional[TalonListLookup] = None,
+        captures: typing.Optional[
+            typing.Callable[
+                [str],
+                typing.Optional[
+                    typing.Union[
+                        TalonCapture,
+                        TalonChoice,
+                        TalonEndAnchor,
+                        TalonList,
+                        TalonOptional,
+                        TalonParenthesizedRule,
+                        TalonRepeat,
+                        TalonRepeat1,
+                        TalonRule,
+                        TalonSeq,
+                        TalonStartAnchor,
+                        TalonWord,
+                    ]
+                ],
+            ]
+        ] = None,
+        lists: typing.Optional[
+            typing.Callable[[str], typing.Optional[list[str]]]
+        ] = None,
     ) -> re.Pattern[str]: ...
 
 @dataclasses.dataclass
@@ -182,8 +265,30 @@ class TalonOptional(Branch):
     def to_pattern(
         self,
         *,
-        captures: typing.Optional[TalonCaptureLookup] = None,
-        lists: typing.Optional[TalonListLookup] = None,
+        captures: typing.Optional[
+            typing.Callable[
+                [str],
+                typing.Optional[
+                    typing.Union[
+                        TalonCapture,
+                        TalonChoice,
+                        TalonEndAnchor,
+                        TalonList,
+                        TalonOptional,
+                        TalonParenthesizedRule,
+                        TalonRepeat,
+                        TalonRepeat1,
+                        TalonRule,
+                        TalonSeq,
+                        TalonStartAnchor,
+                        TalonWord,
+                    ]
+                ],
+            ]
+        ] = None,
+        lists: typing.Optional[
+            typing.Callable[[str], typing.Optional[list[str]]]
+        ] = None,
     ) -> re.Pattern[str]: ...
 
 @dataclasses.dataclass
@@ -207,8 +312,30 @@ class TalonParenthesizedRule(Branch):
     def to_pattern(
         self,
         *,
-        captures: typing.Optional[TalonCaptureLookup] = None,
-        lists: typing.Optional[TalonListLookup] = None,
+        captures: typing.Optional[
+            typing.Callable[
+                [str],
+                typing.Optional[
+                    typing.Union[
+                        TalonCapture,
+                        TalonChoice,
+                        TalonEndAnchor,
+                        TalonList,
+                        TalonOptional,
+                        TalonParenthesizedRule,
+                        TalonRepeat,
+                        TalonRepeat1,
+                        TalonRule,
+                        TalonSeq,
+                        TalonStartAnchor,
+                        TalonWord,
+                    ]
+                ],
+            ]
+        ] = None,
+        lists: typing.Optional[
+            typing.Callable[[str], typing.Optional[list[str]]]
+        ] = None,
     ) -> re.Pattern[str]: ...
 
 @dataclasses.dataclass
@@ -228,8 +355,30 @@ class TalonRepeat(Branch):
     def to_pattern(
         self,
         *,
-        captures: typing.Optional[TalonCaptureLookup] = None,
-        lists: typing.Optional[TalonListLookup] = None,
+        captures: typing.Optional[
+            typing.Callable[
+                [str],
+                typing.Optional[
+                    typing.Union[
+                        TalonCapture,
+                        TalonChoice,
+                        TalonEndAnchor,
+                        TalonList,
+                        TalonOptional,
+                        TalonParenthesizedRule,
+                        TalonRepeat,
+                        TalonRepeat1,
+                        TalonRule,
+                        TalonSeq,
+                        TalonStartAnchor,
+                        TalonWord,
+                    ]
+                ],
+            ]
+        ] = None,
+        lists: typing.Optional[
+            typing.Callable[[str], typing.Optional[list[str]]]
+        ] = None,
     ) -> re.Pattern[str]: ...
 
 @dataclasses.dataclass
@@ -249,8 +398,30 @@ class TalonRepeat1(Branch):
     def to_pattern(
         self,
         *,
-        captures: typing.Optional[TalonCaptureLookup] = None,
-        lists: typing.Optional[TalonListLookup] = None,
+        captures: typing.Optional[
+            typing.Callable[
+                [str],
+                typing.Optional[
+                    typing.Union[
+                        TalonCapture,
+                        TalonChoice,
+                        TalonEndAnchor,
+                        TalonList,
+                        TalonOptional,
+                        TalonParenthesizedRule,
+                        TalonRepeat,
+                        TalonRepeat1,
+                        TalonRule,
+                        TalonSeq,
+                        TalonStartAnchor,
+                        TalonWord,
+                    ]
+                ],
+            ]
+        ] = None,
+        lists: typing.Optional[
+            typing.Callable[[str], typing.Optional[list[str]]]
+        ] = None,
     ) -> re.Pattern[str]: ...
 
 @dataclasses.dataclass
@@ -274,8 +445,30 @@ class TalonRule(Branch):
     def to_pattern(
         self,
         *,
-        captures: typing.Optional[TalonCaptureLookup] = None,
-        lists: typing.Optional[TalonListLookup] = None,
+        captures: typing.Optional[
+            typing.Callable[
+                [str],
+                typing.Optional[
+                    typing.Union[
+                        TalonCapture,
+                        TalonChoice,
+                        TalonEndAnchor,
+                        TalonList,
+                        TalonOptional,
+                        TalonParenthesizedRule,
+                        TalonRepeat,
+                        TalonRepeat1,
+                        TalonRule,
+                        TalonSeq,
+                        TalonStartAnchor,
+                        TalonWord,
+                    ]
+                ],
+            ]
+        ] = None,
+        lists: typing.Optional[
+            typing.Callable[[str], typing.Optional[list[str]]]
+        ] = None,
     ) -> re.Pattern[str]: ...
 
 @dataclasses.dataclass
@@ -295,24 +488,90 @@ class TalonSeq(Branch):
     def to_pattern(
         self,
         *,
-        captures: typing.Optional[TalonCaptureLookup] = None,
-        lists: typing.Optional[TalonListLookup] = None,
+        captures: typing.Optional[
+            typing.Callable[
+                [str],
+                typing.Optional[
+                    typing.Union[
+                        TalonCapture,
+                        TalonChoice,
+                        TalonEndAnchor,
+                        TalonList,
+                        TalonOptional,
+                        TalonParenthesizedRule,
+                        TalonRepeat,
+                        TalonRepeat1,
+                        TalonRule,
+                        TalonSeq,
+                        TalonStartAnchor,
+                        TalonWord,
+                    ]
+                ],
+            ]
+        ] = None,
+        lists: typing.Optional[
+            typing.Callable[[str], typing.Optional[list[str]]]
+        ] = None,
     ) -> re.Pattern[str]: ...
 
 class TalonStartAnchor(Leaf):
     def to_pattern(
         self,
         *,
-        captures: typing.Optional[TalonCaptureLookup] = None,
-        lists: typing.Optional[TalonListLookup] = None,
+        captures: typing.Optional[
+            typing.Callable[
+                [str],
+                typing.Optional[
+                    typing.Union[
+                        TalonCapture,
+                        TalonChoice,
+                        TalonEndAnchor,
+                        TalonList,
+                        TalonOptional,
+                        TalonParenthesizedRule,
+                        TalonRepeat,
+                        TalonRepeat1,
+                        TalonRule,
+                        TalonSeq,
+                        TalonStartAnchor,
+                        TalonWord,
+                    ]
+                ],
+            ]
+        ] = None,
+        lists: typing.Optional[
+            typing.Callable[[str], typing.Optional[list[str]]]
+        ] = None,
     ) -> re.Pattern[str]: ...
 
 class TalonWord(Leaf):
     def to_pattern(
         self,
         *,
-        captures: typing.Optional[TalonCaptureLookup] = None,
-        lists: typing.Optional[TalonListLookup] = None,
+        captures: typing.Optional[
+            typing.Callable[
+                [str],
+                typing.Optional[
+                    typing.Union[
+                        TalonCapture,
+                        TalonChoice,
+                        TalonEndAnchor,
+                        TalonList,
+                        TalonOptional,
+                        TalonParenthesizedRule,
+                        TalonRepeat,
+                        TalonRepeat1,
+                        TalonRule,
+                        TalonSeq,
+                        TalonStartAnchor,
+                        TalonWord,
+                    ]
+                ],
+            ]
+        ] = None,
+        lists: typing.Optional[
+            typing.Callable[[str], typing.Optional[list[str]]]
+        ] = None,
     ) -> re.Pattern[str]: ...
 
 # Statements.

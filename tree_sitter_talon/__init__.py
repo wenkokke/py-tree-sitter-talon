@@ -57,6 +57,3 @@ from .extra import language as language
 from .extra import parse as parse
 from .extra import parse_file as parse_file
 from .extra import parser as parser
-from .types import AnyTalonRule as AnyTalonRule
-from .types import TalonCaptureLookup as TalonCaptureLookup
-from .types import TalonListLookup as TalonListLookup

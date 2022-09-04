@@ -62,9 +62,6 @@ from .dynamic import language as language
 from .dynamic import parse as parse
 from .dynamic import parse_file as parse_file
 from .dynamic import parser as parser
-from .types import AnyTalonRule as AnyTalonRule
-from .types import TalonCaptureLookup as TalonCaptureLookup
-from .types import TalonListLookup as TalonListLookup
 
 ################################################################################
 # Compile TalonRule to re.Pattern
@@ -74,8 +71,28 @@ from .types import TalonListLookup as TalonListLookup
 def _to_pattern(
     self,
     *,
-    captures: typing.Optional[TalonCaptureLookup] = None,
-    lists: typing.Optional[TalonListLookup] = None,
+    captures: typing.Optional[
+        typing.Callable[
+            [str],
+            typing.Optional[
+                typing.Union[
+                    TalonCapture,
+                    TalonChoice,
+                    TalonEndAnchor,
+                    TalonList,
+                    TalonOptional,
+                    TalonParenthesizedRule,
+                    TalonRepeat,
+                    TalonRepeat1,
+                    TalonRule,
+                    TalonSeq,
+                    TalonStartAnchor,
+                    TalonWord,
+                ]
+            ],
+        ]
+    ] = None,
+    lists: typing.Optional[typing.Callable[[str], typing.Optional[list[str]]]] = None,
 ) -> re.Pattern[str]:
     captures = captures or (lambda capture_name: None)
     lists = lists or (lambda list_name: None)
@@ -83,8 +100,39 @@ def _to_pattern(
 
 
 def _get_only_child(
-    children: typing.Sequence[typing.Union[AnyTalonRule, TalonComment]]
-) -> AnyTalonRule:
+    children: typing.Sequence[
+        typing.Union[
+            typing.Union[
+                TalonCapture,
+                TalonChoice,
+                TalonEndAnchor,
+                TalonList,
+                TalonOptional,
+                TalonParenthesizedRule,
+                TalonRepeat,
+                TalonRepeat1,
+                TalonRule,
+                TalonSeq,
+                TalonStartAnchor,
+                TalonWord,
+            ],
+            TalonComment,
+        ]
+    ]
+) -> typing.Union[
+    TalonCapture,
+    TalonChoice,
+    TalonEndAnchor,
+    TalonList,
+    TalonOptional,
+    TalonParenthesizedRule,
+    TalonRepeat,
+    TalonRepeat1,
+    TalonRule,
+    TalonSeq,
+    TalonStartAnchor,
+    TalonWord,
+]:
     for i, child in enumerate(children):
         if not isinstance(child, TalonComment):
             assert all(isinstance(child, TalonComment) for child in children[i + 1 :])
@@ -93,7 +141,41 @@ def _get_only_child(
 
 
 def _to_pattern_str(
-    rule: AnyTalonRule, *, captures: TalonCaptureLookup, lists: TalonListLookup
+    rule: typing.Union[
+        TalonCapture,
+        TalonChoice,
+        TalonEndAnchor,
+        TalonList,
+        TalonOptional,
+        TalonParenthesizedRule,
+        TalonRepeat,
+        TalonRepeat1,
+        TalonRule,
+        TalonSeq,
+        TalonStartAnchor,
+        TalonWord,
+    ],
+    *,
+    captures: typing.Callable[
+        [str],
+        typing.Optional[
+            typing.Union[
+                TalonCapture,
+                TalonChoice,
+                TalonEndAnchor,
+                TalonList,
+                TalonOptional,
+                TalonParenthesizedRule,
+                TalonRepeat,
+                TalonRepeat1,
+                TalonRule,
+                TalonSeq,
+                TalonStartAnchor,
+                TalonWord,
+            ]
+        ],
+    ],
+    lists: typing.Callable[[str], typing.Optional[list[str]]],
 ) -> str:
     if isinstance(rule, TalonCapture):
         capture_name = rule.capture_name.text.strip()
