@@ -1,5 +1,7 @@
+import collections.abc
 import dataclasses
 import pathlib
+import re
 import typing
 
 import tree_sitter  # type: ignore
@@ -10,6 +12,25 @@ from tree_sitter_type_provider import NodeTypeError as NodeTypeError
 from tree_sitter_type_provider import NodeTypeName as NodeTypeName
 from tree_sitter_type_provider import ParseError as ParseError
 from tree_sitter_type_provider import Point as Point
+
+AnyTalonRule = typing.Union[
+    TalonCapture,
+    TalonChoice,
+    TalonEndAnchor,
+    TalonList,
+    TalonOptional,
+    TalonParenthesizedRule,
+    TalonRepeat,
+    TalonRepeat1,
+    TalonRule,
+    TalonSeq,
+    TalonStartAnchor,
+    TalonWord,
+]
+
+TalonCaptureLookup = collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
+
+TalonListLookup = collections.abc.Callable[[str], typing.Optional[list[str]]]
 
 __version__: str
 
@@ -105,6 +126,12 @@ class TalonTagImportDeclaration(Branch, TalonDeclaration):
 class TalonCapture(Branch):
     children: typing.Sequence[TalonComment]
     capture_name: TalonIdentifier
+    def to_pattern(
+        self,
+        *,
+        captures: typing.Optional[TalonCaptureLookup] = None,
+        lists: typing.Optional[TalonListLookup] = None,
+    ) -> re.Pattern[str]: ...
 
 @dataclasses.dataclass
 class TalonChoice(Branch):
@@ -123,14 +150,31 @@ class TalonChoice(Branch):
             TalonComment,
         ]
     ]
+    def to_pattern(
+        self,
+        *,
+        captures: typing.Optional[TalonCaptureLookup] = None,
+        lists: typing.Optional[TalonListLookup] = None,
+    ) -> re.Pattern[str]: ...
 
 class TalonEndAnchor(Leaf):
-    pass
+    def to_pattern(
+        self,
+        *,
+        captures: typing.Optional[TalonCaptureLookup] = None,
+        lists: typing.Optional[TalonListLookup] = None,
+    ) -> re.Pattern[str]: ...
 
 @dataclasses.dataclass
 class TalonList(Branch):
     children: typing.Sequence[TalonComment]
     list_name: TalonIdentifier
+    def to_pattern(
+        self,
+        *,
+        captures: typing.Optional[TalonCaptureLookup] = None,
+        lists: typing.Optional[TalonListLookup] = None,
+    ) -> re.Pattern[str]: ...
 
 @dataclasses.dataclass
 class TalonOptional(Branch):
@@ -150,6 +194,12 @@ class TalonOptional(Branch):
             TalonComment,
         ]
     ]
+    def to_pattern(
+        self,
+        *,
+        captures: typing.Optional[TalonCaptureLookup] = None,
+        lists: typing.Optional[TalonListLookup] = None,
+    ) -> re.Pattern[str]: ...
 
 @dataclasses.dataclass
 class TalonParenthesizedRule(Branch):
@@ -169,6 +219,12 @@ class TalonParenthesizedRule(Branch):
             TalonComment,
         ]
     ]
+    def to_pattern(
+        self,
+        *,
+        captures: typing.Optional[TalonCaptureLookup] = None,
+        lists: typing.Optional[TalonListLookup] = None,
+    ) -> re.Pattern[str]: ...
 
 @dataclasses.dataclass
 class TalonRepeat(Branch):
@@ -184,6 +240,12 @@ class TalonRepeat(Branch):
             TalonComment,
         ]
     ]
+    def to_pattern(
+        self,
+        *,
+        captures: typing.Optional[TalonCaptureLookup] = None,
+        lists: typing.Optional[TalonListLookup] = None,
+    ) -> re.Pattern[str]: ...
 
 @dataclasses.dataclass
 class TalonRepeat1(Branch):
@@ -199,6 +261,12 @@ class TalonRepeat1(Branch):
             TalonComment,
         ]
     ]
+    def to_pattern(
+        self,
+        *,
+        captures: typing.Optional[TalonCaptureLookup] = None,
+        lists: typing.Optional[TalonListLookup] = None,
+    ) -> re.Pattern[str]: ...
 
 @dataclasses.dataclass
 class TalonRule(Branch):
@@ -218,6 +286,12 @@ class TalonRule(Branch):
             TalonComment,
         ]
     ]
+    def to_pattern(
+        self,
+        *,
+        captures: typing.Optional[TalonCaptureLookup] = None,
+        lists: typing.Optional[TalonListLookup] = None,
+    ) -> re.Pattern[str]: ...
 
 @dataclasses.dataclass
 class TalonSeq(Branch):
@@ -233,12 +307,28 @@ class TalonSeq(Branch):
             TalonComment,
         ]
     ]
+    def to_pattern(
+        self,
+        *,
+        captures: typing.Optional[TalonCaptureLookup] = None,
+        lists: typing.Optional[TalonListLookup] = None,
+    ) -> re.Pattern[str]: ...
 
 class TalonStartAnchor(Leaf):
-    pass
+    def to_pattern(
+        self,
+        *,
+        captures: typing.Optional[TalonCaptureLookup] = None,
+        lists: typing.Optional[TalonListLookup] = None,
+    ) -> re.Pattern[str]: ...
 
 class TalonWord(Leaf):
-    pass
+    def to_pattern(
+        self,
+        *,
+        captures: typing.Optional[TalonCaptureLookup] = None,
+        lists: typing.Optional[TalonListLookup] = None,
+    ) -> re.Pattern[str]: ...
 
 # Statements.
 
