@@ -62,29 +62,13 @@ from .dynamic import language as language
 from .dynamic import parse as parse
 from .dynamic import parse_file as parse_file
 from .dynamic import parser as parser
+from .types import AnyTalonRule as AnyTalonRule
+from .types import TalonCaptureLookup as TalonCaptureLookup
+from .types import TalonListLookup as TalonListLookup
 
 ################################################################################
 # Compile TalonRule to re.Pattern
 ################################################################################
-
-AnyTalonRule = typing.Union[
-    TalonCapture,
-    TalonChoice,
-    TalonEndAnchor,
-    TalonList,
-    TalonOptional,
-    TalonParenthesizedRule,
-    TalonRepeat,
-    TalonRepeat1,
-    TalonRule,
-    TalonSeq,
-    TalonStartAnchor,
-    TalonWord,
-]
-
-TalonCaptureLookup = collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
-
-TalonListLookup = collections.abc.Callable[[str], typing.Optional[list[str]]]
 
 
 def _to_pattern(

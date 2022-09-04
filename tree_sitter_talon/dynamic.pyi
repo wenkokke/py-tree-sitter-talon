@@ -13,24 +13,9 @@ from tree_sitter_type_provider import NodeTypeName as NodeTypeName
 from tree_sitter_type_provider import ParseError as ParseError
 from tree_sitter_type_provider import Point as Point
 
-AnyTalonRule = typing.Union[
-    TalonCapture,
-    TalonChoice,
-    TalonEndAnchor,
-    TalonList,
-    TalonOptional,
-    TalonParenthesizedRule,
-    TalonRepeat,
-    TalonRepeat1,
-    TalonRule,
-    TalonSeq,
-    TalonStartAnchor,
-    TalonWord,
-]
-
-TalonCaptureLookup = collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
-
-TalonListLookup = collections.abc.Callable[[str], typing.Optional[list[str]]]
+from .types import AnyTalonRule as AnyTalonRule
+from .types import TalonCaptureLookup as TalonCaptureLookup
+from .types import TalonListLookup as TalonListLookup
 
 __version__: str
 

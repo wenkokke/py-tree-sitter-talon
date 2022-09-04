@@ -1,4 +1,3 @@
-from .extra import AnyTalonRule as AnyTalonRule
 from .extra import Branch as Branch
 from .extra import Leaf as Leaf
 from .extra import Node as Node
@@ -12,7 +11,6 @@ from .extra import TalonAssignmentStatement as TalonAssignmentStatement
 from .extra import TalonBinaryOperator as TalonBinaryOperator
 from .extra import TalonBlock as TalonBlock
 from .extra import TalonCapture as TalonCapture
-from .extra import TalonCaptureLookup as TalonCaptureLookup
 from .extra import TalonChoice as TalonChoice
 from .extra import TalonCommandDeclaration as TalonCommandDeclaration
 from .extra import TalonComment as TalonComment
@@ -29,7 +27,6 @@ from .extra import TalonInterpolation as TalonInterpolation
 from .extra import TalonKeyAction as TalonKeyAction
 from .extra import TalonKeyBindingDeclaration as TalonKeyBindingDeclaration
 from .extra import TalonList as TalonList
-from .extra import TalonListLookup as TalonListLookup
 from .extra import TalonMatch as TalonMatch
 from .extra import TalonMatches as TalonMatches
 from .extra import TalonMatchModifier as TalonMatchModifier
@@ -60,3 +57,6 @@ from .extra import language as language
 from .extra import parse as parse
 from .extra import parse_file as parse_file
 from .extra import parser as parser
+from .types import AnyTalonRule as AnyTalonRule
+from .types import TalonCaptureLookup as TalonCaptureLookup
+from .types import TalonListLookup as TalonListLookup
