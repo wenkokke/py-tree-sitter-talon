@@ -101,7 +101,10 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
     ]:
         tree = self._parse(contents, encoding=encoding)
         return self.from_tree_sitter(
-            tree.root_node, filename=filename, raise_parse_error=raise_parse_error
+            tree.root_node,
+            encoding=encoding,
+            filename=filename,
+            raise_parse_error=raise_parse_error,
         )
 
     def parse_file(
@@ -117,7 +120,10 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
     ]:
         tree = self._parse_file(path, encoding=encoding)
         return self.from_tree_sitter(
-            tree.root_node, filename=str(path), raise_parse_error=raise_parse_error
+            tree.root_node,
+            encoding=encoding,
+            filename=str(path),
+            raise_parse_error=raise_parse_error,
         )
 
     def _parse(
