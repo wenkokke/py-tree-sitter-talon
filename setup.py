@@ -1,12 +1,13 @@
 import setuptools  # isort:skip
+from setuptools.command.develop import develop  # isort:skip
+from setuptools.command.install import install  # isort:skip
+from setuptools.command.sdist import sdist  # isort:skip
 import distutils.cmd
 import distutils.extension
 import os
 import pathlib
 import subprocess
 import sys
-
-import setuptools.command
 
 
 def _get_description() -> str:
@@ -37,22 +38,22 @@ def _git_submodule_update():
     return False
 
 
-class CustomDevelop(setuptools.command.develop):
+class CustomDevelop(develop):
     def run(self):
         _git_submodule_update()
-        setuptools.command.develop.run(self)
+        develop.run(self)
 
 
-class CustomInstall(setuptools.command.install):
+class CustomInstall(install):
     def run(self):
         _git_submodule_update()
-        setuptools.command.install.run(self)
+        install.run(self)
 
 
-class CustomSDist(setuptools.command.sdist):
+class CustomSDist(sdist):
     def run(self):
         _git_submodule_update()
-        setuptools.command.sdist.run(self)
+        sdist.run(self)
 
 
 setuptools.setup(
