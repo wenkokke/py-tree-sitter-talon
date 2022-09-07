@@ -38,17 +38,3 @@ release:
 
 
 .PHONY: minor major release
-
-# Publish to PyPi
-
-run/dist:
-	python -m build
-	twine check dist/*
-
-run/testpypi: run/dist
-	twine upload --skip-existing -r testpypi dist/*
-
-run/pypi: run/dist
-	twine upload --skip-existing -r pypi dist/*
-
-.PHONY: run/dist run/testpypi run/pypi
