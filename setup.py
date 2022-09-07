@@ -17,22 +17,6 @@ def _get_version() -> str:
     return pkg.__version__
 
 
-class ShowVersionCommand(distutils.cmd.Command):
-    """Show the package version."""
-
-    description = "show the package version"
-    user_options: list[tuple[str, ...]] = []
-
-    def initialize_options(self):
-        pass
-
-    def finalize_options(self):
-        pass
-
-    def run(self):
-        print(_get_version())
-
-
 setuptools.setup(
     name="tree_sitter_talon",
     version=_get_version(),
@@ -54,9 +38,6 @@ setuptools.setup(
     keywords=["talon", "parser"],
     platforms=["any"],
     python_requires=">=3.9",
-    cmdclass={
-        "version": ShowVersionCommand,
-    },
     setup_requires=[
         "pytest-runner",
     ],
@@ -72,14 +53,17 @@ setuptools.setup(
     extras_require={
         "dev": [
             "build >=0.8.0, <0.9",
-            "mypy >=0.971, <1",
             "twine >=4.0.1, <5",
         ],
-        "doc": [
+        "docs": [
             "Sphinx >=5.1.1, <6",
             "sphinx-bootstrap-theme >=0.8.1, <0.9",
         ],
-        "test": ["pytest >=7.1.2, <8", "pytest-golden >=0.2.2, <0.3"],
+        "test": [
+            "mypy >=0.971, <1",
+            "pytest >=7.1.2, <8",
+            "pytest-golden >=0.2.2, <0.3",
+        ],
     },
     ext_modules=[
         distutils.extension.Extension(

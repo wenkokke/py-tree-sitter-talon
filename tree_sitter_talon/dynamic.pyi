@@ -12,10 +12,6 @@ from tree_sitter_type_provider import NodeTypeName as NodeTypeName
 from tree_sitter_type_provider import ParseError as ParseError
 from tree_sitter_type_provider import Point as Point
 
-__version__: str
-
-__grammar_version__: str
-
 parser: tree_sitter.Parser
 
 language: tree_sitter.Language

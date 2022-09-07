@@ -2,7 +2,7 @@ import collections.abc
 import pathlib
 import typing
 
-import tree_sitter
+import tree_sitter  # type: ignore
 import tree_sitter_type_provider
 
 from .binding import _tree_sitter_talon_id

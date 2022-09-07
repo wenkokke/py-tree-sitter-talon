@@ -8,9 +8,21 @@ BUILDDIR      = _build
 html: Makefile
 	@$(SPHINXBUILD) -M "html" "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
+# Tests
+
+test: pytest stubtest
+
+pytest:
+	@python setup.py pytest
+
+stubtest:
+	@stubtest --mypy-config-file pyproject.toml tree_sitter_talon
+
+.PHONY: test pytest stubtest
+
 # Bump versions
 
-VERSION = $(shell python setup.py -q version)
+VERSION = $(shell python setup.py -V)
 
 minor:
 	@bumpver update --minor
