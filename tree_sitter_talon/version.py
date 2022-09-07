@@ -3,7 +3,7 @@ import pathlib
 
 import pkg_resources  # type: ignore
 
-__version_binding__: str = "v4.0"
+__version_binding__: str = "4.0"
 
 
 def _get_package_json() -> pathlib.Path:
@@ -31,11 +31,11 @@ def _get_version_grammar() -> str:
     return version_grammar
 
 
-__version_grammar__: str = f"v{_get_version_grammar()}"
+__version_grammar__: str = _get_version_grammar()
 
 
 def _get_version() -> str:
-    version_grammar_parts = _get_version_grammar().split(".")
+    version_grammar_parts = __version_grammar__.split(".")
     assert (
         2 <= len(version_grammar_parts) <= 3
     ), f"Version for tree-sitter-talon must contain at least a MAJOR and a MINOR component, found '{__version_grammar__}'."
@@ -47,4 +47,4 @@ def _get_version() -> str:
         return f"1!{major_grammar}.{minor_grammar}.{major_binding}.post{minor_binding}"
 
 
-__version__: str = f"v{_get_version()}"
+__version__: str = _get_version()
