@@ -32,12 +32,12 @@ major:
 	@bumpver update --no-fetch --major
 	@$(MAKE) tag
 
-tag:
+release:
 	@git tag "v$(VERSION)"
 	@git push origin "v$(VERSION)"
 
 
-.PHONY: minor major tag
+.PHONY: minor major release
 
 # Publish to PyPi
 
