@@ -106,9 +106,9 @@ setuptools.setup(
     },
     ext_modules=[
         distutils.extension.Extension(
-            name="tree_sitter_talon.binding",
+            name="tree_sitter_talon.internal.binding",
             sources=[
-                "tree_sitter_talon/binding.c",
+                "tree_sitter_talon/internal/binding.c",
                 "tree_sitter_talon/data/tree-sitter-talon/src/parser.c",
                 "tree_sitter_talon/data/tree-sitter-talon/src/scanner.cc",
             ],
@@ -120,9 +120,9 @@ setuptools.setup(
     package_data={
         "tree_sitter_talon": [
             "py.typed",
-            "binding.c",
-            "binding.pyi",
-            "dynamic.pyi",
+            "internal/binding.c",
+            "internal/binding.pyi",
+            "internal/dynamic.pyi",
             *_get_data_files(),
         ]
     },
