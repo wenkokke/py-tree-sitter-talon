@@ -26,7 +26,9 @@ def _get_package_json() -> pathlib.Path:
 
 def _get_version_grammar() -> str:
     package_json = _get_package_json()
-    return json.loads(package_json.read_text())["version"]
+    version_grammar = json.loads(package_json.read_text())["version"]
+    version_grammar = version_grammar.removeprefix("v")
+    return version_grammar
 
 
 __version_grammar__: str = f"v{_get_version_grammar()}"
