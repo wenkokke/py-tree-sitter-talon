@@ -3,7 +3,10 @@ import distutils.cmd
 import distutils.extension
 import os
 import pathlib
+import subprocess
 import sys
+
+import setuptools.command
 
 
 def _get_description() -> str:
@@ -24,6 +27,32 @@ def _get_data_files() -> list[str]:
         str(data_file.relative_to(pkg_path))
         for data_file in pkg_path.glob("data/tree-sitter-talon/**/*")
     ]
+
+
+def _git_submodule_update():
+    if (pathlib.Path(__file__).parent / ".git").exists():
+        subprocess.check_call(["git", "submodule", "update", "--init", "--recursive"])
+        return True
+
+    return False
+
+
+class CustomDevelop(setuptools.command.develop):
+    def run(self):
+        _git_submodule_update()
+        setuptools.command.develop.run(self)
+
+
+class CustomInstall(setuptools.command.install):
+    def run(self):
+        _git_submodule_update()
+        setuptools.command.install.run(self)
+
+
+class CustomSDist(setuptools.command.sdist):
+    def run(self):
+        _git_submodule_update()
+        setuptools.command.sdist.run(self)
 
 
 setuptools.setup(
@@ -95,5 +124,10 @@ setuptools.setup(
             "dynamic.pyi",
             *_get_data_files(),
         ]
+    },
+    cmdclass={
+        "develop": CustomDevelop,
+        "install": CustomInstall,
+        "sdist": CustomSDist,
     },
 )
