@@ -25,12 +25,12 @@ stubtest:
 VERSION = $(shell python setup.py -V)
 
 minor:
-	@bumpver update --minor
+	@bumpver update --no-fetch --minor
 	@git tag "$(VERSION)"
 	@git push origin "$(VERSION)"
 
 major:
-	@bumpver update --major
+	@bumpver update --no-fetch --major
 	@git tag "$(VERSION)"
 	@git push origin "$(VERSION)"
 

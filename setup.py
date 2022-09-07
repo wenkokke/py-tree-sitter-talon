@@ -2,6 +2,7 @@ import setuptools  # isort:skip
 import distutils.cmd
 import distutils.extension
 import os
+import pathlib
 import sys
 
 
@@ -15,6 +16,14 @@ def _get_version() -> str:
     import tree_sitter_talon.version as pkg
 
     return pkg.__version__
+
+
+def _get_data_files() -> list[str]:
+    pkg_path = pathlib.Path(__file__).parent / "tree_sitter_talon"
+    return [
+        str(data_file.relative_to(pkg_path))
+        for data_file in pkg_path.glob("data/tree-sitter-talon/**/*")
+    ]
 
 
 setuptools.setup(
@@ -84,18 +93,7 @@ setuptools.setup(
             "binding.c",
             "binding.pyi",
             "dynamic.pyi",
-            "data/tree-sitter-talon/binding.gyp",
-            "data/tree-sitter-talon/bindings/node/binding.cc",
-            "data/tree-sitter-talon/bindings/node/index.js",
-            "data/tree-sitter-talon/bindings/rust/build.rs",
-            "data/tree-sitter-talon/bindings/rust/lib.rs",
-            "data/tree-sitter-talon/grammar.js",
-            "data/tree-sitter-talon/package.json",
-            "data/tree-sitter-talon/src/grammar.json",
-            "data/tree-sitter-talon/src/node-types.json",
-            "data/tree-sitter-talon/src/parser.c",
-            "data/tree-sitter-talon/src/scanner.cc",
-            "data/tree-sitter-talon/src/tree_sitter/parser.h",
+            *_get_data_files(),
         ]
     },
 )
