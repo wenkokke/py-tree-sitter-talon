@@ -16,7 +16,7 @@ html: Makefile
 test: pytest stubtest
 
 pytest:
-	@pytest
+	@python setup.py pytest
 
 stubtest:
 	@PYTHONPATH=. stubtest --mypy-config-file pyproject.toml tree_sitter_talon
