@@ -10,16 +10,19 @@ html: Makefile
 
 # Bump versions
 
-patch:
-	bumpver update --patch
+VERSION = $(shell python setup.py -q version)
 
 minor:
-	bumpver update --minor
+	@bumpver update --minor
+	@git tag "$(VERSION)"
+	@git push origin "$(VERSION)"
 
 major:
-	bumpver update --major
+	@bumpver update --major
+	@git tag "$(VERSION)"
+	@git push origin "$(VERSION)"
 
-.PHONY: patch minor major
+.PHONY: minor major
 
 # Publish to PyPi
 

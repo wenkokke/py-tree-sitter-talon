@@ -1,4 +1,5 @@
 import setuptools  # isort:skip
+import distutils.cmd
 import distutils.extension
 import os
 import sys
@@ -14,6 +15,22 @@ def _get_version() -> str:
     import tree_sitter_talon.version as pkg
 
     return pkg.__version__
+
+
+class ShowVersionCommand(distutils.cmd.Command):
+    """Show the package version."""
+
+    description = "show the package version"
+    user_options: list[tuple[str, ...]] = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        print(_get_version())
 
 
 setuptools.setup(
@@ -37,6 +54,9 @@ setuptools.setup(
     keywords=["talon", "parser"],
     platforms=["any"],
     python_requires=">=3.9",
+    cmdclass={
+        "version": ShowVersionCommand,
+    },
     setup_requires=[
         "pytest-runner",
     ],

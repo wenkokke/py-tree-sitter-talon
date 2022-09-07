@@ -1,4 +1,3 @@
-import collections.abc
 import dataclasses
 import re
 import typing
@@ -55,13 +54,14 @@ from .dynamic import TalonStringEscapeSequence as TalonStringEscapeSequence
 from .dynamic import TalonTagImportDeclaration as TalonTagImportDeclaration
 from .dynamic import TalonVariable as TalonVariable
 from .dynamic import TalonWord as TalonWord
-from .dynamic import __grammar_version__ as __grammar_version__
-from .dynamic import __version__ as __version__
 from .dynamic import from_tree_sitter as from_tree_sitter
 from .dynamic import language as language
 from .dynamic import parse as parse
 from .dynamic import parse_file as parse_file
 from .dynamic import parser as parser
+from .version import __version__ as __version__
+from .version import __version_binding__ as __version_binding__
+from .version import __version_grammar__ as __version_grammar__
 
 ################################################################################
 # Compile TalonRule to re.Pattern
