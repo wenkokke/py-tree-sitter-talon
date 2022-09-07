@@ -26,15 +26,18 @@ VERSION = $(shell python setup.py -V)
 
 minor:
 	@bumpver update --no-fetch --minor
-	@git tag "$(VERSION)"
-	@git push origin "$(VERSION)"
+	@$(MAKE) tag
 
 major:
 	@bumpver update --no-fetch --major
+	@$(MAKE) tag
+
+tag:
 	@git tag "$(VERSION)"
 	@git push origin "$(VERSION)"
 
-.PHONY: minor major
+
+.PHONY: minor major tag
 
 # Publish to PyPi
 
