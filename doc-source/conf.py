@@ -13,18 +13,16 @@ import sys
 
 import sphinx_bootstrap_theme
 
-# -- Path setup --------------------------------------------------------------
-
-
 sys.path.insert(0, os.path.abspath(".."))
 
+import tree_sitter_talon.version as pkg
 
 # -- Project information -----------------------------------------------------
 
 project = "tree_sitter_talon"
 copyright = "2022, Wen Kokke"
 author = "Wen Kokke"
-release = "3.1.1"
+release = pkg.__version__
 
 # -- General configuration ---------------------------------------------------
 

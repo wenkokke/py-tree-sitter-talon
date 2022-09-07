@@ -1,14 +1,12 @@
 import collections.abc
-import json
-import os
 import pathlib
 import typing
 
-import pkg_resources  # type: ignore
-import tree_sitter  # type: ignore
+import tree_sitter
 import tree_sitter_type_provider
 
 from .binding import _tree_sitter_talon_id
+from .node_types import _get_node_types
 
 
 class TalonLanguage(tree_sitter.Language):
@@ -17,8 +15,6 @@ class TalonLanguage(tree_sitter.Language):
 
 
 class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
-
-    __version__: str = "3.1.1"
 
     _library_path: typing.Optional[str] = None
 
@@ -30,26 +26,9 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
     def _node_types(
         self,
     ) -> collections.abc.Sequence[tree_sitter_type_provider.NodeType]:
-        node_types_path = pathlib.Path(
-            pkg_resources.resource_filename(
-                "tree_sitter_talon",
-                os.path.join("data", "tree-sitter-talon", "src", "node-types.json"),
-            )
-        )
         return tree_sitter_type_provider.NodeType.schema().loads(  # type: ignore
-            node_types_path.read_text(), many=True
+            _get_node_types().read_text(), many=True
         )
-
-    @property
-    def __grammar_version__(self) -> str:
-        package_json_path = pathlib.Path(
-            pkg_resources.resource_filename(
-                "tree_sitter_talon",
-                os.path.join("data", "tree-sitter-talon", "package.json"),
-            )
-        )
-        package_json = json.loads(package_json_path.read_text())
-        return package_json["version"]
 
     @property
     def language(self) -> tree_sitter.Language:

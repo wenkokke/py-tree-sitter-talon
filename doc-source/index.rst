@@ -4,7 +4,7 @@
 
 -------------------------------------
 
-.. module:: tree_sitter_talon
+.. module:: tree_sitter_talon.ast
 
 =====================
 Tree-Sitter Instances

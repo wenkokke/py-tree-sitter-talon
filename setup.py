@@ -1,15 +1,26 @@
 import setuptools  # isort:skip
 import distutils.extension
 import os
+import sys
 
-with open(os.path.join(os.path.dirname(__file__), "README.md")) as f:
-    LONG_DESCRIPTION = f.read()
+
+def _get_description() -> str:
+    with open(os.path.join(os.path.dirname(__file__), "README.md")) as fh:
+        return fh.read()
+
+
+def _get_version() -> str:
+    sys.path.insert(0, os.path.abspath("."))
+    import tree_sitter_talon.version as pkg
+
+    return pkg.__version__
+
 
 setuptools.setup(
     name="tree_sitter_talon",
-    version="3.1.1",
+    version=_get_version(),
     description="Parser for Talon files in Python",
-    long_description=LONG_DESCRIPTION,
+    long_description=_get_description(),
     long_description_content_type="text/markdown",
     author="Wen Kokke",
     url="https://github.com/wenkokke/py-tree-sitter-talon",
