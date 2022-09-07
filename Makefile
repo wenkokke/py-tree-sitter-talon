@@ -16,10 +16,10 @@ html: Makefile
 test: pytest stubtest
 
 pytest:
-	@python setup.py pytest
+	@pytest
 
 stubtest:
-	@stubtest --mypy-config-file pyproject.toml tree_sitter_talon
+	@PYTHONPATH=. stubtest --mypy-config-file pyproject.toml tree_sitter_talon
 
 .PHONY: test pytest stubtest
 
