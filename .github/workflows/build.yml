@@ -35,11 +35,7 @@ jobs:
         uses: Gr1N/setup-poetry@v7
 
       - name: Build and Test
-        run: |
-          poetry install -E test
-          poetry run bumpver update --patch --dry
-          poetry run pytest tests/
-          poetry run stubtest --mypy-config-file pyproject.toml tree_sitter_talon
+        run: tox --skip-missing-interpreters true
 
   docs:
     name: Docs
