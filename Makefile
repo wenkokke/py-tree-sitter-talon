@@ -22,14 +22,14 @@ test:
 
 # Bump versions
 
-VERSION = $(shell poetry run tree-sitter-talon-version)
+VERSION = $(shell poetry run python ./version.py)
 
 minor:
-	@bumpver update
+	@poetry run bumpver update
 	@$(MAKE) release
 
 major:
-	@bumpver update
+	@poetry run bumpver update
 	@$(MAKE) release
 
 release:
