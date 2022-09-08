@@ -29,15 +29,12 @@ pytest = { version = "^7.1.2", optional = true }
 pytest-golden = { version = "^0.2.2", optional = true }
 Sphinx = { version = "^5.1.1", optional = true }
 sphinx-bootstrap-theme = { version = "^0.8.1", optional = true }
+# setuptools = "*"
 
 [tool.poetry.extras]
 dev = ["bumpver"]
 docs = ["Sphinx", "sphinx-bootstrap-theme"]
 test = ["bumpver", "mypy", "pytest", "pytest-golden"]
-
-[tool.poetry-dynamic-versioning]
-enable = true
-style = "pep440"
 
 [tool.cibuildwheel]
 manylinux-x86_64-image = "manylinux_2_24"
@@ -49,13 +46,11 @@ manylinux-pypy_x86_64-image = "manylinux_2_24"
 manylinux-pypy_i686-image = "manylinux_2_24"
 manylinux-pypy_aarch64-image = "manylinux_2_24"
 
-[pytest]
-testpaths = "tests"
-
 [tool.pytest.ini_options]
 enable_assertion_pass_hook = true
 filterwarnings = ["ignore::DeprecationWarning:.*:"]
 addopts = "--ignore=tests/data"
+testpaths = "tests"
 
 [tool.mypy]
 python_version = 3.9

@@ -1,26 +1,13 @@
 # Docs
 
-SPHINXOPTS    ?=
-SPHINXBUILD   ?= sphinx-build
-SOURCEDIR     = docs
-BUILDDIR      = docs/_build
+docs:
+	poetry install --extras "docs"
+	poetry run sphinx-build -M "html" "docs" "docs/_build"
 
-html: Makefile
-	@$(SPHINXBUILD) -M "html" "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
-
-.PHONY: html
+.PHONY: docs
 
 
-# Tests
-
-test:
-	@python setup.py pytest
-	@PYTHONPATH=. stubtest --mypy-config-file pyproject.toml tree_sitter_talon
-
-.PHONY: test
-
-
-# Bump versions
+# Versions
 
 VERSION = $(shell poetry run python ./version.py)
 

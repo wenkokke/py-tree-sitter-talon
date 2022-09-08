@@ -34,11 +34,9 @@ jobs:
       - name: Setup Poetry
         uses: Gr1N/setup-poetry@v7
 
-      - name: Build
-        run: poetry install --extras test
-
-      - name: Test
+      - name: Build and Test
         run: |
+          poetry install -E test
           poetry run bumpver update --patch --dry
           poetry run pytest tests/
           poetry run stubtest --mypy-config-file pyproject.toml tree_sitter_talon
