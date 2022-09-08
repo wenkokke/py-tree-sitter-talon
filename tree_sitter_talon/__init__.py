@@ -66,7 +66,7 @@ from .internal.dynamic import parser as parser
 # Compile TalonRule to re.Pattern
 ################################################################################
 
-__version__: str = "1!0.0.0.0"
+__version__: str = "1!1000.2.0.0"
 
 ################################################################################
 # Compile TalonRule to re.Pattern
