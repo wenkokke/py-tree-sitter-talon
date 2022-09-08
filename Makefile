@@ -14,8 +14,7 @@ html: Makefile
 # Tests
 
 test:
-	@python setup.py build_ext
-	@PYTHONPATH=. pytest
+	@python setup.py pytest
 	@PYTHONPATH=. stubtest --mypy-config-file pyproject.toml tree_sitter_talon
 
 .PHONY: test pytest stubtest
