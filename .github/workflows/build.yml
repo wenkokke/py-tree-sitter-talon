@@ -34,8 +34,11 @@ jobs:
       - name: Setup Poetry
         uses: Gr1N/setup-poetry@v7
 
-      - name: Build and Test
-        run: tox --skip-missing-interpreters true
+      - name: Build
+        run: poetry install --extras "dev test"
+
+      - name: Test
+        run: poetry run tox --skip-missing-interpreters true
 
   docs:
     name: Docs
