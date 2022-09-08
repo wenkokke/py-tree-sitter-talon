@@ -20,6 +20,10 @@ enable_assertion_pass_hook = true
 filterwarnings = ["ignore::DeprecationWarning:.*:"]
 addopts = "--ignore=test/data"
 
+[tool.mypy]
+python_version = 3.9
+ignore_missing_imports = true
+
 [tool.bumpver]
 current_version = "4.0"
 version_pattern = "MAJOR.MINOR"
@@ -40,9 +44,12 @@ isolated_build = True
 
 [testenv]
 wheel=true
-allowlist_externals = make
-commands = make test
+commands =
+  {envpython} setup.py build_ext
+  {envpython} -m pytest
+  {envpython} -m stubtest --mypy-config-file pyproject.toml tree_sitter_talon
 deps =
+  mypy >=0.971, <1
   pytest >=7.1.2, <8
   pytest-golden >=0.2.2, <0.3
 """
