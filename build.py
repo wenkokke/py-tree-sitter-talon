@@ -1,6 +1,7 @@
-from distutils.command.build_ext import build_ext
 from distutils.errors import CCompilerError, DistutilsExecError, DistutilsPlatformError
-from distutils.extension import Extension
+
+from setuptools import Extension  # isort: skip
+from setuptools.command.build_ext import build_ext  # isort: skip
 
 ext_modules = [
     Extension(

@@ -33,7 +33,7 @@ major:
 	@$(MAKE) release
 
 release:
-	@git tag "v$(VERSION)"
-	@git push origin "v$(VERSION)"
+	@git tag 'v$(VERSION)'
+	@git push origin 'v$(VERSION)'
 
 .PHONY: minor major release
