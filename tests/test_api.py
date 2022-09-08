@@ -7,14 +7,14 @@ from . import class_signatures, function_signatures
 def test_talon_api(golden):
     assert golden["input"] is None
 
-    import tree_sitter_talon.ast as ast
+    import tree_sitter_talon
 
-    globals().update(ast.__dict__)
+    globals().update(tree_sitter_talon.__dict__)
 
     output: list[str] = []
-    output.extend(function_signatures(ast.__class__))
-    output.extend(function_signatures(ast))
-    output.extend(class_signatures(ast.__class__))
-    output.extend(class_signatures(ast))
+    output.extend(function_signatures(tree_sitter_talon.__class__))
+    output.extend(function_signatures(tree_sitter_talon))
+    output.extend(class_signatures(tree_sitter_talon.__class__))
+    output.extend(class_signatures(tree_sitter_talon))
 
     assert "\n".join(output) == golden.out["output"]
