@@ -22,15 +22,15 @@ test:
 
 # Bump versions
 
-VERSION = $(shell python setup.py -V)
+VERSION = $(shell poetry run tree-sitter-talon-version)
 
 minor:
-	@bumpver update --no-fetch --minor
-	@$(MAKE) tag
+	@bumpver update
+	@$(MAKE) release
 
 major:
-	@bumpver update --no-fetch --major
-	@$(MAKE) tag
+	@bumpver update
+	@$(MAKE) release
 
 release:
 	@git tag "v$(VERSION)"
