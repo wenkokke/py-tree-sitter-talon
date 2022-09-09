@@ -32,7 +32,9 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Build & Test
-        run: tox --skip-missing-interpreters true
+        run: |
+          poetry install -E test
+          poetry run pytest tests/
 
   build-doc:
     name: Build Doc
