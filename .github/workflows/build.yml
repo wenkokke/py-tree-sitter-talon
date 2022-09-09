@@ -33,11 +33,11 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Build & Test
-        run: |
-          poetry build -vvv
-          poetry install -vvv -E test
-          poetry run pytest tests/
+      - name: Build
+        run: poetry build -vvv
+
+      - name: Test
+        run: tox --skip-missing-interpreters
 
       - name: Upload Wheel
         uses: actions/upload-artifact@v3
