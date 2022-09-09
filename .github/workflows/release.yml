@@ -13,25 +13,35 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: true
 
       - name: Setup Python
         uses: ./.github/actions/setup-python
         with:
           python-version: "3.9"
 
-      - name: Build Package
-        run: poetry build
+      - name: Build sdist
+        run: poetry build --format=sdist
+
+      - name: Download wheels
+        uses: actions/download-artifact@v3
+        with:
+          name: wheelhouse
+          path: dist
 
       - name: Publish to PyPi
-        uses: JRubics/poetry-publish@v1.13
-        with:
-          python_version: "3.9"
-          pypi_token: ${{ secrets.PYPI_API_TOKEN }}
+        run: |
+          twine check dist/**.tar.gz dist/**.whl
+          twine upload --skip-existing -r pypi dist/**.tar.gz dist/**.whl
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
 
       - name: Publish to GitHub Releases
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            dist/*.tar.gz
-            dist/*.whl
+            dist/**.tar.gz
+            dist/**.whl
           fail_on_unmatched_files: true
