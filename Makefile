@@ -1,4 +1,4 @@
-VERSION = $(shell poetry run python ./version.py)
+VERSION = $(shell poetry version -s)
 
 build:
 	poetry build
@@ -10,16 +10,12 @@ build-doc:
 test:
 	tox --skip-missing-interpreters true
 
-bump-minor:
+bump-version:
 	@poetry run bumpver update
 	@$(MAKE) release
 
-bump-major:
-	@poetry run bumpver update
-	@$(MAKE) release
-
-tag-release:
+release-version:
 	@git tag 'v$(VERSION)'
 	@git push origin 'v$(VERSION)'
 
-.PHONY: build build-doc test bump-minor bump-major tag-release
+.PHONY: build build-doc test bump-version release-version
