@@ -1,4 +1,4 @@
-name: Publish
+name: Build Doc
 
 on:
   workflow_call:
@@ -8,25 +8,23 @@ defaults:
     shell: bash
 
 jobs:
-  publish:
-    name: Publish
+  build-doc:
+    name: Build Doc
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
-      - uses: actions/setup-python@v4
+      - name: Setup Python
+        uses: ./.github/actions/setup-python
         with:
           python-version: "3.9"
 
-      - uses: Gr1N/setup-poetry@v7
-
-      - name: Build Sphinx Doc
+      - name: Build Doc
         run: |
-          poetry build
+          poetry install -E docs
           poetry run sphinx-build -M "html" "docs" "docs/_build"
 
-      - name: Publish Sphinx Doc
-        if: matrix.python-version == env.RECOMMENDED_PYTHON_VERSION && runner.os == env.RECOMMENDED_OS
+      - name: Deploy Doc
         uses: JamesIves/github-pages-deploy-action@v4.4.0
         with:
           branch: docs
