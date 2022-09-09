@@ -58,4 +58,5 @@ html_theme_options = {
     "navbar_title": "Tree-Sitter Talon",
     "navbar_sidebarrel": False,
     "navbar_pagenav": False,
+    "bootswatch_theme": "flatly",
 }

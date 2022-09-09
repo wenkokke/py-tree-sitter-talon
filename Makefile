@@ -7,6 +7,9 @@ build-doc:
 	poetry install -E docs
 	poetry run sphinx-build -M "html" "docs" "docs/_build"
 
+serve:
+	@(cd docs/_build/html && npx browser-sync -ss)
+
 test:
 	tox --skip-missing-interpreters true
 
