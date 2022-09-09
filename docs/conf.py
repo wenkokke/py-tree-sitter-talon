@@ -15,14 +15,12 @@ import sphinx_bootstrap_theme
 
 sys.path.insert(0, os.path.abspath(".."))
 
-import tree_sitter_talon.version as pkg
-
 # -- Project information -----------------------------------------------------
 
 project = "tree_sitter_talon"
 copyright = "2022, Wen Kokke"
 author = "Wen Kokke"
-release = pkg.__version__
+release = "1!1000.2.0.0"
 
 # -- General configuration ---------------------------------------------------
 
