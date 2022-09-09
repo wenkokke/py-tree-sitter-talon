@@ -1,22 +1,17 @@
--------------------------------------
-   .. autoclass:: Python bindings for Tree-Sitter Talon
-      :members:
+Python bindings for Tree-Sitter Talon
+--------------------------------------------------------------------------------
 
--------------------------------------
+.. module:: tree_sitter_talon
 
-.. module:: tree_sitter_talon.ast
-
-=====================
 Tree-Sitter Instances
-=====================
+================================================================================
 
 .. autodata:: language
 
 .. autodata:: parser
 
-=============================
 Parsing and Converting to AST
-=============================
+================================================================================
 
 .. autofunction:: parse
 
@@ -24,11 +19,8 @@ Parsing and Converting to AST
 
 .. autofunction:: from_tree_sitter
 
-================================
-   .. autoclass:: Talon Abstract Syntax Tree Nodes
-      :members:
-
-================================
+Talon Abstract Syntax Tree Nodes
+================================================================================
 
 All AST nodes inherit from the Node class.
 
@@ -80,144 +72,143 @@ There are two subclasses of `Node`:
 
 Each explicit node in the tree-sitter grammar corresponds to a dataclass.
 
-   .. autoclass:: TalonSourceFile
-      :members:
+.. autoclass:: TalonSourceFile
+   :members:
 
-   .. autoclass:: TalonComment
-      :members:
+.. autoclass:: TalonComment
+   :members:
 
-   .. autoclass:: TalonError
-      :members:
+.. autoclass:: TalonError
+   :members:
 
-   .. autoclass:: TalonMatches
-      :members:
+.. autoclass:: TalonMatches
+   :members:
 
-   .. autoclass:: TalonMatch
-      :members:
+.. autoclass:: TalonMatch
+   :members:
 
-   .. autoclass:: TalonMatchModifier
-      :members:
+.. autoclass:: TalonMatchModifier
+   :members:
 
-   .. autoclass:: TalonDeclaration
-      :members:
+.. autoclass:: TalonDeclaration
+   :members:
 
-   .. autoclass:: TalonCommandDeclaration
-      :members:
+.. autoclass:: TalonCommandDeclaration
+   :members:
 
-   .. autoclass:: TalonKeyBindingDeclaration
-      :members:
+.. autoclass:: TalonKeyBindingDeclaration
+   :members:
 
-   .. autoclass:: TalonSettingsDeclaration
-      :members:
+.. autoclass:: TalonSettingsDeclaration
+   :members:
 
-   .. autoclass:: TalonTagImportDeclaration
-      :members:
+.. autoclass:: TalonTagImportDeclaration
+   :members:
 
-   .. autoclass:: TalonCapture
-      :members:
+.. autoclass:: TalonCapture
+   :members:
 
-   .. autoclass:: TalonChoice
-      :members:
+.. autoclass:: TalonChoice
+   :members:
 
-   .. autoclass:: TalonEndAnchor
-      :members:
+.. autoclass:: TalonEndAnchor
+   :members:
 
-   .. autoclass:: TalonList
-      :members:
+.. autoclass:: TalonList
+   :members:
 
-   .. autoclass:: TalonOptional
-      :members:
+.. autoclass:: TalonOptional
+   :members:
 
-   .. autoclass:: TalonParenthesizedRule
-      :members:
+.. autoclass:: TalonParenthesizedRule
+   :members:
 
-   .. autoclass:: TalonRepeat
-      :members:
+.. autoclass:: TalonRepeat
+   :members:
 
-   .. autoclass:: TalonRepeat1
-      :members:
+.. autoclass:: TalonRepeat1
+   :members:
 
-   .. autoclass:: TalonRule
-      :members:
+.. autoclass:: TalonRule
+   :members:
 
-   .. autoclass:: TalonSeq
-      :members:
+.. autoclass:: TalonSeq
+   :members:
 
-   .. autoclass:: TalonStartAnchor
-      :members:
+.. autoclass:: TalonStartAnchor
+   :members:
 
-   .. autoclass:: TalonWord
-      :members:
+.. autoclass:: TalonWord
+   :members:
 
-   .. autoclass:: TalonStatement
-      :members:
+.. autoclass:: TalonStatement
+   :members:
 
-   .. autoclass:: TalonAssignmentStatement
-      :members:
+.. autoclass:: TalonAssignmentStatement
+   :members:
 
-   .. autoclass:: TalonExpressionStatement
-      :members:
+.. autoclass:: TalonExpressionStatement
+   :members:
 
-   .. autoclass:: TalonBlock
-      :members:
+.. autoclass:: TalonBlock
+   :members:
 
-   .. autoclass:: TalonExpression
-      :members:
+.. autoclass:: TalonExpression
+   :members:
 
-   .. autoclass:: TalonAction
-      :members:
+.. autoclass:: TalonAction
+   :members:
 
-   .. autoclass:: TalonArgumentList
-      :members:
+.. autoclass:: TalonArgumentList
+   :members:
 
-   .. autoclass:: TalonBinaryOperator
-      :members:
+.. autoclass:: TalonBinaryOperator
+   :members:
 
-   .. autoclass:: TalonKeyAction
-      :members:
+.. autoclass:: TalonKeyAction
+   :members:
 
-   .. autoclass:: TalonParenthesizedExpression
-      :members:
+.. autoclass:: TalonParenthesizedExpression
+   :members:
 
-   .. autoclass:: TalonSleepAction
-      :members:
+.. autoclass:: TalonSleepAction
+   :members:
 
-   .. autoclass:: TalonVariable
-      :members:
+.. autoclass:: TalonVariable
+   :members:
 
-   .. autoclass:: TalonIdentifier
-      :members:
+.. autoclass:: TalonIdentifier
+   :members:
 
-   .. autoclass:: TalonOperator
-      :members:
+.. autoclass:: TalonOperator
+   :members:
 
-   .. autoclass:: TalonImplicitString
-      :members:
+.. autoclass:: TalonImplicitString
+   :members:
 
-   .. autoclass:: TalonInterpolation
-      :members:
+.. autoclass:: TalonInterpolation
+   :members:
 
-   .. autoclass:: TalonString
-      :members:
+.. autoclass:: TalonString
+   :members:
 
-   .. autoclass:: TalonStringContent
-      :members:
+.. autoclass:: TalonStringContent
+   :members:
 
-   .. autoclass:: TalonStringEscapeSequence
-      :members:
+.. autoclass:: TalonStringEscapeSequence
+   :members:
 
-   .. autoclass:: TalonFloat
-      :members:
+.. autoclass:: TalonFloat
+   :members:
 
-   .. autoclass:: TalonInteger
-      :members:
+.. autoclass:: TalonInteger
+   :members:
 
-   .. autoclass:: TalonNumber
-      :members:
+.. autoclass:: TalonNumber
+   :members:
 
 
-========================================
 Helper Classes
-========================================
+================================================================================
 
 .. autoclass:: Point
