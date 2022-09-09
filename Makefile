@@ -11,7 +11,7 @@ serve:
 	@(cd docs/_build/html && npx browser-sync -ss)
 
 test:
-	tox --skip-missing-interpreters true
+	tox --skip-missing-interpreters
 
 bump-version:
 	@poetry run bumpver update
@@ -21,4 +21,4 @@ release-version:
 	@git tag 'v$(VERSION)'
 	@git push origin 'v$(VERSION)'
 
-.PHONY: build build-doc test bump-version release-version
+.PHONY: build build-doc serve test bump-version release-version
