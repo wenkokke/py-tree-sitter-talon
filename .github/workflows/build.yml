@@ -33,8 +33,14 @@ jobs:
 
       - name: Build & Test
         run: |
+          poetry build
           poetry install -E test
           poetry run pytest tests/
+
+      - name: Upload Wheel
+        uses: actions/upload-artifact@v3
+        with:
+          path: dist/tree_sitter_talon-*.whl
 
   build-doc:
     name: Build Doc
