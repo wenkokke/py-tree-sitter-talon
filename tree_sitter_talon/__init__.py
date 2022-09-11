@@ -1,3 +1,4 @@
+import collections.abc
 import dataclasses
 import re
 import typing
@@ -267,496 +268,501 @@ setattr(TalonWord, "to_pattern", _to_pattern)
 ################################################################################
 
 
-def _make_TalonAction(*args, **kwargs) -> TalonAction:
-    return TalonAction(*args, **kwargs)
+def _fields(obj) -> tuple[typing.Any, ...]:
+    assert dataclasses.is_dataclass(obj)
+    return tuple(getattr(obj, field.name) for field in dataclasses.fields(obj))
+
+
+def _make_TalonAction(*args) -> TalonAction:
+    return TalonAction(*args)
 
 
 setattr(
     TalonAction,
     "__reduce__",
-    lambda self: (_make_TalonAction, dataclasses.astuple(self)),
+    lambda self: (_make_TalonAction, _fields(self)),
 )
 
 
-def _make_TalonArgumentList(*args, **kwargs) -> TalonArgumentList:
-    return TalonArgumentList(*args, **kwargs)
+def _make_TalonArgumentList(*args) -> TalonArgumentList:
+    return TalonArgumentList(*args)
 
 
 setattr(
     TalonArgumentList,
     "__reduce__",
-    lambda self: (_make_TalonArgumentList, dataclasses.astuple(self)),
+    lambda self: (_make_TalonArgumentList, _fields(self)),
 )
 
 
-def _make_TalonAssignmentStatement(*args, **kwargs) -> TalonAssignmentStatement:
-    return TalonAssignmentStatement(*args, **kwargs)
+def _make_TalonAssignmentStatement(*args) -> TalonAssignmentStatement:
+    return TalonAssignmentStatement(*args)
 
 
 setattr(
     TalonAssignmentStatement,
     "__reduce__",
-    lambda self: (_make_TalonAssignmentStatement, dataclasses.astuple(self)),
+    lambda self: (_make_TalonAssignmentStatement, _fields(self)),
 )
 
 
-def _make_TalonBinaryOperator(*args, **kwargs) -> TalonBinaryOperator:
-    return TalonBinaryOperator(*args, **kwargs)
+def _make_TalonBinaryOperator(*args) -> TalonBinaryOperator:
+    return TalonBinaryOperator(*args)
 
 
 setattr(
     TalonBinaryOperator,
     "__reduce__",
-    lambda self: (_make_TalonBinaryOperator, dataclasses.astuple(self)),
+    lambda self: (_make_TalonBinaryOperator, _fields(self)),
 )
 
 
-def _make_TalonBlock(*args, **kwargs) -> TalonBlock:
-    return TalonBlock(*args, **kwargs)
+def _make_TalonBlock(*args) -> TalonBlock:
+    return TalonBlock(*args)
 
 
 setattr(
     TalonBlock,
     "__reduce__",
-    lambda self: (_make_TalonBlock, dataclasses.astuple(self)),
+    lambda self: (_make_TalonBlock, _fields(self)),
 )
 
 
-def _make_TalonCapture(*args, **kwargs) -> TalonCapture:
-    return TalonCapture(*args, **kwargs)
+def _make_TalonCapture(*args) -> TalonCapture:
+    return TalonCapture(*args)
 
 
 setattr(
     TalonCapture,
     "__reduce__",
-    lambda self: (_make_TalonCapture, dataclasses.astuple(self)),
+    lambda self: (_make_TalonCapture, _fields(self)),
 )
 
 
-def _make_TalonChoice(*args, **kwargs) -> TalonChoice:
-    return TalonChoice(*args, **kwargs)
+def _make_TalonChoice(*args) -> TalonChoice:
+    return TalonChoice(*args)
 
 
 setattr(
     TalonChoice,
     "__reduce__",
-    lambda self: (_make_TalonChoice, dataclasses.astuple(self)),
+    lambda self: (_make_TalonChoice, _fields(self)),
 )
 
 
-def _make_TalonCommandDeclaration(*args, **kwargs) -> TalonCommandDeclaration:
-    return TalonCommandDeclaration(*args, **kwargs)
+def _make_TalonCommandDeclaration(*args) -> TalonCommandDeclaration:
+    return TalonCommandDeclaration(*args)
 
 
 setattr(
     TalonCommandDeclaration,
     "__reduce__",
-    lambda self: (_make_TalonCommandDeclaration, dataclasses.astuple(self)),
+    lambda self: (_make_TalonCommandDeclaration, _fields(self)),
 )
 
 
-def _make_TalonComment(*args, **kwargs) -> TalonComment:
-    return TalonComment(*args, **kwargs)
+def _make_TalonComment(*args) -> TalonComment:
+    return TalonComment(*args)
 
 
 setattr(
     TalonComment,
     "__reduce__",
-    lambda self: (_make_TalonComment, dataclasses.astuple(self)),
+    lambda self: (_make_TalonComment, _fields(self)),
 )
 
 
-def _make_TalonDeclaration(*args, **kwargs) -> TalonDeclaration:
-    return TalonDeclaration(*args, **kwargs)
+def _make_TalonDeclaration(*args) -> TalonDeclaration:
+    return TalonDeclaration(*args)
 
 
 setattr(
     TalonDeclaration,
     "__reduce__",
-    lambda self: (_make_TalonDeclaration, dataclasses.astuple(self)),
+    lambda self: (_make_TalonDeclaration, _fields(self)),
 )
 
 
-def _make_TalonEndAnchor(*args, **kwargs) -> TalonEndAnchor:
-    return TalonEndAnchor(*args, **kwargs)
+def _make_TalonEndAnchor(*args) -> TalonEndAnchor:
+    return TalonEndAnchor(*args)
 
 
 setattr(
     TalonEndAnchor,
     "__reduce__",
-    lambda self: (_make_TalonEndAnchor, dataclasses.astuple(self)),
+    lambda self: (_make_TalonEndAnchor, _fields(self)),
 )
 
 
-def _make_TalonError(*args, **kwargs) -> TalonError:
-    return TalonError(*args, **kwargs)
+def _make_TalonError(*args) -> TalonError:
+    return TalonError(*args)
 
 
 setattr(
     TalonError,
     "__reduce__",
-    lambda self: (_make_TalonError, dataclasses.astuple(self)),
+    lambda self: (_make_TalonError, _fields(self)),
 )
 
 
-def _make_TalonExpression(*args, **kwargs) -> TalonExpression:
-    return TalonExpression(*args, **kwargs)
+def _make_TalonExpression(*args) -> TalonExpression:
+    return TalonExpression(*args)
 
 
 setattr(
     TalonExpression,
     "__reduce__",
-    lambda self: (_make_TalonExpression, dataclasses.astuple(self)),
+    lambda self: (_make_TalonExpression, _fields(self)),
 )
 
 
-def _make_TalonExpressionStatement(*args, **kwargs) -> TalonExpressionStatement:
-    return TalonExpressionStatement(*args, **kwargs)
+def _make_TalonExpressionStatement(*args) -> TalonExpressionStatement:
+    return TalonExpressionStatement(*args)
 
 
 setattr(
     TalonExpressionStatement,
     "__reduce__",
-    lambda self: (_make_TalonExpressionStatement, dataclasses.astuple(self)),
+    lambda self: (_make_TalonExpressionStatement, _fields(self)),
 )
 
 
-def _make_TalonFloat(*args, **kwargs) -> TalonFloat:
-    return TalonFloat(*args, **kwargs)
+def _make_TalonFloat(*args) -> TalonFloat:
+    return TalonFloat(*args)
 
 
 setattr(
     TalonFloat,
     "__reduce__",
-    lambda self: (_make_TalonFloat, dataclasses.astuple(self)),
+    lambda self: (_make_TalonFloat, _fields(self)),
 )
 
 
-def _make_TalonIdentifier(*args, **kwargs) -> TalonIdentifier:
-    return TalonIdentifier(*args, **kwargs)
+def _make_TalonIdentifier(*args) -> TalonIdentifier:
+    return TalonIdentifier(*args)
 
 
 setattr(
     TalonIdentifier,
     "__reduce__",
-    lambda self: (_make_TalonIdentifier, dataclasses.astuple(self)),
+    lambda self: (_make_TalonIdentifier, _fields(self)),
 )
 
 
-def _make_TalonImplicitString(*args, **kwargs) -> TalonImplicitString:
-    return TalonImplicitString(*args, **kwargs)
+def _make_TalonImplicitString(*args) -> TalonImplicitString:
+    return TalonImplicitString(*args)
 
 
 setattr(
     TalonImplicitString,
     "__reduce__",
-    lambda self: (_make_TalonImplicitString, dataclasses.astuple(self)),
+    lambda self: (_make_TalonImplicitString, _fields(self)),
 )
 
 
-def _make_TalonInteger(*args, **kwargs) -> TalonInteger:
-    return TalonInteger(*args, **kwargs)
+def _make_TalonInteger(*args) -> TalonInteger:
+    return TalonInteger(*args)
 
 
 setattr(
     TalonInteger,
     "__reduce__",
-    lambda self: (_make_TalonInteger, dataclasses.astuple(self)),
+    lambda self: (_make_TalonInteger, _fields(self)),
 )
 
 
-def _make_TalonInterpolation(*args, **kwargs) -> TalonInterpolation:
-    return TalonInterpolation(*args, **kwargs)
+def _make_TalonInterpolation(*args) -> TalonInterpolation:
+    return TalonInterpolation(*args)
 
 
 setattr(
     TalonInterpolation,
     "__reduce__",
-    lambda self: (_make_TalonInterpolation, dataclasses.astuple(self)),
+    lambda self: (_make_TalonInterpolation, _fields(self)),
 )
 
 
-def _make_TalonKeyAction(*args, **kwargs) -> TalonKeyAction:
-    return TalonKeyAction(*args, **kwargs)
+def _make_TalonKeyAction(*args) -> TalonKeyAction:
+    return TalonKeyAction(*args)
 
 
 setattr(
     TalonKeyAction,
     "__reduce__",
-    lambda self: (_make_TalonKeyAction, dataclasses.astuple(self)),
+    lambda self: (_make_TalonKeyAction, _fields(self)),
 )
 
 
-def _make_TalonKeyBindingDeclaration(*args, **kwargs) -> TalonKeyBindingDeclaration:
-    return TalonKeyBindingDeclaration(*args, **kwargs)
+def _make_TalonKeyBindingDeclaration(*args) -> TalonKeyBindingDeclaration:
+    return TalonKeyBindingDeclaration(*args)
 
 
 setattr(
     TalonKeyBindingDeclaration,
     "__reduce__",
-    lambda self: (_make_TalonKeyBindingDeclaration, dataclasses.astuple(self)),
+    lambda self: (_make_TalonKeyBindingDeclaration, _fields(self)),
 )
 
 
-def _make_TalonList(*args, **kwargs) -> TalonList:
-    return TalonList(*args, **kwargs)
+def _make_TalonList(*args) -> TalonList:
+    return TalonList(*args)
 
 
 setattr(
     TalonList,
     "__reduce__",
-    lambda self: (_make_TalonList, dataclasses.astuple(self)),
+    lambda self: (_make_TalonList, _fields(self)),
 )
 
 
-def _make_TalonMatch(*args, **kwargs) -> TalonMatch:
-    return TalonMatch(*args, **kwargs)
+def _make_TalonMatch(*args) -> TalonMatch:
+    return TalonMatch(*args)
 
 
 setattr(
     TalonMatch,
     "__reduce__",
-    lambda self: (_make_TalonMatch, dataclasses.astuple(self)),
+    lambda self: (_make_TalonMatch, _fields(self)),
 )
 
 
-def _make_TalonMatches(*args, **kwargs) -> TalonMatches:
-    return TalonMatches(*args, **kwargs)
+def _make_TalonMatches(*args) -> TalonMatches:
+    return TalonMatches(*args)
 
 
 setattr(
     TalonMatches,
     "__reduce__",
-    lambda self: (_make_TalonMatches, dataclasses.astuple(self)),
+    lambda self: (_make_TalonMatches, _fields(self)),
 )
 
 
-def _make_TalonMatchModifier(*args, **kwargs) -> TalonMatchModifier:
-    return TalonMatchModifier(*args, **kwargs)
+def _make_TalonMatchModifier(*args) -> TalonMatchModifier:
+    return TalonMatchModifier(*args)
 
 
 setattr(
     TalonMatchModifier,
     "__reduce__",
-    lambda self: (_make_TalonMatchModifier, dataclasses.astuple(self)),
+    lambda self: (_make_TalonMatchModifier, _fields(self)),
 )
 
 
-def _make_TalonNumber(*args, **kwargs) -> TalonNumber:
-    return TalonNumber(*args, **kwargs)
+def _make_TalonNumber(*args) -> TalonNumber:
+    return TalonNumber(*args)
 
 
 setattr(
     TalonNumber,
     "__reduce__",
-    lambda self: (_make_TalonNumber, dataclasses.astuple(self)),
+    lambda self: (_make_TalonNumber, _fields(self)),
 )
 
 
-def _make_TalonOperator(*args, **kwargs) -> TalonOperator:
-    return TalonOperator(*args, **kwargs)
+def _make_TalonOperator(*args) -> TalonOperator:
+    return TalonOperator(*args)
 
 
 setattr(
     TalonOperator,
     "__reduce__",
-    lambda self: (_make_TalonOperator, dataclasses.astuple(self)),
+    lambda self: (_make_TalonOperator, _fields(self)),
 )
 
 
-def _make_TalonOptional(*args, **kwargs) -> TalonOptional:
-    return TalonOptional(*args, **kwargs)
+def _make_TalonOptional(*args) -> TalonOptional:
+    return TalonOptional(*args)
 
 
 setattr(
     TalonOptional,
     "__reduce__",
-    lambda self: (_make_TalonOptional, dataclasses.astuple(self)),
+    lambda self: (_make_TalonOptional, _fields(self)),
 )
 
 
-def _make_TalonParenthesizedExpression(*args, **kwargs) -> TalonParenthesizedExpression:
-    return TalonParenthesizedExpression(*args, **kwargs)
+def _make_TalonParenthesizedExpression(*args) -> TalonParenthesizedExpression:
+    return TalonParenthesizedExpression(*args)
 
 
 setattr(
     TalonParenthesizedExpression,
     "__reduce__",
-    lambda self: (_make_TalonParenthesizedExpression, dataclasses.astuple(self)),
+    lambda self: (_make_TalonParenthesizedExpression, _fields(self)),
 )
 
 
-def _make_TalonParenthesizedRule(*args, **kwargs) -> TalonParenthesizedRule:
-    return TalonParenthesizedRule(*args, **kwargs)
+def _make_TalonParenthesizedRule(*args) -> TalonParenthesizedRule:
+    return TalonParenthesizedRule(*args)
 
 
 setattr(
     TalonParenthesizedRule,
     "__reduce__",
-    lambda self: (_make_TalonParenthesizedRule, dataclasses.astuple(self)),
+    lambda self: (_make_TalonParenthesizedRule, _fields(self)),
 )
 
 
-def _make_TalonRepeat(*args, **kwargs) -> TalonRepeat:
-    return TalonRepeat(*args, **kwargs)
+def _make_TalonRepeat(*args) -> TalonRepeat:
+    return TalonRepeat(*args)
 
 
 setattr(
     TalonRepeat,
     "__reduce__",
-    lambda self: (_make_TalonRepeat, dataclasses.astuple(self)),
+    lambda self: (_make_TalonRepeat, _fields(self)),
 )
 
 
-def _make_TalonRepeat1(*args, **kwargs) -> TalonRepeat1:
-    return TalonRepeat1(*args, **kwargs)
+def _make_TalonRepeat1(*args) -> TalonRepeat1:
+    return TalonRepeat1(*args)
 
 
 setattr(
     TalonRepeat1,
     "__reduce__",
-    lambda self: (_make_TalonRepeat1, dataclasses.astuple(self)),
+    lambda self: (_make_TalonRepeat1, _fields(self)),
 )
 
 
-def _make_TalonRule(*args, **kwargs) -> TalonRule:
-    return TalonRule(*args, **kwargs)
+def _make_TalonRule(*args) -> TalonRule:
+    return TalonRule(*args)
 
 
 setattr(
     TalonRule,
     "__reduce__",
-    lambda self: (_make_TalonRule, dataclasses.astuple(self)),
+    lambda self: (_make_TalonRule, _fields(self)),
 )
 
 
-def _make_TalonSeq(*args, **kwargs) -> TalonSeq:
-    return TalonSeq(*args, **kwargs)
+def _make_TalonSeq(*args) -> TalonSeq:
+    return TalonSeq(*args)
 
 
 setattr(
     TalonSeq,
     "__reduce__",
-    lambda self: (_make_TalonSeq, dataclasses.astuple(self)),
+    lambda self: (_make_TalonSeq, _fields(self)),
 )
 
 
-def _make_TalonSettingsDeclaration(*args, **kwargs) -> TalonSettingsDeclaration:
-    return TalonSettingsDeclaration(*args, **kwargs)
+def _make_TalonSettingsDeclaration(*args) -> TalonSettingsDeclaration:
+    return TalonSettingsDeclaration(*args)
 
 
 setattr(
     TalonSettingsDeclaration,
     "__reduce__",
-    lambda self: (_make_TalonSettingsDeclaration, dataclasses.astuple(self)),
+    lambda self: (_make_TalonSettingsDeclaration, _fields(self)),
 )
 
 
-def _make_TalonSleepAction(*args, **kwargs) -> TalonSleepAction:
-    return TalonSleepAction(*args, **kwargs)
+def _make_TalonSleepAction(*args) -> TalonSleepAction:
+    return TalonSleepAction(*args)
 
 
 setattr(
     TalonSleepAction,
     "__reduce__",
-    lambda self: (_make_TalonSleepAction, dataclasses.astuple(self)),
+    lambda self: (_make_TalonSleepAction, _fields(self)),
 )
 
 
-def _make_TalonSourceFile(*args, **kwargs) -> TalonSourceFile:
-    return TalonSourceFile(*args, **kwargs)
+def _make_TalonSourceFile(*args) -> TalonSourceFile:
+    return TalonSourceFile(*args)
 
 
 setattr(
     TalonSourceFile,
     "__reduce__",
-    lambda self: (_make_TalonSourceFile, dataclasses.astuple(self)),
+    lambda self: (_make_TalonSourceFile, _fields(self)),
 )
 
 
-def _make_TalonStartAnchor(*args, **kwargs) -> TalonStartAnchor:
-    return TalonStartAnchor(*args, **kwargs)
+def _make_TalonStartAnchor(*args) -> TalonStartAnchor:
+    return TalonStartAnchor(*args)
 
 
 setattr(
     TalonStartAnchor,
     "__reduce__",
-    lambda self: (_make_TalonStartAnchor, dataclasses.astuple(self)),
+    lambda self: (_make_TalonStartAnchor, _fields(self)),
 )
 
 
-def _make_TalonStatement(*args, **kwargs) -> TalonStatement:
-    return TalonStatement(*args, **kwargs)
+def _make_TalonStatement(*args) -> TalonStatement:
+    return TalonStatement(*args)
 
 
 setattr(
     TalonStatement,
     "__reduce__",
-    lambda self: (_make_TalonStatement, dataclasses.astuple(self)),
+    lambda self: (_make_TalonStatement, _fields(self)),
 )
 
 
-def _make_TalonString(*args, **kwargs) -> TalonString:
-    return TalonString(*args, **kwargs)
+def _make_TalonString(*args) -> TalonString:
+    return TalonString(*args)
 
 
 setattr(
     TalonString,
     "__reduce__",
-    lambda self: (_make_TalonString, dataclasses.astuple(self)),
+    lambda self: (_make_TalonString, _fields(self)),
 )
 
 
-def _make_TalonStringContent(*args, **kwargs) -> TalonStringContent:
-    return TalonStringContent(*args, **kwargs)
+def _make_TalonStringContent(*args) -> TalonStringContent:
+    return TalonStringContent(*args)
 
 
 setattr(
     TalonStringContent,
     "__reduce__",
-    lambda self: (_make_TalonStringContent, dataclasses.astuple(self)),
+    lambda self: (_make_TalonStringContent, _fields(self)),
 )
 
 
-def _make_TalonStringEscapeSequence(*args, **kwargs) -> TalonStringEscapeSequence:
-    return TalonStringEscapeSequence(*args, **kwargs)
+def _make_TalonStringEscapeSequence(*args) -> TalonStringEscapeSequence:
+    return TalonStringEscapeSequence(*args)
 
 
 setattr(
     TalonStringEscapeSequence,
     "__reduce__",
-    lambda self: (_make_TalonStringEscapeSequence, dataclasses.astuple(self)),
+    lambda self: (_make_TalonStringEscapeSequence, _fields(self)),
 )
 
 
-def _make_TalonTagImportDeclaration(*args, **kwargs) -> TalonTagImportDeclaration:
-    return TalonTagImportDeclaration(*args, **kwargs)
+def _make_TalonTagImportDeclaration(*args) -> TalonTagImportDeclaration:
+    return TalonTagImportDeclaration(*args)
 
 
 setattr(
     TalonTagImportDeclaration,
     "__reduce__",
-    lambda self: (_make_TalonTagImportDeclaration, dataclasses.astuple(self)),
+    lambda self: (_make_TalonTagImportDeclaration, _fields(self)),
 )
 
 
-def _make_TalonVariable(*args, **kwargs) -> TalonVariable:
-    return TalonVariable(*args, **kwargs)
+def _make_TalonVariable(*args) -> TalonVariable:
+    return TalonVariable(*args)
 
 
 setattr(
     TalonVariable,
     "__reduce__",
-    lambda self: (_make_TalonVariable, dataclasses.astuple(self)),
+    lambda self: (_make_TalonVariable, _fields(self)),
 )
 
 
-def _make_TalonWord(*args, **kwargs) -> TalonWord:
-    return TalonWord(*args, **kwargs)
+def _make_TalonWord(*args) -> TalonWord:
+    return TalonWord(*args)
 
 
 setattr(
     TalonWord,
     "__reduce__",
-    lambda self: (_make_TalonWord, dataclasses.astuple(self)),
+    lambda self: (_make_TalonWord, _fields(self)),
 )
