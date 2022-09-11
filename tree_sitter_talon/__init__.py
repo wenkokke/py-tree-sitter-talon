@@ -1,4 +1,3 @@
-import collections.abc
 import dataclasses
 import re
 import typing
