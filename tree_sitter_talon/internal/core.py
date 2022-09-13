@@ -60,6 +60,7 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
         )
         self.NodeTypeError = tree_sitter_type_provider.NodeTypeError
         self.NodeTypeName = tree_sitter_type_provider.NodeTypeName
+        self.NodeFieldName = tree_sitter_type_provider.NodeFieldName
         self.Node = tree_sitter_type_provider.Node
         self.Leaf = tree_sitter_type_provider.Leaf
         self.Branch = tree_sitter_type_provider.Branch

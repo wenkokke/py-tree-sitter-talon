@@ -3,14 +3,55 @@ import pathlib
 import re
 import typing
 
+import dataclasses_json
 import tree_sitter  # type: ignore
-from tree_sitter_type_provider import Branch as Branch
-from tree_sitter_type_provider import Leaf as Leaf
-from tree_sitter_type_provider import Node as Node
-from tree_sitter_type_provider import NodeTypeError as NodeTypeError
-from tree_sitter_type_provider import NodeTypeName as NodeTypeName
-from tree_sitter_type_provider import ParseError as ParseError
-from tree_sitter_type_provider import Point as Point
+
+################################################################################
+# Extended node types (from tree-sitter-type-provider)
+################################################################################
+
+class NodeTypeError(Exception):
+    pass
+
+@dataclasses.dataclass
+class Point:
+    line: int
+    column: int
+
+    @staticmethod
+    def from_tree_sitter(tspoint: tuple[int, int]) -> "Point":
+        return Point(line=tspoint[0], column=tspoint[1])
+
+NodeTypeName = str
+
+NodeFieldName = str
+
+@dataclasses.dataclass
+class Node(dataclasses_json.DataClassJsonMixin):
+    text: str
+    type_name: NodeTypeName = dataclasses.field(
+        metadata=dataclasses_json.config(field_name="type")
+    )
+    start_position: Point
+    end_position: Point
+
+    def is_extra(self) -> bool: ...
+    def is_equivalent(self, other: "Node") -> bool: ...
+    def assert_equivalent(self, other: "Node") -> None: ...
+
+@dataclasses.dataclass
+class Leaf(Node):
+    pass
+
+@dataclasses.dataclass
+class Branch(Node):
+    children: typing.Union[None, Node, typing.Sequence[Node]]
+
+@dataclasses.dataclass
+class ParseError(Exception, Branch):
+    children: list[Node]
+    contents: typing.Optional[str] = None
+    filename: typing.Optional[str] = None
 
 parser: tree_sitter.Parser
 
@@ -90,6 +131,8 @@ class TalonKeyBindingDeclaration(Branch, TalonDeclaration):
 @dataclasses.dataclass
 class TalonSettingsDeclaration(Branch, TalonDeclaration):
     children: typing.Sequence[typing.Union[TalonBlock, TalonComment]]
+
+    def get_child(self) -> TalonBlock: ...
 
 @dataclasses.dataclass
 class TalonTagImportDeclaration(Branch, TalonDeclaration):
@@ -258,6 +301,21 @@ class TalonOptional(Branch):
             TalonComment,
         ]
     ]
+    def get_child(
+        self,
+    ) -> typing.Union[
+        TalonCapture,
+        TalonChoice,
+        TalonEndAnchor,
+        TalonList,
+        TalonOptional,
+        TalonParenthesizedRule,
+        TalonRepeat,
+        TalonRepeat1,
+        TalonSeq,
+        TalonStartAnchor,
+        TalonWord,
+    ]: ...
     def to_pattern(
         self,
         *,
@@ -305,6 +363,21 @@ class TalonParenthesizedRule(Branch):
             TalonComment,
         ]
     ]
+    def get_child(
+        self,
+    ) -> typing.Union[
+        TalonCapture,
+        TalonChoice,
+        TalonEndAnchor,
+        TalonList,
+        TalonOptional,
+        TalonParenthesizedRule,
+        TalonRepeat,
+        TalonRepeat1,
+        TalonSeq,
+        TalonStartAnchor,
+        TalonWord,
+    ]: ...
     def to_pattern(
         self,
         *,
@@ -348,6 +421,17 @@ class TalonRepeat(Branch):
             TalonComment,
         ]
     ]
+    def get_child(
+        self,
+    ) -> typing.Union[
+        TalonCapture,
+        TalonList,
+        TalonOptional,
+        TalonParenthesizedRule,
+        TalonRepeat,
+        TalonRepeat1,
+        TalonWord,
+    ]: ...
     def to_pattern(
         self,
         *,
@@ -391,6 +475,17 @@ class TalonRepeat1(Branch):
             TalonComment,
         ]
     ]
+    def get_child(
+        self,
+    ) -> typing.Union[
+        TalonCapture,
+        TalonList,
+        TalonOptional,
+        TalonParenthesizedRule,
+        TalonRepeat,
+        TalonRepeat1,
+        TalonWord,
+    ]: ...
     def to_pattern(
         self,
         *,
@@ -621,6 +716,8 @@ class TalonKeyAction(Branch, TalonExpression):
 class TalonParenthesizedExpression(Branch, TalonExpression):
     children: typing.Sequence[typing.Union[TalonExpression, TalonComment]]
 
+    def get_child(self) -> TalonExpression: ...
+
 @dataclasses.dataclass
 class TalonSleepAction(Branch, TalonExpression):
     children: typing.Sequence[TalonComment]
@@ -647,6 +744,8 @@ class TalonImplicitString(Leaf):
 @dataclasses.dataclass
 class TalonInterpolation(Branch):
     children: typing.Sequence[typing.Union[TalonExpression, TalonComment]]
+
+    def get_child(self) -> TalonExpression: ...
 
 @dataclasses.dataclass
 class TalonString(Branch):

@@ -5,6 +5,7 @@ import typing
 from .internal.dynamic import Branch as Branch
 from .internal.dynamic import Leaf as Leaf
 from .internal.dynamic import Node as Node
+from .internal.dynamic import NodeFieldName as NodeFieldName
 from .internal.dynamic import NodeTypeError as NodeTypeError
 from .internal.dynamic import NodeTypeName as NodeTypeName
 from .internal.dynamic import ParseError as ParseError
@@ -63,10 +64,75 @@ from .internal.dynamic import parse_file as parse_file
 from .internal.dynamic import parser as parser
 
 ################################################################################
-# Compile TalonRule to re.Pattern
+# Version Number
 ################################################################################
 
+# TODO: Switch to "1!{tree-sitter-talon.version}.{build}".
+#       Blocked on <python-poetry/poetry/issues/6466>.
+
 __version__: str = "1001.2.0.0"
+#                   ^^^^ build
+#                        ^^^^^ tree-sitter-talon version
+
+
+################################################################################
+# Method to test if a node is extra
+################################################################################
+
+
+def _is_extra(self: Node) -> bool:
+    """
+    Check if a node is an extra node.
+    """
+    return isinstance(self, (TalonComment,))
+
+
+setattr(Node, "is_extra", _is_extra)
+
+################################################################################
+# Method to get only non-extra child
+################################################################################
+
+
+def _get_child_fail_msg(self: Node, children: typing.Iterable[Node] = []) -> str:
+    return "\n".join(
+        [
+            f"Node {self.type_name} should have exactly one non-comment child, found:",
+            *[f"- {child}" for child in children],
+        ]
+    )
+
+
+def _get_child(self: Node) -> Node:
+    """
+    Get the only non-extra child of a branch node.
+    """
+    assert isinstance(self, Branch)
+    assert self.children is not None, _get_child_fail_msg(self)
+    if isinstance(self.children, Node):
+        assert not _is_extra(self.children), _get_child_fail_msg(
+            self, children=[self.children]
+        )
+        return self.children
+    else:
+        for i in range(0, len(self.children) - 1):
+            if _is_extra(self.children[i]):
+                continue
+            assert all(
+                _is_extra(child) for child in self.children[i + 1 :]
+            ), _get_child_fail_msg(self, children=self.children)
+            return self.children[i]
+        raise AssertionError(_get_child_fail_msg(self, children=self.children))
+
+
+setattr(TalonSettingsDeclaration, "get_child", _get_child)
+setattr(TalonOptional, "get_child", _get_child)
+setattr(TalonParenthesizedRule, "get_child", _get_child)
+setattr(TalonRepeat, "get_child", _get_child)
+setattr(TalonRepeat1, "get_child", _get_child)
+setattr(TalonParenthesizedExpression, "get_child", _get_child)
+setattr(TalonInterpolation, "get_child", _get_child)
+
 
 ################################################################################
 # Compile TalonRule to re.Pattern
@@ -102,47 +168,6 @@ def _to_pattern(
     captures = captures or (lambda capture_name: None)
     lists = lists or (lambda list_name: None)
     return re.compile(_to_pattern_str(self, captures=captures, lists=lists))
-
-
-def _get_only_child(
-    children: typing.Sequence[
-        typing.Union[
-            typing.Union[
-                TalonCapture,
-                TalonChoice,
-                TalonEndAnchor,
-                TalonList,
-                TalonOptional,
-                TalonParenthesizedRule,
-                TalonRepeat,
-                TalonRepeat1,
-                TalonRule,
-                TalonSeq,
-                TalonStartAnchor,
-                TalonWord,
-            ],
-            TalonComment,
-        ]
-    ]
-) -> typing.Union[
-    TalonCapture,
-    TalonChoice,
-    TalonEndAnchor,
-    TalonList,
-    TalonOptional,
-    TalonParenthesizedRule,
-    TalonRepeat,
-    TalonRepeat1,
-    TalonRule,
-    TalonSeq,
-    TalonStartAnchor,
-    TalonWord,
-]:
-    for i, child in enumerate(children):
-        if not isinstance(child, TalonComment):
-            assert all(isinstance(child, TalonComment) for child in children[i + 1 :])
-            return child
-    raise ValueError(children)
 
 
 def _to_pattern_str(
@@ -209,20 +234,20 @@ def _to_pattern_str(
         else:
             return re.escape(rf"<{list_name}>")
     elif isinstance(rule, TalonOptional):
-        child = _get_only_child(rule.children)
-        pattern_str = _to_pattern_str(child, captures=captures, lists=lists)
+        child = _get_child(rule)  # type: ignore
+        pattern_str = _to_pattern_str(child, captures=captures, lists=lists)  # type: ignore
         return rf"({pattern_str})?"
     elif isinstance(rule, TalonParenthesizedRule):
-        child = _get_only_child(rule.children)
-        pattern_str = _to_pattern_str(child, captures=captures, lists=lists)
+        child = _get_child(rule)  # type: ignore
+        pattern_str = _to_pattern_str(child, captures=captures, lists=lists)  # type: ignore
         return rf"({pattern_str})"
     elif isinstance(rule, TalonRepeat):
-        child = _get_only_child(rule.children)
-        pattern_str = _to_pattern_str(child, captures=captures, lists=lists)
+        child = _get_child(rule)  # type: ignore
+        pattern_str = _to_pattern_str(child, captures=captures, lists=lists)  # type: ignore
         return rf"({pattern_str})*"
     elif isinstance(rule, TalonRepeat1):
-        child = _get_only_child(rule.children)
-        pattern_str = _to_pattern_str(child, captures=captures, lists=lists)
+        child = _get_child(rule)  # type: ignore
+        pattern_str = _to_pattern_str(child, captures=captures, lists=lists)  # type: ignore
         return rf"({pattern_str})+"
     elif isinstance(rule, TalonRule):
         return r"\s+".join(
