@@ -40,11 +40,11 @@ AnyTalonRule = typing.Union[
 AnyListValue = typing.Union[list[str], dict[str, typing.Any]]
 
 ################################################################################
-# Generic 'to_parser'
+# Generic '_to_parser'
 ################################################################################
 
 
-def to_parser(
+def _to_parser(
     node: typing.Union[TalonSourceFile, TalonCommandDeclaration, AnyTalonRule],
     *,
     fullmatch: bool = False,
@@ -55,8 +55,62 @@ def to_parser(
         collections.abc.Callable[[str], typing.Optional[AnyListValue]]
     ] = None,
 ) -> typing.Union[parsec.Parser, parsec.Parser]:
-    to_parser = getattr(node, "to_parser")
-    return to_parser(fullmatch=fullmatch, get_capture=get_capture, get_list=get_list)
+    if isinstance(node, TalonCapture):
+        return _TalonCapture_to_parser(
+            node, fullmatch=fullmatch, get_capture=get_capture, get_list=get_list
+        )
+    elif isinstance(node, TalonChoice):
+        return _TalonChoice_to_parser(
+            node, fullmatch=fullmatch, get_capture=get_capture, get_list=get_list
+        )
+    elif isinstance(node, TalonCommandDeclaration):
+        return _TalonCommandDeclaration_to_parser(
+            node, fullmatch=fullmatch, get_capture=get_capture, get_list=get_list
+        )
+    elif isinstance(node, TalonEndAnchor):
+        return _TalonEndAnchor_to_parser(
+            node, fullmatch=fullmatch, get_capture=get_capture, get_list=get_list
+        )
+    elif isinstance(node, TalonList):
+        return _TalonList_to_parser(
+            node, fullmatch=fullmatch, get_capture=get_capture, get_list=get_list
+        )
+    elif isinstance(node, TalonOptional):
+        return _TalonOptional_to_parser(
+            node, fullmatch=fullmatch, get_capture=get_capture, get_list=get_list
+        )
+    elif isinstance(node, TalonParenthesizedRule):
+        return _TalonParenthesizedRule_to_parser(
+            node, fullmatch=fullmatch, get_capture=get_capture, get_list=get_list
+        )
+    elif isinstance(node, TalonRepeat):
+        return _TalonRepeat_to_parser(
+            node, fullmatch=fullmatch, get_capture=get_capture, get_list=get_list
+        )
+    elif isinstance(node, TalonRepeat1):
+        return _TalonRepeat1_to_parser(
+            node, fullmatch=fullmatch, get_capture=get_capture, get_list=get_list
+        )
+    elif isinstance(node, TalonRule):
+        return _TalonRule_to_parser(
+            node, fullmatch=fullmatch, get_capture=get_capture, get_list=get_list
+        )
+    elif isinstance(node, TalonSeq):
+        return _TalonSeq_to_parser(
+            node, fullmatch=fullmatch, get_capture=get_capture, get_list=get_list
+        )
+    elif isinstance(node, TalonSourceFile):
+        return _TalonSourceFile_to_parser(
+            node, fullmatch=fullmatch, get_capture=get_capture, get_list=get_list
+        )
+    elif isinstance(node, TalonStartAnchor):
+        return _TalonStartAnchor_to_parser(
+            node, fullmatch=fullmatch, get_capture=get_capture, get_list=get_list
+        )
+    elif isinstance(node, TalonWord):
+        return _TalonWord_to_parser(
+            node, fullmatch=fullmatch, get_capture=get_capture, get_list=get_list
+        )
 
 
 ################################################################################
@@ -76,7 +130,7 @@ def find_command(
         collections.abc.Callable[[str], typing.Optional[AnyListValue]]
     ] = None,
 ) -> typing.Optional[TalonCommandDeclaration]:
-    parser = to_parser(
+    parser = _to_parser(
         self, fullmatch=fullmatch, get_capture=get_capture, get_list=get_list
     )
     try:
@@ -97,7 +151,7 @@ def match(
         collections.abc.Callable[[str], typing.Optional[AnyListValue]]
     ] = None,
 ) -> bool:
-    parser = to_parser(
+    parser = _to_parser(
         self, fullmatch=fullmatch, get_capture=get_capture, get_list=get_list
     )
     try:
@@ -127,7 +181,7 @@ def _TalonSourceFile_to_parser(
     for declaration in self.children:
         if isinstance(declaration, TalonCommandDeclaration):
             buffer.append(
-                to_parser(
+                _to_parser(
                     declaration,
                     fullmatch=fullmatch,
                     get_capture=get_capture,
@@ -140,7 +194,6 @@ def _TalonSourceFile_to_parser(
 
 
 setattr(TalonSourceFile, "find_command", find_command)
-setattr(TalonSourceFile, "to_parser", _TalonSourceFile_to_parser)
 
 ################################################################################
 # Compile TalonCommandDeclaration to parsec.Parser
@@ -158,16 +211,15 @@ def _TalonCommandDeclaration_to_parser(
         collections.abc.Callable[[str], typing.Optional[AnyListValue]]
     ],
 ) -> parsec.Parser:
-    return to_parser(
+    return _to_parser(
         self.rule, fullmatch=fullmatch, get_capture=get_capture, get_list=get_list
     ).result(self)
 
 
 setattr(TalonCommandDeclaration, "match", match)
-setattr(TalonCommandDeclaration, "to_parser", _TalonCommandDeclaration_to_parser)
 
 ################################################################################
-# Implement AnyTalonRule.to_parser
+# Implement AnyTalonRule._to_parser
 ################################################################################
 
 
@@ -203,12 +255,11 @@ def _TalonCapture_to_parser(
     if get_capture:
         capture = get_capture(capture_name)
         if capture:
-            return to_parser(capture, get_capture=get_capture, get_list=get_list)
+            return _to_parser(capture, get_capture=get_capture, get_list=get_list)
     return _word(f"<{capture_name}>").result(None)
 
 
 setattr(TalonCapture, "match", match)
-setattr(TalonCapture, "to_parser", _TalonCapture_to_parser)
 
 
 def _TalonChoice_to_parser(
@@ -225,7 +276,7 @@ def _TalonChoice_to_parser(
     acc: typing.Optional[parsec.Parser] = None
     for rule in reversed(self.children):
         if not isinstance(rule, TalonComment):
-            parser = to_parser(
+            parser = _to_parser(
                 rule,
                 fullmatch=fullmatch,
                 get_capture=get_capture,
@@ -237,7 +288,6 @@ def _TalonChoice_to_parser(
 
 
 setattr(TalonChoice, "match", match)
-setattr(TalonChoice, "to_parser", _TalonChoice_to_parser)
 
 
 def _TalonEndAnchor_to_parser(
@@ -258,7 +308,6 @@ def _TalonEndAnchor_to_parser(
 
 
 setattr(TalonEndAnchor, "match", match)
-setattr(TalonEndAnchor, "to_parser", _TalonEndAnchor_to_parser)
 
 
 def _TalonList_to_parser(
@@ -283,7 +332,6 @@ def _TalonList_to_parser(
 
 
 setattr(TalonList, "match", match)
-setattr(TalonList, "to_parser", _TalonList_to_parser)
 
 
 def _TalonOptional_to_parser(
@@ -298,7 +346,7 @@ def _TalonOptional_to_parser(
     ],
 ) -> parsec.Parser:
     return parsec.optional(
-        to_parser(
+        _to_parser(
             self.get_child(),
             fullmatch=fullmatch,
             get_capture=get_capture,
@@ -308,7 +356,6 @@ def _TalonOptional_to_parser(
 
 
 setattr(TalonOptional, "match", match)
-setattr(TalonOptional, "to_parser", _TalonOptional_to_parser)
 
 
 def _TalonParenthesizedRule_to_parser(
@@ -322,7 +369,7 @@ def _TalonParenthesizedRule_to_parser(
         collections.abc.Callable[[str], typing.Optional[AnyListValue]]
     ],
 ) -> parsec.Parser:
-    return to_parser(
+    return _to_parser(
         self.get_child(),
         fullmatch=fullmatch,
         get_capture=get_capture,
@@ -331,7 +378,6 @@ def _TalonParenthesizedRule_to_parser(
 
 
 setattr(TalonParenthesizedRule, "match", match)
-setattr(TalonParenthesizedRule, "to_parser", _TalonParenthesizedRule_to_parser)
 
 
 def _TalonRepeat_to_parser(
@@ -346,7 +392,7 @@ def _TalonRepeat_to_parser(
     ],
 ) -> parsec.Parser:
     return parsec.many(
-        to_parser(
+        _to_parser(
             self.get_child(),
             fullmatch=fullmatch,
             get_capture=get_capture,
@@ -356,7 +402,6 @@ def _TalonRepeat_to_parser(
 
 
 setattr(TalonRepeat, "match", match)
-setattr(TalonRepeat, "to_parser", _TalonRepeat_to_parser)
 
 
 def _TalonRepeat1_to_parser(
@@ -371,7 +416,7 @@ def _TalonRepeat1_to_parser(
     ],
 ) -> parsec.Parser:
     return parsec.many1(
-        to_parser(
+        _to_parser(
             self.get_child(),
             fullmatch=fullmatch,
             get_capture=get_capture,
@@ -381,7 +426,6 @@ def _TalonRepeat1_to_parser(
 
 
 setattr(TalonRepeat1, "match", match)
-setattr(TalonRepeat1, "to_parser", _TalonRepeat1_to_parser)
 
 
 def _TalonRule_to_parser(
@@ -398,7 +442,7 @@ def _TalonRule_to_parser(
     acc: typing.Optional[parsec.Parser] = None
     for rule in reversed(self.children):
         if not isinstance(rule, TalonComment):
-            parser = to_parser(
+            parser = _to_parser(
                 rule,
                 fullmatch=fullmatch,
                 get_capture=get_capture,
@@ -410,7 +454,6 @@ def _TalonRule_to_parser(
 
 
 setattr(TalonRule, "match", match)
-setattr(TalonRule, "to_parser", _TalonRule_to_parser)
 
 
 def _TalonSeq_to_parser(
@@ -427,7 +470,7 @@ def _TalonSeq_to_parser(
     acc: typing.Optional[parsec.Parser] = None
     for rule in reversed(self.children):
         if not isinstance(rule, TalonComment):
-            parser = to_parser(
+            parser = _to_parser(
                 rule,
                 fullmatch=fullmatch,
                 get_capture=get_capture,
@@ -439,7 +482,6 @@ def _TalonSeq_to_parser(
 
 
 setattr(TalonSeq, "match", match)
-setattr(TalonSeq, "to_parser", _TalonSeq_to_parser)
 
 
 def _TalonStartAnchor_to_parser(
@@ -469,7 +511,6 @@ def _TalonStartAnchor_to_parser(
 
 
 setattr(TalonStartAnchor, "match", match)
-setattr(TalonStartAnchor, "to_parser", _TalonStartAnchor_to_parser)
 
 
 def _TalonWord_to_parser(
@@ -487,4 +528,3 @@ def _TalonWord_to_parser(
 
 
 setattr(TalonWord, "match", match)
-setattr(TalonWord, "to_parser", _TalonWord_to_parser)

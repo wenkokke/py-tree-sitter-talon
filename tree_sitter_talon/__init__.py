@@ -64,8 +64,8 @@ from .internal.dynamic import parse_file as parse_file
 from .internal.dynamic import parser as parser
 from .internal.parsec import AnyListValue as AnyListValue
 from .internal.parsec import AnyTalonRule as AnyTalonRule
+from .internal.parsec import find_command as find_command
 from .internal.parsec import match as match
-from .internal.parsec import to_parser as to_parser
 
 ################################################################################
 # Version Number

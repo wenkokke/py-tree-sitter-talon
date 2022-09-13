@@ -101,17 +101,6 @@ class TalonSourceFile(Branch):
             collections.abc.Callable[[str], typing.Optional[AnyListValue]]
         ] = None,
     ) -> typing.Optional["TalonCommandDeclaration"]: ...
-    def to_parser(
-        self,
-        *,
-        fullmatch: bool = False,
-        get_capture: typing.Optional[
-            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
-        ] = None,
-        get_list: typing.Optional[
-            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
-        ],
-    ) -> parsec.Parser: ...
 
 class TalonComment(Leaf):
     def get_docstring(self) -> typing.Optional[str]: ...
@@ -161,17 +150,6 @@ class TalonCommandDeclaration(Branch, TalonDeclaration):
             collections.abc.Callable[[str], typing.Optional[AnyListValue]]
         ] = None,
     ) -> bool: ...
-    def to_parser(
-        self,
-        *,
-        fullmatch: bool = False,
-        get_capture: typing.Optional[
-            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
-        ] = None,
-        get_list: typing.Optional[
-            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
-        ],
-    ) -> parsec.Parser: ...
 
 @dataclasses.dataclass
 class TalonKeyBindingDeclaration(Branch, TalonDeclaration):
@@ -208,17 +186,6 @@ class TalonCapture(Branch):
             collections.abc.Callable[[str], typing.Optional[AnyListValue]]
         ] = None,
     ) -> bool: ...
-    def to_parser(
-        self,
-        *,
-        fullmatch: bool = False,
-        get_capture: typing.Optional[
-            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
-        ] = None,
-        get_list: typing.Optional[
-            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
-        ],
-    ) -> parsec.Parser: ...
 
 @dataclasses.dataclass
 class TalonChoice(Branch):
@@ -249,17 +216,6 @@ class TalonChoice(Branch):
             collections.abc.Callable[[str], typing.Optional[AnyListValue]]
         ] = None,
     ) -> bool: ...
-    def to_parser(
-        self,
-        *,
-        fullmatch: bool = False,
-        get_capture: typing.Optional[
-            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
-        ] = None,
-        get_list: typing.Optional[
-            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
-        ],
-    ) -> parsec.Parser: ...
 
 class TalonEndAnchor(Leaf):
     def match(
@@ -274,17 +230,6 @@ class TalonEndAnchor(Leaf):
             collections.abc.Callable[[str], typing.Optional[AnyListValue]]
         ] = None,
     ) -> bool: ...
-    def to_parser(
-        self,
-        *,
-        fullmatch: bool = False,
-        get_capture: typing.Optional[
-            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
-        ] = None,
-        get_list: typing.Optional[
-            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
-        ],
-    ) -> parsec.Parser: ...
 
 @dataclasses.dataclass
 class TalonList(Branch):
@@ -302,17 +247,6 @@ class TalonList(Branch):
             collections.abc.Callable[[str], typing.Optional[AnyListValue]]
         ] = None,
     ) -> bool: ...
-    def to_parser(
-        self,
-        *,
-        fullmatch: bool = False,
-        get_capture: typing.Optional[
-            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
-        ] = None,
-        get_list: typing.Optional[
-            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
-        ],
-    ) -> parsec.Parser: ...
 
 @dataclasses.dataclass
 class TalonOptional(Branch):
@@ -359,17 +293,6 @@ class TalonOptional(Branch):
             collections.abc.Callable[[str], typing.Optional[AnyListValue]]
         ] = None,
     ) -> bool: ...
-    def to_parser(
-        self,
-        *,
-        fullmatch: bool = False,
-        get_capture: typing.Optional[
-            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
-        ] = None,
-        get_list: typing.Optional[
-            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
-        ],
-    ) -> parsec.Parser: ...
 
 @dataclasses.dataclass
 class TalonParenthesizedRule(Branch):
@@ -416,17 +339,6 @@ class TalonParenthesizedRule(Branch):
             collections.abc.Callable[[str], typing.Optional[AnyListValue]]
         ] = None,
     ) -> bool: ...
-    def to_parser(
-        self,
-        *,
-        fullmatch: bool = False,
-        get_capture: typing.Optional[
-            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
-        ] = None,
-        get_list: typing.Optional[
-            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
-        ],
-    ) -> parsec.Parser: ...
 
 @dataclasses.dataclass
 class TalonRepeat(Branch):
@@ -465,17 +377,6 @@ class TalonRepeat(Branch):
             collections.abc.Callable[[str], typing.Optional[AnyListValue]]
         ] = None,
     ) -> bool: ...
-    def to_parser(
-        self,
-        *,
-        fullmatch: bool = False,
-        get_capture: typing.Optional[
-            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
-        ] = None,
-        get_list: typing.Optional[
-            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
-        ],
-    ) -> parsec.Parser: ...
 
 @dataclasses.dataclass
 class TalonRepeat1(Branch):
@@ -514,17 +415,6 @@ class TalonRepeat1(Branch):
             collections.abc.Callable[[str], typing.Optional[AnyListValue]]
         ] = None,
     ) -> bool: ...
-    def to_parser(
-        self,
-        *,
-        fullmatch: bool = False,
-        get_capture: typing.Optional[
-            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
-        ] = None,
-        get_list: typing.Optional[
-            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
-        ],
-    ) -> parsec.Parser: ...
 
 @dataclasses.dataclass
 class TalonRule(Branch):
@@ -556,17 +446,6 @@ class TalonRule(Branch):
             collections.abc.Callable[[str], typing.Optional[AnyListValue]]
         ] = None,
     ) -> bool: ...
-    def to_parser(
-        self,
-        *,
-        fullmatch: bool = False,
-        get_capture: typing.Optional[
-            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
-        ] = None,
-        get_list: typing.Optional[
-            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
-        ],
-    ) -> parsec.Parser: ...
 
 @dataclasses.dataclass
 class TalonSeq(Branch):
@@ -594,17 +473,6 @@ class TalonSeq(Branch):
             collections.abc.Callable[[str], typing.Optional[AnyListValue]]
         ] = None,
     ) -> bool: ...
-    def to_parser(
-        self,
-        *,
-        fullmatch: bool = False,
-        get_capture: typing.Optional[
-            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
-        ] = None,
-        get_list: typing.Optional[
-            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
-        ],
-    ) -> parsec.Parser: ...
 
 class TalonStartAnchor(Leaf):
     def match(
@@ -619,17 +487,6 @@ class TalonStartAnchor(Leaf):
             collections.abc.Callable[[str], typing.Optional[AnyListValue]]
         ] = None,
     ) -> bool: ...
-    def to_parser(
-        self,
-        *,
-        fullmatch: bool = False,
-        get_capture: typing.Optional[
-            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
-        ] = None,
-        get_list: typing.Optional[
-            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
-        ],
-    ) -> parsec.Parser: ...
 
 class TalonWord(Leaf):
     def match(
@@ -644,17 +501,6 @@ class TalonWord(Leaf):
             collections.abc.Callable[[str], typing.Optional[AnyListValue]]
         ] = None,
     ) -> bool: ...
-    def to_parser(
-        self,
-        *,
-        fullmatch: bool = False,
-        get_capture: typing.Optional[
-            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
-        ] = None,
-        get_list: typing.Optional[
-            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
-        ],
-    ) -> parsec.Parser: ...
 
 # Statements.
 
