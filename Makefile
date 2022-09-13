@@ -14,7 +14,7 @@ test:
 
 bump-version:
 	@poetry run bumpver update
-	@$(MAKE) release
+	@$(MAKE) release-version
 
 release-version:
 	@git tag 'v$(VERSION)'
