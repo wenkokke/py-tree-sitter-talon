@@ -144,11 +144,19 @@ setattr(TalonCommandDeclaration, "to_parser", _TalonCommandDeclaration_to_parser
 # Compile TalonRule to parsec.Parser
 ################################################################################
 
-_T = typing.TypeVar("_T")
 
-
-def _pure(value: _T) -> parsec.Parser:
+def _pure(value) -> parsec.Parser:
     return parsec.Parser(fn=lambda text, index: parsec.Value.success(index, value))
+
+
+def _token(token) -> parsec.Parser:
+    def _token_parser(text, index: int) -> parsec.Value:
+        if text[index] == token:
+            return parsec.Value.success(index + 1, None)
+        else:
+            return parsec.Value.failure(index, str(token))
+
+    return parsec.Parser(fn=_token_parser)
 
 
 def _TalonCapture_to_parser(
@@ -163,7 +171,7 @@ def _TalonCapture_to_parser(
         capture = get_capture(capture_name)
         if capture:
             return to_parser(capture, get_capture=get_capture, get_list=get_list)
-    return parsec.string([f"<{capture_name}>"]).result(None)
+    return _token(f"<{capture_name}>").result(None)
 
 
 setattr(TalonCapture, "to_parser", _TalonCapture_to_parser)
@@ -176,21 +184,18 @@ def _TalonChoice_to_parser(
     get_capture: typing.Optional[GetTalonCapture] = None,
     get_list: typing.Optional[GetTalonList],
 ) -> parsec.Parser:
-    buffer: list[parsec.Parser] = []
-    for rule in self.children:
-        if isinstance(rule, TalonComment):
-            continue
-        else:
-            buffer.append(
-                to_parser(
-                    rule,
-                    fullmatch=fullmatch,
-                    get_capture=get_capture,
-                    get_list=get_list,
-                )
+    acc: typing.Optional[parsec.Parser] = None
+    for rule in reversed(self.children):
+        if not isinstance(rule, TalonComment):
+            parser = to_parser(
+                rule,
+                fullmatch=fullmatch,
+                get_capture=get_capture,
+                get_list=get_list,
             )
-    assert bool(buffer), "TalonChoice has no options."
-    return functools.reduce(parsec.try_choice, buffer)
+            acc = parser ^ acc if acc else parser
+    assert acc is not None
+    return acc.result(None)
 
 
 setattr(TalonChoice, "to_parser", _TalonChoice_to_parser)
@@ -225,8 +230,8 @@ def _TalonList_to_parser(
         if isinstance(list_value, dict):
             list_value = list(list_value.keys())
         if isinstance(list_value, list):
-            return parsec.one_of([[item] for item in list_value]).result(None)
-    return parsec.string([f"{{{list_name}}}"]).result(None)
+            return parsec.one_of([[item] for item in list_value])
+    return _token(f"{{{list_name}}}").result(None)
 
 
 setattr(TalonList, "to_parser", _TalonList_to_parser)
@@ -246,7 +251,7 @@ def _TalonOptional_to_parser(
             get_capture=get_capture,
             get_list=get_list,
         )
-    )
+    ).result(None)
 
 
 setattr(TalonOptional, "to_parser", _TalonOptional_to_parser)
@@ -264,7 +269,7 @@ def _TalonParenthesizedRule_to_parser(
         fullmatch=fullmatch,
         get_capture=get_capture,
         get_list=get_list,
-    )
+    ).result(None)
 
 
 setattr(TalonParenthesizedRule, "to_parser", _TalonParenthesizedRule_to_parser)
@@ -317,23 +322,18 @@ def _TalonRule_to_parser(
     get_capture: typing.Optional[GetTalonCapture] = None,
     get_list: typing.Optional[GetTalonList],
 ) -> parsec.Parser:
-    buffer: list[parsec.Parser] = []
-    for rule in self.children:
-        if isinstance(rule, TalonComment) or (
-            not fullmatch and isinstance(rule, (TalonStartAnchor, TalonEndAnchor))
-        ):
-            continue
-        else:
-            buffer.append(
-                to_parser(
-                    rule,
-                    fullmatch=fullmatch,
-                    get_capture=get_capture,
-                    get_list=get_list,
-                )
+    acc: typing.Optional[parsec.Parser] = None
+    for rule in reversed(self.children):
+        if not isinstance(rule, TalonComment):
+            parser = to_parser(
+                rule,
+                fullmatch=fullmatch,
+                get_capture=get_capture,
+                get_list=get_list,
             )
-    assert bool(buffer), "TalonSeq has no items."
-    return functools.reduce(parsec.compose, buffer)
+            acc = (parser >> acc) if acc else parser
+    assert acc is not None
+    return acc.result(None)
 
 
 setattr(TalonRule, "to_parser", _TalonRule_to_parser)
@@ -346,21 +346,18 @@ def _TalonSeq_to_parser(
     get_capture: typing.Optional[GetTalonCapture] = None,
     get_list: typing.Optional[GetTalonList],
 ) -> parsec.Parser:
-    buffer: list[parsec.Parser] = []
-    for rule in self.children:
-        if isinstance(rule, TalonComment):
-            continue
-        else:
-            buffer.append(
-                to_parser(
-                    rule,
-                    fullmatch=fullmatch,
-                    get_capture=get_capture,
-                    get_list=get_list,
-                )
+    acc: typing.Optional[parsec.Parser] = None
+    for rule in reversed(self.children):
+        if not isinstance(rule, TalonComment):
+            parser = to_parser(
+                rule,
+                fullmatch=fullmatch,
+                get_capture=get_capture,
+                get_list=get_list,
             )
-    assert bool(buffer), "TalonSeq has no items."
-    return functools.reduce(parsec.compose, buffer)
+            acc = parser > acc if acc else parser
+    assert acc is not None
+    return acc.result(None)
 
 
 setattr(TalonSeq, "to_parser", _TalonSeq_to_parser)
@@ -396,7 +393,7 @@ def _TalonWord_to_parser(
     get_capture: typing.Optional[GetTalonCapture] = None,
     get_list: typing.Optional[GetTalonList],
 ) -> parsec.Parser:
-    return parsec.string([self.text]).result(None)
+    return _token(self.text).result(None)
 
 
 setattr(TalonWord, "to_parser", _TalonWord_to_parser)

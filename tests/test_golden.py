@@ -31,4 +31,12 @@ def test_golden_parsec(golden):
     source_file = tree_sitter_talon.parse(golden["input"])
     assert isinstance(source_file, tree_sitter_talon.TalonSourceFile)
     parser = tree_sitter_talon.parsec.to_parser(source_file)
-    # TODO: golden test files should optionally include sample commands
+    try:
+        for command in golden["commands"]:
+            assert isinstance(command, str)
+            command_input = list(command.split())
+            print(command_input)
+            result = parser.parse_strict(command_input)
+            assert isinstance(result, tree_sitter_talon.TalonCommandDeclaration)
+    except KeyError:
+        pass

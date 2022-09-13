@@ -97,8 +97,9 @@ setattr(Node, "is_extra", _is_extra)
 def _get_child_fail_msg(self: Node, children: typing.Iterable[Node] = []) -> str:
     return "\n".join(
         [
-            f"Node {self.type_name} should have exactly one non-comment child, found:",
+            f"Node '{self.type_name}' should have exactly one non-comment child, found:",
             *[f"- {child}" for child in children],
+            f"in {self}",
         ]
     )
 
@@ -115,7 +116,7 @@ def _get_child(self: Node) -> Node:
         )
         return self.children
     else:
-        for i in range(0, len(self.children) - 1):
+        for i in range(0, len(self.children)):
             if _is_extra(self.children[i]):
                 continue
             assert all(
