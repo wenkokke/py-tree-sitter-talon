@@ -1,3 +1,4 @@
+import collections.abc
 import dataclasses
 import pathlib
 import typing
@@ -47,7 +48,7 @@ class Leaf(Node):
 
 @dataclasses.dataclass
 class Branch(Node):
-    children: typing.Union[None, Node, typing.Sequence[Node]]
+    children: typing.Union[None, Node, collections.abc.Sequence[Node]]
 
 @dataclasses.dataclass
 class ParseError(Exception, Branch):
@@ -84,18 +85,30 @@ def from_tree_sitter(
 
 @dataclasses.dataclass
 class TalonSourceFile(Branch):
-    children: typing.Sequence[
+    children: collections.abc.Sequence[
         typing.Union[TalonDeclaration, TalonMatches, TalonComment]
     ]
+    def find_command(
+        self,
+        text: collections.abc.Sequence[str],
+        *,
+        fullmatch: bool = False,
+        get_capture: typing.Optional[
+            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
+        ] = None,
+        get_list: typing.Optional[
+            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
+        ] = None,
+    ) -> typing.Optional["TalonCommandDeclaration"]: ...
     def to_parser(
         self,
         *,
         fullmatch: bool = False,
         get_capture: typing.Optional[
-            typing.Callable[[str], typing.Optional[AnyTalonRule]]
+            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
         ] = None,
         get_list: typing.Optional[
-            typing.Callable[[str], typing.Optional[AnyListValue]]
+            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
         ],
     ) -> parsec.Parser: ...
 
@@ -104,7 +117,7 @@ class TalonComment(Leaf):
 
 @dataclasses.dataclass
 class TalonError(Exception, Branch):
-    children: typing.Sequence[Node]
+    children: collections.abc.Sequence[Node]
     contents: typing.Optional[str] = None
     filename: typing.Optional[str] = None
 
@@ -112,13 +125,13 @@ class TalonError(Exception, Branch):
 
 @dataclasses.dataclass
 class TalonMatches(Branch):
-    children: typing.Sequence[typing.Union[TalonMatch, TalonComment]]
+    children: collections.abc.Sequence[typing.Union[TalonMatch, TalonComment]]
 
 @dataclasses.dataclass
 class TalonMatch(Branch):
-    children: typing.Sequence[TalonComment]
+    children: collections.abc.Sequence[TalonComment]
     key: TalonIdentifier
-    modifier: typing.Sequence[TalonMatchModifier]
+    modifier: collections.abc.Sequence[TalonMatchModifier]
     pattern: TalonImplicitString
 
 class TalonMatchModifier(Leaf):
@@ -131,59 +144,83 @@ class TalonDeclaration(Node):
 
 @dataclasses.dataclass
 class TalonCommandDeclaration(Branch, TalonDeclaration):
-    children: typing.Sequence[TalonComment]
+    children: collections.abc.Sequence[TalonComment]
     rule: TalonRule
     script: TalonBlock
+    def match(
+        self,
+        text: collections.abc.Sequence[str],
+        *,
+        fullmatch: bool = False,
+        get_capture: typing.Optional[
+            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
+        ] = None,
+        get_list: typing.Optional[
+            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
+        ] = None,
+    ) -> bool: ...
     def to_parser(
         self,
         *,
         fullmatch: bool = False,
         get_capture: typing.Optional[
-            typing.Callable[[str], typing.Optional[AnyTalonRule]]
+            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
         ] = None,
         get_list: typing.Optional[
-            typing.Callable[[str], typing.Optional[AnyListValue]]
+            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
         ],
     ) -> parsec.Parser: ...
 
 @dataclasses.dataclass
 class TalonKeyBindingDeclaration(Branch, TalonDeclaration):
-    children: typing.Sequence[TalonComment]
+    children: collections.abc.Sequence[TalonComment]
     key: TalonKeyAction
     script: TalonBlock
 
 @dataclasses.dataclass
 class TalonSettingsDeclaration(Branch, TalonDeclaration):
-    children: typing.Sequence[typing.Union[TalonBlock, TalonComment]]
+    children: collections.abc.Sequence[typing.Union[TalonBlock, TalonComment]]
 
     def get_child(self) -> TalonBlock: ...
 
 @dataclasses.dataclass
 class TalonTagImportDeclaration(Branch, TalonDeclaration):
-    children: typing.Sequence[TalonComment]
+    children: collections.abc.Sequence[TalonComment]
     tag: TalonIdentifier
 
 # Rules.
 
 @dataclasses.dataclass
 class TalonCapture(Branch):
-    children: typing.Sequence[TalonComment]
+    children: collections.abc.Sequence[TalonComment]
     capture_name: TalonIdentifier
+    def match(
+        self,
+        text: collections.abc.Sequence[str],
+        *,
+        fullmatch: bool = False,
+        get_capture: typing.Optional[
+            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
+        ] = None,
+        get_list: typing.Optional[
+            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
+        ] = None,
+    ) -> bool: ...
     def to_parser(
         self,
         *,
         fullmatch: bool = False,
         get_capture: typing.Optional[
-            typing.Callable[[str], typing.Optional[AnyTalonRule]]
+            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
         ] = None,
         get_list: typing.Optional[
-            typing.Callable[[str], typing.Optional[AnyListValue]]
+            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
         ],
     ) -> parsec.Parser: ...
 
 @dataclasses.dataclass
 class TalonChoice(Branch):
-    children: typing.Sequence[
+    children: collections.abc.Sequence[
         typing.Union[
             TalonCapture,
             TalonEndAnchor,
@@ -198,50 +235,86 @@ class TalonChoice(Branch):
             TalonComment,
         ]
     ]
+    def match(
+        self,
+        text: collections.abc.Sequence[str],
+        *,
+        fullmatch: bool = False,
+        get_capture: typing.Optional[
+            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
+        ] = None,
+        get_list: typing.Optional[
+            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
+        ] = None,
+    ) -> bool: ...
     def to_parser(
         self,
         *,
         fullmatch: bool = False,
         get_capture: typing.Optional[
-            typing.Callable[[str], typing.Optional[AnyTalonRule]]
+            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
         ] = None,
         get_list: typing.Optional[
-            typing.Callable[[str], typing.Optional[AnyListValue]]
+            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
         ],
     ) -> parsec.Parser: ...
 
 class TalonEndAnchor(Leaf):
+    def match(
+        self,
+        text: collections.abc.Sequence[str],
+        *,
+        fullmatch: bool = False,
+        get_capture: typing.Optional[
+            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
+        ] = None,
+        get_list: typing.Optional[
+            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
+        ] = None,
+    ) -> bool: ...
     def to_parser(
         self,
         *,
         fullmatch: bool = False,
         get_capture: typing.Optional[
-            typing.Callable[[str], typing.Optional[AnyTalonRule]]
+            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
         ] = None,
         get_list: typing.Optional[
-            typing.Callable[[str], typing.Optional[AnyListValue]]
+            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
         ],
     ) -> parsec.Parser: ...
 
 @dataclasses.dataclass
 class TalonList(Branch):
-    children: typing.Sequence[TalonComment]
+    children: collections.abc.Sequence[TalonComment]
     list_name: TalonIdentifier
+    def match(
+        self,
+        text: collections.abc.Sequence[str],
+        *,
+        fullmatch: bool = False,
+        get_capture: typing.Optional[
+            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
+        ] = None,
+        get_list: typing.Optional[
+            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
+        ] = None,
+    ) -> bool: ...
     def to_parser(
         self,
         *,
         fullmatch: bool = False,
         get_capture: typing.Optional[
-            typing.Callable[[str], typing.Optional[AnyTalonRule]]
+            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
         ] = None,
         get_list: typing.Optional[
-            typing.Callable[[str], typing.Optional[AnyListValue]]
+            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
         ],
     ) -> parsec.Parser: ...
 
 @dataclasses.dataclass
 class TalonOptional(Branch):
-    children: typing.Sequence[
+    children: collections.abc.Sequence[
         typing.Union[
             TalonCapture,
             TalonChoice,
@@ -272,21 +345,33 @@ class TalonOptional(Branch):
         TalonStartAnchor,
         TalonWord,
     ]: ...
+    def match(
+        self,
+        text: collections.abc.Sequence[str],
+        *,
+        fullmatch: bool = False,
+        get_capture: typing.Optional[
+            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
+        ] = None,
+        get_list: typing.Optional[
+            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
+        ] = None,
+    ) -> bool: ...
     def to_parser(
         self,
         *,
         fullmatch: bool = False,
         get_capture: typing.Optional[
-            typing.Callable[[str], typing.Optional[AnyTalonRule]]
+            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
         ] = None,
         get_list: typing.Optional[
-            typing.Callable[[str], typing.Optional[AnyListValue]]
+            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
         ],
     ) -> parsec.Parser: ...
 
 @dataclasses.dataclass
 class TalonParenthesizedRule(Branch):
-    children: typing.Sequence[
+    children: collections.abc.Sequence[
         typing.Union[
             TalonCapture,
             TalonChoice,
@@ -317,21 +402,33 @@ class TalonParenthesizedRule(Branch):
         TalonStartAnchor,
         TalonWord,
     ]: ...
+    def match(
+        self,
+        text: collections.abc.Sequence[str],
+        *,
+        fullmatch: bool = False,
+        get_capture: typing.Optional[
+            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
+        ] = None,
+        get_list: typing.Optional[
+            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
+        ] = None,
+    ) -> bool: ...
     def to_parser(
         self,
         *,
         fullmatch: bool = False,
         get_capture: typing.Optional[
-            typing.Callable[[str], typing.Optional[AnyTalonRule]]
+            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
         ] = None,
         get_list: typing.Optional[
-            typing.Callable[[str], typing.Optional[AnyListValue]]
+            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
         ],
     ) -> parsec.Parser: ...
 
 @dataclasses.dataclass
 class TalonRepeat(Branch):
-    children: typing.Sequence[
+    children: collections.abc.Sequence[
         typing.Union[
             TalonCapture,
             TalonList,
@@ -354,21 +451,33 @@ class TalonRepeat(Branch):
         TalonRepeat1,
         TalonWord,
     ]: ...
+    def match(
+        self,
+        text: collections.abc.Sequence[str],
+        *,
+        fullmatch: bool = False,
+        get_capture: typing.Optional[
+            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
+        ] = None,
+        get_list: typing.Optional[
+            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
+        ] = None,
+    ) -> bool: ...
     def to_parser(
         self,
         *,
         fullmatch: bool = False,
         get_capture: typing.Optional[
-            typing.Callable[[str], typing.Optional[AnyTalonRule]]
+            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
         ] = None,
         get_list: typing.Optional[
-            typing.Callable[[str], typing.Optional[AnyListValue]]
+            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
         ],
     ) -> parsec.Parser: ...
 
 @dataclasses.dataclass
 class TalonRepeat1(Branch):
-    children: typing.Sequence[
+    children: collections.abc.Sequence[
         typing.Union[
             TalonCapture,
             TalonList,
@@ -391,21 +500,33 @@ class TalonRepeat1(Branch):
         TalonRepeat1,
         TalonWord,
     ]: ...
+    def match(
+        self,
+        text: collections.abc.Sequence[str],
+        *,
+        fullmatch: bool = False,
+        get_capture: typing.Optional[
+            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
+        ] = None,
+        get_list: typing.Optional[
+            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
+        ] = None,
+    ) -> bool: ...
     def to_parser(
         self,
         *,
         fullmatch: bool = False,
         get_capture: typing.Optional[
-            typing.Callable[[str], typing.Optional[AnyTalonRule]]
+            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
         ] = None,
         get_list: typing.Optional[
-            typing.Callable[[str], typing.Optional[AnyListValue]]
+            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
         ],
     ) -> parsec.Parser: ...
 
 @dataclasses.dataclass
 class TalonRule(Branch):
-    children: typing.Sequence[
+    children: collections.abc.Sequence[
         typing.Union[
             TalonCapture,
             TalonChoice,
@@ -421,21 +542,33 @@ class TalonRule(Branch):
             TalonComment,
         ]
     ]
+    def match(
+        self,
+        text: collections.abc.Sequence[str],
+        *,
+        fullmatch: bool = False,
+        get_capture: typing.Optional[
+            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
+        ] = None,
+        get_list: typing.Optional[
+            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
+        ] = None,
+    ) -> bool: ...
     def to_parser(
         self,
         *,
         fullmatch: bool = False,
         get_capture: typing.Optional[
-            typing.Callable[[str], typing.Optional[AnyTalonRule]]
+            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
         ] = None,
         get_list: typing.Optional[
-            typing.Callable[[str], typing.Optional[AnyListValue]]
+            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
         ],
     ) -> parsec.Parser: ...
 
 @dataclasses.dataclass
 class TalonSeq(Branch):
-    children: typing.Sequence[
+    children: collections.abc.Sequence[
         typing.Union[
             TalonCapture,
             TalonList,
@@ -447,41 +580,77 @@ class TalonSeq(Branch):
             TalonComment,
         ]
     ]
+    def match(
+        self,
+        text: collections.abc.Sequence[str],
+        *,
+        fullmatch: bool = False,
+        get_capture: typing.Optional[
+            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
+        ] = None,
+        get_list: typing.Optional[
+            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
+        ] = None,
+    ) -> bool: ...
     def to_parser(
         self,
         *,
         fullmatch: bool = False,
         get_capture: typing.Optional[
-            typing.Callable[[str], typing.Optional[AnyTalonRule]]
+            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
         ] = None,
         get_list: typing.Optional[
-            typing.Callable[[str], typing.Optional[AnyListValue]]
+            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
         ],
     ) -> parsec.Parser: ...
 
 class TalonStartAnchor(Leaf):
+    def match(
+        self,
+        text: collections.abc.Sequence[str],
+        *,
+        fullmatch: bool = False,
+        get_capture: typing.Optional[
+            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
+        ] = None,
+        get_list: typing.Optional[
+            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
+        ] = None,
+    ) -> bool: ...
     def to_parser(
         self,
         *,
         fullmatch: bool = False,
         get_capture: typing.Optional[
-            typing.Callable[[str], typing.Optional[AnyTalonRule]]
+            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
         ] = None,
         get_list: typing.Optional[
-            typing.Callable[[str], typing.Optional[AnyListValue]]
+            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
         ],
     ) -> parsec.Parser: ...
 
 class TalonWord(Leaf):
+    def match(
+        self,
+        text: collections.abc.Sequence[str],
+        *,
+        fullmatch: bool = False,
+        get_capture: typing.Optional[
+            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
+        ] = None,
+        get_list: typing.Optional[
+            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
+        ] = None,
+    ) -> bool: ...
     def to_parser(
         self,
         *,
         fullmatch: bool = False,
         get_capture: typing.Optional[
-            typing.Callable[[str], typing.Optional[AnyTalonRule]]
+            collections.abc.Callable[[str], typing.Optional[AnyTalonRule]]
         ] = None,
         get_list: typing.Optional[
-            typing.Callable[[str], typing.Optional[AnyListValue]]
+            collections.abc.Callable[[str], typing.Optional[AnyListValue]]
         ],
     ) -> parsec.Parser: ...
 
@@ -492,18 +661,18 @@ class TalonStatement(Node):
 
 @dataclasses.dataclass
 class TalonAssignmentStatement(Branch, TalonStatement):
-    children: typing.Sequence[TalonComment]
+    children: collections.abc.Sequence[TalonComment]
     left: TalonIdentifier
     right: TalonExpression
 
 @dataclasses.dataclass
 class TalonExpressionStatement(Branch, TalonStatement):
-    children: typing.Sequence[TalonComment]
+    children: collections.abc.Sequence[TalonComment]
     expression: TalonExpression
 
 @dataclasses.dataclass
 class TalonBlock(Branch):
-    children: typing.Sequence[typing.Union[TalonStatement, TalonComment]]
+    children: collections.abc.Sequence[typing.Union[TalonStatement, TalonComment]]
 
 # Expressions.
 
@@ -512,40 +681,40 @@ class TalonExpression(Node):
 
 @dataclasses.dataclass
 class TalonAction(Branch, TalonExpression):
-    children: typing.Sequence[TalonComment]
+    children: collections.abc.Sequence[TalonComment]
     action_name: TalonIdentifier
     arguments: TalonArgumentList
 
 @dataclasses.dataclass
 class TalonArgumentList(Branch):
-    children: typing.Sequence[typing.Union[TalonExpression, TalonComment]]
+    children: collections.abc.Sequence[typing.Union[TalonExpression, TalonComment]]
 
 @dataclasses.dataclass
 class TalonBinaryOperator(Branch, TalonExpression):
-    children: typing.Sequence[TalonComment]
+    children: collections.abc.Sequence[TalonComment]
     left: TalonExpression
     operator: TalonOperator
     right: TalonExpression
 
 @dataclasses.dataclass
 class TalonKeyAction(Branch, TalonExpression):
-    children: typing.Sequence[TalonComment]
+    children: collections.abc.Sequence[TalonComment]
     arguments: TalonImplicitString
 
 @dataclasses.dataclass
 class TalonParenthesizedExpression(Branch, TalonExpression):
-    children: typing.Sequence[typing.Union[TalonExpression, TalonComment]]
+    children: collections.abc.Sequence[typing.Union[TalonExpression, TalonComment]]
 
     def get_child(self) -> TalonExpression: ...
 
 @dataclasses.dataclass
 class TalonSleepAction(Branch, TalonExpression):
-    children: typing.Sequence[TalonComment]
+    children: collections.abc.Sequence[TalonComment]
     arguments: TalonImplicitString
 
 @dataclasses.dataclass
 class TalonVariable(Branch, TalonExpression):
-    children: typing.Sequence[TalonComment]
+    children: collections.abc.Sequence[TalonComment]
     variable_name: TalonIdentifier
 
 # Identifiers.
@@ -563,13 +732,13 @@ class TalonImplicitString(Leaf):
 
 @dataclasses.dataclass
 class TalonInterpolation(Branch):
-    children: typing.Sequence[typing.Union[TalonExpression, TalonComment]]
+    children: collections.abc.Sequence[typing.Union[TalonExpression, TalonComment]]
 
     def get_child(self) -> TalonExpression: ...
 
 @dataclasses.dataclass
 class TalonString(Branch):
-    children: typing.Sequence[
+    children: collections.abc.Sequence[
         typing.Union[
             TalonInterpolation,
             TalonStringContent,

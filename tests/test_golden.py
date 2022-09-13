@@ -30,13 +30,10 @@ def test_golden_pickle(golden):
 def test_golden_parsec(golden):
     source_file = tree_sitter_talon.parse(golden["input"])
     assert isinstance(source_file, tree_sitter_talon.TalonSourceFile)
-    parser = tree_sitter_talon.internal.parsec.to_parser(source_file)
     try:
         for command in golden["commands"]:
             assert isinstance(command, str)
-            command_input = list(command.split())
-            print(command_input)
-            result = parser.parse_strict(command_input)
-            assert isinstance(result, tree_sitter_talon.TalonCommandDeclaration)
+            declaration = source_file.find_command(list(command.split()))
+            assert isinstance(declaration, tree_sitter_talon.TalonCommandDeclaration)
     except KeyError:
         pass
