@@ -88,6 +88,7 @@ class TalonSourceFile(Branch):
     children: collections.abc.Sequence[
         typing.Union[TalonDeclaration, TalonMatches, TalonComment]
     ]
+    def get_docstring(self) -> typing.Optional[str]: ...
     def find_command(
         self,
         text: collections.abc.Sequence[str],
@@ -113,7 +114,7 @@ class TalonSourceFile(Branch):
     ) -> parsec.Parser: ...
 
 class TalonComment(Leaf):
-    pass
+    def get_docstring(self) -> typing.Optional[str]: ...
 
 @dataclasses.dataclass
 class TalonError(Exception, Branch):
@@ -147,6 +148,7 @@ class TalonCommandDeclaration(Branch, TalonDeclaration):
     children: collections.abc.Sequence[TalonComment]
     rule: TalonRule
     script: TalonBlock
+    def get_docstring(self) -> typing.Optional[str]: ...
     def match(
         self,
         text: collections.abc.Sequence[str],

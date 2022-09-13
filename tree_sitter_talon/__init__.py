@@ -1,4 +1,5 @@
 import dataclasses
+import itertools
 import typing
 
 from .internal.dynamic import Branch as Branch
@@ -136,6 +137,52 @@ setattr(TalonRepeat, "get_child", _get_child)
 setattr(TalonRepeat1, "get_child", _get_child)
 setattr(TalonParenthesizedExpression, "get_child", _get_child)
 setattr(TalonInterpolation, "get_child", _get_child)
+
+################################################################################
+# Method to get docstrings
+################################################################################
+
+
+def _TalonComment_get_docstring(self: TalonComment) -> typing.Optional[str]:
+    if self.text.startswith("###"):
+        return self.text.removeprefix("###").strip()
+    return None
+
+
+setattr(TalonComment, "get_docstring", _TalonComment_get_docstring)
+
+
+def _TalonSourceFile_get_docstring(self: TalonSourceFile) -> typing.Optional[str]:
+    docstrings: list[str] = []
+    for comment in self.children:
+        if isinstance(comment, TalonComment):
+            docstring = _TalonComment_get_docstring(comment)
+            if docstring:
+                docstrings.append(docstring)
+        else:
+            break
+    return "\n".join(docstrings) if docstrings else None
+
+
+setattr(TalonSourceFile, "get_docstring", _TalonSourceFile_get_docstring)
+
+
+def _TalonCommandDeclaration_get_docstring(
+    self: TalonCommandDeclaration,
+) -> typing.Optional[str]:
+    docstrings: list[str] = []
+    for comment in [*self.children, *self.script.children]:
+        if isinstance(comment, TalonComment):
+            docstring = _TalonComment_get_docstring(comment)
+            if docstring:
+                docstrings.append(docstring)
+    return "\n".join(docstrings) if docstrings else None
+
+
+setattr(
+    TalonCommandDeclaration, "get_docstring", _TalonCommandDeclaration_get_docstring
+)
+
 
 ################################################################################
 # Pickle Compatibility
