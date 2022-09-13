@@ -74,7 +74,7 @@ from .internal.parsec import match as match
 # TODO: Switch to "1!{tree-sitter-talon.version}.{build}".
 #       Blocked on <python-poetry/poetry/issues/6466>.
 
-__version__: str = "1001.2.0.0"
+__version__: str = "1002.2.0.0"
 #                   ^^^^ build
 #                        ^^^^^ tree-sitter-talon version
 
