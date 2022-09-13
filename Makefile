@@ -4,7 +4,6 @@ build:
 	poetry build
 
 build-doc:
-	poetry install -E docs
 	poetry run sphinx-build -M "html" "docs" "docs/_build"
 
 serve:
