@@ -1,10 +1,12 @@
 import dataclasses
 import pathlib
-import re
 import typing
 
 import dataclasses_json
-import tree_sitter  # type: ignore
+import parsec
+import tree_sitter
+
+from .parsec import AnyListValue, AnyTalonRule
 
 ################################################################################
 # Extended node types (from tree-sitter-type-provider)
@@ -85,6 +87,17 @@ class TalonSourceFile(Branch):
     children: typing.Sequence[
         typing.Union[TalonDeclaration, TalonMatches, TalonComment]
     ]
+    def to_parser(
+        self,
+        *,
+        fullmatch: bool = False,
+        get_capture: typing.Optional[
+            typing.Callable[[str], typing.Optional[AnyTalonRule]]
+        ] = None,
+        get_list: typing.Optional[
+            typing.Callable[[str], typing.Optional[AnyListValue]]
+        ],
+    ) -> parsec.Parser: ...
 
 class TalonComment(Leaf):
     pass
@@ -121,6 +134,17 @@ class TalonCommandDeclaration(Branch, TalonDeclaration):
     children: typing.Sequence[TalonComment]
     rule: TalonRule
     script: TalonBlock
+    def to_parser(
+        self,
+        *,
+        fullmatch: bool = False,
+        get_capture: typing.Optional[
+            typing.Callable[[str], typing.Optional[AnyTalonRule]]
+        ] = None,
+        get_list: typing.Optional[
+            typing.Callable[[str], typing.Optional[AnyListValue]]
+        ],
+    ) -> parsec.Parser: ...
 
 @dataclasses.dataclass
 class TalonKeyBindingDeclaration(Branch, TalonDeclaration):
@@ -145,34 +169,17 @@ class TalonTagImportDeclaration(Branch, TalonDeclaration):
 class TalonCapture(Branch):
     children: typing.Sequence[TalonComment]
     capture_name: TalonIdentifier
-    def to_pattern(
+    def to_parser(
         self,
         *,
-        captures: typing.Optional[
-            typing.Callable[
-                [str],
-                typing.Optional[
-                    typing.Union[
-                        TalonCapture,
-                        TalonChoice,
-                        TalonEndAnchor,
-                        TalonList,
-                        TalonOptional,
-                        TalonParenthesizedRule,
-                        TalonRepeat,
-                        TalonRepeat1,
-                        TalonRule,
-                        TalonSeq,
-                        TalonStartAnchor,
-                        TalonWord,
-                    ]
-                ],
-            ]
+        fullmatch: bool = False,
+        get_capture: typing.Optional[
+            typing.Callable[[str], typing.Optional[AnyTalonRule]]
         ] = None,
-        lists: typing.Optional[
-            typing.Callable[[str], typing.Optional[list[str]]]
-        ] = None,
-    ) -> re.Pattern[str]: ...
+        get_list: typing.Optional[
+            typing.Callable[[str], typing.Optional[AnyListValue]]
+        ],
+    ) -> parsec.Parser: ...
 
 @dataclasses.dataclass
 class TalonChoice(Branch):
@@ -191,97 +198,46 @@ class TalonChoice(Branch):
             TalonComment,
         ]
     ]
-    def to_pattern(
+    def to_parser(
         self,
         *,
-        captures: typing.Optional[
-            typing.Callable[
-                [str],
-                typing.Optional[
-                    typing.Union[
-                        TalonCapture,
-                        TalonChoice,
-                        TalonEndAnchor,
-                        TalonList,
-                        TalonOptional,
-                        TalonParenthesizedRule,
-                        TalonRepeat,
-                        TalonRepeat1,
-                        TalonRule,
-                        TalonSeq,
-                        TalonStartAnchor,
-                        TalonWord,
-                    ]
-                ],
-            ]
+        fullmatch: bool = False,
+        get_capture: typing.Optional[
+            typing.Callable[[str], typing.Optional[AnyTalonRule]]
         ] = None,
-        lists: typing.Optional[
-            typing.Callable[[str], typing.Optional[list[str]]]
-        ] = None,
-    ) -> re.Pattern[str]: ...
+        get_list: typing.Optional[
+            typing.Callable[[str], typing.Optional[AnyListValue]]
+        ],
+    ) -> parsec.Parser: ...
 
 class TalonEndAnchor(Leaf):
-    def to_pattern(
+    def to_parser(
         self,
         *,
-        captures: typing.Optional[
-            typing.Callable[
-                [str],
-                typing.Optional[
-                    typing.Union[
-                        TalonCapture,
-                        TalonChoice,
-                        TalonEndAnchor,
-                        TalonList,
-                        TalonOptional,
-                        TalonParenthesizedRule,
-                        TalonRepeat,
-                        TalonRepeat1,
-                        TalonRule,
-                        TalonSeq,
-                        TalonStartAnchor,
-                        TalonWord,
-                    ]
-                ],
-            ]
+        fullmatch: bool = False,
+        get_capture: typing.Optional[
+            typing.Callable[[str], typing.Optional[AnyTalonRule]]
         ] = None,
-        lists: typing.Optional[
-            typing.Callable[[str], typing.Optional[list[str]]]
-        ] = None,
-    ) -> re.Pattern[str]: ...
+        get_list: typing.Optional[
+            typing.Callable[[str], typing.Optional[AnyListValue]]
+        ],
+    ) -> parsec.Parser: ...
 
 @dataclasses.dataclass
 class TalonList(Branch):
     children: typing.Sequence[TalonComment]
     list_name: TalonIdentifier
-    def to_pattern(
+    def to_parser(
         self,
         *,
-        captures: typing.Optional[
-            typing.Callable[
-                [str],
-                typing.Optional[
-                    typing.Union[
-                        TalonCapture,
-                        TalonChoice,
-                        TalonEndAnchor,
-                        TalonList,
-                        TalonOptional,
-                        TalonParenthesizedRule,
-                        TalonRepeat,
-                        TalonRepeat1,
-                        TalonRule,
-                        TalonSeq,
-                        TalonStartAnchor,
-                        TalonWord,
-                    ]
-                ],
-            ]
+        fullmatch: bool = False,
+        get_capture: typing.Optional[
+            typing.Callable[[str], typing.Optional[AnyTalonRule]]
         ] = None,
-        lists: typing.Optional[
-            typing.Callable[[str], typing.Optional[list[str]]]
-        ] = None,
-    ) -> re.Pattern[str]: ...
+        get_list: typing.Optional[
+            typing.Callable[[str], typing.Optional[AnyListValue]]
+        ],
+    ) -> parsec.Parser: ...
 
 @dataclasses.dataclass
 class TalonOptional(Branch):
@@ -316,34 +272,17 @@ class TalonOptional(Branch):
         TalonStartAnchor,
         TalonWord,
     ]: ...
-    def to_pattern(
+    def to_parser(
         self,
         *,
-        captures: typing.Optional[
-            typing.Callable[
-                [str],
-                typing.Optional[
-                    typing.Union[
-                        TalonCapture,
-                        TalonChoice,
-                        TalonEndAnchor,
-                        TalonList,
-                        TalonOptional,
-                        TalonParenthesizedRule,
-                        TalonRepeat,
-                        TalonRepeat1,
-                        TalonRule,
-                        TalonSeq,
-                        TalonStartAnchor,
-                        TalonWord,
-                    ]
-                ],
-            ]
+        fullmatch: bool = False,
+        get_capture: typing.Optional[
+            typing.Callable[[str], typing.Optional[AnyTalonRule]]
         ] = None,
-        lists: typing.Optional[
-            typing.Callable[[str], typing.Optional[list[str]]]
-        ] = None,
-    ) -> re.Pattern[str]: ...
+        get_list: typing.Optional[
+            typing.Callable[[str], typing.Optional[AnyListValue]]
+        ],
+    ) -> parsec.Parser: ...
 
 @dataclasses.dataclass
 class TalonParenthesizedRule(Branch):
@@ -378,34 +317,17 @@ class TalonParenthesizedRule(Branch):
         TalonStartAnchor,
         TalonWord,
     ]: ...
-    def to_pattern(
+    def to_parser(
         self,
         *,
-        captures: typing.Optional[
-            typing.Callable[
-                [str],
-                typing.Optional[
-                    typing.Union[
-                        TalonCapture,
-                        TalonChoice,
-                        TalonEndAnchor,
-                        TalonList,
-                        TalonOptional,
-                        TalonParenthesizedRule,
-                        TalonRepeat,
-                        TalonRepeat1,
-                        TalonRule,
-                        TalonSeq,
-                        TalonStartAnchor,
-                        TalonWord,
-                    ]
-                ],
-            ]
+        fullmatch: bool = False,
+        get_capture: typing.Optional[
+            typing.Callable[[str], typing.Optional[AnyTalonRule]]
         ] = None,
-        lists: typing.Optional[
-            typing.Callable[[str], typing.Optional[list[str]]]
-        ] = None,
-    ) -> re.Pattern[str]: ...
+        get_list: typing.Optional[
+            typing.Callable[[str], typing.Optional[AnyListValue]]
+        ],
+    ) -> parsec.Parser: ...
 
 @dataclasses.dataclass
 class TalonRepeat(Branch):
@@ -432,34 +354,17 @@ class TalonRepeat(Branch):
         TalonRepeat1,
         TalonWord,
     ]: ...
-    def to_pattern(
+    def to_parser(
         self,
         *,
-        captures: typing.Optional[
-            typing.Callable[
-                [str],
-                typing.Optional[
-                    typing.Union[
-                        TalonCapture,
-                        TalonChoice,
-                        TalonEndAnchor,
-                        TalonList,
-                        TalonOptional,
-                        TalonParenthesizedRule,
-                        TalonRepeat,
-                        TalonRepeat1,
-                        TalonRule,
-                        TalonSeq,
-                        TalonStartAnchor,
-                        TalonWord,
-                    ]
-                ],
-            ]
+        fullmatch: bool = False,
+        get_capture: typing.Optional[
+            typing.Callable[[str], typing.Optional[AnyTalonRule]]
         ] = None,
-        lists: typing.Optional[
-            typing.Callable[[str], typing.Optional[list[str]]]
-        ] = None,
-    ) -> re.Pattern[str]: ...
+        get_list: typing.Optional[
+            typing.Callable[[str], typing.Optional[AnyListValue]]
+        ],
+    ) -> parsec.Parser: ...
 
 @dataclasses.dataclass
 class TalonRepeat1(Branch):
@@ -486,34 +391,17 @@ class TalonRepeat1(Branch):
         TalonRepeat1,
         TalonWord,
     ]: ...
-    def to_pattern(
+    def to_parser(
         self,
         *,
-        captures: typing.Optional[
-            typing.Callable[
-                [str],
-                typing.Optional[
-                    typing.Union[
-                        TalonCapture,
-                        TalonChoice,
-                        TalonEndAnchor,
-                        TalonList,
-                        TalonOptional,
-                        TalonParenthesizedRule,
-                        TalonRepeat,
-                        TalonRepeat1,
-                        TalonRule,
-                        TalonSeq,
-                        TalonStartAnchor,
-                        TalonWord,
-                    ]
-                ],
-            ]
+        fullmatch: bool = False,
+        get_capture: typing.Optional[
+            typing.Callable[[str], typing.Optional[AnyTalonRule]]
         ] = None,
-        lists: typing.Optional[
-            typing.Callable[[str], typing.Optional[list[str]]]
-        ] = None,
-    ) -> re.Pattern[str]: ...
+        get_list: typing.Optional[
+            typing.Callable[[str], typing.Optional[AnyListValue]]
+        ],
+    ) -> parsec.Parser: ...
 
 @dataclasses.dataclass
 class TalonRule(Branch):
@@ -533,34 +421,17 @@ class TalonRule(Branch):
             TalonComment,
         ]
     ]
-    def to_pattern(
+    def to_parser(
         self,
         *,
-        captures: typing.Optional[
-            typing.Callable[
-                [str],
-                typing.Optional[
-                    typing.Union[
-                        TalonCapture,
-                        TalonChoice,
-                        TalonEndAnchor,
-                        TalonList,
-                        TalonOptional,
-                        TalonParenthesizedRule,
-                        TalonRepeat,
-                        TalonRepeat1,
-                        TalonRule,
-                        TalonSeq,
-                        TalonStartAnchor,
-                        TalonWord,
-                    ]
-                ],
-            ]
+        fullmatch: bool = False,
+        get_capture: typing.Optional[
+            typing.Callable[[str], typing.Optional[AnyTalonRule]]
         ] = None,
-        lists: typing.Optional[
-            typing.Callable[[str], typing.Optional[list[str]]]
-        ] = None,
-    ) -> re.Pattern[str]: ...
+        get_list: typing.Optional[
+            typing.Callable[[str], typing.Optional[AnyListValue]]
+        ],
+    ) -> parsec.Parser: ...
 
 @dataclasses.dataclass
 class TalonSeq(Branch):
@@ -576,94 +447,43 @@ class TalonSeq(Branch):
             TalonComment,
         ]
     ]
-    def to_pattern(
+    def to_parser(
         self,
         *,
-        captures: typing.Optional[
-            typing.Callable[
-                [str],
-                typing.Optional[
-                    typing.Union[
-                        TalonCapture,
-                        TalonChoice,
-                        TalonEndAnchor,
-                        TalonList,
-                        TalonOptional,
-                        TalonParenthesizedRule,
-                        TalonRepeat,
-                        TalonRepeat1,
-                        TalonRule,
-                        TalonSeq,
-                        TalonStartAnchor,
-                        TalonWord,
-                    ]
-                ],
-            ]
+        fullmatch: bool = False,
+        get_capture: typing.Optional[
+            typing.Callable[[str], typing.Optional[AnyTalonRule]]
         ] = None,
-        lists: typing.Optional[
-            typing.Callable[[str], typing.Optional[list[str]]]
-        ] = None,
-    ) -> re.Pattern[str]: ...
+        get_list: typing.Optional[
+            typing.Callable[[str], typing.Optional[AnyListValue]]
+        ],
+    ) -> parsec.Parser: ...
 
 class TalonStartAnchor(Leaf):
-    def to_pattern(
+    def to_parser(
         self,
         *,
-        captures: typing.Optional[
-            typing.Callable[
-                [str],
-                typing.Optional[
-                    typing.Union[
-                        TalonCapture,
-                        TalonChoice,
-                        TalonEndAnchor,
-                        TalonList,
-                        TalonOptional,
-                        TalonParenthesizedRule,
-                        TalonRepeat,
-                        TalonRepeat1,
-                        TalonRule,
-                        TalonSeq,
-                        TalonStartAnchor,
-                        TalonWord,
-                    ]
-                ],
-            ]
+        fullmatch: bool = False,
+        get_capture: typing.Optional[
+            typing.Callable[[str], typing.Optional[AnyTalonRule]]
         ] = None,
-        lists: typing.Optional[
-            typing.Callable[[str], typing.Optional[list[str]]]
-        ] = None,
-    ) -> re.Pattern[str]: ...
+        get_list: typing.Optional[
+            typing.Callable[[str], typing.Optional[AnyListValue]]
+        ],
+    ) -> parsec.Parser: ...
 
 class TalonWord(Leaf):
-    def to_pattern(
+    def to_parser(
         self,
         *,
-        captures: typing.Optional[
-            typing.Callable[
-                [str],
-                typing.Optional[
-                    typing.Union[
-                        TalonCapture,
-                        TalonChoice,
-                        TalonEndAnchor,
-                        TalonList,
-                        TalonOptional,
-                        TalonParenthesizedRule,
-                        TalonRepeat,
-                        TalonRepeat1,
-                        TalonRule,
-                        TalonSeq,
-                        TalonStartAnchor,
-                        TalonWord,
-                    ]
-                ],
-            ]
+        fullmatch: bool = False,
+        get_capture: typing.Optional[
+            typing.Callable[[str], typing.Optional[AnyTalonRule]]
         ] = None,
-        lists: typing.Optional[
-            typing.Callable[[str], typing.Optional[list[str]]]
-        ] = None,
-    ) -> re.Pattern[str]: ...
+        get_list: typing.Optional[
+            typing.Callable[[str], typing.Optional[AnyListValue]]
+        ],
+    ) -> parsec.Parser: ...
 
 # Statements.
 

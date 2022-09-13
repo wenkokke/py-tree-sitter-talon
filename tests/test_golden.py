@@ -4,7 +4,7 @@ import pickle
 import pytest
 
 import tree_sitter_talon
-import tree_sitter_talon.parsec
+import tree_sitter_talon.internal.parsec
 
 from . import node_dict_simplify
 
@@ -30,7 +30,7 @@ def test_golden_pickle(golden):
 def test_golden_parsec(golden):
     source_file = tree_sitter_talon.parse(golden["input"])
     assert isinstance(source_file, tree_sitter_talon.TalonSourceFile)
-    parser = tree_sitter_talon.parsec.to_parser(source_file)
+    parser = tree_sitter_talon.internal.parsec.to_parser(source_file)
     try:
         for command in golden["commands"]:
             assert isinstance(command, str)
