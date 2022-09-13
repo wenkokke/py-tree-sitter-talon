@@ -4,6 +4,7 @@ import pickle
 import pytest
 
 import tree_sitter_talon
+import tree_sitter_talon.parsec
 
 from . import node_dict_simplify
 
@@ -23,3 +24,11 @@ def test_golden_pickle(golden):
     buffer_in = io.BytesIO(buffer_out.getvalue())
     node_after = pickle.load(buffer_in)
     assert node_before == node_after
+
+
+@pytest.mark.golden_test("data/golden/*.yml")
+def test_golden_parsec(golden):
+    source_file = tree_sitter_talon.parse(golden["input"])
+    assert isinstance(source_file, tree_sitter_talon.TalonSourceFile)
+    parser = tree_sitter_talon.parsec.to_parser(source_file)
+    # TODO: golden test files should optionally include sample commands
