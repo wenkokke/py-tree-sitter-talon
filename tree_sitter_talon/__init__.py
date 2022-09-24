@@ -74,9 +74,72 @@ from .internal.parsec import match as match
 # TODO: Switch to "1!{tree-sitter-talon.version}.{build}".
 #       Blocked on <python-poetry/poetry/issues/6466>.
 
-__version__: str = "1002.2.0.0"
+__version__: str = "1002.3.1.0"
 #                   ^^^^ build
 #                        ^^^^^ tree-sitter-talon version
+
+
+################################################################################
+# Properties for backwards compatibility
+################################################################################
+
+
+def _TalonMatch_key(self) -> TalonIdentifier:
+    return self.left
+
+
+setattr(TalonMatch, "key", property(_TalonMatch_key))
+
+
+def _TalonMatch_modifier(self) -> TalonIdentifier:
+    return self.modifiers
+
+
+setattr(TalonMatch, "modifier", property(_TalonMatch_modifier))
+
+
+def _TalonMatch_pattern(self) -> TalonIdentifier:
+    return self.right
+
+
+setattr(TalonMatch, "pattern", property(_TalonMatch_pattern))
+
+
+def _TalonCommandDeclaration_rule(self) -> TalonIdentifier:
+    return self.left
+
+
+setattr(TalonCommandDeclaration, "rule", property(_TalonCommandDeclaration_rule))
+
+
+def _TalonCommandDeclaration_script(self) -> TalonIdentifier:
+    return self.right
+
+
+setattr(TalonCommandDeclaration, "script", property(_TalonCommandDeclaration_script))
+
+
+def _TalonKeyBindingDeclaration_key(self) -> TalonIdentifier:
+    return self.left
+
+
+setattr(TalonKeyBindingDeclaration, "key", property(_TalonKeyBindingDeclaration_key))
+
+
+def _TalonKeyBindingDeclaration_script(self) -> TalonIdentifier:
+    return self.right
+
+
+setattr(
+    TalonKeyBindingDeclaration, "script", property(_TalonKeyBindingDeclaration_script)
+)
+
+
+def _TalonTagImportDeclaration_tag(self) -> TalonIdentifier:
+    return self.right
+
+
+setattr(TalonTagImportDeclaration, "tag", property(_TalonTagImportDeclaration_tag))
 
 
 ################################################################################

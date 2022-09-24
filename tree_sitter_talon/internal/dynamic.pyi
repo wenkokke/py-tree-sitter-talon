@@ -120,14 +120,24 @@ class TalonMatches(Branch):
 @dataclasses.dataclass
 class TalonMatch(Branch):
     children: collections.abc.Sequence[TalonComment]
-    key: TalonIdentifier
-    modifier: collections.abc.Sequence[TalonMatchModifier]
-    pattern: TalonImplicitString
+    left: TalonIdentifier
+    modifiers: collections.abc.Sequence[TalonMatchModifier]
+    right: TalonImplicitString
+
+    @property
+    def key(self) -> TalonIdentifier: ...
+    @property
+    def modifier(self) -> collections.abc.Sequence[TalonMatchModifier]: ...
+    @property
+    def pattern(self) -> TalonImplicitString: ...
 
 class TalonMatchModifier(Leaf):
     pass
 
 # Declarations.
+
+class TalonDeclarations(Branch):
+    children: collections.abc.Sequence[TalonDeclaration]
 
 class TalonDeclaration(Node):
     pass
@@ -135,8 +145,13 @@ class TalonDeclaration(Node):
 @dataclasses.dataclass
 class TalonCommandDeclaration(Branch, TalonDeclaration):
     children: collections.abc.Sequence[TalonComment]
-    rule: TalonRule
-    script: TalonBlock
+    left: TalonRule
+    right: TalonBlock
+
+    @property
+    def rule(self) -> TalonRule: ...
+    @property
+    def script(self) -> TalonBlock: ...
     def get_docstring(self) -> typing.Optional[str]: ...
     def match(
         self,
@@ -154,19 +169,28 @@ class TalonCommandDeclaration(Branch, TalonDeclaration):
 @dataclasses.dataclass
 class TalonKeyBindingDeclaration(Branch, TalonDeclaration):
     children: collections.abc.Sequence[TalonComment]
-    key: TalonKeyAction
-    script: TalonBlock
+    left: TalonKeyAction
+    right: TalonBlock
+
+    @property
+    def key(self) -> TalonKeyAction: ...
+    @property
+    def script(self) -> TalonBlock: ...
 
 @dataclasses.dataclass
 class TalonSettingsDeclaration(Branch, TalonDeclaration):
     children: collections.abc.Sequence[typing.Union[TalonBlock, TalonComment]]
+    right: TalonIdentifier
 
     def get_child(self) -> TalonBlock: ...
 
 @dataclasses.dataclass
 class TalonTagImportDeclaration(Branch, TalonDeclaration):
     children: collections.abc.Sequence[TalonComment]
-    tag: TalonIdentifier
+    right: TalonIdentifier
+
+    @property
+    def tag(self) -> TalonIdentifier: ...
 
 # Rules.
 
@@ -603,11 +627,11 @@ class TalonStringEscapeSequence(Leaf):
 
 # Numbers.
 
+class TalonNumber(Node):
+    pass
+
 class TalonFloat(Leaf, TalonNumber):
     pass
 
 class TalonInteger(Leaf, TalonNumber):
-    pass
-
-class TalonNumber(Node):
     pass

@@ -41,7 +41,7 @@ output: |-
     def __init__(text: str, type_name: str, start_position: Point, end_position: Point, children: list[Union[TalonCapture, TalonEndAnchor, TalonList, TalonOptional, TalonParenthesizedRule, TalonRepeat, TalonRepeat1, TalonSeq, TalonStartAnchor, TalonWord, TalonComment, TalonError]]) -> None:
       pass
   class TalonCommandDeclaration(Branch):
-    def __init__(text: str, type_name: str, start_position: Point, end_position: Point, children: list[Union[TalonComment, TalonError]], rule: 'TalonRule', script: 'TalonBlock') -> None:
+    def __init__(text: str, type_name: str, start_position: Point, end_position: Point, children: list[Union[TalonComment, TalonError]], left: 'TalonRule', right: 'TalonBlock') -> None:
       pass
   class TalonComment(Leaf):
     def __init__(text: str, type_name: str, start_position: Point, end_position: Point) -> None:
@@ -80,13 +80,13 @@ output: |-
     def __init__(text: str, type_name: str, start_position: Point, end_position: Point, children: list[Union[TalonComment, TalonError]], arguments: 'TalonImplicitString') -> None:
       pass
   class TalonKeyBindingDeclaration(Branch):
-    def __init__(text: str, type_name: str, start_position: Point, end_position: Point, children: list[Union[TalonComment, TalonError]], key: 'TalonKeyAction', script: 'TalonBlock') -> None:
+    def __init__(text: str, type_name: str, start_position: Point, end_position: Point, children: list[Union[TalonComment, TalonError]], left: 'TalonKeyAction', right: 'TalonBlock') -> None:
       pass
   class TalonList(Branch):
     def __init__(text: str, type_name: str, start_position: Point, end_position: Point, children: list[Union[TalonComment, TalonError]], list_name: 'TalonIdentifier') -> None:
       pass
   class TalonMatch(Branch):
-    def __init__(text: str, type_name: str, start_position: Point, end_position: Point, children: list[Union[TalonComment, TalonError]], key: 'TalonIdentifier', modifier: list['TalonMatchModifier'], pattern: 'TalonImplicitString') -> None:
+    def __init__(text: str, type_name: str, start_position: Point, end_position: Point, children: list[Union[TalonComment, TalonError]], left: 'TalonIdentifier', modifiers: list['TalonMatchModifier'], right: 'TalonImplicitString') -> None:
       pass
   class TalonMatchModifier(Leaf):
     def __init__(text: str, type_name: str, start_position: Point, end_position: Point) -> None:
@@ -122,13 +122,13 @@ output: |-
     def __init__(text: str, type_name: str, start_position: Point, end_position: Point, children: list[Union[TalonCapture, TalonList, TalonOptional, TalonParenthesizedRule, TalonRepeat, TalonRepeat1, TalonWord, TalonComment, TalonError]]) -> None:
       pass
   class TalonSettingsDeclaration(Branch):
-    def __init__(text: str, type_name: str, start_position: Point, end_position: Point, children: list[Union[TalonBlock, TalonComment, TalonError]]) -> None:
+    def __init__(text: str, type_name: str, start_position: Point, end_position: Point, children: list[Union[TalonComment, TalonError]], right: 'TalonBlock') -> None:
       pass
   class TalonSleepAction(Branch):
     def __init__(text: str, type_name: str, start_position: Point, end_position: Point, children: list[Union[TalonComment, TalonError]], arguments: 'TalonImplicitString') -> None:
       pass
   class TalonSourceFile(Branch):
-    def __init__(text: str, type_name: str, start_position: Point, end_position: Point, children: list[Union[TalonDeclaration, TalonMatches, TalonComment, TalonError]]) -> None:
+    def __init__(text: str, type_name: str, start_position: Point, end_position: Point, children: list[Union[TalonDeclarations, TalonMatches, TalonComment, TalonError]]) -> None:
       pass
   class TalonStartAnchor(Leaf):
     def __init__(text: str, type_name: str, start_position: Point, end_position: Point) -> None:
@@ -146,7 +146,7 @@ output: |-
     def __init__(text: str, type_name: str, start_position: Point, end_position: Point) -> None:
       pass
   class TalonTagImportDeclaration(Branch):
-    def __init__(text: str, type_name: str, start_position: Point, end_position: Point, children: list[Union[TalonComment, TalonError]], tag: 'TalonIdentifier') -> None:
+    def __init__(text: str, type_name: str, start_position: Point, end_position: Point, children: list[Union[TalonComment, TalonError]], right: 'TalonIdentifier') -> None:
       pass
   class TalonVariable(Branch):
     def __init__(text: str, type_name: str, start_position: Point, end_position: Point, children: list[Union[TalonComment, TalonError]], variable_name: 'TalonIdentifier') -> None:
