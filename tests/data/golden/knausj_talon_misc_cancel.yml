@@ -12,72 +12,74 @@ output:
     children: []
   - text: '# allows you to prevent a command executing by ending it with "cancel cancel"'
     type: comment
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+  - type: declarations
+    children:
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
         children:
-        - text: cancel
-          type: word
-        - text: cancel
-          type: word
-      - text: $
-        type: end_anchor
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: skip
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - text: '# the actual behavior of "cancel cancel" is implemented in code/cancel.py;
-      if you want to use a different phrase you must also change cancel_phrase there.'
-    type: comment
-  - text: "# allows you to say something (eg to a human) that you don't want talon\
-      \ to hear, eg \"ignore hey Jerry\""
-    type: comment
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: ignore
-          type: word
-        - type: optional
+        - type: seq
           children:
-          - type: capture
-            children: []
-            capture_name:
-              text: phrase
-              type: identifier
-      - text: $
-        type: end_anchor
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
+          - text: cancel
+            type: word
+          - text: cancel
+            type: word
+        - text: $
+          type: end_anchor
+      right:
+        type: block
+        children:
+        - type: expression_statement
           children: []
-          action_name:
-            text: app.notify
-            type: identifier
-          arguments:
-            type: argument_list
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: skip
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+    - text: '# the actual behavior of "cancel cancel" is implemented in code/cancel.py;
+        if you want to use a different phrase you must also change cancel_phrase there.'
+      type: comment
+    - text: "# allows you to say something (eg to a human) that you don't want talon\
+        \ to hear, eg \"ignore hey Jerry\""
+      type: comment
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: ignore
+            type: word
+          - type: optional
             children:
-            - type: string
+            - type: capture
+              children: []
+              capture_name:
+                text: phrase
+                type: identifier
+        - text: $
+          type: end_anchor
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: app.notify
+              type: identifier
+            arguments:
+              type: argument_list
               children:
-              - text: Command ignored
-                type: string_content
+              - type: string
+                children:
+                - text: Command ignored
+                  type: string_content

@@ -21,97 +21,99 @@ output:
       type: comment
     - type: match
       children: []
-      key:
+      left:
         text: tag
         type: identifier
-      modifier: []
-      pattern:
+      modifiers: []
+      right:
         text: ' user.draft_window_showing'
         type: implicit_string
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+  - type: declarations
+    children:
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
         children:
-        - text: draft
-          type: word
-        - text: hide
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.draft_hide
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+        - type: seq
+          children:
+          - text: draft
+            type: word
+          - text: hide
+            type: word
+      right:
+        type: block
         children:
-        - text: draft
-          type: word
-        - text: submit
-          type: word
-    script:
-      type: block
-      children:
-      - type: assignment_statement
-        children: []
-        left:
-          text: content
-          type: identifier
-        right:
-          type: action
+        - type: expression_statement
           children: []
-          action_name:
-            text: user.draft_get_text
-            type: identifier
-          arguments:
-            type: argument_list
+          expression:
+            type: action
             children: []
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.draft_hide
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
+            action_name:
+              text: user.draft_hide
+              type: identifier
+            arguments:
+              type: argument_list
               children: []
-              variable_name:
-                text: content
-                type: identifier
-      - text: '# user.paste may be somewhat faster, but seems to be unreliable on
-          MacOSX, see'
-        type: comment
-      - text: '# https://github.com/talonvoice/talon/issues/254#issuecomment-789355238'
-        type: comment
-      - text: '# user.paste(content)'
-        type: comment
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: draft
+            type: word
+          - text: submit
+            type: word
+      right:
+        type: block
+        children:
+        - type: assignment_statement
+          children: []
+          left:
+            text: content
+            type: identifier
+          right:
+            type: action
+            children: []
+            action_name:
+              text: user.draft_get_text
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.draft_hide
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: insert
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: variable
+                children: []
+                variable_name:
+                  text: content
+                  type: identifier
+        - text: '# user.paste may be somewhat faster, but seems to be unreliable on
+            MacOSX, see'
+          type: comment
+        - text: '# https://github.com/talonvoice/talon/issues/254#issuecomment-789355238'
+          type: comment
+        - text: '# user.paste(content)'
+          type: comment

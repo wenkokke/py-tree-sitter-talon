@@ -13,128 +13,130 @@ output:
     children:
     - type: match
       children: []
-      key:
+      left:
         text: app
         type: identifier
-      modifier: []
-      pattern:
+      modifiers: []
+      right:
         text: ' windows_explorer'
         type: implicit_string
     - type: match
       children: []
-      key:
+      left:
         text: app
         type: identifier
-      modifier: []
-      pattern:
+      modifiers: []
+      right:
         text: ' windows_file_browser'
         type: implicit_string
-  - type: tag_import_declaration
-    children: []
-    tag:
-      text: user.file_manager
-      type: identifier
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - text: ^
-        type: start_anchor
-      - type: seq
+  - type: declarations
+    children:
+    - type: tag_import_declaration
+      children: []
+      right:
+        text: user.file_manager
+        type: identifier
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
         children:
-        - text: go
-          type: word
-        - type: capture
-          children: []
-          capture_name:
-            text: user.letter
-            type: identifier
-      - text: $
-        type: end_anchor
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.file_manager_open_volume
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '{'
-                type: string_content
-              - text: letter
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: ':'
-                type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+        - text: ^
+          type: start_anchor
+        - type: seq
+          children:
+          - text: go
+            type: word
+          - type: capture
+            children: []
+            capture_name:
+              text: user.letter
+              type: identifier
+        - text: $
+          type: end_anchor
+      right:
+        type: block
         children:
-        - text: go
-          type: word
-        - text: app
-          type: word
-        - text: data
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
+        - type: expression_statement
           children: []
-          action_name:
-            text: user.file_manager_open_directory
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.file_manager_open_volume
+              type: identifier
+            arguments:
+              type: argument_list
               children:
-              - text: '%AppData%'
-                type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+              - type: string
+                children:
+                - text: '{'
+                  type: string_content
+                - text: letter
+                  type: string_content
+                - text: '}'
+                  type: string_content
+                - text: ':'
+                  type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
         children:
-        - text: go
-          type: word
-        - text: program
-          type: word
-        - text: files
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
+        - type: seq
+          children:
+          - text: go
+            type: word
+          - text: app
+            type: word
+          - text: data
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
           children: []
-          action_name:
-            text: user.file_manager_open_directory
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.file_manager_open_directory
+              type: identifier
+            arguments:
+              type: argument_list
               children:
-              - text: '%programfiles%'
-                type: string_content
+              - type: string
+                children:
+                - text: '%AppData%'
+                  type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: go
+            type: word
+          - text: program
+            type: word
+          - text: files
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.file_manager_open_directory
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: string
+                children:
+                - text: '%programfiles%'
+                  type: string_content

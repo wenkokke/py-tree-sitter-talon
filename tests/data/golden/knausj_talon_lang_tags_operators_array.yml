@@ -11,37 +11,39 @@ output:
     children:
     - type: match
       children: []
-      key:
+      left:
         text: tag
         type: identifier
-      modifier: []
-      pattern:
+      modifiers: []
+      right:
         text: ' user.code_operators_array'
         type: implicit_string
   - text: '# array subscription'
     type: comment
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+  - type: declarations
+    children:
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
         children:
-        - text: op
-          type: word
-        - text: subscript
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
+        - type: seq
+          children:
+          - text: op
+            type: word
+          - text: subscript
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
           children: []
-          action_name:
-            text: user.code_operator_subscript
-            type: identifier
-          arguments:
-            type: argument_list
+          expression:
+            type: action
             children: []
+            action_name:
+              text: user.code_operator_subscript
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []

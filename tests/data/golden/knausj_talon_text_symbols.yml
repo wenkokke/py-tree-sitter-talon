@@ -51,1042 +51,54 @@ output:
   children:
   - type: matches
     children: []
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+  - type: declarations
+    children:
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
         children:
-        - text: double
-          type: word
-        - text: dash
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: string
+        - type: seq
           children:
-          - text: --
-            type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: triple
-          type: word
-        - text: quote
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: string
-          children:
-          - text: "'''"
-            type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: parenthesized_rule
-        children:
-        - type: choice
-          children:
-          - type: seq
-            children:
-            - text: triple
-              type: word
-            - text: grave
-              type: word
-          - type: seq
-            children:
-            - text: triple
-              type: word
-            - text: back
-              type: word
-            - text: tick
-              type: word
-          - text: gravy
+          - text: double
             type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '```'
-                type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: parenthesized_rule
-        children:
-        - type: choice
-          children:
-          - type: seq
-            children:
-            - text: dot
-              type: word
-            - text: dot
-              type: word
-          - text: dotdot
+          - text: dash
             type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: string
-          children:
-          - text: ..
-            type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - text: ellipses
-        type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: string
-          children:
-          - text: '...'
-            type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: parenthesized_rule
+      right:
+        type: block
         children:
-        - type: choice
-          children:
-          - type: seq
+        - type: expression_statement
+          children: []
+          expression:
+            type: string
             children:
-            - text: comma
-              type: word
-            - text: and
-              type: word
-          - text: spamma
+            - text: --
+              type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: triple
             type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: string
-          children:
-          - text: ', '
-            type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - text: arrow
-        type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: string
-          children:
-          - text: ->
-            type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: dub
-          type: word
-        - text: arrow
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: string
-          children:
-          - text: =>
-            type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: new
-          type: word
-        - text: line
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: string
-          children:
-          - text: \\
-            type: string_escape_sequence
-          - text: n
-            type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: carriage
-          type: word
-        - text: return
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: string
-          children:
-          - text: \\
-            type: string_escape_sequence
-          - text: r
-            type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: line
-          type: word
-        - text: feed
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: string
-          children:
-          - text: \\
-            type: string_escape_sequence
-          - text: r
-            type: string_content
-          - text: \\
-            type: string_escape_sequence
-          - text: n
-            type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: empty
-          type: word
-        - text: dubstring
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '"'
-                type: string_content
-            - type: string
-              children:
-              - text: '"'
-                type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: empty
-          type: word
-        - text: escaped
-          type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: dubstring
-              type: word
-            - type: seq
-              children:
-              - text: dub
-                type: word
-              - text: quotes
-                type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: \\
-                type: string_escape_sequence
-              - text: '"'
-                type: string_content
-            - type: string
-              children:
-              - text: \\
-                type: string_escape_sequence
-              - text: '"'
-                type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: empty
-          type: word
-        - text: string
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: "'"
-                type: string_content
-            - type: string
-              children:
-              - text: "'"
-                type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: empty
-          type: word
-        - text: escaped
-          type: word
-        - text: string
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: \\
-                type: string_escape_sequence
-              - text: "'"
-                type: string_content
-            - type: string
-              children:
-              - text: \\
-                type: string_escape_sequence
-              - text: "'"
-                type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: parenthesized_rule
-        children:
-        - type: choice
-          children:
-          - type: seq
-            children:
-            - text: inside
-              type: word
-            - text: parens
-              type: word
-          - text: args
+          - text: quote
             type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: (
-                type: string_content
-            - type: string
-              children:
-              - text: )
-                type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+      right:
+        type: block
         children:
-        - text: inside
-          type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: squares
-              type: word
-            - type: seq
-              children:
-              - text: square
-                type: word
-              - text: brackets
-                type: word
-            - text: list
-              type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
+        - type: expression_statement
           children: []
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
+          expression:
+            type: string
             children:
-            - type: string
-              children:
-              - text: '['
-                type: string_content
-            - type: string
-              children:
-              - text: ']'
-                type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: inside
-          type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: bracket
-              type: word
-            - text: braces
-              type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '{'
-                type: string_content
-            - type: string
-              children:
-              - text: '}'
-                type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: inside
-          type: word
-        - text: percent
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '%'
-                type: string_content
-            - type: string
-              children:
-              - text: '%'
-                type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: inside
-          type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: quotes
-              type: word
-            - text: string
-              type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: "'"
-                type: string_content
-            - type: string
-              children:
-              - text: "'"
-                type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: inside
-          type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - type: seq
-              children:
-              - text: double
-                type: word
-              - text: quotes
-                type: word
-            - text: dubquotes
-              type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '"'
-                type: string_content
-            - type: string
-              children:
-              - text: '"'
-                type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: inside
-          type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: graves
-              type: word
-            - type: seq
-              children:
-              - text: back
-                type: word
-              - text: ticks
-                type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.insert_between
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '`'
-                type: string_content
-            - type: string
-              children:
-              - text: '`'
-                type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: angle
-          type: word
-        - text: that
-          type: word
-    script:
-      type: block
-      children:
-      - type: assignment_statement
-        children: []
-        left:
-          text: text
-          type: identifier
-        right:
-          type: action
-          children: []
-          action_name:
-            text: edit.selected_text
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.paste
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: <
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: text
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: '>'
-                type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: square
-              type: word
-            - type: seq
-              children:
-              - text: square
-                type: word
-              - text: bracket
-                type: word
-        - text: that
-          type: word
-    script:
-      type: block
-      children:
-      - type: assignment_statement
-        children: []
-        left:
-          text: text
-          type: identifier
-        right:
-          type: action
-          children: []
-          action_name:
-            text: edit.selected_text
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.paste
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '['
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: text
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: ']'
-                type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: bracket
-              type: word
-            - text: brace
-              type: word
-        - text: that
-          type: word
-    script:
-      type: block
-      children:
-      - type: assignment_statement
-        children: []
-        left:
-          text: text
-          type: identifier
-        right:
-          type: action
-          children: []
-          action_name:
-            text: edit.selected_text
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.paste
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '{{'
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: text
-                type: string_content
-              - text: '}}'
-                type: string_content
-              - text: '}'
-                type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: parens
-              type: word
-            - text: args
-              type: word
-        - text: that
-          type: word
-    script:
-      type: block
-      children:
-      - type: assignment_statement
-        children: []
-        left:
-          text: text
-          type: identifier
-        right:
-          type: action
-          children: []
-          action_name:
-            text: edit.selected_text
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.paste
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: (
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: text
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: )
-                type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: percent
-          type: word
-        - text: that
-          type: word
-    script:
-      type: block
-      children:
-      - type: assignment_statement
-        children: []
-        left:
-          text: text
-          type: identifier
-        right:
-          type: action
-          children: []
-          action_name:
-            text: edit.selected_text
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.paste
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '%'
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: text
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: '%'
-                type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: quote
-          type: word
-        - text: that
-          type: word
-    script:
-      type: block
-      children:
-      - type: assignment_statement
-        children: []
-        left:
-          text: text
-          type: identifier
-        right:
-          type: action
-          children: []
-          action_name:
-            text: edit.selected_text
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.paste
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: "'"
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: text
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: "'"
-                type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+            - text: "'''"
+              type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
         children:
         - type: parenthesized_rule
           children:
@@ -1094,112 +106,1102 @@ output:
             children:
             - type: seq
               children:
-              - text: double
+              - text: triple
                 type: word
-              - text: quote
+              - text: grave
                 type: word
-            - text: dubquote
-              type: word
-        - text: that
-          type: word
-    script:
-      type: block
-      children:
-      - type: assignment_statement
-        children: []
-        left:
-          text: text
-          type: identifier
-        right:
-          type: action
-          children: []
-          action_name:
-            text: edit.selected_text
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.paste
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: '"'
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: text
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: '"'
-                type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: grave
-              type: word
             - type: seq
               children:
+              - text: triple
+                type: word
               - text: back
                 type: word
               - text: tick
                 type: word
-        - text: that
-          type: word
-    script:
-      type: block
-      children:
-      - type: assignment_statement
-        children: []
-        left:
-          text: text
-          type: identifier
-        right:
-          type: action
+            - text: gravy
+              type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
           children: []
-          action_name:
-            text: edit.selected_text
-            type: identifier
-          arguments:
-            type: argument_list
+          expression:
+            type: action
             children: []
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.paste
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
+            action_name:
+              text: insert
+              type: identifier
+            arguments:
+              type: argument_list
               children:
-              - text: '`'
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: text
-                type: string_content
-              - text: '}'
-                type: string_content
-              - text: '`'
-                type: string_content
+              - type: string
+                children:
+                - text: '```'
+                  type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - type: seq
+              children:
+              - text: dot
+                type: word
+              - text: dot
+                type: word
+            - text: dotdot
+              type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: string
+            children:
+            - text: ..
+              type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - text: ellipses
+          type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: string
+            children:
+            - text: '...'
+              type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - type: seq
+              children:
+              - text: comma
+                type: word
+              - text: and
+                type: word
+            - text: spamma
+              type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: string
+            children:
+            - text: ', '
+              type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - text: arrow
+          type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: string
+            children:
+            - text: ->
+              type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: dub
+            type: word
+          - text: arrow
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: string
+            children:
+            - text: =>
+              type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: new
+            type: word
+          - text: line
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: string
+            children:
+            - text: \\
+              type: string_escape_sequence
+            - text: n
+              type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: carriage
+            type: word
+          - text: return
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: string
+            children:
+            - text: \\
+              type: string_escape_sequence
+            - text: r
+              type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: line
+            type: word
+          - text: feed
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: string
+            children:
+            - text: \\
+              type: string_escape_sequence
+            - text: r
+              type: string_content
+            - text: \\
+              type: string_escape_sequence
+            - text: n
+              type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: empty
+            type: word
+          - text: dubstring
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.insert_between
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: string
+                children:
+                - text: '"'
+                  type: string_content
+              - type: string
+                children:
+                - text: '"'
+                  type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: empty
+            type: word
+          - text: escaped
+            type: word
+          - type: parenthesized_rule
+            children:
+            - type: choice
+              children:
+              - text: dubstring
+                type: word
+              - type: seq
+                children:
+                - text: dub
+                  type: word
+                - text: quotes
+                  type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.insert_between
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: string
+                children:
+                - text: \\
+                  type: string_escape_sequence
+                - text: '"'
+                  type: string_content
+              - type: string
+                children:
+                - text: \\
+                  type: string_escape_sequence
+                - text: '"'
+                  type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: empty
+            type: word
+          - text: string
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.insert_between
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: string
+                children:
+                - text: "'"
+                  type: string_content
+              - type: string
+                children:
+                - text: "'"
+                  type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: empty
+            type: word
+          - text: escaped
+            type: word
+          - text: string
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.insert_between
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: string
+                children:
+                - text: \\
+                  type: string_escape_sequence
+                - text: "'"
+                  type: string_content
+              - type: string
+                children:
+                - text: \\
+                  type: string_escape_sequence
+                - text: "'"
+                  type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - type: seq
+              children:
+              - text: inside
+                type: word
+              - text: parens
+                type: word
+            - text: args
+              type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.insert_between
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: string
+                children:
+                - text: (
+                  type: string_content
+              - type: string
+                children:
+                - text: )
+                  type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: inside
+            type: word
+          - type: parenthesized_rule
+            children:
+            - type: choice
+              children:
+              - text: squares
+                type: word
+              - type: seq
+                children:
+                - text: square
+                  type: word
+                - text: brackets
+                  type: word
+              - text: list
+                type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.insert_between
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: string
+                children:
+                - text: '['
+                  type: string_content
+              - type: string
+                children:
+                - text: ']'
+                  type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: inside
+            type: word
+          - type: parenthesized_rule
+            children:
+            - type: choice
+              children:
+              - text: bracket
+                type: word
+              - text: braces
+                type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.insert_between
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: string
+                children:
+                - text: '{'
+                  type: string_content
+              - type: string
+                children:
+                - text: '}'
+                  type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: inside
+            type: word
+          - text: percent
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.insert_between
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: string
+                children:
+                - text: '%'
+                  type: string_content
+              - type: string
+                children:
+                - text: '%'
+                  type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: inside
+            type: word
+          - type: parenthesized_rule
+            children:
+            - type: choice
+              children:
+              - text: quotes
+                type: word
+              - text: string
+                type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.insert_between
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: string
+                children:
+                - text: "'"
+                  type: string_content
+              - type: string
+                children:
+                - text: "'"
+                  type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: inside
+            type: word
+          - type: parenthesized_rule
+            children:
+            - type: choice
+              children:
+              - type: seq
+                children:
+                - text: double
+                  type: word
+                - text: quotes
+                  type: word
+              - text: dubquotes
+                type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.insert_between
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: string
+                children:
+                - text: '"'
+                  type: string_content
+              - type: string
+                children:
+                - text: '"'
+                  type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: inside
+            type: word
+          - type: parenthesized_rule
+            children:
+            - type: choice
+              children:
+              - text: graves
+                type: word
+              - type: seq
+                children:
+                - text: back
+                  type: word
+                - text: ticks
+                  type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.insert_between
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: string
+                children:
+                - text: '`'
+                  type: string_content
+              - type: string
+                children:
+                - text: '`'
+                  type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: angle
+            type: word
+          - text: that
+            type: word
+      right:
+        type: block
+        children:
+        - type: assignment_statement
+          children: []
+          left:
+            text: text
+            type: identifier
+          right:
+            type: action
+            children: []
+            action_name:
+              text: edit.selected_text
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.paste
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: string
+                children:
+                - text: <
+                  type: string_content
+                - text: '{'
+                  type: string_content
+                - text: text
+                  type: string_content
+                - text: '}'
+                  type: string_content
+                - text: '>'
+                  type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - type: parenthesized_rule
+            children:
+            - type: choice
+              children:
+              - text: square
+                type: word
+              - type: seq
+                children:
+                - text: square
+                  type: word
+                - text: bracket
+                  type: word
+          - text: that
+            type: word
+      right:
+        type: block
+        children:
+        - type: assignment_statement
+          children: []
+          left:
+            text: text
+            type: identifier
+          right:
+            type: action
+            children: []
+            action_name:
+              text: edit.selected_text
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.paste
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: string
+                children:
+                - text: '['
+                  type: string_content
+                - text: '{'
+                  type: string_content
+                - text: text
+                  type: string_content
+                - text: '}'
+                  type: string_content
+                - text: ']'
+                  type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - type: parenthesized_rule
+            children:
+            - type: choice
+              children:
+              - text: bracket
+                type: word
+              - text: brace
+                type: word
+          - text: that
+            type: word
+      right:
+        type: block
+        children:
+        - type: assignment_statement
+          children: []
+          left:
+            text: text
+            type: identifier
+          right:
+            type: action
+            children: []
+            action_name:
+              text: edit.selected_text
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.paste
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: string
+                children:
+                - text: '{{'
+                  type: string_content
+                - text: '{'
+                  type: string_content
+                - text: text
+                  type: string_content
+                - text: '}}'
+                  type: string_content
+                - text: '}'
+                  type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - type: parenthesized_rule
+            children:
+            - type: choice
+              children:
+              - text: parens
+                type: word
+              - text: args
+                type: word
+          - text: that
+            type: word
+      right:
+        type: block
+        children:
+        - type: assignment_statement
+          children: []
+          left:
+            text: text
+            type: identifier
+          right:
+            type: action
+            children: []
+            action_name:
+              text: edit.selected_text
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.paste
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: string
+                children:
+                - text: (
+                  type: string_content
+                - text: '{'
+                  type: string_content
+                - text: text
+                  type: string_content
+                - text: '}'
+                  type: string_content
+                - text: )
+                  type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: percent
+            type: word
+          - text: that
+            type: word
+      right:
+        type: block
+        children:
+        - type: assignment_statement
+          children: []
+          left:
+            text: text
+            type: identifier
+          right:
+            type: action
+            children: []
+            action_name:
+              text: edit.selected_text
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.paste
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: string
+                children:
+                - text: '%'
+                  type: string_content
+                - text: '{'
+                  type: string_content
+                - text: text
+                  type: string_content
+                - text: '}'
+                  type: string_content
+                - text: '%'
+                  type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: quote
+            type: word
+          - text: that
+            type: word
+      right:
+        type: block
+        children:
+        - type: assignment_statement
+          children: []
+          left:
+            text: text
+            type: identifier
+          right:
+            type: action
+            children: []
+            action_name:
+              text: edit.selected_text
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.paste
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: string
+                children:
+                - text: "'"
+                  type: string_content
+                - text: '{'
+                  type: string_content
+                - text: text
+                  type: string_content
+                - text: '}'
+                  type: string_content
+                - text: "'"
+                  type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - type: parenthesized_rule
+            children:
+            - type: choice
+              children:
+              - type: seq
+                children:
+                - text: double
+                  type: word
+                - text: quote
+                  type: word
+              - text: dubquote
+                type: word
+          - text: that
+            type: word
+      right:
+        type: block
+        children:
+        - type: assignment_statement
+          children: []
+          left:
+            text: text
+            type: identifier
+          right:
+            type: action
+            children: []
+            action_name:
+              text: edit.selected_text
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.paste
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: string
+                children:
+                - text: '"'
+                  type: string_content
+                - text: '{'
+                  type: string_content
+                - text: text
+                  type: string_content
+                - text: '}'
+                  type: string_content
+                - text: '"'
+                  type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - type: parenthesized_rule
+            children:
+            - type: choice
+              children:
+              - text: grave
+                type: word
+              - type: seq
+                children:
+                - text: back
+                  type: word
+                - text: tick
+                  type: word
+          - text: that
+            type: word
+      right:
+        type: block
+        children:
+        - type: assignment_statement
+          children: []
+          left:
+            text: text
+            type: identifier
+          right:
+            type: action
+            children: []
+            action_name:
+              text: edit.selected_text
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.paste
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: string
+                children:
+                - text: '`'
+                  type: string_content
+                - text: '{'
+                  type: string_content
+                - text: text
+                  type: string_content
+                - text: '}'
+                  type: string_content
+                - text: '`'
+                  type: string_content

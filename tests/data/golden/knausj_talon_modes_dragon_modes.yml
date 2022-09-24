@@ -16,73 +16,75 @@ output:
       type: comment
     - type: match
       children: []
-      key:
+      left:
         text: speech.engine
         type: identifier
-      modifier: []
-      pattern:
+      modifiers: []
+      right:
         text: ' dragon'
         type: implicit_string
     - type: match
       children: []
-      key:
+      left:
         text: mode
         type: identifier
-      modifier: []
-      pattern:
+      modifiers: []
+      right:
         text: ' all'
         type: implicit_string
   - text: '# wakes Dragon on Mac, deactivates talon speech commands'
     type: comment
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+  - type: declarations
+    children:
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
         children:
-        - text: dragon
-          type: word
-        - text: mode
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.dragon_mode
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - text: '#sleep dragon on Mac, activates talon speech commands'
-    type: comment
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+        - type: seq
+          children:
+          - text: dragon
+            type: word
+          - text: mode
+            type: word
+      right:
+        type: block
         children:
-        - text: talon
-          type: word
-        - text: mode
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
+        - type: expression_statement
           children: []
-          action_name:
-            text: user.talon_mode
-            type: identifier
-          arguments:
-            type: argument_list
+          expression:
+            type: action
             children: []
+            action_name:
+              text: user.dragon_mode
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+    - text: '#sleep dragon on Mac, activates talon speech commands'
+      type: comment
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: talon
+            type: word
+          - text: mode
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.talon_mode
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []

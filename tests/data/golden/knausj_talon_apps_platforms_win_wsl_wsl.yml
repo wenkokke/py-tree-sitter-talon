@@ -107,143 +107,145 @@ output:
       type: comment
     - type: match
       children: []
-      key:
+      left:
         text: tag
         type: identifier
-      modifier: []
-      pattern:
+      modifiers: []
+      right:
         text: ' user.wsl'
         type: implicit_string
-  - type: tag_import_declaration
-    children: []
-    tag:
-      text: terminal
-      type: identifier
-  - type: tag_import_declaration
-    children: []
-    tag:
-      text: user.file_manager
-      type: identifier
-  - type: tag_import_declaration
-    children: []
-    tag:
-      text: user.generic_unix_shell
-      type: identifier
-  - type: tag_import_declaration
-    children: []
-    tag:
-      text: user.git
-      type: identifier
-  - type: tag_import_declaration
-    children: []
-    tag:
-      text: user.kubectl
-      type: identifier
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - text: ^
-        type: start_anchor
-      - type: seq
+  - type: declarations
+    children:
+    - type: tag_import_declaration
+      children: []
+      right:
+        text: terminal
+        type: identifier
+    - type: tag_import_declaration
+      children: []
+      right:
+        text: user.file_manager
+        type: identifier
+    - type: tag_import_declaration
+      children: []
+      right:
+        text: user.generic_unix_shell
+        type: identifier
+    - type: tag_import_declaration
+      children: []
+      right:
+        text: user.git
+        type: identifier
+    - type: tag_import_declaration
+      children: []
+      right:
+        text: user.kubectl
+        type: identifier
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
         children:
-        - text: go
-          type: word
-        - type: capture
+        - text: ^
+          type: start_anchor
+        - type: seq
+          children:
+          - text: go
+            type: word
+          - type: capture
+            children: []
+            capture_name:
+              text: user.letter
+              type: identifier
+        - text: $
+          type: end_anchor
+      right:
+        type: block
+        children:
+        - type: expression_statement
           children: []
-          capture_name:
-            text: user.letter
-            type: identifier
-      - text: $
-        type: end_anchor
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.file_manager_open_volume
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.file_manager_open_volume
+              type: identifier
+            arguments:
+              type: argument_list
               children:
-              - text: /mnt/
-                type: string_content
-              - text: '{'
-                type: string_content
-              - text: letter
-                type: string_content
-              - text: '}'
-                type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+              - type: string
+                children:
+                - text: /mnt/
+                  type: string_content
+                - text: '{'
+                  type: string_content
+                - text: letter
+                  type: string_content
+                - text: '}'
+                  type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
         children:
-        - type: parenthesized_rule
+        - type: seq
           children:
-          - type: choice
+          - type: parenthesized_rule
             children:
-            - text: wsl
-              type: word
-            - text: weasel
-              type: word
-        - text: reset
-          type: word
-        - text: path
-          type: word
-        - text: detection
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.wsl_reset_path_detection
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+            - type: choice
+              children:
+              - text: wsl
+                type: word
+              - text: weasel
+                type: word
+          - text: reset
+            type: word
+          - text: path
+            type: word
+          - text: detection
+            type: word
+      right:
+        type: block
         children:
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: wsl
-              type: word
-            - text: weasel
-              type: word
-        - text: speak
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
+        - type: expression_statement
           children: []
-          action_name:
-            text: user.wsl_speak
-            type: identifier
-          arguments:
-            type: argument_list
+          expression:
+            type: action
             children: []
+            action_name:
+              text: user.wsl_reset_path_detection
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - type: parenthesized_rule
+            children:
+            - type: choice
+              children:
+              - text: wsl
+                type: word
+              - text: weasel
+                type: word
+          - text: speak
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.wsl_speak
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []

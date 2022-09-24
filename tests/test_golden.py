@@ -10,8 +10,9 @@ from . import node_dict_simplify
 
 
 @pytest.mark.golden_test("data/golden/*.yml")
-def test_golden(golden):
-    node_dict = tree_sitter_talon.parse(golden["input"]).to_dict()
+def test_golden_dict(golden):
+    node = tree_sitter_talon.parse(golden["input"])
+    node_dict = node.to_dict()
     node_dict_simplify(node_dict)
     assert node_dict == golden.out["output"]
 

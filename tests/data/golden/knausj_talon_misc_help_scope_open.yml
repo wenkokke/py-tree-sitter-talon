@@ -10,43 +10,45 @@ output:
     children:
     - type: match
       children: []
-      key:
+      left:
         text: mode
         type: identifier
-      modifier: []
-      pattern:
+      modifiers: []
+      right:
         text: ' user.help_scope'
         type: implicit_string
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+  - type: declarations
+    children:
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
         children:
-        - text: scope
-          type: word
-        - type: parenthesized_rule
+        - type: seq
           children:
-          - type: choice
+          - text: scope
+            type: word
+          - type: parenthesized_rule
             children:
-            - text: hide
-              type: word
-            - text: close
-              type: word
-      - text: $
-        type: end_anchor
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
+            - type: choice
+              children:
+              - text: hide
+                type: word
+              - text: close
+                type: word
+        - text: $
+          type: end_anchor
+      right:
+        type: block
+        children:
+        - type: expression_statement
           children: []
-          action_name:
-            text: user.help_scope_toggle
-            type: identifier
-          arguments:
-            type: argument_list
+          expression:
+            type: action
             children: []
+            action_name:
+              text: user.help_scope_toggle
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
