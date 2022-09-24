@@ -10,135 +10,137 @@ output:
   children:
   - type: matches
     children: []
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - text: ^
-        type: start_anchor
-      - type: seq
+  - type: declarations
+    children:
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
         children:
-        - text: force
-          type: word
-        - type: list
-          children: []
-          list_name:
-            text: user.language_mode
-            type: identifier
-      - text: $
-        type: end_anchor
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.code_set_language_mode
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children: []
-              variable_name:
-                text: language_mode
-                type: identifier
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - text: ^
-        type: start_anchor
-      - type: seq
-        children:
-        - text: clear
-          type: word
-        - text: language
-          type: word
-        - text: modes
-          type: word
-      - text: $
-        type: end_anchor
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.code_clear_language_mode
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - type: optional
+        - text: ^
+          type: start_anchor
+        - type: seq
           children:
-          - text: enable
+          - text: force
             type: word
-        - text: debug
-          type: word
-        - text: mode
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: mode.enable
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
-              children:
-              - text: user.gdb
-                type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+          - type: list
+            children: []
+            list_name:
+              text: user.language_mode
+              type: identifier
+        - text: $
+          type: end_anchor
+      right:
+        type: block
         children:
-        - text: disable
-          type: word
-        - text: debug
-          type: word
-        - text: mode
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
+        - type: expression_statement
           children: []
-          action_name:
-            text: mode.disable
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.code_set_language_mode
+              type: identifier
+            arguments:
+              type: argument_list
               children:
-              - text: user.gdb
-                type: string_content
+              - type: variable
+                children: []
+                variable_name:
+                  text: language_mode
+                  type: identifier
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - text: ^
+          type: start_anchor
+        - type: seq
+          children:
+          - text: clear
+            type: word
+          - text: language
+            type: word
+          - text: modes
+            type: word
+        - text: $
+          type: end_anchor
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.code_clear_language_mode
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - type: optional
+            children:
+            - text: enable
+              type: word
+          - text: debug
+            type: word
+          - text: mode
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: mode.enable
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: string
+                children:
+                - text: user.gdb
+                  type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: disable
+            type: word
+          - text: debug
+            type: word
+          - text: mode
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: mode.disable
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: string
+                children:
+                - text: user.gdb
+                  type: string_content

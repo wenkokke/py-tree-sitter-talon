@@ -9,139 +9,141 @@ output:
   children:
   - type: matches
     children: []
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+  - type: declarations
+    children:
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
         children:
-        - text: open
-          type: word
-        - type: list
-          children: []
-          list_name:
-            text: user.website
-            type: identifier
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.open_url
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children: []
-              variable_name:
-                text: website
-                type: identifier
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - type: list
-          children: []
-          list_name:
-            text: user.search_engine
-            type: identifier
-        - text: hunt
-          type: word
-        - type: capture
-          children: []
-          capture_name:
-            text: user.text
-            type: identifier
-      - text: $
-        type: end_anchor
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.search_with_search_engine
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children: []
-              variable_name:
-                text: search_engine
-                type: identifier
-            - type: variable
-              children: []
-              variable_name:
-                text: user.text
-                type: identifier
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - type: list
-          children: []
-          list_name:
-            text: user.search_engine
-            type: identifier
-        - type: parenthesized_rule
+        - type: seq
           children:
-          - type: choice
-            children:
-            - text: that
-              type: word
-            - text: this
-              type: word
-    script:
-      type: block
-      children:
-      - type: assignment_statement
-        children: []
-        left:
-          text: text
-          type: identifier
-        right:
-          type: action
-          children: []
-          action_name:
-            text: edit.selected_text
-            type: identifier
-          arguments:
-            type: argument_list
+          - text: open
+            type: word
+          - type: list
             children: []
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
+            list_name:
+              text: user.website
+              type: identifier
+      right:
+        type: block
+        children:
+        - type: expression_statement
           children: []
-          action_name:
-            text: user.search_with_search_engine
-            type: identifier
-          arguments:
-            type: argument_list
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.open_url
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: variable
+                children: []
+                variable_name:
+                  text: website
+                  type: identifier
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - type: list
+            children: []
+            list_name:
+              text: user.search_engine
+              type: identifier
+          - text: hunt
+            type: word
+          - type: capture
+            children: []
+            capture_name:
+              text: user.text
+              type: identifier
+        - text: $
+          type: end_anchor
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.search_with_search_engine
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: variable
+                children: []
+                variable_name:
+                  text: search_engine
+                  type: identifier
+              - type: variable
+                children: []
+                variable_name:
+                  text: user.text
+                  type: identifier
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - type: list
+            children: []
+            list_name:
+              text: user.search_engine
+              type: identifier
+          - type: parenthesized_rule
             children:
-            - type: variable
+            - type: choice
+              children:
+              - text: that
+                type: word
+              - text: this
+                type: word
+      right:
+        type: block
+        children:
+        - type: assignment_statement
+          children: []
+          left:
+            text: text
+            type: identifier
+          right:
+            type: action
+            children: []
+            action_name:
+              text: edit.selected_text
+              type: identifier
+            arguments:
+              type: argument_list
               children: []
-              variable_name:
-                text: search_engine
-                type: identifier
-            - type: variable
-              children: []
-              variable_name:
-                text: text
-                type: identifier
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.search_with_search_engine
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: variable
+                children: []
+                variable_name:
+                  text: search_engine
+                  type: identifier
+              - type: variable
+                children: []
+                variable_name:
+                  text: text
+                  type: identifier

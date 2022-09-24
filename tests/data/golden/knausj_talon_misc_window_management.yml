@@ -23,467 +23,469 @@ output:
   children:
   - type: matches
     children: []
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+  - type: declarations
+    children:
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
         children:
-        - text: window
-          type: word
-        - type: parenthesized_rule
+        - type: seq
           children:
-          - type: choice
+          - text: window
+            type: word
+          - type: parenthesized_rule
             children:
-            - text: new
-              type: word
-            - text: open
-              type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: app.window_open
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+            - type: choice
+              children:
+              - text: new
+                type: word
+              - text: open
+                type: word
+      right:
+        type: block
         children:
-        - text: window
-          type: word
-        - text: next
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
+        - type: expression_statement
           children: []
-          action_name:
-            text: app.window_next
-            type: identifier
-          arguments:
-            type: argument_list
+          expression:
+            type: action
             children: []
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+            action_name:
+              text: app.window_open
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
         children:
-        - text: window
-          type: word
-        - text: last
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: app.window_previous
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+        - type: seq
+          children:
+          - text: window
+            type: word
+          - text: next
+            type: word
+      right:
+        type: block
         children:
-        - text: window
-          type: word
-        - text: close
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
+        - type: expression_statement
           children: []
-          action_name:
-            text: app.window_close
-            type: identifier
-          arguments:
-            type: argument_list
+          expression:
+            type: action
             children: []
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+            action_name:
+              text: app.window_next
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: window
+            type: word
+          - text: last
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: app.window_previous
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: window
+            type: word
+          - text: close
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: app.window_close
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: focus
+            type: word
+          - type: capture
+            children: []
+            capture_name:
+              text: user.running_applications
+              type: identifier
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.switcher_focus
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: variable
+                children: []
+                variable_name:
+                  text: running_applications
+                  type: identifier
+    - text: "# following only works on windows. Can't figure out how to make it work\
+        \ for mac. No idea what the equivalent for linux would be."
+      type: comment
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
         children:
         - text: focus
           type: word
-        - type: capture
+        - text: $
+          type: end_anchor
+      right:
+        type: block
+        children:
+        - type: expression_statement
           children: []
-          capture_name:
-            text: user.running_applications
-            type: identifier
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.switcher_focus
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children: []
-              variable_name:
-                text: running_applications
-                type: identifier
-  - text: "# following only works on windows. Can't figure out how to make it work\
-      \ for mac. No idea what the equivalent for linux would be."
-    type: comment
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - text: focus
-        type: word
-      - text: $
-        type: end_anchor
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.switcher_menu
-            type: identifier
-          arguments:
-            type: argument_list
+          expression:
+            type: action
             children: []
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: running
-          type: word
-        - text: list
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.switcher_toggle_running
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: running
-          type: word
-        - text: close
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.switcher_hide_running
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: launch
-          type: word
-        - type: capture
-          children: []
-          capture_name:
-            text: user.launch_applications
-            type: identifier
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.switcher_launch
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
+            action_name:
+              text: user.switcher_menu
+              type: identifier
+            arguments:
+              type: argument_list
               children: []
-              variable_name:
-                text: launch_applications
-                type: identifier
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
         children:
-        - text: snap
-          type: word
-        - type: capture
-          children: []
-          capture_name:
-            text: user.window_snap_position
-            type: identifier
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.snap_window
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children: []
-              variable_name:
-                text: window_snap_position
-                type: identifier
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: snap
-          type: word
-        - text: next
-          type: word
-        - type: optional
+        - type: seq
           children:
+          - text: running
+            type: word
+          - text: list
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.switcher_toggle_running
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: running
+            type: word
+          - text: close
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.switcher_hide_running
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: launch
+            type: word
+          - type: capture
+            children: []
+            capture_name:
+              text: user.launch_applications
+              type: identifier
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.switcher_launch
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: variable
+                children: []
+                variable_name:
+                  text: launch_applications
+                  type: identifier
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: snap
+            type: word
+          - type: capture
+            children: []
+            capture_name:
+              text: user.window_snap_position
+              type: identifier
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.snap_window
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: variable
+                children: []
+                variable_name:
+                  text: window_snap_position
+                  type: identifier
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: snap
+            type: word
+          - text: next
+            type: word
+          - type: optional
+            children:
+            - text: screen
+              type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.move_window_next_screen
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: snap
+            type: word
+          - text: last
+            type: word
+          - type: optional
+            children:
+            - text: screen
+              type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.move_window_previous_screen
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: snap
+            type: word
           - text: screen
             type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.move_window_next_screen
-            type: identifier
-          arguments:
-            type: argument_list
+          - type: capture
             children: []
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+            capture_name:
+              text: number
+              type: identifier
+      right:
+        type: block
         children:
-        - text: snap
-          type: word
-        - text: last
-          type: word
-        - type: optional
-          children:
-          - text: screen
-            type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
+        - type: expression_statement
           children: []
-          action_name:
-            text: user.move_window_previous_screen
-            type: identifier
-          arguments:
-            type: argument_list
+          expression:
+            type: action
             children: []
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+            action_name:
+              text: user.move_window_to_screen
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: variable
+                children: []
+                variable_name:
+                  text: number
+                  type: identifier
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
         children:
-        - text: snap
-          type: word
-        - text: screen
-          type: word
-        - type: capture
-          children: []
-          capture_name:
-            text: number
-            type: identifier
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.move_window_to_screen
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children: []
-              variable_name:
-                text: number
-                type: identifier
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: snap
-          type: word
-        - type: capture
-          children: []
-          capture_name:
-            text: user.running_applications
-            type: identifier
-        - type: capture
-          children: []
-          capture_name:
-            text: user.window_snap_position
-            type: identifier
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.snap_app
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children: []
-              variable_name:
-                text: running_applications
-                type: identifier
-            - type: variable
-              children: []
-              variable_name:
-                text: window_snap_position
-                type: identifier
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: snap
-          type: word
-        - type: capture
-          children: []
-          capture_name:
-            text: user.running_applications
-            type: identifier
-        - type: optional
+        - type: seq
           children:
-          - text: screen
+          - text: snap
             type: word
-        - type: capture
+          - type: capture
+            children: []
+            capture_name:
+              text: user.running_applications
+              type: identifier
+          - type: capture
+            children: []
+            capture_name:
+              text: user.window_snap_position
+              type: identifier
+      right:
+        type: block
+        children:
+        - type: expression_statement
           children: []
-          capture_name:
-            text: number
-            type: identifier
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.move_app_to_screen
-            type: identifier
-          arguments:
-            type: argument_list
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.snap_app
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: variable
+                children: []
+                variable_name:
+                  text: running_applications
+                  type: identifier
+              - type: variable
+                children: []
+                variable_name:
+                  text: window_snap_position
+                  type: identifier
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: snap
+            type: word
+          - type: capture
+            children: []
+            capture_name:
+              text: user.running_applications
+              type: identifier
+          - type: optional
             children:
-            - type: variable
-              children: []
-              variable_name:
-                text: running_applications
-                type: identifier
-            - type: variable
-              children: []
-              variable_name:
-                text: number
-                type: identifier
+            - text: screen
+              type: word
+          - type: capture
+            children: []
+            capture_name:
+              text: number
+              type: identifier
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.move_app_to_screen
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: variable
+                children: []
+                variable_name:
+                  text: running_applications
+                  type: identifier
+              - type: variable
+                children: []
+                variable_name:
+                  text: number
+                  type: identifier

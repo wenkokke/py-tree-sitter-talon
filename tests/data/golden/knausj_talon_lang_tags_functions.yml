@@ -32,11 +32,11 @@ output:
     children:
     - type: match
       children: []
-      key:
+      left:
         text: tag
         type: identifier
-      modifier: []
-      pattern:
+      modifiers: []
+      right:
         text: ' user.code_functions'
         type: implicit_string
   - text: '# Default implementation of capture listens for the following keywords
@@ -72,170 +72,172 @@ output:
     type: comment
   - text: '#'
     type: comment
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - text: ^
-        type: start_anchor
-      - type: seq
+  - type: declarations
+    children:
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
         children:
-        - type: repeat
+        - text: ^
+          type: start_anchor
+        - type: seq
           children:
-          - type: list
-            children: []
-            list_name:
-              text: user.code_function_modifier
-              type: identifier
-        - text: funky
-          type: word
-        - type: capture
-          children: []
-          capture_name:
-            text: user.text
-            type: identifier
-      - text: $
-        type: end_anchor
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.code_modified_function
-            type: identifier
-          arguments:
-            type: argument_list
+          - type: repeat
             children:
-            - type: binary_operator
+            - type: list
               children: []
-              left:
-                type: variable
+              list_name:
+                text: user.code_function_modifier
+                type: identifier
+          - text: funky
+            type: word
+          - type: capture
+            children: []
+            capture_name:
+              text: user.text
+              type: identifier
+        - text: $
+          type: end_anchor
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.code_modified_function
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: binary_operator
+                children: []
+                left:
+                  type: variable
+                  children: []
+                  variable_name:
+                    text: code_function_modifier_list
+                    type: identifier
+                operator:
+                  text: or
+                  type: operator
+                right:
+                  text: '0'
+                  type: integer
+              - type: variable
                 children: []
                 variable_name:
-                  text: code_function_modifier_list
+                  text: text
                   type: identifier
-              operator:
-                text: or
-                type: operator
-              right:
-                text: '0'
-                type: integer
-            - type: variable
-              children: []
-              variable_name:
-                text: text
-                type: identifier
-  - text: '# for annotating function parameters'
-    type: comment
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+    - text: '# for annotating function parameters'
+      type: comment
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
         children:
-        - text: is
-          type: word
-        - text: type
-          type: word
-        - type: capture
+        - type: seq
+          children:
+          - text: is
+            type: word
+          - text: type
+            type: word
+          - type: capture
+            children: []
+            capture_name:
+              text: user.code_type
+              type: identifier
+      right:
+        type: block
+        children:
+        - type: expression_statement
           children: []
-          capture_name:
-            text: user.code_type
-            type: identifier
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.code_insert_type_annotation
-            type: identifier
-          arguments:
-            type: argument_list
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.code_insert_type_annotation
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: variable
+                children: []
+                variable_name:
+                  text: code_type
+                  type: identifier
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: returns
+            type: word
+          - type: optional
             children:
-            - type: variable
-              children: []
-              variable_name:
-                text: code_type
-                type: identifier
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+            - text: type
+              type: word
+          - type: capture
+            children: []
+            capture_name:
+              text: user.code_type
+              type: identifier
+      right:
+        type: block
         children:
-        - text: returns
-          type: word
-        - type: optional
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.code_insert_return_type
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: variable
+                children: []
+                variable_name:
+                  text: code_type
+                  type: identifier
+    - text: '# for generic reference of types'
+      type: comment
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
           children:
           - text: type
             type: word
-        - type: capture
-          children: []
-          capture_name:
-            text: user.code_type
-            type: identifier
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.code_insert_return_type
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children: []
-              variable_name:
-                text: code_type
-                type: identifier
-  - text: '# for generic reference of types'
-    type: comment
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+          - type: capture
+            children: []
+            capture_name:
+              text: user.code_type
+              type: identifier
+      right:
+        type: block
         children:
-        - text: type
-          type: word
-        - type: capture
+        - type: expression_statement
           children: []
-          capture_name:
-            text: user.code_type
-            type: identifier
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: variable
-              children: []
-              variable_name:
-                text: code_type
-                type: identifier
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: insert
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: variable
+                children: []
+                variable_name:
+                  text: code_type
+                  type: identifier

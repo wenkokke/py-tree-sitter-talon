@@ -20,224 +20,226 @@ output:
     children:
     - type: match
       children: []
-      key:
+      left:
         text: app
         type: identifier
-      modifier: []
-      pattern:
+      modifiers: []
+      right:
         text: ' thunderbird'
         type: implicit_string
     - type: match
       children: []
-      key:
+      left:
         text: app
         type: identifier
-      modifier:
+      modifiers:
       - text: and
         type: match_modifier
       - text: not
         type: match_modifier
-      pattern:
+      right:
         text: ' thunderbird_contacts'
         type: implicit_string
     - type: match
       children: []
-      key:
+      left:
         text: app
         type: identifier
-      modifier:
+      modifiers:
       - text: and
         type: match_modifier
       - text: not
         type: match_modifier
-      pattern:
+      right:
         text: ' thunderbird_composer'
         type: implicit_string
   - text: '# Set tags'
     type: comment
-  - type: tag_import_declaration
-    children: []
-    tag:
-      text: user.tabs
-      type: identifier
-  - text: '# navigate tabs'
-    type: comment
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+  - type: declarations
+    children:
+    - type: tag_import_declaration
+      children: []
+      right:
+        text: user.tabs
+        type: identifier
+    - text: '# navigate tabs'
+      type: comment
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
         children:
-        - text: go
-          type: word
+        - type: seq
+          children:
+          - text: go
+            type: word
+          - type: parenthesized_rule
+            children:
+            - type: choice
+              children:
+              - text: mails
+                type: word
+              - text: messages
+                type: word
+              - text: inbox
+                type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.tab_jump
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - text: '1'
+                type: integer
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: go
+            type: word
+          - type: parenthesized_rule
+            children:
+            - type: choice
+              children:
+              - text: calendar
+                type: word
+              - text: lightning
+                type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.thunderbird_mod
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: string
+                children:
+                - text: shift-c
+                  type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: go
+            type: word
+          - text: tasks
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.thunderbird_mod
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: string
+                children:
+                - text: shift-d
+                  type: string_content
+    - text: '# open windows'
+      type: comment
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
         - type: parenthesized_rule
           children:
           - type: choice
             children:
-            - text: mails
-              type: word
-            - text: messages
-              type: word
-            - text: inbox
-              type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.tab_jump
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - text: '1'
-              type: integer
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: go
-          type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: calendar
-              type: word
-            - text: lightning
-              type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
+            - type: seq
               children:
-              - text: shift-c
-                type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: go
-          type: word
-        - text: tasks
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
+              - text: open
+                type: word
+              - text: address
+                type: word
+              - type: optional
+                children:
+                - text: book
+                  type: word
+            - type: seq
               children:
-              - text: shift-d
-                type: string_content
-  - text: '# open windows'
-    type: comment
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: parenthesized_rule
-        children:
-        - type: choice
-          children:
-          - type: seq
-            children:
-            - text: open
-              type: word
-            - text: address
-              type: word
-            - type: optional
-              children:
+              - text: address
+                type: word
               - text: book
                 type: word
-          - type: seq
-            children:
-            - text: address
-              type: word
-            - text: book
-              type: word
-          - type: seq
-            children:
-            - text: open
-              type: word
-            - text: contacts
-              type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
+            - type: seq
               children:
-              - text: shift-b
-                type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+              - text: open
+                type: word
+              - text: contacts
+                type: word
+      right:
+        type: block
         children:
-        - text: dev
-          type: word
-        - text: tools
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
+        - type: expression_statement
           children: []
-          action_name:
-            text: user.thunderbird_mod
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: string
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.thunderbird_mod
+              type: identifier
+            arguments:
+              type: argument_list
               children:
-              - text: shift-i
-                type: string_content
+              - type: string
+                children:
+                - text: shift-b
+                  type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: dev
+            type: word
+          - text: tools
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.thunderbird_mod
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: string
+                children:
+                - text: shift-i
+                  type: string_content

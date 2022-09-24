@@ -12,20 +12,20 @@ output:
     children:
     - type: match
       children: []
-      key:
+      left:
         text: mode
         type: identifier
-      modifier: []
-      pattern:
+      modifiers: []
+      right:
         text: ' sleep'
         type: implicit_string
     - type: match
       children: []
-      key:
+      left:
         text: speech.engine
         type: identifier
-      modifier: []
-      pattern:
+      modifiers: []
+      right:
         text: ' wav2letter'
         type: implicit_string
   - text: '#this exists solely to prevent talon from waking up super easily in sleep
@@ -33,27 +33,29 @@ output:
     type: comment
   - text: "#you probably shouldn't have any other commands here"
     type: comment
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: capture
-        children: []
-        capture_name:
-          text: phrase
-          type: identifier
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
+  - type: declarations
+    children:
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: capture
           children: []
-          action_name:
-            text: skip
+          capture_name:
+            text: phrase
             type: identifier
-          arguments:
-            type: argument_list
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
             children: []
+            action_name:
+              text: skip
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []

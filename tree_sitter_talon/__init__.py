@@ -1,5 +1,4 @@
 import dataclasses
-import itertools
 import typing
 
 from .internal.dynamic import Branch as Branch
@@ -20,6 +19,7 @@ from .internal.dynamic import TalonChoice as TalonChoice
 from .internal.dynamic import TalonCommandDeclaration as TalonCommandDeclaration
 from .internal.dynamic import TalonComment as TalonComment
 from .internal.dynamic import TalonDeclaration as TalonDeclaration
+from .internal.dynamic import TalonDeclarations as TalonDeclarations
 from .internal.dynamic import TalonEndAnchor as TalonEndAnchor
 from .internal.dynamic import TalonError as TalonError
 from .internal.dynamic import TalonExpression as TalonExpression
@@ -353,6 +353,17 @@ setattr(
     TalonComment,
     "__reduce__",
     lambda self: (_make_TalonComment, _fields(self)),
+)
+
+
+def _make_TalonDeclarations(*args) -> TalonDeclarations:
+    return TalonDeclarations(*args)
+
+
+setattr(
+    TalonDeclarations,
+    "__reduce__",
+    lambda self: (_make_TalonDeclarations, _fields(self)),
 )
 
 

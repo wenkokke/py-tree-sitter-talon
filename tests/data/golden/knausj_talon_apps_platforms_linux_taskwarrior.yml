@@ -36,490 +36,492 @@ output:
     children:
     - type: match
       children: []
-      key:
+      left:
         text: os
         type: identifier
-      modifier: []
-      pattern:
+      modifiers: []
+      right:
         text: ' linux'
         type: implicit_string
     - type: match
       children: []
-      key:
+      left:
         text: tag
         type: identifier
-      modifier: []
-      pattern:
+      modifiers: []
+      right:
         text: ' terminal'
         type: implicit_string
     - type: match
       children: []
-      key:
+      left:
         text: tag
         type: identifier
-      modifier:
+      modifiers:
       - text: and
         type: match_modifier
-      pattern:
+      right:
         text: ' user.taskwarrior'
         type: implicit_string
   - text: '# general'
     type: comment
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+  - type: declarations
+    children:
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
         children:
-        - text: task
-          type: word
-        - text: version
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: string
+        - type: seq
           children:
-          - text: task --version
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: task
-          type: word
-        - text: commands
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: string
-          children:
-          - text: task commands
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: task
-          type: word
-        - text: help
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: string
-          children:
-          - text: task help
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-  - text: '# task list'
-    type: comment
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: task
-          type: word
-        - text: list
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: string
-          children:
-          - text: task list
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: task
-          type: word
-        - text: list
-          type: word
-        - text: orphans
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: string
-          children:
-          - text: 'task project: list'
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: task
-          type: word
-        - text: list
-          type: word
-        - text: untagged
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: string
-          children:
-          - text: 'task tags.none: list'
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: task
-          type: word
-        - text: list
-          type: word
-        - type: capture
-          children: []
-          capture_name:
-            text: user.text
-            type: identifier
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: string
-          children:
-          - text: 'task list '
-            type: string_content
-          - text: '{'
-            type: string_content
-          - text: text
-            type: string_content
-          - text: '}'
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: task
-          type: word
-        - text: list
-          type: word
-        - text: project
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: string
-          children:
-          - text: 'task list project: '
-            type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: task
-          type: word
-        - text: list
-          type: word
-        - text: project
-          type: word
-        - type: capture
-          children: []
-          capture_name:
-            text: user.text
-            type: identifier
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: string
-          children:
-          - text: 'task list project:'
-            type: string_content
-          - text: '{'
-            type: string_content
-          - text: text
-            type: string_content
-          - text: '}'
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-  - text: '# task add'
-    type: comment
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: task
-          type: word
-        - text: add
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: string
-          children:
-          - text: 'task add '
-            type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: task
-          type: word
-        - text: add
-          type: word
-        - type: capture
-          children: []
-          capture_name:
-            text: user.text
-            type: identifier
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: string
-          children:
-          - text: 'task add '
-            type: string_content
-          - text: '{'
-            type: string_content
-          - text: text
-            type: string_content
-          - text: '}'
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: task
-          type: word
-        - text: undo
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: string
-          children:
-          - text: task undo
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: parenthesized_rule
-        children:
-        - type: choice
-          children:
-          - text: tasks
+          - text: task
             type: word
-          - type: seq
+          - text: version
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: string
             children:
-            - text: task
+            - text: task --version
+              type: string_content
+            - text: \n
+              type: string_escape_sequence
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: task
+            type: word
+          - text: commands
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: string
+            children:
+            - text: task commands
+              type: string_content
+            - text: \n
+              type: string_escape_sequence
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: task
+            type: word
+          - text: help
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: string
+            children:
+            - text: task help
+              type: string_content
+            - text: \n
+              type: string_escape_sequence
+    - text: '# task list'
+      type: comment
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: task
+            type: word
+          - text: list
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: string
+            children:
+            - text: task list
+              type: string_content
+            - text: \n
+              type: string_escape_sequence
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: task
+            type: word
+          - text: list
+            type: word
+          - text: orphans
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: string
+            children:
+            - text: 'task project: list'
+              type: string_content
+            - text: \n
+              type: string_escape_sequence
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: task
+            type: word
+          - text: list
+            type: word
+          - text: untagged
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: string
+            children:
+            - text: 'task tags.none: list'
+              type: string_content
+            - text: \n
+              type: string_escape_sequence
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: task
+            type: word
+          - text: list
+            type: word
+          - type: capture
+            children: []
+            capture_name:
+              text: user.text
+              type: identifier
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: string
+            children:
+            - text: 'task list '
+              type: string_content
+            - text: '{'
+              type: string_content
+            - text: text
+              type: string_content
+            - text: '}'
+              type: string_content
+            - text: \n
+              type: string_escape_sequence
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: task
+            type: word
+          - text: list
+            type: word
+          - text: project
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: string
+            children:
+            - text: 'task list project: '
+              type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: task
+            type: word
+          - text: list
+            type: word
+          - text: project
+            type: word
+          - type: capture
+            children: []
+            capture_name:
+              text: user.text
+              type: identifier
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: string
+            children:
+            - text: 'task list project:'
+              type: string_content
+            - text: '{'
+              type: string_content
+            - text: text
+              type: string_content
+            - text: '}'
+              type: string_content
+            - text: \n
+              type: string_escape_sequence
+    - text: '# task add'
+      type: comment
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: task
+            type: word
+          - text: add
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: string
+            children:
+            - text: 'task add '
+              type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: task
+            type: word
+          - text: add
+            type: word
+          - type: capture
+            children: []
+            capture_name:
+              text: user.text
+              type: identifier
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: string
+            children:
+            - text: 'task add '
+              type: string_content
+            - text: '{'
+              type: string_content
+            - text: text
+              type: string_content
+            - text: '}'
+              type: string_content
+            - text: \n
+              type: string_escape_sequence
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: task
+            type: word
+          - text: undo
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: string
+            children:
+            - text: task undo
+              type: string_content
+            - text: \n
+              type: string_escape_sequence
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: parenthesized_rule
+          children:
+          - type: choice
+            children:
+            - text: tasks
               type: word
-            - text: next
-              type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: string
-          children:
-          - text: task next
-            type: string_content
-          - text: \n
-            type: string_escape_sequence
-  - text: '# task editing'
-    type: comment
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+            - type: seq
+              children:
+              - text: task
+                type: word
+              - text: next
+                type: word
+      right:
+        type: block
         children:
-        - text: task
-          type: word
-        - type: capture
+        - type: expression_statement
           children: []
-          capture_name:
-            text: number
-            type: identifier
-        - text: edit
-          type: word
-      - text: $
-        type: end_anchor
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: string
-          children:
-          - text: 'task '
-            type: string_content
-          - text: '{'
-            type: string_content
-          - text: number
-            type: string_content
-          - text: '}'
-            type: string_content
-          - text: ' edit'
-            type: string_content
-  - text: '# task completion'
-    type: comment
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+          expression:
+            type: string
+            children:
+            - text: task next
+              type: string_content
+            - text: \n
+              type: string_escape_sequence
+    - text: '# task editing'
+      type: comment
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
         children:
-        - text: task
-          type: word
-        - type: capture
-          children: []
-          capture_name:
-            text: number
-            type: identifier
-        - text: done
-          type: word
-      - text: $
-        type: end_anchor
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: string
+        - type: seq
           children:
-          - text: 'task '
-            type: string_content
-          - text: '{'
-            type: string_content
-          - text: number
-            type: string_content
-          - text: '}'
-            type: string_content
-          - text: ' done'
-            type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+          - text: task
+            type: word
+          - type: capture
+            children: []
+            capture_name:
+              text: number
+              type: identifier
+          - text: edit
+            type: word
+        - text: $
+          type: end_anchor
+      right:
+        type: block
         children:
-        - text: task
-          type: word
-        - type: capture
+        - type: expression_statement
           children: []
-          capture_name:
-            text: number
-            type: identifier
-        - text: delete
-          type: word
-      - text: $
-        type: end_anchor
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: string
+          expression:
+            type: string
+            children:
+            - text: 'task '
+              type: string_content
+            - text: '{'
+              type: string_content
+            - text: number
+              type: string_content
+            - text: '}'
+              type: string_content
+            - text: ' edit'
+              type: string_content
+    - text: '# task completion'
+      type: comment
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
           children:
-          - text: 'task '
-            type: string_content
-          - text: '{'
-            type: string_content
-          - text: number
-            type: string_content
-          - text: '}'
-            type: string_content
-          - text: ' delete'
-            type: string_content
+          - text: task
+            type: word
+          - type: capture
+            children: []
+            capture_name:
+              text: number
+              type: identifier
+          - text: done
+            type: word
+        - text: $
+          type: end_anchor
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: string
+            children:
+            - text: 'task '
+              type: string_content
+            - text: '{'
+              type: string_content
+            - text: number
+              type: string_content
+            - text: '}'
+              type: string_content
+            - text: ' done'
+              type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: task
+            type: word
+          - type: capture
+            children: []
+            capture_name:
+              text: number
+              type: identifier
+          - text: delete
+            type: word
+        - text: $
+          type: end_anchor
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: string
+            children:
+            - text: 'task '
+              type: string_content
+            - text: '{'
+              type: string_content
+            - text: number
+              type: string_content
+            - text: '}'
+              type: string_content
+            - text: ' delete'
+              type: string_content

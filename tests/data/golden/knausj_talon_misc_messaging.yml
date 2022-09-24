@@ -23,389 +23,391 @@ output:
     children:
     - type: match
       children: []
-      key:
+      left:
         text: tag
         type: identifier
-      modifier: []
-      pattern:
+      modifiers: []
+      right:
         text: ' user.messaging'
         type: implicit_string
   - text: '# Navigation'
     type: comment
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+  - type: declarations
+    children:
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
         children:
-        - text: previous
-          type: word
-        - type: parenthesized_rule
+        - type: seq
           children:
-          - type: choice
+          - text: previous
+            type: word
+          - type: parenthesized_rule
             children:
-            - text: workspace
-              type: word
-            - text: server
-              type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.messaging_workspace_previous
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+            - type: choice
+              children:
+              - text: workspace
+                type: word
+              - text: server
+                type: word
+      right:
+        type: block
         children:
-        - text: next
-          type: word
-        - type: parenthesized_rule
-          children:
-          - type: choice
-            children:
-            - text: workspace
-              type: word
-            - text: server
-              type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
+        - type: expression_statement
           children: []
-          action_name:
-            text: user.messaging_workspace_next
-            type: identifier
-          arguments:
-            type: argument_list
+          expression:
+            type: action
             children: []
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - text: channel
-        type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.messaging_open_channel_picker
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: channel
-          type: word
-        - type: capture
-          children: []
-          capture_name:
-            text: user.text
-            type: identifier
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.messaging_open_channel_picker
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: insert
-            type: identifier
-          arguments:
-            type: argument_list
-            children:
-            - type: action
+            action_name:
+              text: user.messaging_workspace_previous
+              type: identifier
+            arguments:
+              type: argument_list
               children: []
-              action_name:
-                text: user.formatted_text
-                type: identifier
-              arguments:
-                type: argument_list
-                children:
-                - type: variable
-                  children: []
-                  variable_name:
-                    text: user.text
-                    type: identifier
-                - type: string
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: next
+            type: word
+          - type: parenthesized_rule
+            children:
+            - type: choice
+              children:
+              - text: workspace
+                type: word
+              - text: server
+                type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.messaging_workspace_next
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - text: channel
+          type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.messaging_open_channel_picker
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: channel
+            type: word
+          - type: capture
+            children: []
+            capture_name:
+              text: user.text
+              type: identifier
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.messaging_open_channel_picker
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: insert
+              type: identifier
+            arguments:
+              type: argument_list
+              children:
+              - type: action
+                children: []
+                action_name:
+                  text: user.formatted_text
+                  type: identifier
+                arguments:
+                  type: argument_list
                   children:
-                  - text: ALL_LOWERCASE
-                    type: string_content
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+                  - type: variable
+                    children: []
+                    variable_name:
+                      text: user.text
+                      type: identifier
+                  - type: string
+                    children:
+                    - text: ALL_LOWERCASE
+                      type: string_content
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
         children:
-        - text: channel
-          type: word
-        - text: up
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.messaging_channel_previous
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
-        children:
-        - text: channel
-          type: word
-        - text: down
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.messaging_channel_next
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: parenthesized_rule
-        children:
-        - type: choice
+        - type: seq
           children:
-          - type: seq
-            children:
-            - type: optional
-              children:
-              - text: channel
-                type: word
-            - text: unread
-              type: word
-            - text: last
-              type: word
-          - text: gopreev
+          - text: channel
             type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.messaging_unread_previous
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: parenthesized_rule
+          - text: up
+            type: word
+      right:
+        type: block
         children:
-        - type: choice
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.messaging_channel_previous
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
           children:
-          - type: seq
-            children:
-            - type: optional
-              children:
-              - text: channel
-                type: word
-            - text: unread
-              type: word
-            - text: next
-              type: word
-          - text: goneck
+          - text: channel
             type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.messaging_unread_next
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+          - text: down
+            type: word
+      right:
+        type: block
         children:
-        - text: go
-          type: word
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.messaging_channel_next
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
         - type: parenthesized_rule
           children:
           - type: choice
             children:
-            - text: find
+            - type: seq
+              children:
+              - type: optional
+                children:
+                - text: channel
+                  type: word
+              - text: unread
+                type: word
+              - text: last
+                type: word
+            - text: gopreev
               type: word
-            - text: search
-              type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.messaging_open_search
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+      right:
+        type: block
         children:
-        - text: mark
-          type: word
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.messaging_unread_previous
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
         - type: parenthesized_rule
           children:
           - type: choice
             children:
-            - text: all
+            - type: seq
+              children:
+              - type: optional
+                children:
+                - text: channel
+                  type: word
+              - text: unread
+                type: word
+              - text: next
+                type: word
+            - text: goneck
               type: word
-            - text: workspace
-              type: word
-            - text: server
-              type: word
-        - text: read
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
-          children: []
-          action_name:
-            text: user.messaging_mark_workspace_read
-            type: identifier
-          arguments:
-            type: argument_list
-            children: []
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+      right:
+        type: block
         children:
-        - text: mark
-          type: word
-        - text: channel
-          type: word
-        - text: read
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
+        - type: expression_statement
           children: []
-          action_name:
-            text: user.messaging_mark_channel_read
-            type: identifier
-          arguments:
-            type: argument_list
+          expression:
+            type: action
             children: []
-  - type: command_declaration
-    children: []
-    rule:
-      type: rule
-      children:
-      - type: seq
+            action_name:
+              text: user.messaging_unread_next
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
         children:
-        - text: upload
-          type: word
-        - text: file
-          type: word
-    script:
-      type: block
-      children:
-      - type: expression_statement
-        children: []
-        expression:
-          type: action
+        - type: seq
+          children:
+          - text: go
+            type: word
+          - type: parenthesized_rule
+            children:
+            - type: choice
+              children:
+              - text: find
+                type: word
+              - text: search
+                type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
           children: []
-          action_name:
-            text: user.messaging_upload_file
-            type: identifier
-          arguments:
-            type: argument_list
+          expression:
+            type: action
             children: []
+            action_name:
+              text: user.messaging_open_search
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: mark
+            type: word
+          - type: parenthesized_rule
+            children:
+            - type: choice
+              children:
+              - text: all
+                type: word
+              - text: workspace
+                type: word
+              - text: server
+                type: word
+          - text: read
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.messaging_mark_workspace_read
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: mark
+            type: word
+          - text: channel
+            type: word
+          - text: read
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.messaging_mark_channel_read
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
+    - type: command_declaration
+      children: []
+      left:
+        type: rule
+        children:
+        - type: seq
+          children:
+          - text: upload
+            type: word
+          - text: file
+            type: word
+      right:
+        type: block
+        children:
+        - type: expression_statement
+          children: []
+          expression:
+            type: action
+            children: []
+            action_name:
+              text: user.messaging_upload_file
+              type: identifier
+            arguments:
+              type: argument_list
+              children: []
