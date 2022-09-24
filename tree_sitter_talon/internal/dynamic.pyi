@@ -86,7 +86,7 @@ def from_tree_sitter(
 @dataclasses.dataclass
 class TalonSourceFile(Branch):
     children: collections.abc.Sequence[
-        typing.Union[TalonDeclaration, TalonMatches, TalonComment]
+        typing.Union[TalonDeclarations, TalonMatches, TalonComment]
     ]
     def get_docstring(self) -> typing.Optional[str]: ...
     def find_command(
