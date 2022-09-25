@@ -40,6 +40,11 @@ jobs:
       - name: Build & Test
         run: tox --skip-missing-interpreters
 
+      - name: Build Wheels
+        run: python -m cibuildwheel --output-dir dist
+        env:
+          CIBW_SKIP: cp36-* cp37-* cp38-* *musllinux*
+
       - name: Upload wheel
         if: ${{ matrix.build-format }} == 'wheel'
         uses: actions/upload-artifact@v3
