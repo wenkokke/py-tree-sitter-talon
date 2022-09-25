@@ -38,15 +38,12 @@ jobs:
         run: poetry install --no-root --with ci
 
       - name: Build
-        run: poetry build -vvv --format=${{ matrix.build-format }}
-
-      - name: Build & Test
-        run: poetry run tox --skip-missing-interpreters
-
-      - name: Build Wheels
         run: poetry run cibuildwheel --output-dir dist
         env:
           CIBW_SKIP: cp36-* cp37-* cp38-* *musllinux*
+
+      - name: Build & Test
+        run: poetry run tox --skip-missing-interpreters
 
       - name: Upload wheel
         if: ${{ matrix.build-format }} == 'wheel'
