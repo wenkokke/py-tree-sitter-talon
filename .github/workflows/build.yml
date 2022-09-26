@@ -56,26 +56,31 @@ jobs:
           poetry install --no-root --with ci
           poetry run tox --skip-missing-interpreters
 
-      - name: Build SDist & Wheel
+      - name: Build SDist
         if: matrix.experimental == false
-        run: |
-          poetry run cibuildwheel --output-dir dist
-          poetry build --format=sdist
+        run: poetry build --format=sdist
+
+      - name: Build Wheel
+        if: matrix.experimental == false
+        run: poetry run cibuildwheel --output-dir dist
         env:
           CIBW_SKIP: pp* cp36* cp37* cp38* *musllinux*
 
       - name: Upload sdist
-        if: runner.os == 'Linux'
+        if: runner.os == 'Linux' && matrix.experimental == false
         uses: actions/upload-artifact@v3
         with:
           name: wheelhouse
           path: dist/**.tar.gz
+          if-no-files-found: error
 
       - name: Upload wheel
+        if: matrix.experimental == false
         uses: actions/upload-artifact@v3
         with:
           name: wheelhouse
           path: dist/**.whl
+          if-no-files-found: error
 
   build-doc:
     name: Build Doc
