@@ -22,7 +22,25 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-11, macos-12, windows-2019, windows-2022]
         python-version: ["3.9"]
+        experimental: [false]
+        include:
+          - os: ubuntu-latest
+            python-version: "3.9.8"
+            experimental: true
+          - os: ubuntu-latest
+            python-version: "3.9.9"
+            experimental: true
+          - os: ubuntu-latest
+            python-version: "3.9.10"
+            experimental: true
+          - os: ubuntu-latest
+            python-version: "3.9.11"
+            experimental: true
+          - os: ubuntu-latest
+            python-version: "3.9.12"
+            experimental: true
     runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.experimental }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -37,6 +55,10 @@ jobs:
         run: |
           poetry install --no-root --with ci
           poetry run tox --skip-missing-interpreters
+
+      - name: Build SDist & Wheel
+        if: ! maxtrix.experimental
+        run: |
           poetry run cibuildwheel --output-dir dist
           poetry build --format=sdist
         env:
