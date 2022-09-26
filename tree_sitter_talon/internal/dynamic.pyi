@@ -179,8 +179,8 @@ class TalonKeyBindingDeclaration(Branch, TalonDeclaration):
 
 @dataclasses.dataclass
 class TalonSettingsDeclaration(Branch, TalonDeclaration):
-    children: collections.abc.Sequence[typing.Union[TalonBlock, TalonComment]]
-    right: TalonIdentifier
+    children: collections.abc.Sequence[TalonComment]
+    right: TalonBlock
 
     def get_child(self) -> TalonBlock: ...
 
