@@ -1,6 +1,8 @@
 import dataclasses
 import typing
 
+import deprecation
+
 from .internal.dynamic import Branch as Branch
 from .internal.dynamic import Leaf as Leaf
 from .internal.dynamic import Node as Node
@@ -83,47 +85,79 @@ __version__: str = "1003.3.1.0"
 # Properties for backwards compatibility
 ################################################################################
 
+deprecated_for_left = deprecation.deprecated(
+    deprecated_in="1004.3.1.0",
+    current_version=__version__,
+    details="Use 'left' instead.",
+)
+
+deprecated_for_modifiers = deprecation.deprecated(
+    deprecated_in="1004.3.1.0",
+    current_version=__version__,
+    details="Use 'modifiers' instead.",
+)
+
+deprecated_for_right = deprecation.deprecated(
+    deprecated_in="1004.3.1.0",
+    current_version=__version__,
+    details="Use 'right' instead.",
+)
+
 
 def _TalonMatch_key(self) -> TalonIdentifier:
     return self.left
 
 
-setattr(TalonMatch, "key", property(_TalonMatch_key))
+setattr(TalonMatch, "key", deprecated_for_left(property(_TalonMatch_key)))
 
 
 def _TalonMatch_modifier(self) -> TalonIdentifier:
     return self.modifiers
 
 
-setattr(TalonMatch, "modifier", property(_TalonMatch_modifier))
+setattr(
+    TalonMatch, "modifier", deprecated_for_modifiers(property(_TalonMatch_modifier))
+)
 
 
 def _TalonMatch_pattern(self) -> TalonIdentifier:
     return self.right
 
 
-setattr(TalonMatch, "pattern", property(_TalonMatch_pattern))
+setattr(TalonMatch, "pattern", deprecated_for_right(property(_TalonMatch_pattern)))
 
 
 def _TalonCommandDeclaration_rule(self) -> TalonIdentifier:
     return self.left
 
 
-setattr(TalonCommandDeclaration, "rule", property(_TalonCommandDeclaration_rule))
+setattr(
+    TalonCommandDeclaration,
+    "rule",
+    deprecated_for_left(property(_TalonCommandDeclaration_rule)),
+)
 
 
 def _TalonCommandDeclaration_script(self) -> TalonIdentifier:
     return self.right
 
 
-setattr(TalonCommandDeclaration, "script", property(_TalonCommandDeclaration_script))
+setattr(
+    TalonCommandDeclaration,
+    "script",
+    deprecated_for_right(property(_TalonCommandDeclaration_script)),
+)
 
 
 def _TalonKeyBindingDeclaration_key(self) -> TalonIdentifier:
     return self.left
 
 
-setattr(TalonKeyBindingDeclaration, "key", property(_TalonKeyBindingDeclaration_key))
+setattr(
+    TalonKeyBindingDeclaration,
+    "key",
+    deprecated_for_left(property(_TalonKeyBindingDeclaration_key)),
+)
 
 
 def _TalonKeyBindingDeclaration_script(self) -> TalonIdentifier:
@@ -131,7 +165,9 @@ def _TalonKeyBindingDeclaration_script(self) -> TalonIdentifier:
 
 
 setattr(
-    TalonKeyBindingDeclaration, "script", property(_TalonKeyBindingDeclaration_script)
+    TalonKeyBindingDeclaration,
+    "script",
+    deprecated_for_right(property(_TalonKeyBindingDeclaration_script)),
 )
 
 
@@ -139,7 +175,11 @@ def _TalonTagImportDeclaration_tag(self) -> TalonIdentifier:
     return self.right
 
 
-setattr(TalonTagImportDeclaration, "tag", property(_TalonTagImportDeclaration_tag))
+setattr(
+    TalonTagImportDeclaration,
+    "tag",
+    deprecated_for_right(property(_TalonTagImportDeclaration_tag)),
+)
 
 
 ################################################################################
