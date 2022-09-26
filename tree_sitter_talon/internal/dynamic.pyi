@@ -7,6 +7,7 @@ import dataclasses_json
 import parsec
 import tree_sitter
 
+from . import __version__
 from .parsec import AnyListValue, AnyTalonRule
 
 ################################################################################

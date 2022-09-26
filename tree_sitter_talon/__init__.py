@@ -1,8 +1,8 @@
 import dataclasses
 import typing
+import warnings
 
-import deprecation
-
+from .internal import __version__ as __version__
 from .internal.dynamic import Branch as Branch
 from .internal.dynamic import Leaf as Leaf
 from .internal.dynamic import Node as Node
@@ -70,115 +70,135 @@ from .internal.parsec import find_command as find_command
 from .internal.parsec import match as match
 
 ################################################################################
-# Version Number
-################################################################################
-
-# TODO: Switch to "1!{tree-sitter-talon.version}.{build}".
-#       Blocked on <python-poetry/poetry/issues/6466>.
-
-__version__: str = "1003.3.1.0"
-#                   ^^^^ build
-#                        ^^^^^ tree-sitter-talon version
-
-
-################################################################################
 # Properties for backwards compatibility
 ################################################################################
 
-deprecated_for_left = deprecation.deprecated(
-    deprecated_in="1004.3.1.0",
-    current_version=__version__,
-    details="Use 'left' instead.",
-)
-
-deprecated_for_modifiers = deprecation.deprecated(
-    deprecated_in="1004.3.1.0",
-    current_version=__version__,
-    details="Use 'modifiers' instead.",
-)
-
-deprecated_for_right = deprecation.deprecated(
-    deprecated_in="1004.3.1.0",
-    current_version=__version__,
-    details="Use 'right' instead.",
-)
-
 
 def _TalonMatch_key(self) -> TalonIdentifier:
+    warnings.warn(
+        "'key' was deprecated in 1004.3.1.0; use 'left'",
+        DeprecationWarning,
+        stacklevel=2,
+    )
     return self.left
 
 
-setattr(TalonMatch, "key", deprecated_for_left(property(_TalonMatch_key)))
+setattr(
+    TalonMatch,
+    "key",
+    property(_TalonMatch_key),
+)
 
 
 def _TalonMatch_modifier(self) -> TalonIdentifier:
+    warnings.warn(
+        "'modifier' was deprecated in 1004.3.1.0; use 'modifiers'",
+        DeprecationWarning,
+        stacklevel=2,
+    )
     return self.modifiers
 
 
 setattr(
-    TalonMatch, "modifier", deprecated_for_modifiers(property(_TalonMatch_modifier))
+    TalonMatch,
+    "modifier",
+    property(_TalonMatch_modifier),
 )
 
 
 def _TalonMatch_pattern(self) -> TalonIdentifier:
+    warnings.warn(
+        "'pattern' was deprecated in 1004.3.1.0; use 'right'",
+        DeprecationWarning,
+        stacklevel=2,
+    )
     return self.right
 
 
-setattr(TalonMatch, "pattern", deprecated_for_right(property(_TalonMatch_pattern)))
+setattr(
+    TalonMatch,
+    "pattern",
+    property(_TalonMatch_pattern),
+)
 
 
 def _TalonCommandDeclaration_rule(self) -> TalonIdentifier:
+    warnings.warn(
+        "'rule' was deprecated in 1004.3.1.0; use 'left'",
+        DeprecationWarning,
+        stacklevel=2,
+    )
     return self.left
 
 
 setattr(
     TalonCommandDeclaration,
     "rule",
-    deprecated_for_left(property(_TalonCommandDeclaration_rule)),
+    property(_TalonCommandDeclaration_rule),
 )
 
 
 def _TalonCommandDeclaration_script(self) -> TalonIdentifier:
+    warnings.warn(
+        "'script' was deprecated in 1004.3.1.0; use 'right'",
+        DeprecationWarning,
+        stacklevel=2,
+    )
     return self.right
 
 
 setattr(
     TalonCommandDeclaration,
     "script",
-    deprecated_for_right(property(_TalonCommandDeclaration_script)),
+    property(_TalonCommandDeclaration_script),
 )
 
 
 def _TalonKeyBindingDeclaration_key(self) -> TalonIdentifier:
+    warnings.warn(
+        "'key' was deprecated in 1004.3.1.0; use 'left'",
+        DeprecationWarning,
+        stacklevel=2,
+    )
     return self.left
 
 
 setattr(
     TalonKeyBindingDeclaration,
     "key",
-    deprecated_for_left(property(_TalonKeyBindingDeclaration_key)),
+    property(_TalonKeyBindingDeclaration_key),
 )
 
 
 def _TalonKeyBindingDeclaration_script(self) -> TalonIdentifier:
+    warnings.warn(
+        "'script' was deprecated in 1004.3.1.0; use 'right'",
+        DeprecationWarning,
+        stacklevel=2,
+    )
     return self.right
 
 
 setattr(
     TalonKeyBindingDeclaration,
     "script",
-    deprecated_for_right(property(_TalonKeyBindingDeclaration_script)),
+    property(_TalonKeyBindingDeclaration_script),
 )
 
 
 def _TalonTagImportDeclaration_tag(self) -> TalonIdentifier:
+    warnings.warn(
+        "'tag' was deprecated in 1004.3.1.0; use 'right'",
+        DeprecationWarning,
+        stacklevel=2,
+    )
     return self.right
 
 
 setattr(
     TalonTagImportDeclaration,
     "tag",
-    deprecated_for_right(property(_TalonTagImportDeclaration_tag)),
+    property(_TalonTagImportDeclaration_tag),
 )
 
 
