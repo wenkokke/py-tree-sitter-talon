@@ -145,12 +145,22 @@ class TalonDeclarations(Branch):
 class TalonDeclaration(Node):
     pass
 
-@dataclasses.dataclass
+@dataclasses.dataclass(init=False)
 class TalonCommandDeclaration(Branch, TalonDeclaration):
-    children: collections.abc.Sequence[TalonComment]
+    children: None
     left: TalonRule
     right: TalonBlock
 
+    def __init__(
+        self,
+        text: str,
+        type_name: NodeTypeName,
+        start_position: Point,
+        end_position: Point,
+        children: typing.Optional[collections.abc.Sequence[TalonComment]],
+        left: TalonRule,
+        right: TalonBlock,
+    ) -> None: ...
     @property
     def rule(self) -> TalonRule: ...
     @property
@@ -170,24 +180,42 @@ class TalonCommandDeclaration(Branch, TalonDeclaration):
     ) -> bool: ...
     def is_short(self) -> bool: ...
 
-@dataclasses.dataclass
+@dataclasses.dataclass(init=False)
 class TalonKeyBindingDeclaration(Branch, TalonDeclaration):
-    children: collections.abc.Sequence[TalonComment]
+    children: None
     left: TalonKeyAction
     right: TalonBlock
 
+    def __init__(
+        self,
+        text: str,
+        type_name: NodeTypeName,
+        start_position: Point,
+        end_position: Point,
+        children: typing.Optional[collections.abc.Sequence[TalonComment]],
+        left: TalonKeyAction,
+        right: TalonBlock,
+    ) -> None: ...
     @property
     def key(self) -> TalonKeyAction: ...
     @property
     def script(self) -> TalonBlock: ...
     def is_short(self) -> bool: ...
 
-@dataclasses.dataclass
+@dataclasses.dataclass(init=False)
 class TalonSettingsDeclaration(Branch, TalonDeclaration):
-    children: collections.abc.Sequence[TalonComment]
+    children: None
     right: TalonBlock
 
-    def get_child(self) -> TalonBlock: ...
+    def __init__(
+        self,
+        text: str,
+        type_name: NodeTypeName,
+        start_position: Point,
+        end_position: Point,
+        children: typing.Optional[collections.abc.Sequence[TalonComment]],
+        right: TalonBlock,
+    ) -> None: ...
     def is_short(self) -> bool: ...
 
 @dataclasses.dataclass
@@ -551,6 +579,8 @@ class TalonExpressionStatement(Branch, TalonStatement):
 @dataclasses.dataclass
 class TalonBlock(Branch):
     children: collections.abc.Sequence[typing.Union[TalonStatement, TalonComment]]
+
+    def is_short(self) -> bool: ...
 
 # Expressions.
 

@@ -1,3 +1,4 @@
+import collections.abc
 import dataclasses
 import typing
 import warnings
@@ -215,26 +216,114 @@ setattr(TalonMatches, "is_explicit", _TalonMatches_is_explicit)
 
 
 ################################################################################
+# Redefine __init__ to merge comments into block
+################################################################################
+
+
+def _TalonBlock_with_comments(
+    self: TalonBlock, comments: typing.Optional[collections.abc.Sequence[TalonComment]]
+) -> TalonBlock:
+    return TalonBlock(
+        text=self.text,
+        type_name=self.type_name,
+        start_position=self.start_position,
+        end_position=self.end_position,
+        children=[*(comments or ()), *self.children],
+    )
+
+
+def _TalonCommandDeclaration___init__(
+    self: TalonCommandDeclaration,
+    text: str,
+    type_name: NodeTypeName,
+    start_position: Point,
+    end_position: Point,
+    children: typing.Optional[collections.abc.Sequence[TalonComment]],
+    left: TalonRule,
+    right: TalonBlock,
+) -> None:
+    self.text = text
+    self.type_name = type_name
+    self.start_position = start_position
+    self.end_position = end_position
+    self.children = None
+    self.left = left
+    self.right = _TalonBlock_with_comments(right, children)
+
+
+setattr(TalonCommandDeclaration, "__init__", _TalonCommandDeclaration___init__)
+
+
+def _TalonKeyBindingDeclaration___init__(
+    self: TalonKeyBindingDeclaration,
+    text: str,
+    type_name: NodeTypeName,
+    start_position: Point,
+    end_position: Point,
+    children: typing.Optional[collections.abc.Sequence[TalonComment]],
+    left: TalonKeyAction,
+    right: TalonBlock,
+) -> None:
+    self.text = text
+    self.type_name = type_name
+    self.start_position = start_position
+    self.end_position = end_position
+    self.children = None
+    self.left = left
+    self.right = _TalonBlock_with_comments(right, children)
+
+
+setattr(TalonKeyBindingDeclaration, "__init__", _TalonKeyBindingDeclaration___init__)
+
+
+def _TalonSettingsDeclaration___init__(
+    self: TalonSettingsDeclaration,
+    text: str,
+    type_name: NodeTypeName,
+    start_position: Point,
+    end_position: Point,
+    children: typing.Optional[collections.abc.Sequence[TalonComment]],
+    right: TalonBlock,
+) -> None:
+    self.text = text
+    self.type_name = type_name
+    self.start_position = start_position
+    self.end_position = end_position
+    self.children = None
+    self.right = _TalonBlock_with_comments(right, children)
+
+
+setattr(TalonSettingsDeclaration, "__init__", _TalonSettingsDeclaration___init__)
+
+
+################################################################################
 # Method to test if a declaration is short
 ################################################################################
 
 
+def _TalonBlock_is_short(self: TalonBlock) -> bool:
+    return len(self.children) <= 1
+
+
+setattr(TalonBlock, "is_short", _TalonBlock_is_short)
+
+
 def _TalonCommandDeclaration_is_short(self: TalonCommandDeclaration) -> bool:
-    return len(self.children) + len(self.right.children) == 1
+    return self.right.is_short()
 
 
 setattr(TalonCommandDeclaration, "is_short", _TalonCommandDeclaration_is_short)
 
 
 def _TalonSettingsDeclaration_is_short(self: TalonSettingsDeclaration) -> bool:
-    return len(self.children) + len(self.right.children) == 1
+    return self.right.is_short()
 
 
 setattr(TalonSettingsDeclaration, "is_short", _TalonSettingsDeclaration_is_short)
 
 
 def _TalonKeyBindingDeclaration_is_short(self: TalonKeyBindingDeclaration) -> bool:
-    return len(self.children) + len(self.right.children) == 1
+    return self.right.is_short()
 
 
 setattr(TalonKeyBindingDeclaration, "is_short", _TalonKeyBindingDeclaration_is_short)
@@ -292,7 +381,6 @@ def _get_child(self: Node) -> Node:
         raise AssertionError(_get_child_fail_msg(self, children=self.children))
 
 
-setattr(TalonSettingsDeclaration, "get_child", _get_child)
 setattr(TalonOptional, "get_child", _get_child)
 setattr(TalonParenthesizedRule, "get_child", _get_child)
 setattr(TalonRepeat, "get_child", _get_child)
@@ -333,7 +421,7 @@ def _TalonCommandDeclaration_get_docstring(
     self: TalonCommandDeclaration,
 ) -> typing.Optional[str]:
     docstrings: list[str] = []
-    for comment in [*self.children, *self.script.children]:
+    for comment in self.right.children:
         if isinstance(comment, TalonComment):
             docstring = _TalonComment_get_docstring(comment)
             if docstring:

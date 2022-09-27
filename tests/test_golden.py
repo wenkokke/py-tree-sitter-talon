@@ -25,6 +25,8 @@ def test_golden_pickle(golden):
     buffer_in = io.BytesIO(buffer_out.getvalue())
     node_after = pickle.load(buffer_in)
     assert node_before == node_after
+    # NOTE: suppresses GoldenTestUsageWarning
+    assert golden["output"] is not None
 
 
 @pytest.mark.golden_test("data/golden/*.yml")
@@ -38,3 +40,5 @@ def test_golden_parsec(golden):
             assert isinstance(declaration, tree_sitter_talon.TalonCommandDeclaration)
     except KeyError:
         pass
+    # NOTE: suppresses GoldenTestUsageWarning
+    assert golden["output"] is not None
