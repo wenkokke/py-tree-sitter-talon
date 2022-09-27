@@ -7,6 +7,10 @@ defaults:
   run:
     shell: bash
 
+# concurrency:
+#   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+#   cancel-in-progress: true
+
 jobs:
   build-wheel:
     strategy:
@@ -15,14 +19,20 @@ jobs:
         os_and_platform_tag:
           - [ubuntu-latest, manylinux_x86_64]
           - [ubuntu-latest, manylinux_i686]
-          - [macos-latest, macosx_x86_64]
-          - [macos-latest, macosx_universal2]
-          - [macos-latest, macosx_arm64]
+          # [ubuntu-latest, manylinux_aarch64]
+          # [ubuntu-latest, manylinux_ppc64le]
+          # [ubuntu-latest, manylinux_s390x]
+          - [macos-10.5, macosx_*]
+          - [macos-11, macosx_*]
+          - [macos-12, macosx_*]
           - [windows-latest, win_amd64]
           - [windows-latest, win32]
 
     name: Build wheel for ${{ matrix.python_tag }}-${{ matrix.os_and_platform_tag[1] }}
     runs-on: ${{ matrix.os_and_platform_tag[0] }}
+    continue-on-error: true
+    env:
+      IS_32BIT: ${{ matrix.os_and_platform_tag[1] == 'win32' }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -39,6 +49,14 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install -r requirements-ci.txt
+
+      - name: Configure mingw for 32-bit builds
+        if: ${{ env.IS_32_BIT == 'true' }}
+        run: |
+          choco uninstall mingw
+          choco install -y mingw --forcex86 --force --version=7.3.0
+          echo "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw32\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          refreshenv
 
       - name: Build wheel
         uses: pypa/cibuildwheel@v2.9.0
