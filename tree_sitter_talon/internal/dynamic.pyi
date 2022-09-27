@@ -118,6 +118,8 @@ class TalonError(Exception, Branch):
 class TalonMatches(Branch):
     children: collections.abc.Sequence[typing.Union[TalonMatch, TalonComment]]
 
+    def is_explicit(self) -> bool: ...
+
 @dataclasses.dataclass
 class TalonMatch(Branch):
     children: collections.abc.Sequence[TalonComment]
@@ -166,6 +168,7 @@ class TalonCommandDeclaration(Branch, TalonDeclaration):
             collections.abc.Callable[[str], typing.Optional[AnyListValue]]
         ] = None,
     ) -> bool: ...
+    def is_short(self) -> bool: ...
 
 @dataclasses.dataclass
 class TalonKeyBindingDeclaration(Branch, TalonDeclaration):
@@ -177,6 +180,7 @@ class TalonKeyBindingDeclaration(Branch, TalonDeclaration):
     def key(self) -> TalonKeyAction: ...
     @property
     def script(self) -> TalonBlock: ...
+    def is_short(self) -> bool: ...
 
 @dataclasses.dataclass
 class TalonSettingsDeclaration(Branch, TalonDeclaration):
@@ -184,6 +188,7 @@ class TalonSettingsDeclaration(Branch, TalonDeclaration):
     right: TalonBlock
 
     def get_child(self) -> TalonBlock: ...
+    def is_short(self) -> bool: ...
 
 @dataclasses.dataclass
 class TalonTagImportDeclaration(Branch, TalonDeclaration):

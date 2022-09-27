@@ -202,6 +202,43 @@ setattr(
     property(_TalonTagImportDeclaration_tag),
 )
 
+################################################################################
+# Method to test if a matches block is explicit
+################################################################################
+
+
+def _TalonMatches_is_explicit(self: TalonMatches) -> bool:
+    return self.text == "-" or self.text.endswith("\n-")
+
+
+setattr(TalonMatches, "is_explicit", _TalonMatches_is_explicit)
+
+
+################################################################################
+# Method to test if a declaration is short
+################################################################################
+
+
+def _TalonCommandDeclaration_is_short(self: TalonCommandDeclaration) -> bool:
+    return len(self.children) + len(self.right.children) == 1
+
+
+setattr(TalonCommandDeclaration, "is_short", _TalonCommandDeclaration_is_short)
+
+
+def _TalonSettingsDeclaration_is_short(self: TalonSettingsDeclaration) -> bool:
+    return len(self.children) + len(self.right.children) == 1
+
+
+setattr(TalonSettingsDeclaration, "is_short", _TalonSettingsDeclaration_is_short)
+
+
+def _TalonKeyBindingDeclaration_is_short(self: TalonKeyBindingDeclaration) -> bool:
+    return len(self.children) + len(self.right.children) == 1
+
+
+setattr(TalonKeyBindingDeclaration, "is_short", _TalonKeyBindingDeclaration_is_short)
+
 
 ################################################################################
 # Method to test if a node is extra
@@ -216,6 +253,7 @@ def _is_extra(self: Node) -> bool:
 
 
 setattr(Node, "is_extra", _is_extra)
+
 
 ################################################################################
 # Method to get only non-extra child
