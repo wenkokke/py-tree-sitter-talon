@@ -9,78 +9,41 @@ defaults:
 
 jobs:
   build:
-    name: Build & Test
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
         python_tag: ["cp39", "cp310", "cp311"]
-        include:
-          - os: ubuntu-latest
-            platform_tag: manylinux_x86_64
-          - os: ubuntu-latest
-            platform_tag: manylinux_i686
-          - os: ubuntu-latest
-            platform_tag: manylinux_aarch64
-          - os: ubuntu-latest
-            platform_tag: manylinux_ppc64le
-          - os: ubuntu-latest
-            platform_tag: manylinux_s390x
-          - os: macos-latest
-            platform_tag: macosx_x86_64
-          - os: macos-latest
-            platform_tag: macosx_universal2
-          - os: macos-latest
-            platform_tag: macosx_arm64
-          - os: windows-latest
-            platform_tag: win_amd64
-          - os: windows-latest
-            platform_tag: win32
-    runs-on: ${{ matrix.os }}
+        os_and_platform_tag:
+          - [ubuntu-latest, manylinux_x86_64]
+          - [ubuntu-latest, manylinux_i686]
+          - [ubuntu-latest, manylinux_aarch64]
+          - [ubuntu-latest, manylinux_ppc64le]
+          - [ubuntu-latest, manylinux_s390x]
+          - [macos-latest, macosx_x86_64]
+          - [macos-latest, macosx_universal2]
+          - [macos-latest, macosx_arm64]
+          - [windows-latest, win_amd64]
+          - [windows-latest, win32]
+
+    name: Build wheel for ${{ matrix.python_tag }}-${{ matrix.os_and_platform_tag[1] }}
+    runs-on: ${{ matrix.os_and_platform_tag[0] }}
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: true
 
-      - name: Build & Test
-        run: |
-          poetry install --no-root --with ci
-          poetry run tox --skip-missing-interpreters
-
-      - name: Build SDist
-        if: matrix.experimental == false
-        run: poetry build --format=sdist
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
 
       - name: Build Wheel
-        if: matrix.experimental == false
-        run: poetry run cibuildwheel --output-dir dist
+        uses: pypa/cibuildwheel@v2.9.0
         env:
-          CIBW_SKIP: pp* cp36* cp37* cp38* *musllinux*
-          CIBW_ARCHS_MACOS: x86_64 arm64 universal2
+          CIBW_BUILD: ${{ matrix.python_tag }}-${{ matrix.os_and_platform_tag[1] }}
 
-      - name: Upload sdist
-        if: runner.os == 'Linux' && matrix.experimental == false
+      - name: Upload Wheel
         uses: actions/upload-artifact@v3
         with:
           name: wheelhouse
-          path: dist/**.tar.gz
+          path: wheelhouse/*.whl
           if-no-files-found: error
-
-      - name: Upload wheel
-        if: matrix.experimental == false
-        uses: actions/upload-artifact@v3
-        with:
-          name: wheelhouse
-          path: dist/**.whl
-          if-no-files-found: error
-
-  build-doc:
-    name: Build Doc
-    needs: [build]
-    if: github.event_name == 'push'
-    uses: ./.github/workflows/build-doc.yml
-
-  release:
-    name: Release
-    needs: [build]
-    if: startsWith(github.ref, 'refs/tags/')
-    uses: ./.github/workflows/release.yml
