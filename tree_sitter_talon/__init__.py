@@ -57,6 +57,7 @@ from .internal.dynamic import TalonString as TalonString
 from .internal.dynamic import TalonStringContent as TalonStringContent
 from .internal.dynamic import TalonStringEscapeSequence as TalonStringEscapeSequence
 from .internal.dynamic import TalonTagImportDeclaration as TalonTagImportDeclaration
+from .internal.dynamic import TalonUnaryOperator as TalonUnaryOperator
 from .internal.dynamic import TalonVariable as TalonVariable
 from .internal.dynamic import TalonWord as TalonWord
 from .internal.dynamic import from_tree_sitter as from_tree_sitter

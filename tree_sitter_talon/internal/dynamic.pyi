@@ -563,6 +563,12 @@ class TalonArgumentList(Branch):
     children: collections.abc.Sequence[typing.Union[TalonExpression, TalonComment]]
 
 @dataclasses.dataclass
+class TalonUnaryOperator(Branch, TalonExpression):
+    children: collections.abc.Sequence[TalonComment]
+    operator: TalonOperator
+    right: TalonExpression
+
+@dataclasses.dataclass
 class TalonBinaryOperator(Branch, TalonExpression):
     children: collections.abc.Sequence[TalonComment]
     left: TalonExpression
