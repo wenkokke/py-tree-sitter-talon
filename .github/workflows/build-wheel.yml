@@ -1,4 +1,4 @@
-name: Build Wheel
+name: Build wheel
 
 on:
   workflow_call:
@@ -36,14 +36,16 @@ jobs:
         with:
           python-version: "3.x"
 
-      - name: Build Wheel
+      - name: Build wheel
         uses: pypa/cibuildwheel@v2.9.0
+        with:
+          output-dir: dist
         env:
           CIBW_BUILD: ${{ matrix.python_tag }}-${{ matrix.os_and_platform_tag[1] }}
 
-      - name: Upload Wheel
+      - name: Upload wheel
         uses: actions/upload-artifact@v3
         with:
-          name: wheelhouse
-          path: wheelhouse/*.whl
+          name: dist
+          path: dist/*.whl
           if-no-files-found: error

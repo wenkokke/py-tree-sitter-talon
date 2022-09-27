@@ -1,0 +1,41 @@
+name: Build sdist
+
+on:
+  workflow_call:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    name: Build sdist
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9 - 3.10"
+
+      - name: Setup Poetry
+        uses: Gr1N/setup-poetry@v7
+
+      - name: Cache Poetry
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pypoetry/virtualenvs
+          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}-
+
+      - name: Build sdist
+        run: poetry build --format=sdist
+
+      - name: Upload sdist
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist/*.tag.gz
+          if-no-files-found: error
