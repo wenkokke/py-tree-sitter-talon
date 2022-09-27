@@ -20,27 +20,9 @@ jobs:
     name: Build & Test
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-2019, windows-2022]
-        python-version: ["3.9"]
-        experimental: [false]
-        include:
-          - os: ubuntu-latest
-            python-version: "3.9.8"
-            experimental: true
-          - os: ubuntu-latest
-            python-version: "3.9.9"
-            experimental: true
-          - os: ubuntu-latest
-            python-version: "3.9.10"
-            experimental: true
-          - os: ubuntu-latest
-            python-version: "3.9.11"
-            experimental: true
-          - os: ubuntu-latest
-            python-version: "3.9.12"
-            experimental: true
-    runs-on: ${{ matrix.os }}
-    continue-on-error: ${{ matrix.experimental }}
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ["3.9", "3.10"]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
@@ -53,35 +35,14 @@ jobs:
 
       - name: Build & Test
         run: |
-          poetry install --no-root --with ci
+          poetry install -no-root --with ci
           poetry run tox --skip-missing-interpreters
 
-      - name: Build SDist
-        if: matrix.experimental == false
-        run: poetry build --format=sdist
-
-      - name: Build Wheel
-        if: matrix.experimental == false
-        run: poetry run cibuildwheel --output-dir dist
-        env:
-          CIBW_SKIP: pp* cp36* cp37* cp38* *musllinux*
-          CIBW_ARCHS_MACOS: x86_64 arm64 universal2
-
-      - name: Upload sdist
-        if: runner.os == 'Linux' && matrix.experimental == false
-        uses: actions/upload-artifact@v3
-        with:
-          name: wheelhouse
-          path: dist/**.tar.gz
-          if-no-files-found: error
-
-      - name: Upload wheel
-        if: matrix.experimental == false
-        uses: actions/upload-artifact@v3
-        with:
-          name: wheelhouse
-          path: dist/**.whl
-          if-no-files-found: error
+  # build-wheel:
+  #   name: Build Wheel
+  #   needs: [build]
+  #   if: github.event_name == 'push'
+  #   uses: ./.github/workflows/build-wheel.yml
 
   build-doc:
     name: Build Doc
