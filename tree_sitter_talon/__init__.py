@@ -221,7 +221,7 @@ setattr(TalonMatches, "is_explicit", _TalonMatches_is_explicit)
 
 
 def _TalonBlock_with_comments(
-    self: TalonBlock, comments: typing.Optional[collections.abc.Sequence[TalonComment]]
+    self: TalonBlock, comments: typing.Optional[typing.Sequence[TalonComment]]
 ) -> TalonBlock:
     return TalonBlock(
         text=self.text,
@@ -238,7 +238,7 @@ def _TalonCommandDeclaration___init__(
     type_name: NodeTypeName,
     start_position: Point,
     end_position: Point,
-    children: typing.Optional[collections.abc.Sequence[TalonComment]],
+    children: typing.Optional[typing.Sequence[TalonComment]],
     left: TalonRule,
     right: TalonBlock,
 ) -> None:
@@ -260,7 +260,7 @@ def _TalonKeyBindingDeclaration___init__(
     type_name: NodeTypeName,
     start_position: Point,
     end_position: Point,
-    children: typing.Optional[collections.abc.Sequence[TalonComment]],
+    children: typing.Optional[typing.Sequence[TalonComment]],
     left: TalonKeyAction,
     right: TalonBlock,
 ) -> None:
@@ -282,7 +282,7 @@ def _TalonSettingsDeclaration___init__(
     type_name: NodeTypeName,
     start_position: Point,
     end_position: Point,
-    children: typing.Optional[collections.abc.Sequence[TalonComment]],
+    children: typing.Optional[typing.Sequence[TalonComment]],
     right: TalonBlock,
 ) -> None:
     self.text = text
@@ -403,7 +403,7 @@ setattr(TalonComment, "get_docstring", _TalonComment_get_docstring)
 
 
 def _TalonSourceFile_get_docstring(self: TalonSourceFile) -> typing.Optional[str]:
-    docstrings: list[str] = []
+    docstrings: typing.List[str] = []
     for comment in self.children:
         if isinstance(comment, TalonComment):
             docstring = _TalonComment_get_docstring(comment)
@@ -420,7 +420,7 @@ setattr(TalonSourceFile, "get_docstring", _TalonSourceFile_get_docstring)
 def _TalonCommandDeclaration_get_docstring(
     self: TalonCommandDeclaration,
 ) -> typing.Optional[str]:
-    docstrings: list[str] = []
+    docstrings: typing.List[str] = []
     for comment in self.right.children:
         if isinstance(comment, TalonComment):
             docstring = _TalonComment_get_docstring(comment)
@@ -439,7 +439,7 @@ setattr(
 ################################################################################
 
 
-def _fields(obj) -> tuple[typing.Any, ...]:
+def _fields(obj) -> typing.Tuple[typing.Any, ...]:
     assert dataclasses.is_dataclass(obj)
     return tuple(getattr(obj, field.name) for field in dataclasses.fields(obj))
 

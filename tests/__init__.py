@@ -16,7 +16,7 @@ def short(sig: inspect.Signature) -> str:
     return out
 
 
-def function_signatures(object: object) -> collections.abc.Iterator[str]:
+def function_signatures(object: object) -> typing.Iterator[str]:
     for name, fun in inspect.getmembers(object, inspect.isfunction):
         assert isinstance(fun, types.FunctionType)
         if not name.startswith("_"):
@@ -28,7 +28,7 @@ def function_signatures(object: object) -> collections.abc.Iterator[str]:
                 pass
 
 
-def class_signatures(object: object) -> collections.abc.Iterator[str]:
+def class_signatures(object: object) -> typing.Iterator[str]:
     for name, cls in inspect.getmembers(object, inspect.isclass):
         if not name.startswith("_"):
             try:
@@ -41,7 +41,7 @@ def class_signatures(object: object) -> collections.abc.Iterator[str]:
                 pass
 
 
-def node_dict_simplify(node_dict: dict[str, typing.Any]) -> None:
+def node_dict_simplify(node_dict: typing.Dict[str, typing.Any]) -> None:
     if len(node_dict) > 4:
         del node_dict["text"]
 

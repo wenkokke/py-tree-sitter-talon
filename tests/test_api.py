@@ -11,7 +11,7 @@ def test_talon_api(golden):
 
     globals().update(tree_sitter_talon.__dict__)
 
-    output: list[str] = []
+    output: typing.List[str] = []
     output.extend(function_signatures(tree_sitter_talon.__class__))
     output.extend(function_signatures(tree_sitter_talon))
     output.extend(class_signatures(tree_sitter_talon.__class__))

@@ -25,7 +25,7 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
     @property
     def _node_types(
         self,
-    ) -> collections.abc.Sequence[tree_sitter_type_provider.NodeType]:
+    ) -> typing.Sequence[tree_sitter_type_provider.NodeType]:
         return tree_sitter_type_provider.NodeType.schema().loads(  # type: ignore
             _get_node_types().read_text(), many=True
         )
