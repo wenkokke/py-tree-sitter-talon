@@ -1,10 +1,8 @@
-import collections.abc
 import dataclasses
 import pathlib
 import typing
 
 import dataclasses_json
-import parsec
 import tree_sitter
 
 from . import __version__

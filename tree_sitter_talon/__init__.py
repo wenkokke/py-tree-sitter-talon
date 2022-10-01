@@ -1,4 +1,3 @@
-import collections.abc
 import dataclasses
 import typing
 import warnings
