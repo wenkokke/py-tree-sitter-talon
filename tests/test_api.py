@@ -1,9 +1,11 @@
+import typing
+
 import pytest
 
-from . import class_signatures, function_signatures
+from . import class_signatures, function_signatures, pyver
 
 
-@pytest.mark.golden_test("data/api.yml")
+@pytest.mark.golden_test(f"data/api.{pyver()}.yml")
 def test_talon_api(golden):
     assert golden["input"] is None
 
@@ -11,7 +13,7 @@ def test_talon_api(golden):
 
     globals().update(tree_sitter_talon.__dict__)
 
-    output: list[str] = []
+    output: typing.List[str] = []
     output.extend(function_signatures(tree_sitter_talon.__class__))
     output.extend(function_signatures(tree_sitter_talon))
     output.extend(class_signatures(tree_sitter_talon.__class__))

@@ -19,29 +19,29 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.9.8"
+python = "^3.7.1"
 tree-sitter = "^0.20.0"
-tree-sitter-type-provider = "^2.1.17"
+tree-sitter-type-provider = "^2.1.18"
 dataclasses-json = "^0.5.7"
 setuptools = "<65.5.0" # for 'pkg_resources'
 bumpver = { version = "*", optional = true }
 mypy = { version = "^0.971", optional = true }
 pytest = { version = "^7.1.2", optional = true }
 pytest-golden = { version = "^0.2.2", optional = true }
-Sphinx = { version = "^5.1.1", optional = true }
-sphinx-bootstrap-theme = { version = "^0.8.1", optional = true }
 parsec = "^3.14"
 
 [tool.poetry.extras]
-docs = ["Sphinx", "sphinx-bootstrap-theme"]
 test = ["bumpver", "mypy", "pytest", "pytest-golden"]
+
+[tool.poetry.group.docs.dependencies]
+Sphinx = "^5.1.1"
+sphinx-bootstrap-theme = "^0.8.1"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^0.971"
 tox = "^3.25.1"
 black = "^22.8.0"
 isort = "^5.10.1"
-flake8 = "^5.0.4"
 bumpver = "*"
 
 [tool.poetry.group.ci.dependencies]
@@ -66,6 +66,7 @@ addopts = "--ignore=tests/data"
 testpaths = ["tests"]
 
 [tool.mypy]
+python_version = 3.7
 implicit_reexport = false
 ignore_missing_imports = true
 warn_incomplete_stub = false
@@ -94,21 +95,35 @@ legacy_tox_ini = """
 [tox]
 requires =
   tox-poetry
-envlist = py39,py310,py311
+envlist = py37,py38,py39,py310,py311
 isolated_build = True
 
 [gh-actions]
 python =
+  3.7: py37
+  3.8: py38
   3.9: py39
   3.10: py310
   3.11: py311
 
 [testenv]
-wheel=true
 extras =
   test
 commands =
   bumpver update --dry --no-fetch
-  stubtest --mypy-config-file pyproject.toml tree_sitter_talon
   pytest tests -x
+
+[testenv:py37]
+extras =
+  {[testenv]extras}
+commands =
+  {[testenv]commands}
+  stubtest --mypy-config-file pyproject.toml --allowlist=.stubtest-allowlist.py37.csv tree_sitter_talon
+
+[testenv:py{py38,py39,py10}]
+extras =
+  {[testenv]extras}
+commands =
+  {[testenv]commands}
+  stubtest --mypy-config-file pyproject.toml tree_sitter_talon
 """

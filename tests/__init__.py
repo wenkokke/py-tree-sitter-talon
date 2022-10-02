@@ -1,22 +1,24 @@
-import collections.abc
 import inspect
 import re
+import sys
 import types
 import typing
 
 
+def pyver() -> str:
+    return f"py{sys.version_info.major}{sys.version_info.minor}"
+
+
 def short(sig: inspect.Signature) -> str:
     out = str(sig)
+    out = re.sub(r"ForwardRef\('([^']+)'\)", r"\1", out)
     out = out.replace("tree_sitter_type_provider.node_types.", "")
-    out = re.sub(r"ForwardRef\('(\w+)'\)", r"\1", out)
-    out = out.replace("typing.", "")
-    out = out.replace("NoneType", "None")
-    out = out.replace("abc.", "")
-    out = out.replace("~Result", "Result")
+    out = out.replace("abc.Talon", "Talon")
+    out = re.sub(r"'Talon([^']+)'", r"Talon\1", out)
     return out
 
 
-def function_signatures(object: object) -> collections.abc.Iterator[str]:
+def function_signatures(object: object) -> typing.Iterator[str]:
     for name, fun in inspect.getmembers(object, inspect.isfunction):
         assert isinstance(fun, types.FunctionType)
         if not name.startswith("_"):
@@ -28,7 +30,7 @@ def function_signatures(object: object) -> collections.abc.Iterator[str]:
                 pass
 
 
-def class_signatures(object: object) -> collections.abc.Iterator[str]:
+def class_signatures(object: object) -> typing.Iterator[str]:
     for name, cls in inspect.getmembers(object, inspect.isclass):
         if not name.startswith("_"):
             try:
@@ -41,7 +43,7 @@ def class_signatures(object: object) -> collections.abc.Iterator[str]:
                 pass
 
 
-def node_dict_simplify(node_dict: dict[str, typing.Any]) -> None:
+def node_dict_simplify(node_dict: typing.Dict[str, typing.Any]) -> None:
     if len(node_dict) > 4:
         del node_dict["text"]
 
