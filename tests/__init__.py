@@ -1,18 +1,20 @@
-import collections.abc
 import inspect
 import re
+import sys
 import types
 import typing
 
 
+def pyver() -> str:
+    return f"py{sys.version_info.major}{sys.version_info.minor}"
+
+
 def short(sig: inspect.Signature) -> str:
     out = str(sig)
+    out = re.sub(r"ForwardRef\('([^']+)'\)", r"\1", out)
     out = out.replace("tree_sitter_type_provider.node_types.", "")
-    out = re.sub(r"ForwardRef\('(\w+)'\)", r"\1", out)
-    out = out.replace("typing.", "")
-    out = out.replace("NoneType", "None")
-    out = out.replace("abc.", "")
-    out = out.replace("~Result", "Result")
+    out = out.replace("abc.Talon", "Talon")
+    out = re.sub(r"'Talon([^']+)'", r"Talon\1", out)
     return out
 
 

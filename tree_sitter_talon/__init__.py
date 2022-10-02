@@ -2,6 +2,7 @@ import dataclasses
 import typing
 import warnings
 
+from .compat import _removeprefix
 from .internal import __version__ as __version__
 from .internal.dynamic import Branch as Branch
 from .internal.dynamic import Leaf as Leaf
@@ -389,12 +390,12 @@ setattr(TalonInterpolation, "get_child", _get_child)
 
 ################################################################################
 # Method to get docstrings
-################################################################################
+##############################################_removeprefix##################################
 
 
 def _TalonComment_get_docstring(self: TalonComment) -> typing.Optional[str]:
     if self.text.startswith("###"):
-        return self.text.removeprefix("###").strip()
+        return _removeprefix(self.text, "###").strip()
     return None
 
 

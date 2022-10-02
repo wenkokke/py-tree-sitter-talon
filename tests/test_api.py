@@ -1,9 +1,11 @@
+import typing
+
 import pytest
 
-from . import class_signatures, function_signatures
+from . import class_signatures, function_signatures, pyver
 
 
-@pytest.mark.golden_test("data/api.yml")
+@pytest.mark.golden_test(f"data/api.{pyver()}.yml")
 def test_talon_api(golden):
     assert golden["input"] is None
 
