@@ -7,15 +7,11 @@ defaults:
   run:
     shell: bash
 
-# concurrency:
-#   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
-#   cancel-in-progress: true
-
 jobs:
   build-wheel:
     strategy:
       matrix:
-        python_tag: ["cp39", "cp310", "cp311"]
+        python_tag: ["cp37", "cp38", "cp39", "cp310", "cp311"]
         os_and_platform_tag:
           - [ubuntu-latest, manylinux_x86_64]
           - [ubuntu-latest, manylinux_i686]
@@ -41,7 +37,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: "^3.9.8"
+          python-version: "^3.7.1"
           cache: "pip"
           cache-dependency-path: "requirements-ci.txt"
 
