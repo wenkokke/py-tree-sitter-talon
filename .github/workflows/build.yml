@@ -27,11 +27,6 @@ jobs:
           - # Earliest supported version:
             os: ubuntu-20.04
             python-version: "3.7.1"
-          # NOTE: disabled due to a bug in Poetry build
-          # - # Upcoming release candidate:
-          #   os: ubuntu-latest
-          #   python-version: "3.11.0-alpha - 3.11.0"
-          #   experimental: true
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
@@ -51,7 +46,18 @@ jobs:
           python -m pip install -r requirements-ci.txt
 
       - name: Build & Test
-        run: tox --skip-missing-interpreters
+        run: |
+          pip install .[test]
+          bumpver update --dry --no-fetch
+          pytest tests -x
+
+      - name: Stubtest (Python ~3.7)
+        if: ${{ matrix.python-version }} == '3.7' || ${{ matrix.python-version }} == '3.7.1'
+        run: stubtest --mypy-config-file pyproject.toml --allowlist=.stubtest-allowlist.py37.csv tree_sitter_talon
+
+      - name: Stubtest (Python ^3.8)
+        if: ${{ matrix.python-version }} == '3.8' || ${{ matrix.python-version }} == '3.9' || ${{ matrix.python-version }} == '3.10'
+        run: stubtest --mypy-config-file pyproject.toml tree_sitter_talon
 
   build-doc:
     name: Build Doc
