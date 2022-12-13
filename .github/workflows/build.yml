@@ -47,9 +47,9 @@ jobs:
 
       - name: Build & Test
         run: |
-          pip install .[test]
-          bumpver update --dry --no-fetch
-          pytest tests -x
+          poetry install -E test
+          poetry run bumpver update --dry --no-fetch
+          poetry run pytest tests -x
 
       - name: Stubtest (Python ~3.7)
         if: ${{ matrix.python-version }} == '3.7' || ${{ matrix.python-version }} == '3.7.1'
