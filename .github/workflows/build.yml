@@ -27,12 +27,6 @@ jobs:
           - # Earliest supported version:
             os: ubuntu-20.04
             python-version: "3.7.1"
-            stubtest-args: "--allowlist=.stubtest-allowlist.py37.csv"
-          - # Set stubtest args for Python ^3.8
-            stubtest-args: ""
-          - # Set stubtest allowlist for Python ~3.7
-            python-version: "3.7"
-            stubtest-args: "--allowlist=.stubtest-allowlist.py37.csv"
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
@@ -53,10 +47,10 @@ jobs:
 
       - name: Build & Test
         run: |
-          poetry install  --without ci --without dev --without docs -E test
+          poetry install --without ci --without dev --without docs -E test
           poetry run bumpver update --dry --no-fetch
           poetry run pytest tests -x
-          poetry run stubtest --mypy-config-file pyproject.toml ${{ matrix.stubtest-args }} tree_sitter_talon
+          poetry run stubtest --mypy-config-file=pyproject.toml --allowlist=.stubtest-allowlist.python${{ matrix.python-version }}.csv tree_sitter_talon
 
   build-doc:
     name: Build Doc
