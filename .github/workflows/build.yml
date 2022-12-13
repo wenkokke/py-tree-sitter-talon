@@ -53,7 +53,7 @@ jobs:
 
       - name: Build & Test
         run: |
-          poetry install -E test
+          poetry install  --without ci --without dev --without docs -E test
           poetry run bumpver update --dry --no-fetch
           poetry run pytest tests -x
           poetry run stubtest --mypy-config-file pyproject.toml ${{ matrix.stubtest-args }} tree_sitter_talon
