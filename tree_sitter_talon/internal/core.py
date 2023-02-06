@@ -14,7 +14,6 @@ class TalonLanguage(tree_sitter.Language):
 
 
 class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
-
     _library_path: typing.Optional[str] = None
 
     _language: typing.Optional[tree_sitter.Language] = None
