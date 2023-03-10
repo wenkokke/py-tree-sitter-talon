@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools", "poetry-core>=1.0.0"]
+requires = ["setuptools", "poetry-core>=1.0.0,<1.3"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
@@ -40,13 +40,14 @@ sphinx-bootstrap-theme = "^0.8.1"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^0.971"
-tox = ">=3.25.1,<5.0.0"
+tox = ">=4.4.6,<5.0.0"
 black = "^22.8.0"
 isort = "^5.10.1"
 bumpver = "*"
 
 [tool.poetry.group.ci.dependencies]
 cibuildwheel = "^2.10.2"
+tox = ">=4.4.6,<5.0.0"
 
 [tool.cibuildwheel]
 manylinux-x86_64-image = "manylinux_2_24"
@@ -94,33 +95,15 @@ legacy_tox_ini = """
 [tox]
 envlist = py37,py38,py39,py310,py311
 isolated_build = true
-
-[gh-actions]
-python =
-  3.7: py37
-  3.8: py38
-  3.9: py39
-  3.10: py310
-  3.11: py311
+skip_missing_interpreters = true
 
 [testenv]
-extras =
-  test
+skip_install = true
+allowlist_externals = poetry
+commands_pre =
+  poetry install -E test
 commands =
-  bumpver update --dry --no-fetch
-  pytest tests -x
-
-[testenv:py37]
-extras =
-  {[testenv]extras}
-commands =
-  {[testenv]commands}
-  stubtest --mypy-config-file pyproject.toml --allowlist=.stubtest-allowlist.py37.csv tree_sitter_talon
-
-[testenv:py{py38,py39,py10,py311}]
-extras =
-  {[testenv]extras}
-commands =
-  {[testenv]commands}
-  stubtest --mypy-config-file pyproject.toml tree_sitter_talon
+  poetry run bumpver update --dry --no-fetch
+  poetry run pytest tests -x
+  poetry run stubtest --mypy-config-file=pyproject.toml --allowlist=.stubtest-allowlist.{envname}.csv tree_sitter_talon
 """
