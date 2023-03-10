@@ -46,11 +46,7 @@ jobs:
           python -m pip install -r requirements-ci.txt
 
       - name: Build & Test
-        run: |
-          poetry install --without ci --without dev --without docs -E test
-          poetry run bumpver update --dry --no-fetch
-          poetry run pytest tests -x
-          poetry run stubtest --mypy-config-file=pyproject.toml --allowlist=.stubtest-allowlist.python${{ matrix.python-version }}.csv tree_sitter_talon
+        run: tox
 
   build-doc:
     name: Build Doc
