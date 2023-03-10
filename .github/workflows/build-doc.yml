@@ -30,8 +30,10 @@ jobs:
 
       - name: Build doc
         run: |
-          poetry install  --without ci --without dev --with docs
-          poetry run sphinx-build -M "html" "docs" "docs/_build"
+          pipx run --spec poetry==1.4.0 \
+            poetry install  --without dev --with docs
+          pipx run --spec poetry==1.4.0 \
+            poetry run sphinx-build -M "html" "docs" "docs/_build"
 
       - name: Deploy doc
         uses: JamesIves/github-pages-deploy-action@v4.4.1
