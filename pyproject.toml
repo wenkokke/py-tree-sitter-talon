@@ -98,14 +98,10 @@ isolated_build = true
 skip_missing_interpreters = true
 
 [testenv]
-skip_install = true
-deps =
-  poetry==1.4.0
-commands_pre =
-  poetry config installer.modern-installation false --local
-  poetry install -E test
+extras =
+  test
 commands =
-  poetry run bumpver update --dry --no-fetch
-  poetry run pytest tests -x
-  poetry run stubtest --mypy-config-file=pyproject.toml --ignore-unused-allowlist --allowlist=.stubtest-allowlist.{envname}.csv tree_sitter_talon
+  bumpver update --dry --no-fetch
+  pytest tests -x
+  stubtest --mypy-config-file=pyproject.toml --ignore-unused-allowlist --allowlist=.stubtest-allowlist.{envname}.csv tree_sitter_talon
 """
