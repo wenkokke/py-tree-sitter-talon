@@ -23,12 +23,13 @@ python = "^3.7.1"
 tree-sitter = "^0.20.0"
 tree-sitter-type-provider = "^2.1.18"
 dataclasses-json = "^0.5.7"
-setuptools = "<67.6.0" # for 'pkg_resources'
 bumpver = { version = "*", optional = true }
 mypy = { version = "^0.971", optional = true }
 pytest = { version = "^7.1.2", optional = true }
 pytest-golden = { version = "^0.2.2", optional = true }
 parsec = "^3.14"
+# Prevent poetry 1.3 from removing setuptools
+setuptools = "<67.6.0" # for 'pkg_resources'
 
 [tool.poetry.extras]
 test = ["bumpver", "mypy", "pytest", "pytest-golden"]
@@ -91,10 +92,8 @@ push = false
 [tool.tox]
 legacy_tox_ini = """
 [tox]
-requires =
-  tox-poetry
 envlist = py37,py38,py39,py310,py311
-isolated_build = True
+isolated_build = true
 
 [gh-actions]
 python =
@@ -118,7 +117,7 @@ commands =
   {[testenv]commands}
   stubtest --mypy-config-file pyproject.toml --allowlist=.stubtest-allowlist.py37.csv tree_sitter_talon
 
-[testenv:py{py38,py39,py10}]
+[testenv:py{py38,py39,py10,py311}]
 extras =
   {[testenv]extras}
 commands =
