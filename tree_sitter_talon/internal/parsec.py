@@ -493,7 +493,7 @@ def _TalonStartAnchor_to_parser(
 
         def start_anchor_parser(
             text: typing.Sequence[str], index: int
-        ) -> parsec.Parser:
+        ) -> typing.Union[parsec.Parser, parsec.Value]:
             if index == 0:
                 return parsec.Value.success(index, None)
             else:
