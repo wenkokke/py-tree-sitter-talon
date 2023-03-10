@@ -9,13 +9,19 @@ description = "Parser for Talon files in Python."
 license = "MIT"
 authors = ["Wen Kokke <wenkokke@users.noreply.github.com>"]
 readme = "README.md"
-include = [{ path = "build.py", format = "sdist" }]
 repository = "https://github.com/wenkokke/py-tree-sitter-talon"
 documentation = "https://wenkokke.github.io/py-tree-sitter-talon/"
 keywords = ["parser", "tree-sitter", "talon"]
 classifiers = [
   "License :: OSI Approved :: MIT License",
   "Topic :: Software Development :: Compilers",
+]
+include = [
+  # Build script must be included in the sdist
+  { path = "build.py", format = "sdist" },
+  # C extensions must be included in the wheel
+  { path = "extended/*.so", format = "wheel" },
+  { path = "extended/*.pyd", format = "wheel" },
 ]
 
 [tool.poetry.build]
