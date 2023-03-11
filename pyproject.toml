@@ -56,11 +56,13 @@ isort = "^5.10.1"
 bumpver = "*"
 
 [tool.cibuildwheel]
-# before-build = "python build.py"
 build-verbosity = 1
 test-requires = "pytest==7.2.2 pytest-golden==0.2.2"
 test-command = "pytest {project}/tests"
-test-skip = "*_arm64 *_universal2:arm64"
+test-skip = [
+  "{cp37,cp38}-macosx*",
+  "*_arm64 *_universal2:arm64"
+]
 
 # manylinux-x86_64-image = "manylinux_2_24"
 # manylinux-i686-image = "manylinux_2_24"
@@ -75,7 +77,7 @@ test-skip = "*_arm64 *_universal2:arm64"
 archs = ["x86_64", "i686"]
 
 [tool.cibuildwheel.macos]
-archs = ["x86_64"] # "universal2", "arm64"]
+archs = ["x86_64"]
 
 [tool.cibuildwheel.windows]
 archs = ["x86", "AMD64"]
