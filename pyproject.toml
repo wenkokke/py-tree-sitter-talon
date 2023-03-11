@@ -64,20 +64,13 @@ test-skip = [
   "*_arm64 *_universal2:arm64"
 ]
 
-# manylinux-x86_64-image = "manylinux_2_24"
-# manylinux-i686-image = "manylinux_2_24"
-# manylinux-aarch64-image = "manylinux_2_24"
-# manylinux-ppc64le-image = "manylinux_2_24"
-# manylinux-s390x-image = "manylinux_2_24"
-# manylinux-pypy_x86_64-image = "manylinux_2_24"
-# manylinux-pypy_i686-image = "manylinux_2_24"
-# manylinux-pypy_aarch64-image = "manylinux_2_24"
-
 [tool.cibuildwheel.linux]
 archs = ["x86_64", "i686"]
+before-build = "rm -rf {project}/build"
 
 [tool.cibuildwheel.macos]
-archs = ["x86_64"]
+archs = ["x86_64", "arm64", "universal2"]
+before-build = "rm -rf {project}/build"
 
 [tool.cibuildwheel.windows]
 archs = ["x86", "AMD64"]
