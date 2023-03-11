@@ -60,7 +60,7 @@ before-build = "python build.py"
 
 test-requires = "pytest==7.2.2 pytest-golden==0.2.2"
 test-command = "pytest {project}/tests"
-test-skip = "*-macosx_{arm64}"
+test-skip = "*-macosx_{arm64,universal2}"
 
 manylinux-x86_64-image = "manylinux_2_24"
 manylinux-i686-image = "manylinux_2_24"
@@ -71,8 +71,14 @@ manylinux-pypy_x86_64-image = "manylinux_2_24"
 manylinux-pypy_i686-image = "manylinux_2_24"
 manylinux-pypy_aarch64-image = "manylinux_2_24"
 
+[tool.cibuildwheel.linux]
+archs = ["x86_64", "i686"]
+
 [tool.cibuildwheel.macos]
-archs = ["x86_64", "arm64"]
+archs = ["x86_64", "universal2", "arm64"]
+
+[tool.cibuildwheel.windows]
+archs = ["x86", "AMD64"]
 
 [tool.pytest.ini_options]
 enable_assertion_pass_hook = true
