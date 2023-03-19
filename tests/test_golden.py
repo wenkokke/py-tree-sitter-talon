@@ -4,13 +4,13 @@ import pickle
 import pytest
 
 import tree_sitter_talon
-import tree_sitter_talon.internal.parsec
+import tree_sitter_talon.internal.match
 
 from . import node_dict_simplify
 
 
 @pytest.mark.golden_test("data/golden/*.yml")
-def test_golden_dict(golden):
+def test_golden_dict(golden) -> None:
     node = tree_sitter_talon.parse(golden["input"])
     node_dict = node.to_dict()
     node_dict_simplify(node_dict)
@@ -18,7 +18,7 @@ def test_golden_dict(golden):
 
 
 @pytest.mark.golden_test("data/golden/*.yml")
-def test_golden_pickle(golden):
+def test_golden_pickle(golden) -> None:
     buffer_out = io.BytesIO()
     node_before = tree_sitter_talon.parse(golden["input"])
     pickle.dump(node_before, buffer_out)
@@ -30,7 +30,7 @@ def test_golden_pickle(golden):
 
 
 @pytest.mark.golden_test("data/golden/*.yml")
-def test_golden_parsec(golden):
+def test_golden_match(golden) -> None:
     source_file = tree_sitter_talon.parse(golden["input"])
     assert isinstance(source_file, tree_sitter_talon.TalonSourceFile)
     try:

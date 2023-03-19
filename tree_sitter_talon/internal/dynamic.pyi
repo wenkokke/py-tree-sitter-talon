@@ -6,7 +6,7 @@ import dataclasses_json
 import tree_sitter
 
 from . import __version__
-from .parsec import AnyListValue, AnyTalonRule
+from .match import AnyListValue, AnyTalonRule
 
 ################################################################################
 # Extended node types (from tree-sitter-type-provider)

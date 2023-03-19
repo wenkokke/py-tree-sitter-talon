@@ -6,7 +6,7 @@ from . import class_signatures, function_signatures, pyver
 
 
 @pytest.mark.golden_test(f"data/api.{pyver()}.yml")
-def test_talon_api(golden):
+def test_talon_api(golden) -> None:
     assert golden["input"] is None
 
     import tree_sitter_talon
