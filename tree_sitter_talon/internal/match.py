@@ -343,18 +343,20 @@ def _always() -> SequenceMatcher:
     def _always_parser(text: typing.Sequence[str], index: int):
         return parsec.Value.success(index, None)
 
-    return SequenceMatcher(fn=_always_parser)
+    return parsec.Parser(fn=_always_parser)
 
 
 def _word(token: str) -> SequenceMatcher:
     def _word_parser(text: typing.Sequence[str], index: int):
-        if text[index] == token:
-            return parsec.Value.success(index + 1, None)
-        else:
-            # NOTE: `Value.failure` creates a value of type `Value[<nothing>]`
-            return parsec.Value.failure(index, str(token))
+        try:
+            if text[index] == token:
+                return parsec.Value.success(index + 1, None)
+        except IndexError:
+            pass
+        # NOTE: `Value.failure` creates a value of type `Value[<nothing>]`
+        return parsec.Value.failure(index, str(token))
 
-    return SequenceMatcher(fn=_word_parser)
+    return parsec.Parser(fn=_word_parser)
 
 
 def _TalonCapture_to_parser(
