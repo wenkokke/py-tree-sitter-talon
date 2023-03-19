@@ -1,19 +1,8 @@
 import functools
 import typing
 
+import parsec
 import typing_extensions
-from parsec import (
-    ParseError,
-    Parser,
-    Value,
-    eof,
-    fail_with,
-    many,
-    many1,
-    one_of,
-    optional,
-    try_choice,
-)
 
 from .dynamic import (
     TalonCapture,
@@ -74,7 +63,7 @@ def find_command(
     )
     try:
         return parser.parse_strict(text)
-    except ParseError:
+    except parsec.ParseError:
         return None
 
 
@@ -99,7 +88,7 @@ def match(
     try:
         parser.parse_strict(text)
         return True
-    except ParseError:
+    except parsec.ParseError:
         return False
 
 
@@ -122,11 +111,13 @@ setattr(TalonWord, "match", match)
 ################################################################################
 
 if typing.TYPE_CHECKING:
-    Matcher: typing_extensions.TypeAlias = Parser[None]
-    Fetcher: typing_extensions.TypeAlias = Parser[TalonCommandDeclaration]
+    SequenceMatcher: typing_extensions.TypeAlias = parsec.Parser[None]
+    TalonCommandDeclarationMatcher: typing_extensions.TypeAlias = parsec.Parser[
+        TalonCommandDeclaration
+    ]
 else:
-    Matcher: typing_extensions.TypeAlias = Parser
-    Fetcher: typing_extensions.TypeAlias = Parser
+    SequenceMatcher: typing_extensions.TypeAlias = parsec.Parser
+    TalonCommandDeclarationMatcher: typing_extensions.TypeAlias = parsec.Parser
 
 
 @typing.overload
@@ -140,7 +131,7 @@ def _to_parser(
     get_list: typing.Optional[
         typing.Callable[[str], typing.Optional[AnyListValue]]
     ] = None,
-) -> Fetcher:
+) -> TalonCommandDeclarationMatcher:
     ...
 
 
@@ -155,7 +146,7 @@ def _to_parser(
     get_list: typing.Optional[
         typing.Callable[[str], typing.Optional[AnyListValue]]
     ] = None,
-) -> Fetcher:
+) -> TalonCommandDeclarationMatcher:
     ...
 
 
@@ -170,7 +161,7 @@ def _to_parser(
     get_list: typing.Optional[
         typing.Callable[[str], typing.Optional[AnyListValue]]
     ] = None,
-) -> Fetcher:
+) -> TalonCommandDeclarationMatcher:
     ...
 
 
@@ -185,7 +176,7 @@ def _to_parser(
     get_list: typing.Optional[
         typing.Callable[[str], typing.Optional[AnyListValue]]
     ] = None,
-) -> Matcher:
+) -> SequenceMatcher:
     ...
 
 
@@ -201,7 +192,7 @@ def _to_parser(
     get_list: typing.Optional[
         typing.Callable[[str], typing.Optional[AnyListValue]]
     ] = None,
-) -> typing.Union[Matcher, Fetcher,]:
+) -> typing.Union[SequenceMatcher, TalonCommandDeclarationMatcher]:
     if isinstance(node, TalonCapture):
         return _TalonCapture_to_parser(
             node, fullmatch=fullmatch, get_capture=get_capture, get_list=get_list
@@ -277,8 +268,8 @@ def _TalonSourceFile_to_parser(
         typing.Callable[[str], typing.Optional[AnyTalonRule]]
     ] = None,
     get_list: typing.Optional[typing.Callable[[str], typing.Optional[AnyListValue]]],
-) -> Fetcher:
-    buffer: typing.List[Parser] = []
+) -> TalonCommandDeclarationMatcher:
+    buffer: typing.List[parsec.Parser] = []
     for declarations in self.children:
         if isinstance(declarations, TalonDeclarations):
             buffer.append(
@@ -290,7 +281,7 @@ def _TalonSourceFile_to_parser(
                 )
             )
     return functools.reduce(
-        try_choice, buffer, fail_with(f"input does not match any command")
+        parsec.try_choice, buffer, parsec.fail_with(f"input does not match any command")
     )
 
 
@@ -307,8 +298,8 @@ def _TalonDeclarations_to_parser(
         typing.Callable[[str], typing.Optional[AnyTalonRule]]
     ] = None,
     get_list: typing.Optional[typing.Callable[[str], typing.Optional[AnyListValue]]],
-) -> Fetcher:
-    buffer: typing.List[Parser] = []
+) -> TalonCommandDeclarationMatcher:
+    buffer: typing.List[parsec.Parser] = []
     for declaration in self.children:
         if isinstance(declaration, TalonCommandDeclaration):
             buffer.append(
@@ -320,7 +311,7 @@ def _TalonDeclarations_to_parser(
                 )
             )
     return functools.reduce(
-        try_choice, buffer, fail_with(f"input does not match any command")
+        parsec.try_choice, buffer, parsec.fail_with(f"input does not match any command")
     )
 
 
@@ -337,7 +328,7 @@ def _TalonCommandDeclaration_to_parser(
         typing.Callable[[str], typing.Optional[AnyTalonRule]]
     ] = None,
     get_list: typing.Optional[typing.Callable[[str], typing.Optional[AnyListValue]]],
-) -> Fetcher:
+) -> TalonCommandDeclarationMatcher:
     return _to_parser(
         self.rule, fullmatch=fullmatch, get_capture=get_capture, get_list=get_list
     ).result(self)
@@ -348,22 +339,22 @@ def _TalonCommandDeclaration_to_parser(
 ################################################################################
 
 
-def _always() -> Matcher:
-    def _always_parser(text: typing.Sequence[str], index: int) -> Value[None]:
-        return Value.success(index, None)
+def _always() -> SequenceMatcher:
+    def _always_parser(text: typing.Sequence[str], index: int):
+        return parsec.Value.success(index, None)
 
-    return Matcher(fn=_always_parser)
+    return SequenceMatcher(fn=_always_parser)
 
 
-def _word(token: str) -> Matcher:
-    def _word_parser(text: typing.Sequence[str], index: int) -> Value[None]:
+def _word(token: str) -> SequenceMatcher:
+    def _word_parser(text: typing.Sequence[str], index: int):
         if text[index] == token:
-            return Value.success(index + 1, None)
+            return parsec.Value.success(index + 1, None)
         else:
             # NOTE: `Value.failure` creates a value of type `Value[<nothing>]`
-            return typing.cast(Value[None], Value.failure(index, str(token)))
+            return parsec.Value.failure(index, str(token))
 
-    return Matcher(fn=_word_parser)
+    return SequenceMatcher(fn=_word_parser)
 
 
 def _TalonCapture_to_parser(
@@ -374,7 +365,7 @@ def _TalonCapture_to_parser(
         typing.Callable[[str], typing.Optional[AnyTalonRule]]
     ] = None,
     get_list: typing.Optional[typing.Callable[[str], typing.Optional[AnyListValue]]],
-) -> Matcher:
+) -> SequenceMatcher:
     capture_name = self.capture_name.text
     if get_capture:
         capture = get_capture(capture_name)
@@ -391,8 +382,8 @@ def _TalonChoice_to_parser(
         typing.Callable[[str], typing.Optional[AnyTalonRule]]
     ] = None,
     get_list: typing.Optional[typing.Callable[[str], typing.Optional[AnyListValue]]],
-) -> Matcher:
-    acc: typing.Optional[Parser] = None
+) -> SequenceMatcher:
+    acc: typing.Optional[parsec.Parser] = None
     for rule in reversed(self.children):
         if not isinstance(rule, TalonComment):
             parser = _to_parser(
@@ -414,9 +405,9 @@ def _TalonEndAnchor_to_parser(
         typing.Callable[[str], typing.Optional[AnyTalonRule]]
     ] = None,
     get_list: typing.Optional[typing.Callable[[str], typing.Optional[AnyListValue]]],
-) -> Matcher:
+) -> SequenceMatcher:
     if fullmatch:
-        return eof()
+        return parsec.eof()
     else:
         return _always()
 
@@ -429,14 +420,14 @@ def _TalonList_to_parser(
         typing.Callable[[str], typing.Optional[AnyTalonRule]]
     ] = None,
     get_list: typing.Optional[typing.Callable[[str], typing.Optional[AnyListValue]]],
-) -> Matcher:
+) -> SequenceMatcher:
     list_name = self.list_name.text
     if get_list:
         list_value = get_list(list_name)
         if isinstance(list_value, dict):
             list_value = list(list_value.keys())
         if isinstance(list_value, list):
-            return one_of([item for item in list_value]).result(None)
+            return parsec.one_of([item for item in list_value]).result(None)
     return _word(f"{{{list_name}}}").result(None)
 
 
@@ -448,8 +439,8 @@ def _TalonOptional_to_parser(
         typing.Callable[[str], typing.Optional[AnyTalonRule]]
     ] = None,
     get_list: typing.Optional[typing.Callable[[str], typing.Optional[AnyListValue]]],
-) -> Matcher:
-    return optional(
+) -> SequenceMatcher:
+    return parsec.optional(
         _to_parser(
             self.get_child(),
             fullmatch=fullmatch,
@@ -467,7 +458,7 @@ def _TalonParenthesizedRule_to_parser(
         typing.Callable[[str], typing.Optional[AnyTalonRule]]
     ] = None,
     get_list: typing.Optional[typing.Callable[[str], typing.Optional[AnyListValue]]],
-) -> Matcher:
+) -> SequenceMatcher:
     return _to_parser(
         self.get_child(),
         fullmatch=fullmatch,
@@ -484,8 +475,8 @@ def _TalonRepeat_to_parser(
         typing.Callable[[str], typing.Optional[AnyTalonRule]]
     ] = None,
     get_list: typing.Optional[typing.Callable[[str], typing.Optional[AnyListValue]]],
-) -> Matcher:
-    return many(
+) -> SequenceMatcher:
+    return parsec.many(
         _to_parser(
             self.get_child(),
             fullmatch=fullmatch,
@@ -503,8 +494,8 @@ def _TalonRepeat1_to_parser(
         typing.Callable[[str], typing.Optional[AnyTalonRule]]
     ] = None,
     get_list: typing.Optional[typing.Callable[[str], typing.Optional[AnyListValue]]],
-) -> Matcher:
-    return many1(
+) -> SequenceMatcher:
+    return parsec.many1(
         _to_parser(
             self.get_child(),
             fullmatch=fullmatch,
@@ -522,8 +513,8 @@ def _TalonRule_to_parser(
         typing.Callable[[str], typing.Optional[AnyTalonRule]]
     ] = None,
     get_list: typing.Optional[typing.Callable[[str], typing.Optional[AnyListValue]]],
-) -> Matcher:
-    acc: typing.Optional[Matcher] = None
+) -> SequenceMatcher:
+    acc: typing.Optional[SequenceMatcher] = None
     for rule in reversed(self.children):
         if not isinstance(rule, TalonComment):
             parser = _to_parser(
@@ -545,8 +536,8 @@ def _TalonSeq_to_parser(
         typing.Callable[[str], typing.Optional[AnyTalonRule]]
     ] = None,
     get_list: typing.Optional[typing.Callable[[str], typing.Optional[AnyListValue]]],
-) -> Matcher:
-    acc: typing.Optional[Matcher] = None
+) -> SequenceMatcher:
+    acc: typing.Optional[SequenceMatcher] = None
     for rule in reversed(self.children):
         if not isinstance(rule, TalonComment):
             parser = _to_parser(
@@ -568,16 +559,16 @@ def _TalonStartAnchor_to_parser(
         typing.Callable[[str], typing.Optional[AnyTalonRule]]
     ] = None,
     get_list: typing.Optional[typing.Callable[[str], typing.Optional[AnyListValue]]],
-) -> Matcher:
+) -> SequenceMatcher:
     if fullmatch:
 
-        def start_anchor_parser(text: typing.Sequence[str], index: int) -> Value:
+        def start_anchor_parser(text: typing.Sequence[str], index: int):
             if index == 0:
-                return Value.success(index, None)
+                return parsec.Value.success(index, None)
             else:
-                return Value.failure(index, "should be start of the input")
+                return parsec.Value.failure(index, "should be start of the input")
 
-        return Matcher(fn=start_anchor_parser)
+        return SequenceMatcher(fn=start_anchor_parser)
     else:
         return _always()
 
@@ -590,5 +581,5 @@ def _TalonWord_to_parser(
         typing.Callable[[str], typing.Optional[AnyTalonRule]]
     ] = None,
     get_list: typing.Optional[typing.Callable[[str], typing.Optional[AnyListValue]]],
-) -> Matcher:
+) -> SequenceMatcher:
     return _word(self.text).result(None)
