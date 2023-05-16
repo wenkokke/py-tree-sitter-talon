@@ -928,6 +928,17 @@ setattr(
 )
 
 
+def _make_TalonUnaryOperator(*args) -> TalonUnaryOperator:
+    return TalonUnaryOperator(*args)
+
+
+setattr(
+    TalonUnaryOperator,
+    "__reduce__",
+    lambda self: (_make_TalonUnaryOperator, _fields(self)),
+)
+
+
 def _make_TalonVariable(*args) -> TalonVariable:
     return TalonVariable(*args)
 
