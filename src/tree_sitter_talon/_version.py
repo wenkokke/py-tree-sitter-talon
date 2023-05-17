@@ -21,4 +21,4 @@ except ModuleNotFoundError:
         ).read_text(encoding="utf-8")
     )["version"]
 
-VERSION: str = f"1!1.0.3+grammar{TREE_SITTER_TALON_VERSION}"
+VERSION: str = f"1!1.0.4+grammar{TREE_SITTER_TALON_VERSION}"
