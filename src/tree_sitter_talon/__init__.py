@@ -3,7 +3,6 @@ import typing
 import warnings
 
 from ._compat import _removeprefix
-from ._internal import __version__ as __version__
 from ._internal.dynamic import Branch as Branch
 from ._internal.dynamic import Leaf as Leaf
 from ._internal.dynamic import Node as Node
@@ -70,6 +69,7 @@ from ._internal.match import AnyListValue as AnyListValue
 from ._internal.match import AnyTalonRule as AnyTalonRule
 from ._internal.match import find_command as find_command
 from ._internal.match import match as match
+from ._version import VERSION as VERSION
 
 ################################################################################
 # Properties for backwards compatibility

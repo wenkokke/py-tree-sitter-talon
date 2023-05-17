@@ -1,12 +1,12 @@
 [build-system]
-requires = ["setuptools>=45"]
+requires = ["setuptools>=45", "importlib_resources >=5.12,<6"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "tree_sitter_talon"
-version = "1007.3.2.0"
 description = "Parser for Talon files in Python."
 license = { file = 'LICENSE' }
+dynamic = ["version"]
 authors = [{ name = "Wen Kokke", email = "wenkokke@users.noreply.github.com" }]
 readme = "README.md"
 keywords = ["parser", "tree-sitter", "talon"]
@@ -26,7 +26,7 @@ dependencies = [
   "tree_sitter_type_provider >=2.1.18,<2.2",
   "dataclasses_json >=0.5.7,<0.6",
   "parsec >=3.15,<4",
-  "importlib-resources >=5.12,<6"
+  "importlib_resources >=5.12,<6"
 ]
 
 [project.optional-dependencies]
@@ -48,14 +48,8 @@ tag = false
 push = false
 
 [tool.bumpver.file_patterns]
-"pyproject.toml" = [
-  '^version = "{version}.3.2.0"$',
-  '^current_version = "{version}"$',
-]
-"src/tree_sitter_talon/_internal/__init__.py" = [
-  '^__version__: str = "{version}.3.2.0"$'
-]
-"docs/conf.py" = ['^release = "{version}.3.2.0"$']
+"pyproject.toml" = ['^current_version = "{version}"$']
+"src/tree_sitter_talon/_version.py" = ['^__build__: int = {version}$']
 
 [tool.cibuildwheel]
 build-frontend = "build"
@@ -91,6 +85,9 @@ enable_assertion_pass_hook = true
 filterwarnings = ["ignore::DeprecationWarning:.*:"]
 addopts = "--ignore=tests/data"
 testpaths = ["tests"]
+
+[tool.setuptools.dynamic]
+version = { attr = "tree_sitter_talon._version.VERSION" }
 
 [tool.setuptools.packages.find]
 where = ["src"]
