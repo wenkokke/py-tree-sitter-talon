@@ -2,7 +2,7 @@ import pathlib
 import typing
 
 import importlib_resources
-import tree_sitter  # type: ignore
+import tree_sitter
 import tree_sitter_type_provider
 
 from .binding import _tree_sitter_talon_id
@@ -68,7 +68,7 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
         self.Leaf = tree_sitter_type_provider.Leaf
         self.Branch = tree_sitter_type_provider.Branch
         self.Point = tree_sitter_type_provider.Point
-        self.ParseError = tree_sitter_type_provider.ParseError
+        self.ParseError = tree_sitter_type_provider.ParseError  # type: ignore[attr-defined]
 
     def parse(
         self,
