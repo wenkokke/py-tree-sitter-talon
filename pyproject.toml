@@ -95,7 +95,7 @@ where = ["src"]
 [tool.tox]
 legacy_tox_ini = """
 [tox]
-envlist = py37, py38, py39, py310, py311
+envlist = py37, py38, py39, py310, py311, docs
 isolated_build = true
 skip_missing_interpreters = true
 
@@ -106,4 +106,12 @@ commands =
   {envpython} -m bumpver update --patch --dry --no-fetch
   {envpython} -m pytest tests -x
   {envpython} -m mypy.stubtest --mypy-config-file=pyproject.toml --ignore-unused-allowlist --allowlist=.stubtest-allowlist.{envname}.csv tree_sitter_talon
+
+[testenv:docs]
+requires =
+  py311
+extras =
+  docs
+commands =
+  sphinx-build -M html docs docs/_build
 """
