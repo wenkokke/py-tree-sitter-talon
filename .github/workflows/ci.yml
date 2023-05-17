@@ -21,45 +21,4 @@ env:
 
 jobs:
   cibuildwheel:
-    strategy:
-      matrix:
-        os:
-          - name: "Linux"
-            type: "ubuntu-latest"
-          - name: "macOS"
-            type: "macos-latest"
-          - name: "Windows"
-            type: "windows-latest"
-
-    name: cibuildwheel / ${{ matrix.os.name }}
-    runs-on: ${{ matrix.os.type }}
-
-    steps:
-      - name: Get source
-        uses: actions/checkout@v3
-
-      - # Required to run job via act: https://github.com/nektos/act
-        name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          cache: "pip"
-          cache-dependency-path: "./requirements-ci.txt"
-          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
-
-      - # Required to run job via act: https://github.com/nektos/act
-        name: Setup dependencies
-        run: pip install -r "./requirements-ci.txt"
-
-      - name: Build wheel
-        uses: pypa/cibuildwheel@v2.12.3
-        with:
-          output-dir: "./wheelhouse"
-          config-file: "{package}/pyproject.toml"
-        env:
-          MACOSX_DEPLOYMENT_TARGET: "10.9"
-
-      - name: Upload wheels
-        uses: actions/upload-artifact@v3
-        with:
-          name: wheelhouse
-          path: ./wheelhouse/*.whl
+    uses: ./.github/workflows/cibuildwheel.yml
