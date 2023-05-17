@@ -9,15 +9,10 @@ defaults:
     shell: sh
 
 jobs:
-  release:
+  github:
     runs-on: ubuntu-latest
 
-    environment:
-      name: pypi
-      url: https://pypi.org/p/tree-sitter-talon
-
     permissions:
-      id-token: write # IMPORTANT: this permission is mandatory for trusted publishing
       contents: write
 
     steps:
@@ -34,6 +29,23 @@ jobs:
             dist/*.tar.gz
             dist/*.whl
           fail_on_unmatched_files: true
+
+  pypi:
+    runs-on: ubuntu-latest
+
+    environment:
+      name: pypi
+      url: https://pypi.org/p/tree-sitter-talon
+
+    permissions:
+      id-token: write # IMPORTANT: this permission is mandatory for trusted publishing 
+
+    steps:
+      - name: Download dist
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: dist
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
