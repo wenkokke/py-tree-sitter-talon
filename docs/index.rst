@@ -165,6 +165,9 @@ Each explicit node in the tree-sitter grammar corresponds to a dataclass.
 .. autoclass:: TalonBinaryOperator
    :members:
 
+.. autoclass:: TalonUnaryOperator
+   :members:
+
 .. autoclass:: TalonKeyAction
    :members:
 
