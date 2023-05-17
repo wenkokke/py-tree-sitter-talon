@@ -1,4 +1,4 @@
-name: cibuildwheel
+name: sdist
 
 on:
   workflow_call:
@@ -13,18 +13,14 @@ env:
   DEFAULT_PYTHON_VERSION: "3.11"
 
 jobs:
-  cibuildwheel:
+  sdist:
     strategy:
       matrix:
         os:
           - name: "Linux"
             type: "ubuntu-latest"
-          - name: "macOS"
-            type: "macos-latest"
-          - name: "Windows"
-            type: "windows-latest"
 
-    name: cibuildwheel / ${{ matrix.os.name }}
+    name: sdist / ${{ matrix.os.name }}
     runs-on: ${{ matrix.os.type }}
 
     steps:
@@ -43,16 +39,11 @@ jobs:
         name: Setup dependencies
         run: pip install -r "./requirements-ci.txt"
 
-      - name: Build wheels
-        uses: pypa/cibuildwheel@v2.12.3
-        with:
-          output-dir: "./wheelhouse"
-          config-file: "{package}/pyproject.toml"
-        env:
-          MACOSX_DEPLOYMENT_TARGET: "10.9"
+      - name: Build sdist
+        run: pipx run --spec build pyproject-build --sdist --outdir sdist
 
-      - name: Upload wheels
+      - name: Upload sdist
         uses: actions/upload-artifact@v3
         with:
-          name: wheelhouse
-          path: ./wheelhouse/*.whl
+          name: sdist
+          path: ./sdist/*.tar.gz

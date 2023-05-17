@@ -1,4 +1,4 @@
-name: cibuildwheel
+name: sphinx
 
 on:
   workflow_call:
@@ -13,18 +13,14 @@ env:
   DEFAULT_PYTHON_VERSION: "3.11"
 
 jobs:
-  cibuildwheel:
+  sphinx:
     strategy:
       matrix:
         os:
           - name: "Linux"
             type: "ubuntu-latest"
-          - name: "macOS"
-            type: "macos-latest"
-          - name: "Windows"
-            type: "windows-latest"
 
-    name: cibuildwheel / ${{ matrix.os.name }}
+    name: sdist / ${{ matrix.os.name }}
     runs-on: ${{ matrix.os.type }}
 
     steps:
@@ -36,23 +32,18 @@ jobs:
         uses: actions/setup-python@v4
         with:
           cache: "pip"
-          cache-dependency-path: "./requirements-ci.txt"
+          cache-dependency-path: "./pyproject.toml"
           python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
 
       - # Required to run job via act: https://github.com/nektos/act
         name: Setup dependencies
-        run: pip install -r "./requirements-ci.txt"
+        run: pip install .[docs]
 
-      - name: Build wheels
-        uses: pypa/cibuildwheel@v2.12.3
-        with:
-          output-dir: "./wheelhouse"
-          config-file: "{package}/pyproject.toml"
-        env:
-          MACOSX_DEPLOYMENT_TARGET: "10.9"
+      - name: Build docs
+        run: sphinx-build -M 'html' 'docs' 'docs/_build'"
 
-      - name: Upload wheels
-        uses: actions/upload-artifact@v3
+      - name: Deploy doc
+        uses: JamesIves/github-pages-deploy-action@v4.4.1
         with:
-          name: wheelhouse
-          path: ./wheelhouse/*.whl
+          branch: docs
+          folder: docs/_build/html

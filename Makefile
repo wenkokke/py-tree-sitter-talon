@@ -1,23 +1,22 @@
-VERSION = $(shell poetry version -s)
+#################################################################################
+# Tests
+#################################################################################
 
-build:
-	poetry build
-
-build-doc:
-	poetry run sphinx-build -M "html" "docs" "docs/_build"
-
-serve:
-	@(cd docs/_build/html && npx browser-sync -ss)
-
+.PHONY: test
 test:
-	tox --skip-missing-interpreters
+	tox
 
-bump-version:
-	@poetry run bumpver update
-	@$(MAKE) release-version
+#################################################################################
+# Build Docs
+#################################################################################
 
-release-version:
-	@git tag 'v$(VERSION)'
-	@git push origin 'v$(VERSION)'
+.PHONY: serve
+serve:
+	@.venv/bin/python -m http.server --directory ./example/docs/_build/html
 
-.PHONY: build build-doc serve test bump-version release-version
+.PHONY: docs
+docs: .venv/bin/activate
+	@bash -c "source .venv/bin/activate; pip install -q .[docs]; sphinx-build -M 'html' 'docs' 'docs/_build'"
+
+.venv/bin/activate:
+	@python -m venv .venv
