@@ -15,10 +15,10 @@ try:
         .read_text(encoding="utf-8")
     )["version"]
 except ModuleNotFoundError:
-    TREE_SITTER_TALON_VERSION_: str = json.loads(  # type: ignore[no-redef]
+    TREE_SITTER_TALON_VERSION: str = json.loads(  # type: ignore[no-redef]
         (
             pathlib.Path(__file__).parent / "_tree_sitter_talon" / "package.json"
         ).read_text(encoding="utf-8")
     )["version"]
 
-VERSION: str = f"1!1.0.0+grammar{TREE_SITTER_TALON_VERSION_}"
+VERSION: str = f"1!1.0.0+grammar{TREE_SITTER_TALON_VERSION}"
