@@ -20,17 +20,11 @@ jobs:
       id-token: write # IMPORTANT: this permission is mandatory for trusted publishing
 
     steps:
-      - name: Download sdist
+      - name: Download dist
         uses: actions/download-artifact@v3
         with:
-          name: sdist
-          path: sdist
-
-      - name: Download wheels
-        uses: actions/download-artifact@v3
-        with:
-          name: wheelhouse
-          path: wheelhouse
+          name: dist
+          path: dist
 
       - name: Publish to GitHub Releases
         uses: softprops/action-gh-release@v1
@@ -42,3 +36,5 @@ jobs:
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist
