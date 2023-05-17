@@ -1,4 +1,8 @@
+import os
+
 from setuptools import Extension, setup
+
+print(os.listdir("src/tree_sitter_talon/_tree_sitter_talon/src"))
 
 setup(
     ext_modules=[

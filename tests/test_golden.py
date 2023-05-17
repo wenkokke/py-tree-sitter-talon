@@ -4,7 +4,6 @@ import pickle
 import pytest
 
 import tree_sitter_talon
-import tree_sitter_talon.internal.match
 
 from . import node_dict_simplify
 

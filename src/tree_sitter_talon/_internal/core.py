@@ -1,3 +1,4 @@
+import importlib.resources
 import pathlib
 import typing
 
@@ -5,7 +6,6 @@ import tree_sitter  # type: ignore
 import tree_sitter_type_provider
 
 from .binding import _tree_sitter_talon_id
-from .node_types import _get_node_types
 
 
 class TalonLanguage(tree_sitter.Language):
@@ -24,8 +24,11 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
     def _node_types(
         self,
     ) -> typing.Sequence[tree_sitter_type_provider.NodeType]:
+        _node_types_text = importlib.resources.read_text(
+            "tree_sitter_talon._tree_sitter_talon.src", "node-types.json"
+        )
         return tree_sitter_type_provider.NodeType.schema().loads(  # type: ignore
-            _get_node_types().read_text(), many=True
+            _node_types_text, many=True
         )
 
     @property
