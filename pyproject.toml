@@ -1,92 +1,41 @@
 [build-system]
-requires = ["setuptools", "poetry-core>=1.5.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["setuptools>=45"]
+build-backend = "setuptools.build_meta"
 
-[tool.poetry]
+[project]
 name = "tree_sitter_talon"
 version = "1007.3.2.0"
 description = "Parser for Talon files in Python."
-license = "MIT"
-authors = ["Wen Kokke <wenkokke@users.noreply.github.com>"]
+license = { file = 'LICENSE' }
+authors = [{ name = "Wen Kokke", email = "wenkokke@users.noreply.github.com" }]
 readme = "README.md"
-repository = "https://github.com/wenkokke/py-tree-sitter-talon"
-documentation = "https://wenkokke.github.io/py-tree-sitter-talon/"
 keywords = ["parser", "tree-sitter", "talon"]
 classifiers = [
   "License :: OSI Approved :: MIT License",
   "Topic :: Software Development :: Compilers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
 ]
-include = [
-  # Build script must be included in the sdist
-  { path = "build.py", format = "sdist" },
-  # C extensions must be included in the wheel
-  { path = "tree_sitter_talon/internal/*.so", format = "wheel" },
-  { path = "tree_sitter_talon/internal/*.pyd", format = "wheel" },
-]
-
-[tool.poetry.build]
-script = "build.py"
-generate-setup-file = false
-
-[tool.poetry.dependencies]
-python = "^3.7.1"
-tree-sitter = "^0.20.0"
-tree-sitter-type-provider = "^2.1.18"
-dataclasses-json = "^0.5.7"
-bumpver = { version = "*", optional = true }
-mypy = { version = "^1.1.1", optional = true }
-pytest = { version = "^7.1.2", optional = true }
-pytest-golden = { version = "^0.2.2", optional = true }
-parsec = ">=3.15"
-# Prevent Poetry 1.3 from removing setuptools
-setuptools = "<67.8.0" # for 'pkg_resources'
-
-[tool.poetry.extras]
-test = ["bumpver", "mypy", "pytest", "pytest-golden"]
-
-[tool.poetry.group.docs.dependencies]
-Sphinx = "^5.1.1"
-sphinx-bootstrap-theme = "^0.8.1"
-
-[tool.poetry.group.dev.dependencies]
-mypy = "^1.1.1"
-tox = ">=4.4.6,<5.0.0"
-black = ">=22.8,<24.0"
-isort = "^5.10.1"
-bumpver = "*"
-
-[tool.cibuildwheel]
-build-verbosity = 1
-test-requires = "pytest==7.2.2 pytest-golden==0.2.2"
-test-command = "pytest {project}/tests"
-test-skip = [
-  "{cp37,cp38}-macosx*",
-  "*_arm64 *_universal2:arm64"
+requires-python = ">=3.7.1,<3.12"
+dependencies = [
+  "tree_sitter >=0.20,<0.21",
+  "tree_sitter_type_provider >=2.1.18,<2.2",
+  "dataclasses_json >=0.5.7,<0.6",
+  "parsec >=3.15,<4",
 ]
 
-[tool.cibuildwheel.linux]
-archs = ["x86_64", "i686"]
-before-build = "rm -rf {project}/build"
-
-[tool.cibuildwheel.macos]
-archs = ["x86_64"]
-before-build = "rm -rf {project}/build"
-
-[tool.cibuildwheel.windows]
-archs = ["x86", "AMD64"]
-
-[tool.pytest.ini_options]
-enable_assertion_pass_hook = true
-filterwarnings = ["ignore::DeprecationWarning:.*:"]
-addopts = "--ignore=tests/data"
-testpaths = ["tests"]
-
-[tool.mypy]
-python_version = 3.7
-implicit_reexport = false
-ignore_missing_imports = true
-warn_incomplete_stub = false
-warn_no_return = true
+[project.optional-dependencies]
+test = [
+  "bumpver",
+  "mypy >=1.1.1,<2",
+  "pytest >=7.1.2,<8",
+  "pytest_golden >=0.2.2,<0.3",
+]
+docs = ["Sphinx >=5.1.1,<7", "sphinx_bootstrap_theme >=0.8.1,<0.9"]
 
 [tool.bumpver]
 current_version = "1007"
@@ -106,6 +55,32 @@ push = false
 ]
 "docs/conf.py" = ['^release = "{version}.3.2.0"$']
 
+[tool.cibuildwheel]
+build-frontend = "build"
+skip = [
+  # 18-04-2023:
+  # PyPy builds do not work.
+  "pp*",
+]
+test-command = "pytest {package}/tests"
+test-extras = "test"
+
+[tool.mypy]
+python_version = 3.7
+implicit_reexport = false
+ignore_missing_imports = true
+warn_incomplete_stub = false
+warn_no_return = true
+
+[tool.pytest.ini_options]
+enable_assertion_pass_hook = true
+filterwarnings = ["ignore::DeprecationWarning:.*:"]
+addopts = "--ignore=tests/data"
+testpaths = ["tests"]
+
+# [tool.setuptools.packages.find]
+# where = ["src"]
+
 [tool.tox]
 legacy_tox_ini = """
 [tox]
@@ -116,8 +91,6 @@ skip_missing_interpreters = true
 [testenv]
 extras =
   test
-commands_pre =
-  {envpython} build.py
 commands =
   {envpython} -m bumpver update --dry --no-fetch
   {envpython} -m pytest tests -x
