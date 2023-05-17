@@ -4,3 +4,5 @@
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/wenkokke/py-tree-sitter-talon/dev.svg)](https://results.pre-commit.ci/latest/github/wenkokke/py-tree-sitter-talon/dev)
 
 # Parser for Talon files in Python
+
+See [the documentation](https://wen.works/py-tree-sitter-talon).
