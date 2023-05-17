@@ -30,9 +30,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-mypy = [
-  "types_setuptools",
-]
+mypy = ["types_setuptools"]
 test = [
   "bumpver",
   "mypy >=1.1.1,<2",
@@ -68,6 +66,10 @@ skip = [
 ]
 test-command = "pytest {package}/tests"
 test-extras = "test"
+
+[tool.cibuildwheel.macos]
+# Skip trying to test arm64 builds on Intel Macs
+test-skip = "*-macosx_arm64 *-macosx_universal2:arm64"
 
 [tool.mypy]
 python_version = 3.7
