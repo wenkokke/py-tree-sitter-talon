@@ -13,6 +13,8 @@ import sys
 
 import sphinx_bootstrap_theme
 
+import tree_sitter_talon
+
 sys.path.insert(0, os.path.abspath(".."))
 
 # -- Project information -----------------------------------------------------
@@ -20,7 +22,7 @@ sys.path.insert(0, os.path.abspath(".."))
 project = "tree_sitter_talon"
 copyright = "2022, Wen Kokke"
 author = "Wen Kokke"
-release = "1007.3.2.0"
+release = tree_sitter_talon.VERSION
 
 # -- General configuration ---------------------------------------------------
 

@@ -1,11 +1,11 @@
 import pathlib
 import typing
 
-import tree_sitter  # type: ignore
+import importlib_resources
+import tree_sitter
 import tree_sitter_type_provider
 
 from .binding import _tree_sitter_talon_id
-from .node_types import _get_node_types
 
 
 class TalonLanguage(tree_sitter.Language):
@@ -24,8 +24,13 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
     def _node_types(
         self,
     ) -> typing.Sequence[tree_sitter_type_provider.NodeType]:
+        _node_types_text = (
+            importlib_resources.files("tree_sitter_talon")
+            .joinpath("_tree_sitter_talon", "src", "node-types.json")
+            .read_text(encoding="utf-8")
+        )
         return tree_sitter_type_provider.NodeType.schema().loads(  # type: ignore
-            _get_node_types().read_text(), many=True
+            _node_types_text, many=True
         )
 
     @property
@@ -63,7 +68,7 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
         self.Leaf = tree_sitter_type_provider.Leaf
         self.Branch = tree_sitter_type_provider.Branch
         self.Point = tree_sitter_type_provider.Point
-        self.ParseError = tree_sitter_type_provider.ParseError
+        self.ParseError = tree_sitter_type_provider.ParseError  # type: ignore[attr-defined]
 
     def parse(
         self,

@@ -1,0 +1,51 @@
+name: sdist
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: sh
+
+env:
+  # NOTE: The default Python version is installed with actions/setup-python.
+  DEFAULT_PYTHON_VERSION: "3.11"
+
+jobs:
+  sdist:
+    strategy:
+      matrix:
+        os:
+          - name: "Linux"
+            type: "ubuntu-latest"
+
+    name: sdist / ${{ matrix.os.name }}
+    runs-on: ${{ matrix.os.type }}
+
+    steps:
+      - name: Get source
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - # Required to run job via act: https://github.com/nektos/act
+        name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          cache: "pip"
+          cache-dependency-path: "./requirements-ci.txt"
+          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+
+      - # Required to run job via act: https://github.com/nektos/act
+        name: Setup dependencies
+        run: pip install -r "./requirements-ci.txt"
+
+      - name: Build sdist
+        run: pipx run --spec build pyproject-build --sdist --outdir sdist
+
+      - name: Upload sdist
+        uses: actions/upload-artifact@v3
+        with:
+          name: sdist
+          path: ./sdist/*.tar.gz

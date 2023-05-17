@@ -2,33 +2,43 @@ name: release
 
 on:
   workflow_call:
+  workflow_dispatch:
 
 defaults:
   run:
-    shell: bash
+    shell: sh
 
 jobs:
-  publish:
-    name: Release
+  release:
     runs-on: ubuntu-latest
+
+    environment:
+      name: pypi
+      url: https://pypi.org/p/tree-sitter-talon
+
+    permissions:
+      id-token: write # IMPORTANT: this permission is mandatory for trusted publishing
+
     steps:
+      - name: Download sdist
+        uses: actions/download-artifact@v3
+        with:
+          name: sdist
+          path: sdist
+
       - name: Download wheels
         uses: actions/download-artifact@v3
         with:
-          name: dist
-          path: dist
-
-      # - name: Publish to PyPi
-      #   uses: pypa/gh-action-pypi-publish@release/v1
-      #   with:
-      #     user: __token__
-      #     password: ${{ secrets.PYPI_API_TOKEN }}
-      #     skip_existing: true
+          name: wheelhouse
+          path: wheelhouse
 
       - name: Publish to GitHub Releases
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            dist/**.tar.gz
-            dist/**.whl
+            sdist/**.tar.gz
+            wheelhouse/**.whl
           fail_on_unmatched_files: true
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1

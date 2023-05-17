@@ -5,7 +5,6 @@ import typing
 import dataclasses_json
 import tree_sitter
 
-from . import __version__
 from .match import AnyListValue, AnyTalonRule
 
 ################################################################################
