@@ -1,5 +1,9 @@
 [build-system]
-requires = ["setuptools>=45", "importlib_resources >=5.12,<6"]
+requires = [
+  "setuptools>=45",
+  "importlib_resources >=5.12,<6",
+  "packaging >=23.1,<24"
+]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -40,16 +44,27 @@ test = [
 docs = ["Sphinx >=5.1.1,<7", "sphinx_bootstrap_theme >=0.8.1,<0.9"]
 
 [tool.bumpver]
-current_version = "1!1.0.6"
-version_pattern = "1!MAJOR.MINOR.PATCH"
+# NOTE: This package uses a version in two parts. The epoch is the major
+#       version number of the underlying tree_sitter_talon grammar, the
+#       remaining two numbers are a ComVer version, where the first number
+#       is bumped if compatibility is broken, and the second number is bumped
+#       if it isn't. In SemVer terms, the first two numbers are major numbers,
+#       the third number is a minor number.
+current_version = "v3!1.0"
+version_pattern = "vMAJOR!MINOR.PATCH"
+#                   ^^^^^ - epoch version
+#                         ^^^^^ - major/minor version
+#                               ^^^^^ - patch version
 commit_message = "Bump build number {old_version} -> {new_version}"
 commit = true
-tag = true
-push = true
+tag = false
+push = false
 
 [tool.bumpver.file_patterns]
 "pyproject.toml" = ['^current_version = "{version}"$']
-"src/tree_sitter_talon/_version.py" = ['^VERSION: str = f"{version}']
+"src/tree_sitter_talon/_version.py" = [
+  '^VERSION: str = f"{TREE_SITTER_TALON_VERSION.major}!MINOR.PATCH"$'
+]
 
 [tool.cibuildwheel]
 build-frontend = "build"
