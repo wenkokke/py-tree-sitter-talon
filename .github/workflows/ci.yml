@@ -5,7 +5,7 @@ on:
     branches:
       - dev
     tags:
-      - "1!*"
+      - "v*"
   pull_request:
     types:
       - opened
@@ -18,14 +18,11 @@ defaults:
     shell: sh
 
 jobs:
-  tox:
-    uses: ./.github/workflows/tox.yml
+  build:
+    uses: ./.github/workflows/build.yml
 
-  sdist:
-    uses: ./.github/workflows/sdist.yml
-
-  cibuildwheel:
-    uses: ./.github/workflows/cibuildwheel.yml
+  test:
+    uses: ./.github/workflows/test.yml
 
   release:
     if: startsWith(github.ref, 'refs/tags/')
