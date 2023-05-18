@@ -1,4 +1,5 @@
 import sys
+from typing import List
 
 from .core import TreeSitterTalon
 

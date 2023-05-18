@@ -1,22 +1,26 @@
-import typing
+from typing import List
 
-import pytest
+from pytest import mark
+from pytest_golden.plugin import GoldenTestFixture
 
 from . import class_signatures, function_signatures, pyver
 
 
-@pytest.mark.golden_test(f"data/api.{pyver()}.yml")
-def test_talon_api(golden) -> None:
+@mark.golden_test(f"data/api.{pyver()}.yml")  # type: ignore[misc]
+def test_talon_api(golden: GoldenTestFixture) -> None:
     assert golden["input"] is None
 
     import tree_sitter_talon
 
-    globals().update(tree_sitter_talon.__dict__)
+    defns = {
+        name: defn
+        for name, defn in tree_sitter_talon.__dict__.items()
+        if name in tree_sitter_talon.__all__
+    }
+    globals().update(defns)
 
-    output: typing.List[str] = []
-    output.extend(function_signatures(tree_sitter_talon.__class__))
-    output.extend(function_signatures(tree_sitter_talon))
-    output.extend(class_signatures(tree_sitter_talon.__class__))
-    output.extend(class_signatures(tree_sitter_talon))
+    output: List[str] = []
+    output.extend(function_signatures(defns))
+    output.extend(class_signatures(defns))
 
     assert "\n".join(output) == golden.out["output"]

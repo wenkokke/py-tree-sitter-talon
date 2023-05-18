@@ -1,5 +1,5 @@
-import pathlib
-import typing
+from pathlib import Path
+from typing import List, Optional, Sequence, Union
 
 import importlib_resources
 import tree_sitter
@@ -7,23 +7,37 @@ import tree_sitter_type_provider
 
 from .binding import _tree_sitter_talon_id
 
+################################################################################
+# Export List
+################################################################################
 
-class TalonLanguage(tree_sitter.Language):
-    def __init__(self):
+__all__: List[str] = [
+    "TalonLanguage",
+    "TreeSitterTalon",
+]
+
+
+################################################################################
+# Core Classes
+################################################################################
+
+
+class TalonLanguage(tree_sitter.Language):  # type: ignore
+    def __init__(self) -> None:
         self.language_id = _tree_sitter_talon_id()
 
 
-class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
-    _library_path: typing.Optional[str] = None
+class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):  # type: ignore
+    _library_path: Optional[str] = None
 
-    _language: typing.Optional[tree_sitter.Language] = None
+    _language: Optional[tree_sitter.Language] = None
 
-    _parser: typing.Optional[tree_sitter.Parser] = None
+    _parser: Optional[tree_sitter.Parser] = None
 
     @property
     def _node_types(
         self,
-    ) -> typing.Sequence[tree_sitter_type_provider.NodeType]:
+    ) -> Sequence[tree_sitter_type_provider.NodeType]:
         _node_types_text = (
             importlib_resources.files("tree_sitter_talon")
             .joinpath("_tree_sitter_talon", "src", "node-types.json")
@@ -46,7 +60,7 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
             self._parser.set_language(self.language)
         return self._parser
 
-    def __init__(self):
+    def __init__(self) -> None:
         # Conversion from tree-sitter names to Python names
         def as_class_name(node_type_name: str) -> str:
             buffer = ["Talon"]
@@ -68,19 +82,87 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
         self.Leaf = tree_sitter_type_provider.Leaf
         self.Branch = tree_sitter_type_provider.Branch
         self.Point = tree_sitter_type_provider.Point
-        self.ParseError = tree_sitter_type_provider.ParseError  # type: ignore[attr-defined]
+        self.ParseError = tree_sitter_type_provider.ParseError
+
+        ################################################################################
+        # Export List
+        ################################################################################
+
+        self.__all__: List[str] = [
+            "parser",
+            "language",
+            "parse",
+            "parse_file",
+            "from_tree_sitter",
+            "NodeTypeName",
+            "NodeFieldName",
+            "NodeTypeError",
+            "Point",
+            "Node",
+            "Leaf",
+            "Branch",
+            "ParseError",
+            "TalonSourceFile",
+            "TalonComment",
+            "TalonError",
+            "TalonMatches",
+            "TalonMatch",
+            "TalonMatchModifier",
+            "TalonDeclarations",
+            "TalonDeclaration",
+            "TalonCommandDeclaration",
+            "TalonKeyBindingDeclaration",
+            "TalonSettingsDeclaration",
+            "TalonTagImportDeclaration",
+            "TalonCapture",
+            "TalonChoice",
+            "TalonEndAnchor",
+            "TalonList",
+            "TalonOptional",
+            "TalonParenthesizedRule",
+            "TalonRepeat",
+            "TalonRepeat1",
+            "TalonRule",
+            "TalonSeq",
+            "TalonStartAnchor",
+            "TalonWord",
+            "TalonStatement",
+            "TalonAssignmentStatement",
+            "TalonExpressionStatement",
+            "TalonBlock",
+            "TalonExpression",
+            "TalonAction",
+            "TalonArgumentList",
+            "TalonUnaryOperator",
+            "TalonBinaryOperator",
+            "TalonKeyAction",
+            "TalonParenthesizedExpression",
+            "TalonSleepAction",
+            "TalonVariable",
+            "TalonIdentifier",
+            "TalonOperator",
+            "TalonImplicitString",
+            "TalonInterpolation",
+            "TalonString",
+            "TalonStringContent",
+            "TalonStringEscapeSequence",
+            "TalonNumber",
+            "TalonFloat",
+            "TalonInteger",
+        ]
 
     def parse(
         self,
-        contents: typing.Union[str, bytes],
+        contents: Union[str, bytes],
         *,
         encoding: str = "utf-8",
-        filename: typing.Optional[str] = None,
+        filename: Optional[str] = None,
         raise_parse_error: bool = False,
-    ) -> typing.Union[
-        typing.Sequence[tree_sitter_type_provider.Node],
-        tree_sitter_type_provider.Node,
-        None,
+    ) -> Optional[
+        Union[
+            tree_sitter_type_provider.Node,
+            Sequence[tree_sitter_type_provider.Node],
+        ]
     ]:
         tree = self._parse(contents, encoding=encoding)
         return self.from_tree_sitter(
@@ -92,14 +174,15 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
 
     def parse_file(
         self,
-        path: typing.Union[str, pathlib.Path],
+        path: Union[str, Path],
         *,
         encoding: str = "utf-8",
         raise_parse_error: bool = False,
-    ) -> typing.Union[
-        typing.Sequence[tree_sitter_type_provider.Node],
-        tree_sitter_type_provider.Node,
-        None,
+    ) -> Optional[
+        Union[
+            tree_sitter_type_provider.Node,
+            Sequence[tree_sitter_type_provider.Node],
+        ]
     ]:
         tree = self._parse_file(path, encoding=encoding)
         return self.from_tree_sitter(
@@ -111,7 +194,7 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
 
     def _parse(
         self,
-        contents: typing.Union[str, bytes],
+        contents: Union[str, bytes],
         *,
         encoding: str = "utf-8",
     ) -> tree_sitter.Tree:
@@ -121,11 +204,11 @@ class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):
 
     def _parse_file(
         self,
-        path: typing.Union[str, pathlib.Path],
+        path: Union[str, Path],
         *,
         encoding: str = "utf-8",
     ) -> tree_sitter.Tree:
-        if not isinstance(path, pathlib.Path):
-            path = pathlib.Path(path)
+        if not isinstance(path, Path):
+            path = Path(path)
         contents = path.read_bytes()
         return self._parse(contents, encoding=encoding)

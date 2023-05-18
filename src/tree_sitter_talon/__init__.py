@@ -1,82 +1,152 @@
-import dataclasses
-import typing
 import warnings
+from dataclasses import fields, is_dataclass
+from functools import partial
+from typing import Any, Iterable, List, Optional, Sequence, Tuple, Type
 
 from ._compat import _removeprefix
-from ._internal.dynamic import Branch as Branch
-from ._internal.dynamic import Leaf as Leaf
-from ._internal.dynamic import Node as Node
-from ._internal.dynamic import NodeFieldName as NodeFieldName
-from ._internal.dynamic import NodeTypeError as NodeTypeError
-from ._internal.dynamic import NodeTypeName as NodeTypeName
-from ._internal.dynamic import ParseError as ParseError
-from ._internal.dynamic import Point as Point
-from ._internal.dynamic import TalonAction as TalonAction
-from ._internal.dynamic import TalonArgumentList as TalonArgumentList
-from ._internal.dynamic import TalonAssignmentStatement as TalonAssignmentStatement
-from ._internal.dynamic import TalonBinaryOperator as TalonBinaryOperator
-from ._internal.dynamic import TalonBlock as TalonBlock
-from ._internal.dynamic import TalonCapture as TalonCapture
-from ._internal.dynamic import TalonChoice as TalonChoice
-from ._internal.dynamic import TalonCommandDeclaration as TalonCommandDeclaration
-from ._internal.dynamic import TalonComment as TalonComment
-from ._internal.dynamic import TalonDeclaration as TalonDeclaration
-from ._internal.dynamic import TalonDeclarations as TalonDeclarations
-from ._internal.dynamic import TalonEndAnchor as TalonEndAnchor
-from ._internal.dynamic import TalonError as TalonError
-from ._internal.dynamic import TalonExpression as TalonExpression
-from ._internal.dynamic import TalonExpressionStatement as TalonExpressionStatement
-from ._internal.dynamic import TalonFloat as TalonFloat
-from ._internal.dynamic import TalonIdentifier as TalonIdentifier
-from ._internal.dynamic import TalonImplicitString as TalonImplicitString
-from ._internal.dynamic import TalonInteger as TalonInteger
-from ._internal.dynamic import TalonInterpolation as TalonInterpolation
-from ._internal.dynamic import TalonKeyAction as TalonKeyAction
-from ._internal.dynamic import TalonKeyBindingDeclaration as TalonKeyBindingDeclaration
-from ._internal.dynamic import TalonList as TalonList
-from ._internal.dynamic import TalonMatch as TalonMatch
-from ._internal.dynamic import TalonMatches as TalonMatches
-from ._internal.dynamic import TalonMatchModifier as TalonMatchModifier
-from ._internal.dynamic import TalonNumber as TalonNumber
-from ._internal.dynamic import TalonOperator as TalonOperator
-from ._internal.dynamic import TalonOptional as TalonOptional
 from ._internal.dynamic import (
-    TalonParenthesizedExpression as TalonParenthesizedExpression,
+    Branch,
+    Leaf,
+    Node,
+    NodeFieldName,
+    NodeTypeError,
+    NodeTypeName,
+    ParseError,
+    Point,
+    TalonAction,
+    TalonArgumentList,
+    TalonAssignmentStatement,
+    TalonBinaryOperator,
+    TalonBlock,
+    TalonCapture,
+    TalonChoice,
+    TalonCommandDeclaration,
+    TalonComment,
+    TalonDeclaration,
+    TalonDeclarations,
+    TalonEndAnchor,
+    TalonError,
+    TalonExpression,
+    TalonExpressionStatement,
+    TalonFloat,
+    TalonIdentifier,
+    TalonImplicitString,
+    TalonInteger,
+    TalonInterpolation,
+    TalonKeyAction,
+    TalonKeyBindingDeclaration,
+    TalonList,
+    TalonMatch,
+    TalonMatches,
+    TalonMatchModifier,
+    TalonNumber,
+    TalonOperator,
+    TalonOptional,
+    TalonParenthesizedExpression,
+    TalonParenthesizedRule,
+    TalonRepeat,
+    TalonRepeat1,
+    TalonRule,
+    TalonSeq,
+    TalonSettingsDeclaration,
+    TalonSleepAction,
+    TalonSourceFile,
+    TalonStartAnchor,
+    TalonStatement,
+    TalonString,
+    TalonStringContent,
+    TalonStringEscapeSequence,
+    TalonTagImportDeclaration,
+    TalonUnaryOperator,
+    TalonVariable,
+    TalonWord,
+    from_tree_sitter,
+    language,
+    parse,
+    parse_file,
+    parser,
 )
-from ._internal.dynamic import TalonParenthesizedRule as TalonParenthesizedRule
-from ._internal.dynamic import TalonRepeat as TalonRepeat
-from ._internal.dynamic import TalonRepeat1 as TalonRepeat1
-from ._internal.dynamic import TalonRule as TalonRule
-from ._internal.dynamic import TalonSeq as TalonSeq
-from ._internal.dynamic import TalonSettingsDeclaration as TalonSettingsDeclaration
-from ._internal.dynamic import TalonSleepAction as TalonSleepAction
-from ._internal.dynamic import TalonSourceFile as TalonSourceFile
-from ._internal.dynamic import TalonStartAnchor as TalonStartAnchor
-from ._internal.dynamic import TalonStatement as TalonStatement
-from ._internal.dynamic import TalonString as TalonString
-from ._internal.dynamic import TalonStringContent as TalonStringContent
-from ._internal.dynamic import TalonStringEscapeSequence as TalonStringEscapeSequence
-from ._internal.dynamic import TalonTagImportDeclaration as TalonTagImportDeclaration
-from ._internal.dynamic import TalonUnaryOperator as TalonUnaryOperator
-from ._internal.dynamic import TalonVariable as TalonVariable
-from ._internal.dynamic import TalonWord as TalonWord
-from ._internal.dynamic import from_tree_sitter as from_tree_sitter
-from ._internal.dynamic import language as language
-from ._internal.dynamic import parse as parse
-from ._internal.dynamic import parse_file as parse_file
-from ._internal.dynamic import parser as parser
-from ._internal.match import AnyListValue as AnyListValue
-from ._internal.match import AnyTalonRule as AnyTalonRule
-from ._internal.match import find_command as find_command
-from ._internal.match import match as match
-from ._version import VERSION as VERSION
+from ._internal.match import AnyTalonRule, ListValue, find_command, match
+from ._version import VERSION
+
+################################################################################
+# Export List
+################################################################################
+
+__all__ = [
+    "Branch",
+    "Leaf",
+    "Node",
+    "NodeFieldName",
+    "NodeTypeError",
+    "NodeTypeName",
+    "ParseError",
+    "Point",
+    "TalonAction",
+    "TalonArgumentList",
+    "TalonAssignmentStatement",
+    "TalonBinaryOperator",
+    "TalonBlock",
+    "TalonCapture",
+    "TalonChoice",
+    "TalonCommandDeclaration",
+    "TalonComment",
+    "TalonDeclaration",
+    "TalonDeclarations",
+    "TalonEndAnchor",
+    "TalonError",
+    "TalonExpression",
+    "TalonExpressionStatement",
+    "TalonFloat",
+    "TalonIdentifier",
+    "TalonImplicitString",
+    "TalonInteger",
+    "TalonInterpolation",
+    "TalonKeyAction",
+    "TalonKeyBindingDeclaration",
+    "TalonList",
+    "TalonMatch",
+    "TalonMatches",
+    "TalonMatchModifier",
+    "TalonNumber",
+    "TalonOperator",
+    "TalonOptional",
+    "TalonParenthesizedExpression",
+    "TalonParenthesizedRule",
+    "TalonRepeat",
+    "TalonRepeat1",
+    "TalonRule",
+    "TalonSeq",
+    "TalonSettingsDeclaration",
+    "TalonSleepAction",
+    "TalonSourceFile",
+    "TalonStartAnchor",
+    "TalonStatement",
+    "TalonString",
+    "TalonStringContent",
+    "TalonStringEscapeSequence",
+    "TalonTagImportDeclaration",
+    "TalonUnaryOperator",
+    "TalonVariable",
+    "TalonWord",
+    "from_tree_sitter",
+    "language",
+    "parse",
+    "parse_file",
+    "parser",
+    "AnyTalonRule",
+    "ListValue",
+    "find_command",
+    "match",
+    "VERSION",
+]
 
 ################################################################################
 # Properties for backwards compatibility
 ################################################################################
 
 
-def _TalonMatch_key(self) -> TalonIdentifier:
+def _TalonMatch_key(self: TalonMatch) -> TalonIdentifier:
     warnings.warn(
         "'key' was deprecated in 1004.3.1.0; use 'left'",
         DeprecationWarning,
@@ -92,7 +162,7 @@ setattr(
 )
 
 
-def _TalonMatch_modifier(self) -> TalonIdentifier:
+def _TalonMatch_modifier(self: TalonMatch) -> Sequence[TalonMatchModifier]:
     warnings.warn(
         "'modifier' was deprecated in 1004.3.1.0; use 'modifiers'",
         DeprecationWarning,
@@ -108,7 +178,7 @@ setattr(
 )
 
 
-def _TalonMatch_pattern(self) -> TalonIdentifier:
+def _TalonMatch_pattern(self: TalonMatch) -> TalonImplicitString:
     warnings.warn(
         "'pattern' was deprecated in 1004.3.1.0; use 'right'",
         DeprecationWarning,
@@ -124,7 +194,7 @@ setattr(
 )
 
 
-def _TalonCommandDeclaration_rule(self) -> TalonIdentifier:
+def _TalonCommandDeclaration_rule(self: TalonCommandDeclaration) -> TalonRule:
     warnings.warn(
         "'rule' was deprecated in 1004.3.1.0; use 'left'",
         DeprecationWarning,
@@ -140,7 +210,7 @@ setattr(
 )
 
 
-def _TalonCommandDeclaration_script(self) -> TalonIdentifier:
+def _TalonCommandDeclaration_script(self: TalonCommandDeclaration) -> TalonBlock:
     warnings.warn(
         "'script' was deprecated in 1004.3.1.0; use 'right'",
         DeprecationWarning,
@@ -156,7 +226,7 @@ setattr(
 )
 
 
-def _TalonKeyBindingDeclaration_key(self) -> TalonIdentifier:
+def _TalonKeyBindingDeclaration_key(self: TalonKeyBindingDeclaration) -> TalonKeyAction:
     warnings.warn(
         "'key' was deprecated in 1004.3.1.0; use 'left'",
         DeprecationWarning,
@@ -172,7 +242,7 @@ setattr(
 )
 
 
-def _TalonKeyBindingDeclaration_script(self) -> TalonIdentifier:
+def _TalonKeyBindingDeclaration_script(self: TalonKeyBindingDeclaration) -> TalonBlock:
     warnings.warn(
         "'script' was deprecated in 1004.3.1.0; use 'right'",
         DeprecationWarning,
@@ -188,7 +258,7 @@ setattr(
 )
 
 
-def _TalonTagImportDeclaration_tag(self) -> TalonIdentifier:
+def _TalonTagImportDeclaration_tag(self: TalonTagImportDeclaration) -> TalonIdentifier:
     warnings.warn(
         "'tag' was deprecated in 1004.3.1.0; use 'right'",
         DeprecationWarning,
@@ -221,7 +291,7 @@ setattr(TalonMatches, "is_explicit", _TalonMatches_is_explicit)
 
 
 def _TalonBlock_with_comments(
-    self: TalonBlock, comments: typing.Optional[typing.Sequence[TalonComment]]
+    self: TalonBlock, comments: Optional[Sequence[TalonComment]]
 ) -> TalonBlock:
     return TalonBlock(
         text=self.text,
@@ -238,7 +308,7 @@ def _TalonCommandDeclaration___init__(
     type_name: NodeTypeName,
     start_position: Point,
     end_position: Point,
-    children: typing.Optional[typing.Sequence[TalonComment]],
+    children: Optional[Sequence[TalonComment]],
     left: TalonRule,
     right: TalonBlock,
 ) -> None:
@@ -260,7 +330,7 @@ def _TalonKeyBindingDeclaration___init__(
     type_name: NodeTypeName,
     start_position: Point,
     end_position: Point,
-    children: typing.Optional[typing.Sequence[TalonComment]],
+    children: Optional[Sequence[TalonComment]],
     left: TalonKeyAction,
     right: TalonBlock,
 ) -> None:
@@ -282,7 +352,7 @@ def _TalonSettingsDeclaration___init__(
     type_name: NodeTypeName,
     start_position: Point,
     end_position: Point,
-    children: typing.Optional[typing.Sequence[TalonComment]],
+    children: Optional[Sequence[TalonComment]],
     right: TalonBlock,
 ) -> None:
     self.text = text
@@ -349,7 +419,7 @@ setattr(Node, "is_extra", _is_extra)
 ################################################################################
 
 
-def _get_child_fail_msg(self: Node, children: typing.Iterable[Node] = []) -> str:
+def _get_child_fail_msg(self: Node, children: Iterable[Node] = []) -> str:
     return "\n".join(
         [
             f"Node '{self.type_name}' should have exactly one non-comment child, found:",
@@ -393,7 +463,7 @@ setattr(TalonInterpolation, "get_child", _get_child)
 ##############################################_removeprefix##################################
 
 
-def _TalonComment_get_docstring(self: TalonComment) -> typing.Optional[str]:
+def _TalonComment_get_docstring(self: TalonComment) -> Optional[str]:
     if self.text.startswith("###"):
         return _removeprefix(self.text, "###").strip()
     return None
@@ -402,8 +472,8 @@ def _TalonComment_get_docstring(self: TalonComment) -> typing.Optional[str]:
 setattr(TalonComment, "get_docstring", _TalonComment_get_docstring)
 
 
-def _TalonSourceFile_get_docstring(self: TalonSourceFile) -> typing.Optional[str]:
-    docstrings: typing.List[str] = []
+def _TalonSourceFile_get_docstring(self: TalonSourceFile) -> Optional[str]:
+    docstrings: List[str] = []
     for comment in self.children:
         if isinstance(comment, TalonComment):
             docstring = _TalonComment_get_docstring(comment)
@@ -419,8 +489,8 @@ setattr(TalonSourceFile, "get_docstring", _TalonSourceFile_get_docstring)
 
 def _TalonCommandDeclaration_get_docstring(
     self: TalonCommandDeclaration,
-) -> typing.Optional[str]:
-    docstrings: typing.List[str] = []
+) -> Optional[str]:
+    docstrings: List[str] = []
     for comment in self.right.children:
         if isinstance(comment, TalonComment):
             docstring = _TalonComment_get_docstring(comment)
@@ -439,12 +509,12 @@ setattr(
 ################################################################################
 
 
-def _fields(obj) -> typing.Tuple[typing.Any, ...]:
-    assert dataclasses.is_dataclass(obj)
-    return tuple(getattr(obj, field.name) for field in dataclasses.fields(obj))
+def _fields(obj: Type[Any]) -> Tuple[Any, ...]:
+    assert is_dataclass(obj)
+    return tuple(getattr(obj, field.name) for field in fields(obj))
 
 
-def _make_TalonAction(*args) -> TalonAction:
+def _make_TalonAction(*args: Any) -> TalonAction:
     return TalonAction(*args)
 
 
@@ -455,7 +525,7 @@ setattr(
 )
 
 
-def _make_TalonArgumentList(*args) -> TalonArgumentList:
+def _make_TalonArgumentList(*args: Any) -> TalonArgumentList:
     return TalonArgumentList(*args)
 
 
@@ -466,7 +536,7 @@ setattr(
 )
 
 
-def _make_TalonAssignmentStatement(*args) -> TalonAssignmentStatement:
+def _make_TalonAssignmentStatement(*args: Any) -> TalonAssignmentStatement:
     return TalonAssignmentStatement(*args)
 
 
@@ -477,7 +547,7 @@ setattr(
 )
 
 
-def _make_TalonBinaryOperator(*args) -> TalonBinaryOperator:
+def _make_TalonBinaryOperator(*args: Any) -> TalonBinaryOperator:
     return TalonBinaryOperator(*args)
 
 
@@ -488,7 +558,7 @@ setattr(
 )
 
 
-def _make_TalonBlock(*args) -> TalonBlock:
+def _make_TalonBlock(*args: Any) -> TalonBlock:
     return TalonBlock(*args)
 
 
@@ -499,7 +569,7 @@ setattr(
 )
 
 
-def _make_TalonCapture(*args) -> TalonCapture:
+def _make_TalonCapture(*args: Any) -> TalonCapture:
     return TalonCapture(*args)
 
 
@@ -510,7 +580,7 @@ setattr(
 )
 
 
-def _make_TalonChoice(*args) -> TalonChoice:
+def _make_TalonChoice(*args: Any) -> TalonChoice:
     return TalonChoice(*args)
 
 
@@ -521,7 +591,7 @@ setattr(
 )
 
 
-def _make_TalonCommandDeclaration(*args) -> TalonCommandDeclaration:
+def _make_TalonCommandDeclaration(*args: Any) -> TalonCommandDeclaration:
     return TalonCommandDeclaration(*args)
 
 
@@ -532,7 +602,7 @@ setattr(
 )
 
 
-def _make_TalonComment(*args) -> TalonComment:
+def _make_TalonComment(*args: Any) -> TalonComment:
     return TalonComment(*args)
 
 
@@ -543,7 +613,7 @@ setattr(
 )
 
 
-def _make_TalonDeclarations(*args) -> TalonDeclarations:
+def _make_TalonDeclarations(*args: Any) -> TalonDeclarations:
     return TalonDeclarations(*args)
 
 
@@ -554,7 +624,7 @@ setattr(
 )
 
 
-def _make_TalonDeclaration(*args) -> TalonDeclaration:
+def _make_TalonDeclaration(*args: Any) -> TalonDeclaration:
     return TalonDeclaration(*args)
 
 
@@ -565,7 +635,7 @@ setattr(
 )
 
 
-def _make_TalonEndAnchor(*args) -> TalonEndAnchor:
+def _make_TalonEndAnchor(*args: Any) -> TalonEndAnchor:
     return TalonEndAnchor(*args)
 
 
@@ -576,7 +646,7 @@ setattr(
 )
 
 
-def _make_TalonError(*args) -> TalonError:
+def _make_TalonError(*args: Any) -> TalonError:
     return TalonError(*args)
 
 
@@ -587,7 +657,7 @@ setattr(
 )
 
 
-def _make_TalonExpression(*args) -> TalonExpression:
+def _make_TalonExpression(*args: Any) -> TalonExpression:
     return TalonExpression(*args)
 
 
@@ -598,7 +668,7 @@ setattr(
 )
 
 
-def _make_TalonExpressionStatement(*args) -> TalonExpressionStatement:
+def _make_TalonExpressionStatement(*args: Any) -> TalonExpressionStatement:
     return TalonExpressionStatement(*args)
 
 
@@ -609,7 +679,7 @@ setattr(
 )
 
 
-def _make_TalonFloat(*args) -> TalonFloat:
+def _make_TalonFloat(*args: Any) -> TalonFloat:
     return TalonFloat(*args)
 
 
@@ -620,7 +690,7 @@ setattr(
 )
 
 
-def _make_TalonIdentifier(*args) -> TalonIdentifier:
+def _make_TalonIdentifier(*args: Any) -> TalonIdentifier:
     return TalonIdentifier(*args)
 
 
@@ -631,7 +701,7 @@ setattr(
 )
 
 
-def _make_TalonImplicitString(*args) -> TalonImplicitString:
+def _make_TalonImplicitString(*args: Any) -> TalonImplicitString:
     return TalonImplicitString(*args)
 
 
@@ -642,7 +712,7 @@ setattr(
 )
 
 
-def _make_TalonInteger(*args) -> TalonInteger:
+def _make_TalonInteger(*args: Any) -> TalonInteger:
     return TalonInteger(*args)
 
 
@@ -653,7 +723,7 @@ setattr(
 )
 
 
-def _make_TalonInterpolation(*args) -> TalonInterpolation:
+def _make_TalonInterpolation(*args: Any) -> TalonInterpolation:
     return TalonInterpolation(*args)
 
 
@@ -664,7 +734,7 @@ setattr(
 )
 
 
-def _make_TalonKeyAction(*args) -> TalonKeyAction:
+def _make_TalonKeyAction(*args: Any) -> TalonKeyAction:
     return TalonKeyAction(*args)
 
 
@@ -675,7 +745,7 @@ setattr(
 )
 
 
-def _make_TalonKeyBindingDeclaration(*args) -> TalonKeyBindingDeclaration:
+def _make_TalonKeyBindingDeclaration(*args: Any) -> TalonKeyBindingDeclaration:
     return TalonKeyBindingDeclaration(*args)
 
 
@@ -686,7 +756,7 @@ setattr(
 )
 
 
-def _make_TalonList(*args) -> TalonList:
+def _make_TalonList(*args: Any) -> TalonList:
     return TalonList(*args)
 
 
@@ -697,7 +767,7 @@ setattr(
 )
 
 
-def _make_TalonMatch(*args) -> TalonMatch:
+def _make_TalonMatch(*args: Any) -> TalonMatch:
     return TalonMatch(*args)
 
 
@@ -708,7 +778,7 @@ setattr(
 )
 
 
-def _make_TalonMatches(*args) -> TalonMatches:
+def _make_TalonMatches(*args: Any) -> TalonMatches:
     return TalonMatches(*args)
 
 
@@ -719,7 +789,7 @@ setattr(
 )
 
 
-def _make_TalonMatchModifier(*args) -> TalonMatchModifier:
+def _make_TalonMatchModifier(*args: Any) -> TalonMatchModifier:
     return TalonMatchModifier(*args)
 
 
@@ -730,7 +800,7 @@ setattr(
 )
 
 
-def _make_TalonNumber(*args) -> TalonNumber:
+def _make_TalonNumber(*args: Any) -> TalonNumber:
     return TalonNumber(*args)
 
 
@@ -741,7 +811,7 @@ setattr(
 )
 
 
-def _make_TalonOperator(*args) -> TalonOperator:
+def _make_TalonOperator(*args: Any) -> TalonOperator:
     return TalonOperator(*args)
 
 
@@ -752,7 +822,7 @@ setattr(
 )
 
 
-def _make_TalonOptional(*args) -> TalonOptional:
+def _make_TalonOptional(*args: Any) -> TalonOptional:
     return TalonOptional(*args)
 
 
@@ -763,7 +833,7 @@ setattr(
 )
 
 
-def _make_TalonParenthesizedExpression(*args) -> TalonParenthesizedExpression:
+def _make_TalonParenthesizedExpression(*args: Any) -> TalonParenthesizedExpression:
     return TalonParenthesizedExpression(*args)
 
 
@@ -774,7 +844,7 @@ setattr(
 )
 
 
-def _make_TalonParenthesizedRule(*args) -> TalonParenthesizedRule:
+def _make_TalonParenthesizedRule(*args: Any) -> TalonParenthesizedRule:
     return TalonParenthesizedRule(*args)
 
 
@@ -785,7 +855,7 @@ setattr(
 )
 
 
-def _make_TalonRepeat(*args) -> TalonRepeat:
+def _make_TalonRepeat(*args: Any) -> TalonRepeat:
     return TalonRepeat(*args)
 
 
@@ -796,7 +866,7 @@ setattr(
 )
 
 
-def _make_TalonRepeat1(*args) -> TalonRepeat1:
+def _make_TalonRepeat1(*args: Any) -> TalonRepeat1:
     return TalonRepeat1(*args)
 
 
@@ -807,7 +877,7 @@ setattr(
 )
 
 
-def _make_TalonRule(*args) -> TalonRule:
+def _make_TalonRule(*args: Any) -> TalonRule:
     return TalonRule(*args)
 
 
@@ -818,7 +888,7 @@ setattr(
 )
 
 
-def _make_TalonSeq(*args) -> TalonSeq:
+def _make_TalonSeq(*args: Any) -> TalonSeq:
     return TalonSeq(*args)
 
 
@@ -829,7 +899,7 @@ setattr(
 )
 
 
-def _make_TalonSettingsDeclaration(*args) -> TalonSettingsDeclaration:
+def _make_TalonSettingsDeclaration(*args: Any) -> TalonSettingsDeclaration:
     return TalonSettingsDeclaration(*args)
 
 
@@ -840,7 +910,7 @@ setattr(
 )
 
 
-def _make_TalonSleepAction(*args) -> TalonSleepAction:
+def _make_TalonSleepAction(*args: Any) -> TalonSleepAction:
     return TalonSleepAction(*args)
 
 
@@ -851,7 +921,7 @@ setattr(
 )
 
 
-def _make_TalonSourceFile(*args) -> TalonSourceFile:
+def _make_TalonSourceFile(*args: Any) -> TalonSourceFile:
     return TalonSourceFile(*args)
 
 
@@ -862,7 +932,7 @@ setattr(
 )
 
 
-def _make_TalonStartAnchor(*args) -> TalonStartAnchor:
+def _make_TalonStartAnchor(*args: Any) -> TalonStartAnchor:
     return TalonStartAnchor(*args)
 
 
@@ -873,7 +943,7 @@ setattr(
 )
 
 
-def _make_TalonStatement(*args) -> TalonStatement:
+def _make_TalonStatement(*args: Any) -> TalonStatement:
     return TalonStatement(*args)
 
 
@@ -884,7 +954,7 @@ setattr(
 )
 
 
-def _make_TalonString(*args) -> TalonString:
+def _make_TalonString(*args: Any) -> TalonString:
     return TalonString(*args)
 
 
@@ -895,7 +965,7 @@ setattr(
 )
 
 
-def _make_TalonStringContent(*args) -> TalonStringContent:
+def _make_TalonStringContent(*args: Any) -> TalonStringContent:
     return TalonStringContent(*args)
 
 
@@ -906,7 +976,7 @@ setattr(
 )
 
 
-def _make_TalonStringEscapeSequence(*args) -> TalonStringEscapeSequence:
+def _make_TalonStringEscapeSequence(*args: Any) -> TalonStringEscapeSequence:
     return TalonStringEscapeSequence(*args)
 
 
@@ -917,7 +987,7 @@ setattr(
 )
 
 
-def _make_TalonTagImportDeclaration(*args) -> TalonTagImportDeclaration:
+def _make_TalonTagImportDeclaration(*args: Any) -> TalonTagImportDeclaration:
     return TalonTagImportDeclaration(*args)
 
 
@@ -928,7 +998,7 @@ setattr(
 )
 
 
-def _make_TalonUnaryOperator(*args) -> TalonUnaryOperator:
+def _make_TalonUnaryOperator(*args: Any) -> TalonUnaryOperator:
     return TalonUnaryOperator(*args)
 
 
@@ -939,7 +1009,7 @@ setattr(
 )
 
 
-def _make_TalonVariable(*args) -> TalonVariable:
+def _make_TalonVariable(*args: Any) -> TalonVariable:
     return TalonVariable(*args)
 
 
@@ -950,7 +1020,7 @@ setattr(
 )
 
 
-def _make_TalonWord(*args) -> TalonWord:
+def _make_TalonWord(*args: Any) -> TalonWord:
     return TalonWord(*args)
 
 

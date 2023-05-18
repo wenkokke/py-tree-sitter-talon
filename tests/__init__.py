@@ -1,8 +1,8 @@
 import inspect
 import re
 import sys
-import types
-import typing
+from types import ModuleType
+from typing import Any, Dict, Iterator
 
 
 def pyver() -> str:
@@ -18,10 +18,9 @@ def short(sig: inspect.Signature) -> str:
     return out
 
 
-def function_signatures(object: object) -> typing.Iterator[str]:
-    for name, fun in inspect.getmembers(object, inspect.isfunction):
-        assert isinstance(fun, types.FunctionType)
-        if not name.startswith("_"):
+def function_signatures(defns: Dict[str, Any]) -> Iterator[str]:
+    for name, fun in defns.items():
+        if inspect.isfunction(fun) and not name.startswith("_"):
             try:
                 funsig = inspect.signature(fun)
                 yield f"def {name}{short(funsig)}:"
@@ -30,9 +29,9 @@ def function_signatures(object: object) -> typing.Iterator[str]:
                 pass
 
 
-def class_signatures(object: object) -> typing.Iterator[str]:
-    for name, cls in inspect.getmembers(object, inspect.isclass):
-        if not name.startswith("_"):
+def class_signatures(defns: Dict[str, Any]) -> Iterator[str]:
+    for name, cls in defns.items():
+        if inspect.isclass(cls) and not name.startswith("_"):
             try:
                 parent = cls.__mro__[1].__name__
                 init = short(inspect.signature(cls))
@@ -43,7 +42,7 @@ def class_signatures(object: object) -> typing.Iterator[str]:
                 pass
 
 
-def node_dict_simplify(node_dict: typing.Dict[str, typing.Any]) -> None:
+def node_dict_simplify(node_dict: Dict[str, Any]) -> None:
     if len(node_dict) > 4:
         del node_dict["text"]
 
