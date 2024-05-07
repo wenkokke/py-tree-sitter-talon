@@ -94,7 +94,7 @@ jobs:
         run: pip install -r "./requirements-ci.txt"
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.16.1
+        uses: pypa/cibuildwheel@v2.17.0
         with:
           output-dir: "./dist"
           config-file: "{package}/pyproject.toml"
@@ -102,10 +102,10 @@ jobs:
           MACOSX_DEPLOYMENT_TARGET: "10.9"
 
       - name: Upload wheels
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: dist
-          path: ./dist/*.whl
+          name: "dist-${{ matrix.os.name }}"
+          path: "./dist/*.whl"
 
   ################################################################################
   # Test package with Tox
@@ -182,7 +182,7 @@ jobs:
         run: sphinx-build -M html docs docs/_build
 
       - name: Deploy doc
-        uses: JamesIves/github-pages-deploy-action@v4.4.3
+        uses: JamesIves/github-pages-deploy-action@v4.6.0
         with:
           branch: docs
           folder: docs/_build/html
@@ -204,11 +204,12 @@ jobs:
       - name: Download dist
         uses: actions/download-artifact@v3
         with:
-          name: dist
+          pattern: "dist-*"
           path: dist
+          merge-multiple: true
 
       - name: Publish to GitHub Releases
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: |
             dist/*.tar.gz
