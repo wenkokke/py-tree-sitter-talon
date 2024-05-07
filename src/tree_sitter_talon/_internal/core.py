@@ -24,7 +24,7 @@ __all__: List[str] = [
 
 class TalonLanguage(tree_sitter.Language):  # type: ignore
     def __init__(self) -> None:
-        self.language_id = _tree_sitter_talon_id()
+        super().__init__(_tree_sitter_talon_id(), "talon")
 
 
 class TreeSitterTalon(tree_sitter_type_provider.TreeSitterTypeProvider):  # type: ignore
