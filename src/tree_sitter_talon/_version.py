@@ -26,4 +26,4 @@ except ModuleNotFoundError:
         )["version"]
     )
 
-VERSION: str = f"{TREE_SITTER_TALON_VERSION.major}!1.6"
+VERSION: str = f"{TREE_SITTER_TALON_VERSION.major}!1.7"
